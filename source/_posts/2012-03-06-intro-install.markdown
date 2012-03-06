@@ -28,6 +28,13 @@ Xcode は Mac App Store からインストールできます。Mac App Store を
 使用している Mac OS X が 10.6.8 の場合には Xcode 4.2.x が、10.7.x の場合には Xcode 4.3.x がインストールされます。
 
 
+## Command Line Tools をインストール
+Xcode 4.3 からは、コマンドラインで実行するコンパイラなどのツール類を別途インストールしなければなりません。Xcode と併せてインストールしておきましょう。
+
+Xcode のメニューから [Xcode]->[Preferences...] と選択していきます。下の図のように Downloads のタブを選択し、Command Line Tools をインストールします。
+
+![image](/images/intro-install/command_line_tools.png)
+
 ## MacRuby をインストール
 引き続き、[MacRuby](http://www.macruby.org/) をインストールしましょう。
 
