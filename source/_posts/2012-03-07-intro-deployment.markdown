@@ -44,7 +44,7 @@ Usage: macruby_deploy [options] application-bundle
 <tr><td>--gem RubyGems名</td><td>指定した RubyGems をアプリケーションに埋め込みます</td></tr>
 </table>
 
-できあがったアプリケーションは、[Products] のアプリケーション名を control キーを押しながらクリックすると Finder で確認することができます。
+できあがったアプリケーションは、[Products] のアプリケーション名を <kbd>control</kbd> キーを押しながらクリックすると Finder で確認することができます。
 
 ![image](/images/intro-deployment/show_finder.png)
 

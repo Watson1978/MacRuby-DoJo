@@ -48,7 +48,7 @@ class AppDelegate
 
 このように attr_accessor で用意した変数をアウトレットとして使用することができます。
 
-*MainMenu.xib* の画面に戻り、アウトレットを接続します。control キーを押しながら、App Delegate から Text Field へドラッグします。
+*MainMenu.xib* の画面に戻り、アウトレットを接続します。<kbd>control</kbd> キーを押しながら、App Delegate から Text Field へドラッグします。
 
 ![image](/images/intro-stopwatch/connect_outlet.png)
 
@@ -83,7 +83,7 @@ class AppDelegate
 end
 ```
 
-*MainMenu.xib* の画面に戻り、アクションを接続します。control キーを押しながら、start ボタンから App Delegate へドラッグします。
+*MainMenu.xib* の画面に戻り、アクションを接続します。<kbd>control</kbd> キーを押しながら、start ボタンから App Delegate へドラッグします。
 
 ![image](/images/intro-stopwatch/connect_action.png)
 
