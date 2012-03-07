@@ -11,3 +11,4 @@ sidebar: true
 ## 入門編
 - [MacRuby の環境を構築しよう](/blog/2012/03/06/intro-install/)
 - [新規プロジェクトをつくってみよう](/blog/2012/03/06/intro-new-project/)
+- [ストップウォッチを作る](blog/2012/03/07/intro-stopwatch/)
