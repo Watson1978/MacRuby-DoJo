@@ -153,10 +153,10 @@ class AppDelegate
       @time = 0.0
       @timer = NSTimer
                 .scheduledTimerWithTimeInterval(0.1,
-                                                target:self,
-                                                selector:"timerHandler:",
-                                                userInfo:nil,
-                                                repeats:true)
+                                                target: self,
+                                                selector: "timerHandler:",
+                                                userInfo: nil,
+                                                repeats: true)
     end
   end
   
