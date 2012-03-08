@@ -3,7 +3,8 @@ layout: post
 title: "ストップウォッチを作る (Thread 編)"
 date: 2012-03-08 15:49
 comments: true
-categories: 
+sharing: true
+categories: MacRuby
 ---
 
 [ストップウォッチを作る](/blog/2012/03/07/intro-stopwatch/)では [NSTimer](https://developer.apple.com/library/mac/#documentation/Cocoa/Reference/Foundation/Classes/nstimer_Class/Reference/NSTimer.html) を使って定期的に Text Field の内容を更新していました。同じ事を Ruby の Thread を使って実現することができます。
