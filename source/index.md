@@ -13,4 +13,5 @@ sidebar: true
 - [新規プロジェクトをつくってみよう](/blog/2012/03/06/intro-new-project/)
 - [ストップウォッチを作る](/blog/2012/03/07/intro-stopwatch/)
 - [ストップウォッチを作る (Thread 編)](/blog/2012/03/08/intro-stopwatch-thread/)
+- [Window のリサイズに対応しよう](blog/2012/03/08/intro-window-resize/)
 - [Deployment してアプリケーションを配布しよう](/blog/2012/03/07/intro-deployment/)
