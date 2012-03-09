@@ -17,7 +17,7 @@ When using the MacRuby, you would need to install the following softwares in adv
 - BridgeSupport Preview 3 (if you would use MacRuby on Mac OS X 10.6.8)
 
 ## Install Xcode
-Install Xcode from the Mac App Store. Launch Mac App Store, search xcode with search field.
+Install Xcode from the Mac App Store. Launch Mac App Store, and then, search Xcode with search field on top of right corner.
 
 ![image](/images/en/intro-install/search_xcode.png)
 
@@ -25,11 +25,11 @@ You could install Xcode too easy from search result.
 
 ![image](/images/en/intro-install/xcode.png)
 
-If you use the Mac OS X 10.6.8, will install Xcode 4.2.x. And if you use the Mac OS X 10.7.x, will install Xcode 4.3.x.
+If you use the Mac OS X 10.6.8, Xcode 4.2.x will be installed. And if you use the Mac OS X 10.7.x, Xcode 4.3.x will be installed.
 
 
 ## Install Command Line Tools
-Since Xcode 4.3, Command Line Tools (compiler, etc) became to additional package.  Also would install Command Line Tools.
+Since Xcode 4.3, Command Line Tools (compiler, etc) became to additional package. Also would install Command Line Tools.
 
 1. Select [Xcode]->[Preferences…] to display Preferences form Xcode menu.
 2. Select Downloads tab as shown in the figure below, and install Command Line Tools.
