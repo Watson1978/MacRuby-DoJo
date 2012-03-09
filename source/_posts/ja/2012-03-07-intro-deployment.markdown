@@ -13,11 +13,11 @@ categories: MacRuby
 
 以下の図のように「Deployment」を選択した状態で [Run] をクリックすると、アプリケーションに MacRuby が埋め込まれます。
 
-![image](/images/intro-deployment/deployment.png)
+![image](/images/ja/intro-deployment/deployment.png)
 
 Deployment ではいくつかのオプションを指定することができます。以下の図のように「Arguments」欄でオプションを指定します。
 
-![image](/images/intro-deployment/deployment_option.png)
+![image](/images/ja/intro-deployment/deployment_option.png)
 
 指定できるオプションは、`macruby_deploy` コマンドを Terminal で実行することで確認できます。
 
@@ -46,6 +46,6 @@ Usage: macruby_deploy [options] application-bundle
 
 できあがったアプリケーションは、[Products] のアプリケーション名を <kbd>control</kbd> キーを押しながらクリックすると Finder で確認することができます。
 
-![image](/images/intro-deployment/show_finder.png)
+![image](/images/ja/intro-deployment/show_finder.png)
 
 あとは、zip ファイルに圧縮するなどして配布してみてください。

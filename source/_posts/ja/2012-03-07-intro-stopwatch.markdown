@@ -11,28 +11,28 @@ categories: MacRuby
 
 アプリケーションは以下の図のようなデザインで、「StopWatch」というプロジェクトとします。
 
-![image](/images/intro-stopwatch/stopwatch.png)
+![image](/images/ja/intro-stopwatch/stopwatch.png)
 
 「start ボタンがクリックされるとタイマーが動き出し、stop ボタンがクリックされるとタイマーを停止します。Text Field には何秒間タイマーが動いていたかを表示する。」というアプリケーションです。
 
 ## UI 部品を配置する
 それでは、さっそく UI 部品を配置してみましょう。Xcode で *MainMenu.xib* ファイルを選択して、UI デザインを変更していきます。
 
-![image](/images/intro-stopwatch/mainmenu_xib.png)
+![image](/images/ja/intro-stopwatch/mainmenu_xib.png)
 
 次に [Window - StopWatch] を選択して、UI 部品を配置する Window を表示します。
 
-![image](/images/intro-stopwatch/window_stopwatch.png)
+![image](/images/ja/intro-stopwatch/window_stopwatch.png)
 
 以下の図のように、ツールバーのアイコンをクリックすると Object Library が表示されます。
 
-![image](/images/intro-stopwatch/show_object_library.png)
+![image](/images/ja/intro-stopwatch/show_object_library.png)
 
 ようやく UI 部品を配置するための準備が整いました。
 
 それでは、タイマーの値を表示するための TextField と、タイマーの開始と停止のための Button を Object Library から Window へドラッグ&ドロップして配置します。
 
-![image](/images/intro-stopwatch/ui_design.png)
+![image](/images/ja/intro-stopwatch/ui_design.png)
 
 
 ## アウトレットを接続する
@@ -50,11 +50,11 @@ class AppDelegate
 
 *MainMenu.xib* の画面に戻り、アウトレットを接続します。<kbd>control</kbd> キーを押しながら、App Delegate から Text Field へドラッグします。
 
-![image](/images/intro-stopwatch/connect_outlet.png)
+![image](/images/ja/intro-stopwatch/connect_outlet.png)
 
 アウトレットの一覧が表示されるので、先ほど追加した textField を選択して接続します。
 
-![image](/images/intro-stopwatch/outlets.png)
+![image](/images/ja/intro-stopwatch/outlets.png)
 
 これで、プログラムから textField 変数を通して Text Field の値を取得設定できるようになります。
 
@@ -85,11 +85,11 @@ end
 
 *MainMenu.xib* の画面に戻り、アクションを接続します。<kbd>control</kbd> キーを押しながら、start ボタンから App Delegate へドラッグします。
 
-![image](/images/intro-stopwatch/connect_action.png)
+![image](/images/ja/intro-stopwatch/connect_action.png)
 
 アクションの一覧が表示されるので、先ほど追加した `startTimer` を選択して接続します。
 
-![image](/images/intro-stopwatch/actions.png)
+![image](/images/ja/intro-stopwatch/actions.png)
 
 同じように stop ボタンと `stopTimer` を接続します。これで、ボタンがクリックされた時にそれぞれのメソッドが呼び出されるようになります。
 
@@ -179,4 +179,4 @@ end
 
 これで「ストップウォッチ」アプリケーションが完成です。完成したアプリケーションを実行してみましょう。[Scheme] で「Deployment」からプロジェクト名のスキームに変更してツールバーの [Run] ボタンをクリックすると、アプリケーションが起動します。
 
-![image](/images/intro-stopwatch/scheme.png)
+![image](/images/ja/intro-stopwatch/scheme.png)

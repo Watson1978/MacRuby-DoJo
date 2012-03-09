@@ -19,11 +19,11 @@ MacRuby を使用する際には、あらかじめ以下のものをインスト
 ## Xcode をインストール
 Xcode は Mac App Store からインストールできます。Mac App Store を起動し、右上の検索欄に Xcode と入力し検索します。
 
-![image](/images/intro-install/search_xcode.png)
+![image](/images/ja/intro-install/search_xcode.png)
 
 検索結果に表示された Xcode をインストールします。
 
-![image](/images/intro-install/xcode.png)
+![image](/images/ja/intro-install/xcode.png)
 
 使用している Mac OS X が 10.6.8 の場合には Xcode 4.2.x が、10.7.x の場合には Xcode 4.3.x がインストールされます。
 
@@ -33,16 +33,16 @@ Xcode 4.3 からは、コマンドラインで実行するコンパイラなど�
 
 Xcode のメニューから [Xcode]->[Preferences...] と選択していきます。下の図のように Downloads のタブを選択し、Command Line Tools をインストールします。
 
-![image](/images/intro-install/command_line_tools.png)
+![image](/images/ja/intro-install/command_line_tools.png)
 
 ## MacRuby をインストール
 引き続き、[MacRuby](http://www.macruby.org/) をインストールしましょう。
 
-![image](/images/intro-install/macruby_org.png)
+![image](/images/ja/intro-install/macruby_org.png)
 
 現在リリースされている MacRuby 0.10 は、残念ながら Xcode 4.3 には対応していません。そこで [http://www.macruby.org/files/nightlies/](http://www.macruby.org/files/nightlies/) から nightly build の *macruby_nightly-latest.pkg* をダウンロードしてインストールします。nightly build は、毎日作られその時点での最新の変更内容が適用されたパッケージです。
 
-![image](/images/intro-install/nightly_build.png)
+![image](/images/ja/intro-install/nightly_build.png)
 
 
 ## BridgeSupport Preview 3 をインストール

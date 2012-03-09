@@ -9,20 +9,20 @@ categories: MacRuby
 
 作成したアプリケーションを実行した後、Window がリサイズされることを考慮しましょう。何も対処していなければ、以下のようにリサイズすると間が抜けた UI レイアウトになったり、たくさんの UI 部品を使用したアプリケーションでは使用するのが困難なほどにレイアウトが崩れたりすることもあるでしょう。
 
-![image](/images/intro-window-resize/window.png)
+![image](/images/ja/intro-window-resize/window.png)
 
 ## Autosizing の設定
 Window をリサイズした時に、UI 部品の配置をどのように取り扱うかについて Xcode の Autosizing という項目で簡単に設定することができます。以下の図のように、Autosizing を設定する UI 部品を選択し Size Inspector を表示します。
 
-![image](/images/intro-window-resize/size_inspector.png)
+![image](/images/ja/intro-window-resize/size_inspector.png)
 
 幅や高さを伸縮させたい場合には以下のように設定します。
 
-![image](/images/intro-window-resize/autosizing_variable.png)
+![image](/images/ja/intro-window-resize/autosizing_variable.png)
 
 UI 配置位置を固定する場合には以下のように設定します。設定した箇所の間隔は、Window をリサイズしても変わらないようになります。
 
-![image](/images/intro-window-resize/autosizing_fixable.png)
+![image](/images/ja/intro-window-resize/autosizing_fixable.png)
 
 Autosizing の効果は Exsample にプレビューされるので、確認しながら設定していくと良いでしょう。
 
@@ -32,6 +32,6 @@ Autosizing の効果は Exsample にプレビューされるので、確認し�
 
 Window を選択した状態で、Size Inspector を表示します。
 
-![image](/images/intro-window-resize/window_size.png)
+![image](/images/ja/intro-window-resize/window_size.png)
 
 [Minimum Size] と [Maximum Size] のチェックを ON にすると、Window の最大最小サイズを固定できます。上の図のように Minimum Size と Maximum Size を同じ値にすると、Window がリサイズできないようになります。

@@ -9,7 +9,7 @@ categories: MacRuby
 
 作成したアプリケーションのアイコンには Mac OS X であらかじめ用意されているものが使用されます。すべてのアプリケーションは、最初に同じアイコンで表示されることになり、あまり見栄えがしません。
 
-![image](/images/intro-icon/default_icon.png)
+![image](/images/ja/intro-icon/default_icon.png)
 
 アプリケーションのアイコンを独自のものに変更してみましょう。
 
@@ -18,17 +18,17 @@ categories: MacRuby
 
 Xcode 4.3 からは、[Xcode]->[Open Developer Tool] から起動することができます。
 
-![image](/images/intro-icon/icon_composer_xcode43.png)
+![image](/images/ja/intro-icon/icon_composer_xcode43.png)
 
 Xcode 4.2 以前では、*/Developer/Applications/Utilities/Icon Composer.app* というフォルダ内に存在します。
 
-![image](/images/intro-icon/icon_composer_xcode42.png)
+![image](/images/ja/intro-icon/icon_composer_xcode42.png)
 
 Icon Composer を起動すると、アイコンサイズごとに枠がいくつか表示されています。その枠に用意しておいた画像をドラッグ & ドロップして配置し、アイコンを保存します。
 
-![image](/images/intro-icon/icns.png)
+![image](/images/ja/intro-icon/icns.png)
 
 ## アイコンを変更する
 Xcode でアプリケーションのアイコンを変更します。以下の図のように、ターゲットを選択して [App Icon] に先ほど Icon Composer で作成したアイコンをドラッグ & ドロップします。
 
-![image](/images/intro-icon/change_icon.png)
+![image](/images/ja/intro-icon/change_icon.png)
