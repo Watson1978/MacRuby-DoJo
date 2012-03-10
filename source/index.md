@@ -16,3 +16,5 @@ sidebar: true
 - [Window のリサイズに対応しよう](/blog/2012/03/08/intro-window-resize/)
 - [アイコンを変更しよう](/blog/2012/03/09/intro-icon/)
 - [Deployment してアプリケーションを配布しよう](/blog/2012/03/07/intro-deployment/)
+
+- [Objective-C のメソッドの読み方](/blog/2012/03/10/intro-objc-method/)
