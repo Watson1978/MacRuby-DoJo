@@ -29,7 +29,7 @@ Xcode は Mac App Store からインストールできます。Mac App Store を
 
 <div class="note">
 <p>
-Xcode 4.3.x をインストールする前に、Xcode 4.2.x など古いバージョンをインストールされていた方は、Terminal 上で以下のコマンドを実行しておくと良いでしょう。</p>
+以前に Xcode 4.2.x など古いバージョンをインストールされていて、今回 Xcode 4.3.x をインストールされた方は、Terminal 上で以下のコマンドを実行しておくと良いでしょう。</p>
 
 ```
 $ sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer/

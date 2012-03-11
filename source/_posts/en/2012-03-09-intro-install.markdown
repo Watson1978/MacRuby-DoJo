@@ -28,7 +28,8 @@ You could install Xcode too easy from search result.
 If you use the Mac OS X 10.6.8, Xcode 4.2.x will be installed. And if you use the Mac OS X 10.7.x, Xcode 4.3.x will be installed.
 
 <div class="note">
-Before installing Xcode 4.3.x, if you had been install an older version as Xcode 4.2.x, recommend to be running the following command on the Terminal.
+If you have previously installed an older version (as Xcode 4.2.x) and installed Xcode 4.3.x at this time,
+recommend to be running the following command on the Terminal.
 
 ```
 $ sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer/
