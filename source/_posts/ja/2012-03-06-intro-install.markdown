@@ -27,6 +27,15 @@ Xcode は Mac App Store からインストールできます。Mac App Store を
 
 使用している Mac OS X が 10.6.8 の場合には Xcode 4.2.x が、10.7.x の場合には Xcode 4.3.x がインストールされます。
 
+<div class="note">
+<p>
+Xcode 4.3.x をインストールする前に、Xcode 4.2.x など古いバージョンをインストールされていた方は、Terminal 上で以下のコマンドを実行しておくと良いでしょう。</p>
+
+```
+$ sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer/
+```
+</div>
+
 
 ## Command Line Tools をインストール
 Xcode 4.3 からは、コマンドラインで実行するコンパイラなどのツール類を別途インストールしなければなりません。Xcode と併せてインストールしておきましょう。
