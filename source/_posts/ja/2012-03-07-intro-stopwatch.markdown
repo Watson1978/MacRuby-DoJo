@@ -46,7 +46,7 @@ class AppDelegate
   attr_accessor :textField # アウトレット
 ```
 
-このように attr_accessor で用意した変数をアウトレットとして使用することができます。
+このように attr_accessor で用意したアクセサをアウトレットとして使用することができます。
 
 *MainMenu.xib* の画面に戻り、アウトレットを接続します。<kbd>control</kbd> キーを押しながら、App Delegate から Text Field へドラッグします。
 
@@ -96,7 +96,7 @@ end
 ボタンがクリックされた時に呼び出される `startTimer` と `stopTimer` は**アクションメソッド**とも呼ばれます。
 
 <div class="note">
-アクションメソッドを記述する際には、必ず sender という引数を用意しましょう。MacRuby の仕様により、sender 引数がないメソッドはアクションメソッドとして認識されず、接続することができません。
+アクションメソッドを記述する際には、<strong>必ず sender</strong> という引数を用意しましょう。MacRuby の仕様により、sender 引数がないメソッドはアクションメソッドとして認識されず、接続することができません。
 </div>
 
 
@@ -129,7 +129,7 @@ end
 </table>
 
 <div class="note">
-selector はメッソド名を示す文字列です。メソッドが引数を取る場合には "timerHandler:" のようにコロンがついたりします。引数がない場合には "timerHandler" です。 上記の例で使用しているメソッドの場合には "scheduledTimerWithTimeInterval:target:selector:userInfo:repeats:" となります。Objective-C 由来の書き方でわかりにくいのですが、リファレンスを読む場合にも度々でてくるので、selector の書き方はマスターしてください。
+selector はメッソド名を示す文字列です。メソッドが引数を取る場合には <code>"timerHandler:"</code> のようにコロンがついたりします。引数がない場合には <code>"timerHandler"</code> です。 上記の例で使用しているメソッドの場合には <code>"scheduledTimerWithTimeInterval:target:selector:userInfo:repeats:"</code> となります。Objective-C 由来の書き方でわかりにくいのですが、リファレンスを読む場合にも度々でてくるので、selector の書き方はマスターしてください。
 </div>
 
 タイマーを停止するには、`invalidate` メソッドを使用します。
