@@ -100,4 +100,4 @@ class AppDelegate
 end
 ```
 
-検索結果を取得する際に `NSString.stringWithContentsOfURL` を使用していますが、Ruby の `Net::HTTP` を使用することもできます。また、JSON の解析も Mac OS X 10.7 以降に限定すれば [NSJSONSerialization](https://developer.apple.com/library/ios/#documentation/Foundation/Reference/NSJSONSerialization_Class/Reference/Reference.html) を使うことができます。Ruby メソッドと Mac OS X API をいろいろ組み合わせて使用できますので、用途や利便性などで使いわけてみてください。
+検索結果を取得する際に `NSString.stringWithContentsOfURL` を使用していますが、Ruby の `Net::HTTP` を使用することもできます。また、JSON の解析も Mac OS X 10.7 以降に限定すれば [NSJSONSerialization](https://developer.apple.com/library/mac/#documentation/Foundation/Reference/NSJSONSerialization_Class/Reference/Reference.html) を使うことができます。Ruby メソッドと Mac OS X API をいろいろ組み合わせて使用できますので、用途や利便性などで使いわけてみてください。
