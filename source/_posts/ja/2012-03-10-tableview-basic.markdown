@@ -96,6 +96,7 @@ end
     return str
   end
 ```
-rowIndex の値でどの行のデータが必要とされているのか判別できます。列は、aTableColumn.identifierの値によって判別できます。
+
+`rowIndex` の値でどの行のデータが必要とされているのか判別できます。列は、`aTableColumn.identifier` の値によって判別できます。
 
 ![image](/images/ja/tableview-basic/tableview_sample2.png)
