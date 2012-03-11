@@ -95,9 +95,9 @@ end
 
 ボタンがクリックされた時に呼び出される `startTimer` と `stopTimer` は**アクションメソッド**とも呼ばれます。
 
-<p class="note">
+<div class="note">
 アクションメソッドを記述する際には、必ず sender という引数を用意しましょう。MacRuby の仕様により、sender 引数がないメソッドはアクションメソッドとして認識されず、接続することができません。
-</p>
+</div>
 
 
 ## タイマーを使う
@@ -128,9 +128,9 @@ end
 <tr><td>repeats</td><td>タイマーの実行を繰り返すかどうか (true:繰り返す, false:1度のみ)</td></tr>
 </table>
 
-<p class="note">
+<div class="note">
 selector はメッソド名を示す文字列です。メソッドが引数を取る場合には "timerHandler:" のようにコロンがついたりします。引数がない場合には "timerHandler" です。 上記の例で使用しているメソッドの場合には "scheduledTimerWithTimeInterval:target:selector:userInfo:repeats:" となります。Objective-C 由来の書き方でわかりにくいのですが、リファレンスを読む場合にも度々でてくるので、selector の書き方はマスターしてください。
-</p>
+</div>
 
 タイマーを停止するには、`invalidate` メソッドを使用します。
 

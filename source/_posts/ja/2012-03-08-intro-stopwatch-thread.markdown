@@ -47,6 +47,6 @@ NSTimer の長い呼び出しの記述が無くなっただけで、ずいぶん
 
 また Text Field に文字列を設定するメソッドとして、今回は `stringValue=` を使用しています。MacRuby には `foo=` というメソッドを `setFoo` と読み替える仕組みがあり、それを活用するとより Ruby らしいコードになるのではないでしょうか。
 
-<p class="note">
+<div class="note">
 今回の Text Field のように、UI を更新する場合には単一のスレッドで行いましょう。(NSTimerを使ったものは、メインスレッドで更新しています)
-</p>
+</div>
