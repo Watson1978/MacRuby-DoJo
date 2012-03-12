@@ -10,7 +10,7 @@ sidebar: true
 
 ## First Step
 - [Constructs the MacRuby environment](/blog/2012/03/09/intro-install/)
-- Creates the New Project
+- [Creates a New Project](/blog/2012/03/12/intro-new-project/)
 - Creates the stopwatch application
 - Creates the stopwatch application (with Thread)
 - Corresponding to resize the Window
