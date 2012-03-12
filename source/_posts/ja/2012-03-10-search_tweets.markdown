@@ -101,3 +101,17 @@ end
 ```
 
 検索結果を取得する際に `NSString.stringWithContentsOfURL` を使用していますが、Ruby の `Net::HTTP` を使用することもできます。また、JSON の解析も Mac OS X 10.7 以降に限定すれば [NSJSONSerialization](https://developer.apple.com/library/mac/#documentation/Foundation/Reference/NSJSONSerialization_Class/Reference/Reference.html) を使うことができます。Ruby メソッドと Mac OS X API をいろいろ組み合わせて使用できますので、用途や利便性などで使いわけてみてください。
+
+
+## Organizer で API を調べてみよう
+Xcode には Organizer という、iPhone などのデバイスやプロジェクト、ドキュメントを扱うツールがあります。Xcode で [Window]->[Organizer] とメニューを選択すると Organizer が起動します。
+
+![image](/images/ja/search_tweets/xcode_menu_organizer.png)
+
+Organizer のツールバーにある Documentation というアイコンを選択すると、Mac OS X や iOS のドキュメントを閲覧することができます。
+
+![image](/images/ja/search_tweets/organizer.png)
+
+各 Framework のクラスで、どのようなメソッドが存在するのか調べたりする際などで活用してみてください。
+
+![image](/images/ja/search_tweets/organizer_doc_search.png)
