@@ -24,7 +24,7 @@ UI 配置位置を固定する場合には以下のように設定します。�
 
 ![image](/images/ja/intro-window-resize/autosizing_fixable.png)
 
-Autosizing の効果は Exsample にプレビューされるので、確認しながら設定していくと良いでしょう。
+Autosizing の効果は Example にプレビューされるので、確認しながら設定していくと良いでしょう。
 
 
 ## Window をリサイズできないようにする

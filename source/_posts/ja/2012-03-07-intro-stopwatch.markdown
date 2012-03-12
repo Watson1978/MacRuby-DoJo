@@ -30,7 +30,7 @@ categories: MacRuby
 
 ようやく UI 部品を配置するための準備が整いました。
 
-それでは、タイマーの値を表示するための TextField と、タイマーの開始と停止のための Button を Object Library から Window へドラッグ&ドロップして配置します。
+それでは、タイマーの値を表示するための Text Field と、タイマーの開始と停止のための Button を Object Library から Window へドラッグ&ドロップして配置します。
 
 ![image](/images/ja/intro-stopwatch/ui_design.png)
 
@@ -56,11 +56,11 @@ class AppDelegate
 
 ![image](/images/ja/intro-stopwatch/outlets.png)
 
-これで、プログラムから textField 変数を通して Text Field の値を取得設定できるようになります。
+これで、プログラムからアクセサ textField を通して Text Field の値を取得設定できるようになります。
 
 
 ## アクションを接続する
-まだ、start ボタンと stop ボダンをクリックしても何も起こりません。ボタンがクリックされた時の振る舞いを設定してあげる必要があります。振る舞いを設定する仕組みとしてアクションがあります。
+まだ、start ボタンと stop ボタンをクリックしても何も起こりません。ボタンがクリックされた時の振る舞いを設定してあげる必要があります。振る舞いを設定する仕組みとしてアクションがあります。
 
 *AppDelegate.rb* を選択して以下のように `startTimer` と `stopTimer` を追加します。
 
@@ -129,7 +129,7 @@ end
 </table>
 
 <div class="note">
-selector はメッソド名を示す文字列です。メソッドが引数を取る場合には <code>"timerHandler:"</code> のようにコロンがついたりします。引数がない場合には <code>"timerHandler"</code> です。 上記の例で使用しているメソッドの場合には <code>"scheduledTimerWithTimeInterval:target:selector:userInfo:repeats:"</code> となります。Objective-C 由来の書き方でわかりにくいのですが、リファレンスを読む場合にも度々でてくるので、selector の書き方はマスターしてください。
+selector はメソッド名を示す文字列です。メソッドが引数を取る場合には <code>"timerHandler:"</code> のようにコロンがついたりします。引数がない場合には <code>"timerHandler"</code> です。 上記の例で使用しているメソッドの場合には <code>"scheduledTimerWithTimeInterval:target:selector:userInfo:repeats:"</code> となります。Objective-C 由来の書き方でわかりにくいのですが、リファレンスを読む場合にも度々でてくるので、selector の書き方はマスターしてください。
 </div>
 
 タイマーを停止するには、`invalidate` メソッドを使用します。
