@@ -100,3 +100,9 @@ end
 `rowIndex` の値でどの行のデータが必要とされているのか判別できます。列は、`aTableColumn.identifier` の値によって判別できます。
 
 ![image](/images/ja/tableview-basic/tableview_sample2.png)
+
+
+## 列を追加する
+TableView は初期状態で 2 列分のデータを表示します。以下の図のように、[Table View] を選択した状態で [Show the attributes inspector] をクリックします。[Columns] に表示する列数を指定すると、TableView に列を追加することができます。
+
+![image](/images/ja/tableview-basic/tableview_columns.png)
