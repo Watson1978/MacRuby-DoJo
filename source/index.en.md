@@ -16,3 +16,7 @@ sidebar: true
 - Corresponding to resize the Window
 - Changes the application's icon
 - Embed the MacRuby into application
+
+
+## Links
+- [MacRuby: The Definitive Guide](http://ofps.oreilly.com/titles/9781449380373/)

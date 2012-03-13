@@ -20,3 +20,7 @@ sidebar: true
 - [Objective-C のメソッドの読み方](/blog/2012/03/10/intro-objc-method/)
 - [TableView を使ってみよう](/blog/2012/03/10/tableview-basic/)
 - [ツイートを検索して表示してみよう](/blog/2012/03/10/search_tweets/)
+
+
+## リンク
+- [MacRuby: The Definitive Guide](http://ofps.oreilly.com/titles/9781449380373/)
