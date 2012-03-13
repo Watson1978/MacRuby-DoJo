@@ -106,3 +106,41 @@ end
 TableView は初期状態で 2 列分のデータを表示します。以下の図のように、[Table View] を選択した状態で [Show the attributes inspector] をクリックします。[Columns] に表示する列数を指定すると、TableView に列を追加することができます。
 
 ![image](/images/ja/tableview-basic/tableview_columns.png)
+
+
+## セルに画像を表示する
+今度は TableView のセルに画像を表示してみましょう。初期状態で TableView のセルには「Text Field Cell」という部品が使われています。
+
+![image](/images/ja/tableview-basic/tableview_text_field_cell.png)
+
+この Text Field Cell は名前の通りに Text しか表示できません。画像を表示するためには、「Image Cell」という部品を使います。次の図のように、Object Library から Image Cell を画像を表示するセルの Text Field Cell へドロップして置き換えます。
+
+![image](/images/ja/tableview-basic/replace_to_image_cell.png)
+
+Image Cell へ置き換えると、Window に配置した TableView は以下のように表示されます。
+
+![image](/images/ja/tableview-basic/tableview_with_image_cell.png)
+
+Image Cell の Identifier を image と設定します。`tableView:objectValueForTableColumn:row:` メソッドで、Image Cell のデータに NSImage のオブジェクトを返すようにするとセルに画像が表示されます。
+
+```ruby
+  def tableView(aTableView, objectValueForTableColumn: aTableColumn, row: rowIndex)
+    # テーブルに表示するデータを返す
+    if rowIndex == 0
+      # 1行目のデータ
+      case aTableColumn.identifier
+      when 'image'
+        nsurl = NSURL.URLWithString("http://images.apple.com/apple-events/images/overview_march2011_20110302_20110301.jpg")
+        data = NSImage.alloc.initWithContentsOfURL(nsurl)
+      when 'name'
+        data = "Steven Paul Jobs"
+      when 'age'
+        data = "56"
+      end
+    end
+
+    return data
+  end
+```
+
+![image](/images/ja/tableview-basic/tableview_with_image_cell2.png)
