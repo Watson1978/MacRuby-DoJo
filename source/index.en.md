@@ -15,7 +15,7 @@ sidebar: true
 - Creates the stopwatch application (with Thread)
 - Corresponding to resize the Window
 - Changes the application's icon
-- Embed the MacRuby into application
+- [Embeds the MacRuby into Application](/blog/2012/03/19/intro-deployment/)
 
 
 ## Links
