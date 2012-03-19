@@ -9,7 +9,7 @@ categories: MacRuby
 
 Application that you created has been just worked with environment which installed MacRuby. When you distribute your application, MacRuby might not be installed in users environments.
 
-Therefore, MacRuby may embed itself into your application. The application which embeded MacRuby will work everywhere.
+Therefore, MacRuby may embed itself into your application. The application which embedded MacRuby will work everywhere.
 
 You choose "Deployment" and click [Run] as a following figure, then MacRuby is embedded into your application.
 
