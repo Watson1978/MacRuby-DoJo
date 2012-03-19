@@ -9,23 +9,23 @@ categories: MacRuby
 
 ## Requirements
 
-When using the MacRuby, you would need to install the following softwares in advance.
+When use the MacRuby, you would need to install the following softwares in advance.
 
 - Mac OS X 10.6.8 later
 - Xcode 4.2 or Xcode 4.3
 - MacRuby
-- BridgeSupport Preview 3 (if you would use MacRuby on Mac OS X 10.6.8)
+- BridgeSupport Preview 3 (If you use MacRuby on Mac OS X 10.6.8)
 
 ## Install Xcode
-Install Xcode from the Mac App Store. Launch Mac App Store, and then, search Xcode with search field on top of right corner.
+Install Xcode from the Mac App Store. Launch Mac App Store, and then, search by keywords of "Xcode" at search field on top of right corner.
 
 ![image](/images/en/intro-install/search_xcode.png)
 
-You could install Xcode too easy from search result.
+You could install Xcode easily from the search results.
 
 ![image](/images/en/intro-install/xcode.png)
 
-If you use the Mac OS X 10.6.8, Xcode 4.2.x will be installed. And if you use the Mac OS X 10.7.x, Xcode 4.3.x will be installed.
+If you use Mac OS X 10.6.8, Xcode 4.2.x will be installed. And if you use Mac OS X 10.7.x, Xcode 4.3.x will be installed.
 
 <div class="note">
 <p>
@@ -42,7 +42,7 @@ $ sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer/
 ## Install Command Line Tools
 Since Xcode 4.3, Command Line Tools (compiler, etc) became to additional package. Also would install Command Line Tools.
 
-1. Select [Xcode]->[Preferences…] to display Preferences form Xcode menu.
+1. Select [Xcode]->[Preferences…] form Xcode's menu to display Preferences.
 2. Select Downloads tab as shown in the figure below, and install Command Line Tools.
 
 ![image](/images/en/intro-install/command_line_tools.png)
@@ -53,7 +53,7 @@ Next step, install MacRuby.
 
 ![image](/images/en/intro-install/macruby_org.png)
 
-MacRuby 0.10 has been released now. However, unfortunately, it does not support for Xcode 4.3. Therefore, install the nightly build which could be downloaded from [http://www.macruby.org/files/nightlies/](http://www.macruby.org/files/nightlies/). Nightly build which has latest changes has packaged every night.
+MacRuby 0.10 has been released now. However, unfortunately, it does not support for Xcode 4.3. Therefore, you should install the nightly build and could download it from [http://www.macruby.org/files/nightlies/](http://www.macruby.org/files/nightlies/). Nightly build which has latest changes has packaged every night.
 
 ![image](/images/en/intro-install/nightly_build.png)
 

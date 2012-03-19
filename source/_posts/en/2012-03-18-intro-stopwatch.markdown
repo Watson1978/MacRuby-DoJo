@@ -7,9 +7,9 @@ sharing: true
 categories: MacRuby
 ---
 
-In this content, how to create a simple application. This content may have an essence to create an application using MacRuby.
+In this content, describe how to create a simple application. This content have some essences to create an application using MacRuby.
 
-An application's User Interface will be designed in like a below. We will call this application "StopWatch".
+Show an application’s User Interface in following figure. We will call this application "StopWatch".
 
 ![image](/images/en/intro-stopwatch/stopwatch.png)
 
@@ -21,7 +21,7 @@ An application's User Interface will be designed in like a below. We will call t
 
 
 ## Design User Interface
-To start the design, need to some operations in Xcode.
+To start the design, need some operations in Xcode.
 
 Choose a *MainMenu.xib*.
 
@@ -31,17 +31,17 @@ Choose a [Window - StopWatch] to display Window for design.
 
 ![image](/images/en/intro-stopwatch/window_stopwatch.png)
 
-Click an icon in toolbar in like a below. Then, Object Library is displayed.
+Click an icon in toolbar in following figure. After then, Object Library is displayed.
 
 ![image](/images/en/intro-stopwatch/show_object_library.png)
 
-You have been completed to prepare to design. Then, place the User Interface parts from Object Library on Window.
+You have been completed to prepare to design. Then, place the User Interface parts from Object Library to Window.
 
 ![image](/images/en/intro-stopwatch/ui_design.png)
 
 
 ## Connect the Outlets
-"StopWatch" application sets a timer value into Text Field. However, if Text Field is just placed on Window, cannot set a value into there. We should use the Outlets to set a value, or to get a status of User Interface parts.
+"StopWatch" application sets a timer value into Text Field. However, if Text Field is just placed on Window, cannot set a value into there. We should use the Outlets to set a value or to get a status of User Interface parts.
 
 To use the Outlets, need to write a program code. Choose a *AppDelegate.rb*, then add a `attr_accessor :textField` to AppDelegate class.
 
@@ -59,11 +59,11 @@ A list of Outlets will be displayed, then choose a `textField` to connect it.
 
 ![image](/images/en/intro-stopwatch/outlets.png)
 
-You are able to set/get the value of the Text Field through the `textField` accessor.
+You can  set/get the value of the Text Field through the textField accessor.
 
 
 ## Connect the Actions
-When you clicked start/stop button, it happen nothing yet. You need to set the behaviors when the buttons are clicked.
+When you clicked start/stop button, still nothing happens. You need to set the behaviors when the buttons are clicked.
 
 Choose an *AppDelegate.rb*, then add `startTimer` and `stopTimer` methods as following.
 
@@ -158,8 +158,7 @@ class AppDelegate
 end
 ```
 
-Invoke `@timer.invalidate` to stop a timer. Invoke     `textField.setStringValue(string)` to set string to Text Field.
-
+Invoke `@timer.invalidate` to stop a timer. Invoke `textField.setStringValue(string)` to set string to Text Field.
 
 "Stopwatch" application is complete!
 

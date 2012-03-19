@@ -15,7 +15,7 @@ Next, you would choose a Template for New Project.
 
 ![image](/images/en/intro-new-project/choose_a_templete.png)
 
-Select a [MacRuby Application], and click a [Next].
+Choose a [MacRuby Application], and click a [Next].
 
 ![image](/images/en/intro-new-project/product_name.png)
 
