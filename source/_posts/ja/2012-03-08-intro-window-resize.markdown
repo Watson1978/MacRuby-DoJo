@@ -34,4 +34,4 @@ Window を選択した状態で、Size Inspector を表示します。
 
 ![image](/images/ja/intro-window-resize/window_size.png)
 
-[Minimum Size] と [Maximum Size] のチェックを ON にすると、Window の最大最小サイズを固定できます。上の図のように Minimum Size と Maximum Size を同じ値にすると、Window がリサイズできないようになります。
+[Minimum Size] と [Maximum Size] のチェックを ON にすると、Window の最大最小サイズを固定できます。上の図のように [Minimum Size] と [Maximum Size] を同じ値にすると、Window がリサイズできないようになります。

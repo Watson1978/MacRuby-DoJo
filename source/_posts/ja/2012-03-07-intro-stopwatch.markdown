@@ -13,7 +13,7 @@ categories: MacRuby
 
 ![image](/images/ja/intro-stopwatch/stopwatch.png)
 
-「start ボタンがクリックされるとタイマーが動き出し、stop ボタンがクリックされるとタイマーを停止します。Text Field には何秒間タイマーが動いていたかを表示する。」というアプリケーションです。
+「start ボタンがクリックされるとタイマーが動き出し、stop ボタンがクリックされるとタイマーを停止します。Text Field には何秒間タイマーが動いていたかを表示する」というアプリケーションです。
 
 ## UI 部品を配置する
 それでは、さっそく UI 部品を配置してみましょう。Xcode で *MainMenu.xib* ファイルを選択して、UI デザインを変更していきます。
@@ -30,7 +30,7 @@ categories: MacRuby
 
 ようやく UI 部品を配置するための準備が整いました。
 
-それでは、タイマーの値を表示するための Text Field と、タイマーの開始と停止のための Button を Object Library から Window へドラッグ&ドロップして配置します。
+それでは、タイマーの値を表示するための Text Field と、タイマーの開始と停止のための Button を Object Library から Window へドラッグ & ドロップして配置します。
 
 ![image](/images/ja/intro-stopwatch/ui_design.png)
 
@@ -46,17 +46,17 @@ class AppDelegate
   attr_accessor :textField # アウトレット
 ```
 
-このように attr_accessor で用意したアクセサをアウトレットとして使用することができます。
+このように `attr_accessor` で用意したアクセサをアウトレットとして使用することができます。
 
 *MainMenu.xib* の画面に戻り、アウトレットを接続します。<kbd>control</kbd> キーを押しながら、App Delegate から Text Field へドラッグします。
 
 ![image](/images/ja/intro-stopwatch/connect_outlet.png)
 
-アウトレットの一覧が表示されるので、先ほど追加した textField を選択して接続します。
+アウトレットの一覧が表示されるので、先ほど追加した `textField` を選択して接続します。
 
 ![image](/images/ja/intro-stopwatch/outlets.png)
 
-これで、プログラムからアクセサ textField を通して Text Field の値を取得設定できるようになります。
+これで、プログラムからアクセサ `textField` を通して Text Field の値を取得設定できるようになります。
 
 
 ## アクションを接続する
