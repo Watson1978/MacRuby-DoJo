@@ -17,8 +17,8 @@ sidebar: true
 - [アイコンを変更しよう](/blog/2012/03/09/intro-icon/)
 - [Deployment してアプリケーションを配布しよう](/blog/2012/03/07/intro-deployment/)
 <br/>
-- [Organizer で API を調べてみよう](/blog/2012/03/21/organizer/)
 - [Objective-C のメソッドの読み方](/blog/2012/03/10/intro-objc-method/)
+- [Organizer で API を調べてみよう](/blog/2012/03/21/organizer/)
 - [TableView を使ってみよう](/blog/2012/03/10/tableview-basic/)
 - [ツイートを検索して表示してみよう](/blog/2012/03/10/search_tweets/)
 - [WebKit フレームワークを使ってみよう](/blog/2012/03/15/webkit/)
