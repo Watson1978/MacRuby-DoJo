@@ -1,0 +1,337 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>WebKit フレームワークを使ってみよう - MacRuby DoJo (道場)</title>
+  <meta name="author" content="Watson">
+
+  
+  <meta name="description" content="[MacRuby Application] テンプレートを用いてプロジェクトを作成すると、あらかじめ Cocoa.framework というフレームワークが読み込まれるようになっています。 また、rb_main.rb で以下のように Cocoa.framework &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/15/webkit">
+  <link href="/MacRuby-DoJo/favicon.png" rel="icon">
+  <link href="/MacRuby-DoJo/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/MacRuby-DoJo/javascripts/modernizr-2.0.js"></script>
+  <script src="/MacRuby-DoJo/javascripts/ender.js"></script>
+  <script src="/MacRuby-DoJo/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/MacRuby-DoJo/atom.xml" rel="alternate" title="MacRuby DoJo (道場)" type="application/atom+xml">
+  
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/MacRuby-DoJo/">MacRuby DoJo (道場)</a></h1>
+  
+  <p class="fork"><a href="https://github.com/Watson1978/MacRuby-DoJo/"><img src="/MacRuby-DoJo/images/forkme_right_darkblue_121621.png" /></a></p>
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/MacRuby-DoJo/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:watson1978.github.com/MacRuby-DoJo" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/MacRuby-DoJo/">日本語</a></li>
+  <li><a href="/MacRuby-DoJo/index.en.html">English</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">WebKit フレームワークを使ってみよう</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-15T08:52:00+09:00" pubdate data-updated="true">Mar 15<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>[MacRuby Application] テンプレートを用いてプロジェクトを作成すると、あらかじめ Cocoa.framework というフレームワークが読み込まれるようになっています。</p>
+
+<p><img src="/MacRuby-DoJo/images/ja/webkit/framework.png" alt="image" /></p>
+
+<p>また、<em>rb_main.rb</em> で以下のように Cocoa.framework が読み込まれプログラム中から扱えるようになっています。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># Loading the Cocoa framework. If you need to load more frameworks, you can</span>
+</span><span class='line'><span class="c1"># do that here too.</span>
+</span><span class='line'><span class="n">framework</span> <span class="s1">&#39;Cocoa&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<div class="note">
+Cocoa.framework は Foundation.framework、AppKit.framework と CoreData.framework を 1 つにまとめたフレームワークとなっています。これらのフレームワークで扱っている UI 部品や API は、プロジェクト作成直後から利用することができます。
+</div>
+
+
+<h2>WebKit.framework を追加する</h2>
+
+<p>さっそくフレームワークを追加してみましょう。以下の図のように &#8220;+&#8221; ボタンをクリックすると、フレームワークを追加することができます。</p>
+
+<p><img src="/MacRuby-DoJo/images/ja/webkit/add_framework.png" alt="image" /></p>
+
+<p>シートダイアログが表示されるので、追加するフレームワークを選択します。</p>
+
+<p><img src="/MacRuby-DoJo/images/ja/webkit/choose_framework.png" alt="image" /></p>
+
+<p><em>rb_main.rb</em> で以下のように WebKit.framework を読み込むようにします。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># Loading the Cocoa framework. If you need to load more frameworks, you can</span>
+</span><span class='line'><span class="c1"># do that here too.</span>
+</span><span class='line'><span class="n">framework</span> <span class="s1">&#39;Cocoa&#39;</span>
+</span><span class='line'><span class="n">framework</span> <span class="s1">&#39;WebKit&#39;</span> <span class="c1"># 追加</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>以上で、フレームワークの追加作業が完了です。</p>
+
+<h2>Web View を配置する</h2>
+
+<p><img src="/MacRuby-DoJo/images/ja/webkit/put_webview.png" alt="image" /></p>
+
+<p>Object Library から Web View を Window 上に配置します。</p>
+
+<h2>Web View をアウトレット接続する</h2>
+
+<p><em>AppDelegate.rb</em> に webView のアウトレット用のアクセサを追加し、Web View と接続します。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">AppDelegate</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:window</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:webView</span> <span class="c1"># アウトレット</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img src="/MacRuby-DoJo/images/ja/webkit/connect_outlet.png" alt="image" /></p>
+
+<h2>Web サイトを表示する</h2>
+
+<p>以下のように、アウトレット接続した <code>webView</code> の <code>mainFrame</code> に URL のサイトを読み込むように指示すると、さきほど配置した Web View に Web サイトが表示されます。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">AppDelegate</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:window</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:webView</span> <span class="c1"># アウトレット</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">applicationDidFinishLaunching</span><span class="p">(</span><span class="n">a_notification</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1"># Insert code here to initialize your application</span>
+</span><span class='line'>    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;http://www.apple.com/&quot;</span>
+</span><span class='line'>    <span class="n">nsurl</span> <span class="o">=</span> <span class="no">NSURL</span><span class="o">.</span><span class="n">URLWithString</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">nsurl_req</span> <span class="o">=</span> <span class="no">NSURLRequest</span><span class="o">.</span><span class="n">requestWithURL</span><span class="p">(</span><span class="n">nsurl</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">webView</span><span class="o">.</span><span class="n">mainFrame</span><span class="o">.</span><span class="n">loadRequest</span><span class="p">(</span><span class="n">nsurl_req</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img src="/MacRuby-DoJo/images/ja/webkit/webview.png" alt="image" /></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Watson</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-15T08:52:00+09:00" pubdate data-updated="true">Mar 15<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/MacRuby-DoJo/blog/categories/macruby/'>MacRuby</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/15/webkit/" data-via="" data-counturl="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/15/webkit/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/MacRuby-DoJo/blog/2012/03/12/intro-new-project/" title="Previous Post: Creates a New Project">&laquo; Creates a New Project</a>
+      
+      
+        <a class="basic-alignment right" href="/MacRuby-DoJo/blog/2012/03/18/intro-stopwatch/" title="Next Post: Creates a Stopwatch Application">Creates a Stopwatch Application &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/MacRuby-DoJo/blog/2012/03/21/organizer/">Organizer で API を調べてみよう</a>
+      </li>
+    
+      <li class="post">
+        <a href="/MacRuby-DoJo/blog/2012/03/19/intro-deployment/">Embeds the MacRuby into Application</a>
+      </li>
+    
+      <li class="post">
+        <a href="/MacRuby-DoJo/blog/2012/03/18/intro-stopwatch/">Creates a Stopwatch Application</a>
+      </li>
+    
+      <li class="post">
+        <a href="/MacRuby-DoJo/blog/2012/03/15/webkit/">WebKit フレームワークを使ってみよう</a>
+      </li>
+    
+      <li class="post">
+        <a href="/MacRuby-DoJo/blog/2012/03/12/intro-new-project/">Creates a New Project</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Watson -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

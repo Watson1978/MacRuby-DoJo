@@ -1,0 +1,458 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Creates a Stopwatch Application - MacRuby DoJo (道場)</title>
+  <meta name="author" content="Watson">
+
+  
+  <meta name="description" content="In this content, describe how to create a simple application. This content have some essences to create an application using MacRuby. Show an &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/18/intro-stopwatch">
+  <link href="/MacRuby-DoJo/favicon.png" rel="icon">
+  <link href="/MacRuby-DoJo/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/MacRuby-DoJo/javascripts/modernizr-2.0.js"></script>
+  <script src="/MacRuby-DoJo/javascripts/ender.js"></script>
+  <script src="/MacRuby-DoJo/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/MacRuby-DoJo/atom.xml" rel="alternate" title="MacRuby DoJo (道場)" type="application/atom+xml">
+  
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/MacRuby-DoJo/">MacRuby DoJo (道場)</a></h1>
+  
+  <p class="fork"><a href="https://github.com/Watson1978/MacRuby-DoJo/"><img src="/MacRuby-DoJo/images/forkme_right_darkblue_121621.png" /></a></p>
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/MacRuby-DoJo/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:watson1978.github.com/MacRuby-DoJo" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/MacRuby-DoJo/">日本語</a></li>
+  <li><a href="/MacRuby-DoJo/index.en.html">English</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Creates a Stopwatch Application</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-18T00:01:00+09:00" pubdate data-updated="true">Mar 18<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>In this content, describe how to create a simple application. This content have some essences to create an application using MacRuby.</p>
+
+<p>Show an application’s User Interface in following figure. We will call this application &#8220;StopWatch&#8221;.</p>
+
+<p><img src="/MacRuby-DoJo/images/en/intro-stopwatch/stopwatch.png" alt="image" /></p>
+
+<p>&#8220;StopWatch&#8221; has below behaviors.</p>
+
+<ol>
+<li>Run a timer if start button is clicked.</li>
+<li>Stop a timer if stop button is clicked.</li>
+<li>A timer value is displayed in Text Field.</li>
+</ol>
+
+
+<h2>Design User Interface</h2>
+
+<p>To start the design, need some operations in Xcode.</p>
+
+<p>Choose a <em>MainMenu.xib</em>.</p>
+
+<p><img src="/MacRuby-DoJo/images/en/intro-stopwatch/mainmenu_xib.png" alt="image" /></p>
+
+<p>Choose a [Window - StopWatch] to display Window for design.</p>
+
+<p><img src="/MacRuby-DoJo/images/en/intro-stopwatch/window_stopwatch.png" alt="image" /></p>
+
+<p>Click an icon in toolbar in following figure. After then, Object Library is displayed.</p>
+
+<p><img src="/MacRuby-DoJo/images/en/intro-stopwatch/show_object_library.png" alt="image" /></p>
+
+<p>You have been completed to prepare to design. Then, place the User Interface parts from Object Library to Window.</p>
+
+<p><img src="/MacRuby-DoJo/images/en/intro-stopwatch/ui_design.png" alt="image" /></p>
+
+<h2>Connect the Outlets</h2>
+
+<p>&#8220;StopWatch&#8221; application sets a timer value into Text Field. However, if Text Field is just placed on Window, cannot set a value into there. We should use the Outlets to set a value or to get a status of User Interface parts.</p>
+
+<p>To use the Outlets, need to write a program code. Choose a <em>AppDelegate.rb</em>, then add a <code>attr_accessor :textField</code> to AppDelegate class.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">AppDelegate</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:window</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:textField</span> <span class="c1"># Outlet</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Return to <em>MainMenu.xib</em> screen, connect the Outlet. Press <kbd>control</kbd> key, and drag from App Delegate to Text Field.</p>
+
+<p><img src="/MacRuby-DoJo/images/en/intro-stopwatch/connect_outlet.png" alt="image" /></p>
+
+<p>A list of Outlets will be displayed, then choose a <code>textField</code> to connect it.</p>
+
+<p><img src="/MacRuby-DoJo/images/en/intro-stopwatch/outlets.png" alt="image" /></p>
+
+<p>You can  set/get the value of the Text Field through the textField accessor.</p>
+
+<h2>Connect the Actions</h2>
+
+<p>When you clicked start/stop button, still nothing happens. You need to set the behaviors when the buttons are clicked.</p>
+
+<p>Choose an <em>AppDelegate.rb</em>, then add <code>startTimer</code> and <code>stopTimer</code> methods as following.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">AppDelegate</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:window</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:textField</span> <span class="c1"># Outlet</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">applicationDidFinishLaunching</span><span class="p">(</span><span class="n">a_notification</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1"># Insert code here to initialize your application</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">startTimer</span><span class="p">(</span><span class="n">sender</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1"># This method is called when clicked start button.</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">stopTimer</span><span class="p">(</span><span class="n">sender</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1"># This method is called when clicked stop button.</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Return to <em>MainMenu.xib</em> screen, connect the Actions. Press control key, and drag from start button to App Delegate.</p>
+
+<p><img src="/MacRuby-DoJo/images/en/intro-stopwatch/connect_action.png" alt="image" /></p>
+
+<p>A list of Actions will be displayed, then choose a <code>startTimer</code> to connect it.</p>
+
+<p><img src="/MacRuby-DoJo/images/en/intro-stopwatch/actions.png" alt="image" /></p>
+
+<p>Connect stop button to <code>stopTimer</code> in the same way. Each methods will be called when the button is clicked.</p>
+
+<p><code>stopTimer</code>/<code>startTimer</code> are also known as the action method.</p>
+
+<div class="note">
+When you write an action method, you <strong>must</strong> provide a <code>sender</code> argument. If methods does not have a <code>sender</code> argument, it is not recognized as an action method.
+</div>
+
+
+<h2>Use the timer</h2>
+
+<p>If you do something at a constant interval, use the <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Reference/Foundation/Classes/nstimer_Class/Reference/NSTimer.html">NSTimer</a>.</p>
+
+<p>When use a timer as shown below, you will be able to handle at a constant interval.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="vi">@timer</span> <span class="o">=</span> <span class="no">NSTimer</span>
+</span><span class='line'>           <span class="o">.</span><span class="n">scheduledTimerWithTimeInterval</span><span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span>
+</span><span class='line'>                                           <span class="n">target</span><span class="p">:</span> <span class="nb">self</span><span class="p">,</span>
+</span><span class='line'>                                           <span class="n">selector</span><span class="p">:</span> <span class="s2">&quot;timerHandler:&quot;</span><span class="p">,</span>
+</span><span class='line'>                                           <span class="n">userInfo</span><span class="p">:</span> <span class="kp">nil</span><span class="p">,</span>
+</span><span class='line'>                                           <span class="n">repeats</span><span class="p">:</span> <span class="kp">true</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">timerHandler</span><span class="p">(</span><span class="n">userInfo</span><span class="p">)</span>
+</span><span class='line'>  <span class="c1"># Handler</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Generate a timer at startTimer and stop a timer at stopTimer.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">AppDelegate</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:window</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:textField</span> <span class="c1"># Outlet</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">applicationDidFinishLaunching</span><span class="p">(</span><span class="n">a_notification</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1"># Insert code here to initialize your application</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">startTimer</span><span class="p">(</span><span class="n">sender</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">if</span> <span class="vi">@timer</span><span class="o">.</span><span class="n">nil?</span>
+</span><span class='line'>      <span class="vi">@time</span> <span class="o">=</span> <span class="mi">0</span><span class="o">.</span><span class="mi">0</span>
+</span><span class='line'>      <span class="vi">@timer</span> <span class="o">=</span> <span class="no">NSTimer</span>
+</span><span class='line'>                <span class="o">.</span><span class="n">scheduledTimerWithTimeInterval</span><span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span>
+</span><span class='line'>                                                <span class="n">target</span><span class="p">:</span> <span class="nb">self</span><span class="p">,</span>
+</span><span class='line'>                                                <span class="n">selector</span><span class="p">:</span> <span class="s2">&quot;timerHandler:&quot;</span><span class="p">,</span>
+</span><span class='line'>                                                <span class="n">userInfo</span><span class="p">:</span> <span class="kp">nil</span><span class="p">,</span>
+</span><span class='line'>                                                <span class="n">repeats</span><span class="p">:</span> <span class="kp">true</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">stopTimer</span><span class="p">(</span><span class="n">sender</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">if</span> <span class="vi">@timer</span>
+</span><span class='line'>      <span class="vi">@timer</span><span class="o">.</span><span class="n">invalidate</span>
+</span><span class='line'>      <span class="vi">@timer</span> <span class="o">=</span> <span class="kp">nil</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">timerHandler</span><span class="p">(</span><span class="n">userInfo</span><span class="p">)</span>
+</span><span class='line'>    <span class="vi">@time</span> <span class="o">+=</span> <span class="mi">0</span><span class="o">.</span><span class="mi">1</span>
+</span><span class='line'>    <span class="n">string</span> <span class="o">=</span> <span class="nb">sprintf</span><span class="p">(</span><span class="s2">&quot;%.1f&quot;</span><span class="p">,</span> <span class="vi">@time</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">textField</span><span class="o">.</span><span class="n">setStringValue</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Invoke <code>@timer.invalidate</code> to stop a timer. Invoke <code>textField.setStringValue(string)</code> to set string to Text Field.</p>
+
+<p>&#8220;Stopwatch&#8221; application is complete!</p>
+
+<p>Change to &#8220;StopWatch&#8221; from &#8220;Deployment&#8221; in Scheme. Then, Click [Run]. &#8220;Stopwatch&#8221; application will be running!!</p>
+
+<p><img src="/MacRuby-DoJo/images/en/intro-stopwatch/scheme.png" alt="image" /></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Watson</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-18T00:01:00+09:00" pubdate data-updated="true">Mar 18<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/MacRuby-DoJo/blog/categories/macruby/'>MacRuby</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/18/intro-stopwatch/" data-via="" data-counturl="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/18/intro-stopwatch/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/MacRuby-DoJo/blog/2012/03/15/webkit/" title="Previous Post: WebKit フレームワークを使ってみよう">&laquo; WebKit フレームワークを使ってみよう</a>
+      
+      
+        <a class="basic-alignment right" href="/MacRuby-DoJo/blog/2012/03/19/intro-deployment/" title="Next Post: Embeds the MacRuby into Application">Embeds the MacRuby into Application &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/MacRuby-DoJo/blog/2012/03/21/organizer/">Organizer で API を調べてみよう</a>
+      </li>
+    
+      <li class="post">
+        <a href="/MacRuby-DoJo/blog/2012/03/19/intro-deployment/">Embeds the MacRuby into Application</a>
+      </li>
+    
+      <li class="post">
+        <a href="/MacRuby-DoJo/blog/2012/03/18/intro-stopwatch/">Creates a Stopwatch Application</a>
+      </li>
+    
+      <li class="post">
+        <a href="/MacRuby-DoJo/blog/2012/03/15/webkit/">WebKit フレームワークを使ってみよう</a>
+      </li>
+    
+      <li class="post">
+        <a href="/MacRuby-DoJo/blog/2012/03/12/intro-new-project/">Creates a New Project</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Watson -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,297 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Constructs the MacRuby environment - MacRuby DoJo (道場)</title>
+  <meta name="author" content="Watson">
+
+  
+  <meta name="description" content="Requirements When use the MacRuby, you would need to install the following softwares in advance. Mac OS X 10.6.8 later
+Xcode 4.2 or Xcode 4.3
+MacRuby &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/09/intro-install">
+  <link href="/MacRuby-DoJo/favicon.png" rel="icon">
+  <link href="/MacRuby-DoJo/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/MacRuby-DoJo/javascripts/modernizr-2.0.js"></script>
+  <script src="/MacRuby-DoJo/javascripts/ender.js"></script>
+  <script src="/MacRuby-DoJo/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/MacRuby-DoJo/atom.xml" rel="alternate" title="MacRuby DoJo (道場)" type="application/atom+xml">
+  
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/MacRuby-DoJo/">MacRuby DoJo (道場)</a></h1>
+  
+  <p class="fork"><a href="https://github.com/Watson1978/MacRuby-DoJo/"><img src="/MacRuby-DoJo/images/forkme_right_darkblue_121621.png" /></a></p>
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/MacRuby-DoJo/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:watson1978.github.com/MacRuby-DoJo" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/MacRuby-DoJo/">日本語</a></li>
+  <li><a href="/MacRuby-DoJo/index.en.html">English</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Constructs the MacRuby Environment</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-09T21:58:00+09:00" pubdate data-updated="true">Mar 9<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Requirements</h2>
+
+<p>When use the MacRuby, you would need to install the following softwares in advance.</p>
+
+<ul>
+<li>Mac OS X 10.6.8 later</li>
+<li>Xcode 4.2 or Xcode 4.3</li>
+<li>MacRuby</li>
+<li>BridgeSupport Preview 3 (If you use MacRuby on Mac OS X 10.6.8)</li>
+</ul>
+
+
+<h2>Install Xcode</h2>
+
+<p>Install Xcode from the Mac App Store. Launch Mac App Store, and then, search by keywords of &#8220;Xcode&#8221; at search field on top of right corner.</p>
+
+<p><img src="/MacRuby-DoJo/images/en/intro-install/search_xcode.png" alt="image" /></p>
+
+<p>You could install Xcode easily from the search results.</p>
+
+<p><img src="/MacRuby-DoJo/images/en/intro-install/xcode.png" alt="image" /></p>
+
+<p>If you use Mac OS X 10.6.8, Xcode 4.2.x will be installed. And if you use Mac OS X 10.7.x, Xcode 4.3.x will be installed.</p>
+
+<div class="note">
+<p>
+If you have previously installed an older version (as Xcode 4.2.x) and installed Xcode 4.3.x at this time,
+recommend to be running the following command on the Terminal.
+</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer/</span></code></pre></td></tr></table></div></figure>
+</div>
+
+
+<h2>Install Command Line Tools</h2>
+
+<p>Since Xcode 4.3, Command Line Tools (compiler, etc) became to additional package. Also would install Command Line Tools.</p>
+
+<ol>
+<li>Select [Xcode]->[Preferences…] form Xcode&#8217;s menu to display Preferences.</li>
+<li>Select Downloads tab as shown in the figure below, and install Command Line Tools.</li>
+</ol>
+
+
+<p><img src="/MacRuby-DoJo/images/en/intro-install/command_line_tools.png" alt="image" /></p>
+
+<h1>Install MacRuby</h1>
+
+<p>Next step, install MacRuby.</p>
+
+<p><img src="/MacRuby-DoJo/images/en/intro-install/macruby_org.png" alt="image" /></p>
+
+<p>MacRuby 0.10 has been released now. However, unfortunately, it does not support for Xcode 4.3. Therefore, you should install the nightly build and could download it from <a href="http://www.macruby.org/files/nightlies/">http://www.macruby.org/files/nightlies/</a>. Nightly build which has latest changes has packaged every night.</p>
+
+<p><img src="/MacRuby-DoJo/images/en/intro-install/nightly_build.png" alt="image" /></p>
+
+<h1>Install BridgeSupport Preview 3</h1>
+
+<p><strong>For Mac OS X 10.6.8 users only</strong>, need to install BridgeSupport Preview 3. BridgeSupport is used to get information about the Framework provided by the Mac OS X. In Mac OS X 10.7 environment, it has been pre-installed. You could get the BridgeSupport Preview 3 from <a href="http://www.macruby.org/files/">http://www.macruby.org/files/</a> as <em>BridgeSupport Preview 3.zip</em>.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Watson</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-09T21:58:00+09:00" pubdate data-updated="true">Mar 9<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/MacRuby-DoJo/blog/categories/macruby/'>MacRuby</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/09/intro-install/" data-via="" data-counturl="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/09/intro-install/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/MacRuby-DoJo/blog/2012/03/09/intro-icon/" title="Previous Post: アイコンを変更しよう">&laquo; アイコンを変更しよう</a>
+      
+      
+        <a class="basic-alignment right" href="/MacRuby-DoJo/blog/2012/03/10/intro-objc-method/" title="Next Post: Objective-C のメソッドの読み方">Objective-C のメソッドの読み方 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/MacRuby-DoJo/blog/2012/03/21/organizer/">Organizer で API を調べてみよう</a>
+      </li>
+    
+      <li class="post">
+        <a href="/MacRuby-DoJo/blog/2012/03/19/intro-deployment/">Embeds the MacRuby into Application</a>
+      </li>
+    
+      <li class="post">
+        <a href="/MacRuby-DoJo/blog/2012/03/18/intro-stopwatch/">Creates a Stopwatch Application</a>
+      </li>
+    
+      <li class="post">
+        <a href="/MacRuby-DoJo/blog/2012/03/15/webkit/">WebKit フレームワークを使ってみよう</a>
+      </li>
+    
+      <li class="post">
+        <a href="/MacRuby-DoJo/blog/2012/03/12/intro-new-project/">Creates a New Project</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Watson -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

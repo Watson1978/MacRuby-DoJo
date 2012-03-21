@@ -1,0 +1,1536 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[MacRuby DoJo (道場)]]></title>
+  <link href="http://watson1978.github.com/MacRuby-DoJo/atom.xml" rel="self"/>
+  <link href="http://watson1978.github.com/MacRuby-DoJo/"/>
+  <updated>2012-03-22T01:33:56+09:00</updated>
+  <id>http://watson1978.github.com/MacRuby-DoJo/</id>
+  <author>
+    <name><![CDATA[Watson]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Organizer で API を調べてみよう]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/21/organizer/"/>
+    <updated>2012-03-21T22:33:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/21/organizer</id>
+    <content type="html"><![CDATA[<p>Xcode には Organizer という、iPhone などのデバイスやプロジェクト、ドキュメントを扱うツールがあります。Xcode で [Window]->[Organizer] とメニューを選択すると Organizer が起動します。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/organizer/xcode_menu_organizer.png" alt="image" /></p>
+
+<p>Organizer のツールバーにある Documentation というアイコンを選択すると、Mac OS X や iOS のドキュメントを閲覧することができます。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/organizer/organizer.png" alt="image" /></p>
+
+<p>各 Framework のクラスで、どのようなメソッドが存在するのか調べたりする際などで活用してみてください。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/organizer/organizer_doc_search.png" alt="image" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Embeds the MacRuby into Application]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/19/intro-deployment/"/>
+    <updated>2012-03-19T00:00:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/19/intro-deployment</id>
+    <content type="html"><![CDATA[<p>Application that you created has been just worked with environment which installed MacRuby. When you distribute your application, MacRuby might not be installed in users environments.</p>
+
+<p>Therefore, MacRuby may embed itself into your application. The application which embedded MacRuby will work everywhere.</p>
+
+<p>You choose &#8220;Deployment&#8221; and click [Run] as a following figure, then MacRuby is embedded into your application.</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-deployment/deployment.png" alt="image" /></p>
+
+<p>You can specify several options with &#8220;Deployment&#8221; in &#8220;Arguments&#8221; as a following figure.</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-deployment/deployment_option.png" alt="image" /></p>
+
+<p>Run a <code>macruby_deploy</code> command in Terminal.app, you could confirm the options.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ macruby_deploy 
+</span><span class='line'>Usage: macruby_deploy [options] application-bundle
+</span><span class='line'>        --compile                    Compile the bundle source code
+</span><span class='line'>        --embed                      Embed MacRuby inside the bundle
+</span><span class='line'>        --no-stdlib                  Do not embed the standard library
+</span><span class='line'>        --stdlib [LIB]               Embed only LIB from the standard library
+</span><span class='line'>        --gem [GEM]                  Embed GEM and its dependencies
+</span><span class='line'>        --bs                         Embed the system BridgeSupport files
+</span><span class='line'>        --verbose                    Log all commands to standard out
+</span><span class='line'>        --codesign [CERT]            Sign the files with the specified certificate
+</span><span class='line'>    -v, --version                    Display the version</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Creates a Stopwatch Application]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/18/intro-stopwatch/"/>
+    <updated>2012-03-18T00:01:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/18/intro-stopwatch</id>
+    <content type="html"><![CDATA[<p>In this content, describe how to create a simple application. This content have some essences to create an application using MacRuby.</p>
+
+<p>Show an application’s User Interface in following figure. We will call this application &#8220;StopWatch&#8221;.</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-stopwatch/stopwatch.png" alt="image" /></p>
+
+<p>&#8220;StopWatch&#8221; has below behaviors.</p>
+
+<ol>
+<li>Run a timer if start button is clicked.</li>
+<li>Stop a timer if stop button is clicked.</li>
+<li>A timer value is displayed in Text Field.</li>
+</ol>
+
+
+<h2>Design User Interface</h2>
+
+<p>To start the design, need some operations in Xcode.</p>
+
+<p>Choose a <em>MainMenu.xib</em>.</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-stopwatch/mainmenu_xib.png" alt="image" /></p>
+
+<p>Choose a [Window - StopWatch] to display Window for design.</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-stopwatch/window_stopwatch.png" alt="image" /></p>
+
+<p>Click an icon in toolbar in following figure. After then, Object Library is displayed.</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-stopwatch/show_object_library.png" alt="image" /></p>
+
+<p>You have been completed to prepare to design. Then, place the User Interface parts from Object Library to Window.</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-stopwatch/ui_design.png" alt="image" /></p>
+
+<h2>Connect the Outlets</h2>
+
+<p>&#8220;StopWatch&#8221; application sets a timer value into Text Field. However, if Text Field is just placed on Window, cannot set a value into there. We should use the Outlets to set a value or to get a status of User Interface parts.</p>
+
+<p>To use the Outlets, need to write a program code. Choose a <em>AppDelegate.rb</em>, then add a <code>attr_accessor :textField</code> to AppDelegate class.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">AppDelegate</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:window</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:textField</span> <span class="c1"># Outlet</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Return to <em>MainMenu.xib</em> screen, connect the Outlet. Press <kbd>control</kbd> key, and drag from App Delegate to Text Field.</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-stopwatch/connect_outlet.png" alt="image" /></p>
+
+<p>A list of Outlets will be displayed, then choose a <code>textField</code> to connect it.</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-stopwatch/outlets.png" alt="image" /></p>
+
+<p>You can  set/get the value of the Text Field through the textField accessor.</p>
+
+<h2>Connect the Actions</h2>
+
+<p>When you clicked start/stop button, still nothing happens. You need to set the behaviors when the buttons are clicked.</p>
+
+<p>Choose an <em>AppDelegate.rb</em>, then add <code>startTimer</code> and <code>stopTimer</code> methods as following.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">AppDelegate</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:window</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:textField</span> <span class="c1"># Outlet</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">applicationDidFinishLaunching</span><span class="p">(</span><span class="n">a_notification</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1"># Insert code here to initialize your application</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">startTimer</span><span class="p">(</span><span class="n">sender</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1"># This method is called when clicked start button.</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">stopTimer</span><span class="p">(</span><span class="n">sender</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1"># This method is called when clicked stop button.</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Return to <em>MainMenu.xib</em> screen, connect the Actions. Press control key, and drag from start button to App Delegate.</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-stopwatch/connect_action.png" alt="image" /></p>
+
+<p>A list of Actions will be displayed, then choose a <code>startTimer</code> to connect it.</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-stopwatch/actions.png" alt="image" /></p>
+
+<p>Connect stop button to <code>stopTimer</code> in the same way. Each methods will be called when the button is clicked.</p>
+
+<p><code>stopTimer</code>/<code>startTimer</code> are also known as the action method.</p>
+
+<div class="note">
+When you write an action method, you <strong>must</strong> provide a <code>sender</code> argument. If methods does not have a <code>sender</code> argument, it is not recognized as an action method.
+</div>
+
+
+<h2>Use the timer</h2>
+
+<p>If you do something at a constant interval, use the <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Reference/Foundation/Classes/nstimer_Class/Reference/NSTimer.html">NSTimer</a>.</p>
+
+<p>When use a timer as shown below, you will be able to handle at a constant interval.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="vi">@timer</span> <span class="o">=</span> <span class="no">NSTimer</span>
+</span><span class='line'>           <span class="o">.</span><span class="n">scheduledTimerWithTimeInterval</span><span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span>
+</span><span class='line'>                                           <span class="n">target</span><span class="p">:</span> <span class="nb">self</span><span class="p">,</span>
+</span><span class='line'>                                           <span class="n">selector</span><span class="p">:</span> <span class="s2">&quot;timerHandler:&quot;</span><span class="p">,</span>
+</span><span class='line'>                                           <span class="n">userInfo</span><span class="p">:</span> <span class="kp">nil</span><span class="p">,</span>
+</span><span class='line'>                                           <span class="n">repeats</span><span class="p">:</span> <span class="kp">true</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">timerHandler</span><span class="p">(</span><span class="n">userInfo</span><span class="p">)</span>
+</span><span class='line'>  <span class="c1"># Handler</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Generate a timer at startTimer and stop a timer at stopTimer.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">AppDelegate</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:window</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:textField</span> <span class="c1"># Outlet</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">applicationDidFinishLaunching</span><span class="p">(</span><span class="n">a_notification</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1"># Insert code here to initialize your application</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">startTimer</span><span class="p">(</span><span class="n">sender</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">if</span> <span class="vi">@timer</span><span class="o">.</span><span class="n">nil?</span>
+</span><span class='line'>      <span class="vi">@time</span> <span class="o">=</span> <span class="mi">0</span><span class="o">.</span><span class="mi">0</span>
+</span><span class='line'>      <span class="vi">@timer</span> <span class="o">=</span> <span class="no">NSTimer</span>
+</span><span class='line'>                <span class="o">.</span><span class="n">scheduledTimerWithTimeInterval</span><span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span>
+</span><span class='line'>                                                <span class="n">target</span><span class="p">:</span> <span class="nb">self</span><span class="p">,</span>
+</span><span class='line'>                                                <span class="n">selector</span><span class="p">:</span> <span class="s2">&quot;timerHandler:&quot;</span><span class="p">,</span>
+</span><span class='line'>                                                <span class="n">userInfo</span><span class="p">:</span> <span class="kp">nil</span><span class="p">,</span>
+</span><span class='line'>                                                <span class="n">repeats</span><span class="p">:</span> <span class="kp">true</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">stopTimer</span><span class="p">(</span><span class="n">sender</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">if</span> <span class="vi">@timer</span>
+</span><span class='line'>      <span class="vi">@timer</span><span class="o">.</span><span class="n">invalidate</span>
+</span><span class='line'>      <span class="vi">@timer</span> <span class="o">=</span> <span class="kp">nil</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">timerHandler</span><span class="p">(</span><span class="n">userInfo</span><span class="p">)</span>
+</span><span class='line'>    <span class="vi">@time</span> <span class="o">+=</span> <span class="mi">0</span><span class="o">.</span><span class="mi">1</span>
+</span><span class='line'>    <span class="n">string</span> <span class="o">=</span> <span class="nb">sprintf</span><span class="p">(</span><span class="s2">&quot;%.1f&quot;</span><span class="p">,</span> <span class="vi">@time</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">textField</span><span class="o">.</span><span class="n">setStringValue</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Invoke <code>@timer.invalidate</code> to stop a timer. Invoke <code>textField.setStringValue(string)</code> to set string to Text Field.</p>
+
+<p>&#8220;Stopwatch&#8221; application is complete!</p>
+
+<p>Change to &#8220;StopWatch&#8221; from &#8220;Deployment&#8221; in Scheme. Then, Click [Run]. &#8220;Stopwatch&#8221; application will be running!!</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-stopwatch/scheme.png" alt="image" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[WebKit フレームワークを使ってみよう]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/15/webkit/"/>
+    <updated>2012-03-15T08:52:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/15/webkit</id>
+    <content type="html"><![CDATA[<p>[MacRuby Application] テンプレートを用いてプロジェクトを作成すると、あらかじめ Cocoa.framework というフレームワークが読み込まれるようになっています。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/webkit/framework.png" alt="image" /></p>
+
+<p>また、<em>rb_main.rb</em> で以下のように Cocoa.framework が読み込まれプログラム中から扱えるようになっています。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># Loading the Cocoa framework. If you need to load more frameworks, you can</span>
+</span><span class='line'><span class="c1"># do that here too.</span>
+</span><span class='line'><span class="n">framework</span> <span class="s1">&#39;Cocoa&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<div class="note">
+Cocoa.framework は Foundation.framework、AppKit.framework と CoreData.framework を 1 つにまとめたフレームワークとなっています。これらのフレームワークで扱っている UI 部品や API は、プロジェクト作成直後から利用することができます。
+</div>
+
+
+<h2>WebKit.framework を追加する</h2>
+
+<p>さっそくフレームワークを追加してみましょう。以下の図のように &#8220;+&#8221; ボタンをクリックすると、フレームワークを追加することができます。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/webkit/add_framework.png" alt="image" /></p>
+
+<p>シートダイアログが表示されるので、追加するフレームワークを選択します。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/webkit/choose_framework.png" alt="image" /></p>
+
+<p><em>rb_main.rb</em> で以下のように WebKit.framework を読み込むようにします。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># Loading the Cocoa framework. If you need to load more frameworks, you can</span>
+</span><span class='line'><span class="c1"># do that here too.</span>
+</span><span class='line'><span class="n">framework</span> <span class="s1">&#39;Cocoa&#39;</span>
+</span><span class='line'><span class="n">framework</span> <span class="s1">&#39;WebKit&#39;</span> <span class="c1"># 追加</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>以上で、フレームワークの追加作業が完了です。</p>
+
+<h2>Web View を配置する</h2>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/webkit/put_webview.png" alt="image" /></p>
+
+<p>Object Library から Web View を Window 上に配置します。</p>
+
+<h2>Web View をアウトレット接続する</h2>
+
+<p><em>AppDelegate.rb</em> に webView のアウトレット用のアクセサを追加し、Web View と接続します。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">AppDelegate</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:window</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:webView</span> <span class="c1"># アウトレット</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/webkit/connect_outlet.png" alt="image" /></p>
+
+<h2>Web サイトを表示する</h2>
+
+<p>以下のように、アウトレット接続した <code>webView</code> の <code>mainFrame</code> に URL のサイトを読み込むように指示すると、さきほど配置した Web View に Web サイトが表示されます。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">AppDelegate</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:window</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:webView</span> <span class="c1"># アウトレット</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">applicationDidFinishLaunching</span><span class="p">(</span><span class="n">a_notification</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1"># Insert code here to initialize your application</span>
+</span><span class='line'>    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;http://www.apple.com/&quot;</span>
+</span><span class='line'>    <span class="n">nsurl</span> <span class="o">=</span> <span class="no">NSURL</span><span class="o">.</span><span class="n">URLWithString</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">nsurl_req</span> <span class="o">=</span> <span class="no">NSURLRequest</span><span class="o">.</span><span class="n">requestWithURL</span><span class="p">(</span><span class="n">nsurl</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">webView</span><span class="o">.</span><span class="n">mainFrame</span><span class="o">.</span><span class="n">loadRequest</span><span class="p">(</span><span class="n">nsurl_req</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/webkit/webview.png" alt="image" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Creates a New Project]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/12/intro-new-project/"/>
+    <updated>2012-03-12T12:34:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/12/intro-new-project</id>
+    <content type="html"><![CDATA[<p>If you create a New Project, launch Xcode and click &#8220;Create a new Xcode project&#8221; in &#8220;Welcome to Xcode&#8221; screen.</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-new-project/welcome_to_xcode.png" alt="image" /></p>
+
+<p>Next, you would choose a Template for New Project.</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-new-project/choose_a_templete.png" alt="image" /></p>
+
+<p>Choose a [MacRuby Application], and click a [Next].</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-new-project/product_name.png" alt="image" /></p>
+
+<p>Input your Project Name, and then, choose location for New Project. You would be able to see New Project.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[ツイートを検索して表示してみよう]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/10/search_tweets/"/>
+    <updated>2012-03-10T17:35:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/10/search_tweets</id>
+    <content type="html"><![CDATA[<p>TableView の使い方を <a href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/10/tableview-basic/">TableView を使ってみよう</a> に書きました。今回は Twitter のツイートを検索して、TableView に表示するアプリケーションを作ってみようと思います。</p>
+
+<p>以下のように、Text Field に検索ワードを入力し該当するツイートを TableView に表示します。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/search_tweets/search_tweets.png" alt="image" /></p>
+
+<h2>使用するアウトレットとアクションメソッド</h2>
+
+<p>使用するアウトレットは以下のとおりです。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:textField</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:tableView</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Search ボタンがクリックされた時に呼び出されるアクションメソッドとして、以下のメソッドを用意します。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="n">sender</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1"># 検索処理</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>アウトレットなどを接続</h2>
+
+<p>以下の図のように、アウトレットやアクション、データソースを接続します。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/search_tweets/connect_outlets_etc.png" alt="image" /></p>
+
+<h2>Table カラムの Identifier を指定</h2>
+
+<p>Table のカラムを以下のように指定しておきます。</p>
+
+<table class="table">
+<tr><th>カラム</th><th>identifier</th></tr>
+<tr><td>1 列目</td><td>name</td></tr>
+<tr><td>2 列目</td><td>text</td></tr>
+</table>
+
+
+<h2>検索処理を実装</h2>
+
+<p>Twitter API を用いて検索した際に、<a href="https://dev.twitter.com/docs/api/1/get/search">https://dev.twitter.com/docs/api/1/get/search</a> という形式で JSON を取得できます。これを参考に実装します。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;uri&#39;</span>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;json&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">AppDelegate</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:window</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:textField</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:tableView</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="n">sender</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">text</span> <span class="o">=</span> <span class="n">textField</span><span class="o">.</span><span class="n">stringValue</span>  <span class="c1"># Text Field から文字列を取得</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">length</span> <span class="o">&gt;</span> <span class="mi">0</span>
+</span><span class='line'>      <span class="n">query</span> <span class="o">=</span> <span class="no">URI</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>    <span class="c1"># 検索クエリーをエスケープ</span>
+</span><span class='line'>      <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;http://search.twitter.com/search.json?q=</span><span class="si">#{</span><span class="n">query</span><span class="si">}</span><span class="s2">&amp;rpp=30&quot;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="c1"># HTTP アクセスし、レスポンスを取得</span>
+</span><span class='line'>      <span class="n">nsurl</span> <span class="o">=</span> <span class="no">NSURL</span><span class="o">.</span><span class="n">URLWithString</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">str</span> <span class="o">=</span> <span class="no">NSString</span><span class="o">.</span><span class="n">stringWithContentsOfURL</span><span class="p">(</span><span class="n">nsurl</span><span class="p">,</span>
+</span><span class='line'>                                             <span class="n">encoding</span><span class="p">:</span> <span class="no">NSUTF8StringEncoding</span><span class="p">,</span>
+</span><span class='line'>                                             <span class="n">error</span><span class="p">:</span> <span class="kp">nil</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">json</span> <span class="o">=</span> <span class="no">JSON</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">str</span><span class="p">)</span>
+</span><span class='line'>      <span class="vi">@search_result</span> <span class="o">=</span> <span class="n">json</span><span class="o">[</span><span class="s1">&#39;results&#39;</span><span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="c1"># TableView をリロード</span>
+</span><span class='line'>      <span class="c1"># numberOfRowsInTableView や tableView:objectValueForTableColumn:row:</span>
+</span><span class='line'>      <span class="c1"># が呼びだされます</span>
+</span><span class='line'>      <span class="n">tableView</span><span class="o">.</span><span class="n">reloadData</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">numberOfRowsInTableView</span><span class="p">(</span><span class="n">aTableView</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span> <span class="k">if</span> <span class="vi">@search_result</span><span class="o">.</span><span class="n">nil?</span>
+</span><span class='line'>    <span class="k">return</span> <span class="vi">@search_result</span><span class="o">.</span><span class="n">size</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">tableView</span><span class="p">(</span><span class="n">aTableView</span><span class="p">,</span>
+</span><span class='line'>                <span class="n">objectValueForTableColumn</span><span class="p">:</span> <span class="n">aTableColumn</span><span class="p">,</span>
+</span><span class='line'>                <span class="n">row</span><span class="p">:</span> <span class="n">rowIndex</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">case</span> <span class="n">aTableColumn</span><span class="o">.</span><span class="n">identifier</span>
+</span><span class='line'>    <span class="k">when</span> <span class="s2">&quot;name&quot;</span>
+</span><span class='line'>      <span class="k">return</span> <span class="vi">@search_result</span><span class="o">[</span><span class="n">rowIndex</span><span class="o">][</span><span class="s1">&#39;from_user&#39;</span><span class="o">]</span>
+</span><span class='line'>    <span class="k">when</span> <span class="s2">&quot;text&quot;</span>
+</span><span class='line'>      <span class="k">return</span> <span class="vi">@search_result</span><span class="o">[</span><span class="n">rowIndex</span><span class="o">][</span><span class="s1">&#39;text&#39;</span><span class="o">]</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>検索結果を取得する際に <code>NSString.stringWithContentsOfURL</code> を使用していますが、Ruby の <code>Net::HTTP</code> を使用することもできます。また、JSON の解析も Mac OS X 10.7 以降に限定すれば <a href="https://developer.apple.com/library/mac/#documentation/Foundation/Reference/NSJSONSerialization_Class/Reference/Reference.html">NSJSONSerialization</a> を使うことができます。Ruby メソッドと Mac OS X API をいろいろ組み合わせて使用できますので、用途や利便性などで使いわけてみてください。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[TableView を使ってみよう]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/10/tableview-basic/"/>
+    <updated>2012-03-10T14:00:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/10/tableview-basic</id>
+    <content type="html"><![CDATA[<p>ここでは、TableView の使い方について説明します。TableView を使用するとデータをテーブル状に表示できます。この TableView はさまざまな Mac アプリケーションで見かけることができます。</p>
+
+<h2>TableView を配置する</h2>
+
+<p>それでは、新規プロジェクトを作成し Table View を配置してみましょう。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/tableview-basic/tableview.png" alt="image" /></p>
+
+<h2>データソースを接続する</h2>
+
+<p>TableView はデータソースという仕組みを用いて、データをテーブルに表示します。データソースは、UI 部品で表示する内容が変更したというイベントが発生すると、プログラム側からデータを提供してあげるという処理が行われます。アクションメソッドを接続したと同じように、どこから提供されるかを TableView に接続してあげる必要がります。</p>
+
+<p>以下の図のように、<kbd>control</kbd> キーを押しながら TableView から App Delegate へドラッグします。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/tableview-basic/connect_datasource.png" alt="image" /></p>
+
+<p>一覧に表示されている [dataSource] を選択して接続します。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/tableview-basic/datasource.png" alt="image" /></p>
+
+<p>AppDelegate クラスからデータを提供するために、<a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Reference/ApplicationKit/Protocols/NSTableDataSource_Protocol/Reference/Reference.html">NSTableViewDataSource</a> プロトコルの以下のメソッドを実装します。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nf">numberOfRowsInTableView:</span><span class="p">(</span><span class="n">NSTableView</span> <span class="o">*</span><span class="p">)</span><span class="nv">aTableView</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nf">tableView:</span><span class="p">(</span><span class="n">NSTableView</span> <span class="o">*</span><span class="p">)</span><span class="nv">aTableView</span> <span class="nf">objectValueForTableColumn:</span><span class="p">(</span><span class="n">NSTableColumn</span> <span class="o">*</span><span class="p">)</span><span class="nv">aTableColumn</span> <span class="nf">row:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">rowIndex</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>最初に <code>numberOfRowsInTableView:</code> メソッドが呼び出され、データが何行分あるのかを返します。
+<code>tableView:objectValueForTableColumn:row:</code> メソッドが行数と列数に応じて呼び出されるので、テーブルに表示するデータを返してあげます。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">AppDelegate</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:window</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">numberOfRowsInTableView</span><span class="p">(</span><span class="n">aTableView</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1"># データが何行あるかを返す</span>
+</span><span class='line'>    <span class="mi">2</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">tableView</span><span class="p">(</span><span class="n">aTableView</span><span class="p">,</span> <span class="n">objectValueForTableColumn</span><span class="p">:</span> <span class="n">aTableColumn</span><span class="p">,</span> <span class="n">row</span><span class="p">:</span> <span class="n">rowIndex</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1"># テーブルに表示するデータを返す</span>
+</span><span class='line'>    <span class="s2">&quot;foo&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>実行すると、以下のように表示されます。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/tableview-basic/tableview_sample1.png" alt="image" /></p>
+
+<h2>セルごとに表示する内容を変える</h2>
+
+<p>上記のプログラムでは全てのセルで foo としか表示されないので、セルごとに表示するデータを変更してみましょう。</p>
+
+<p>以下の図のように 1 列目の Table カラムを選択し、Identifier に name を設定します。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/tableview-basic/tableview_identifier.png" alt="image" /></p>
+
+<p>同じように、今度は 2 列目の Table カラムを選択し、Identifier に age を設定します。</p>
+
+<p><code>tableView:objectValueForTableColumn:row:</code> メソッドを以下のように変更してみましょう。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">def</span> <span class="nf">tableView</span><span class="p">(</span><span class="n">aTableView</span><span class="p">,</span> <span class="n">objectValueForTableColumn</span><span class="p">:</span> <span class="n">aTableColumn</span><span class="p">,</span> <span class="n">row</span><span class="p">:</span> <span class="n">rowIndex</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1"># テーブルに表示するデータを返す</span>
+</span><span class='line'>    <span class="c1"># 2行 x 2列 = 4回、このメソッドが呼び出される</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">rowIndex</span> <span class="o">==</span> <span class="mi">0</span>
+</span><span class='line'>      <span class="c1"># 1行目のデータ</span>
+</span><span class='line'>      <span class="k">case</span> <span class="n">aTableColumn</span><span class="o">.</span><span class="n">identifier</span>
+</span><span class='line'>      <span class="k">when</span> <span class="s1">&#39;name&#39;</span> <span class="c1"># 1列目のデータ</span>
+</span><span class='line'>        <span class="n">str</span> <span class="o">=</span> <span class="s2">&quot;Steven Paul Jobs&quot;</span>
+</span><span class='line'>      <span class="k">when</span> <span class="s1">&#39;age&#39;</span>  <span class="c1"># 2列目のデータ</span>
+</span><span class='line'>        <span class="n">str</span> <span class="o">=</span> <span class="s2">&quot;56&quot;</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="n">rowIndex</span> <span class="o">==</span> <span class="mi">1</span>
+</span><span class='line'>      <span class="c1"># 2行目のデータ</span>
+</span><span class='line'>      <span class="k">case</span> <span class="n">aTableColumn</span><span class="o">.</span><span class="n">identifier</span>
+</span><span class='line'>      <span class="k">when</span> <span class="s1">&#39;name&#39;</span> <span class="c1"># 1列目のデータ</span>
+</span><span class='line'>        <span class="n">str</span> <span class="o">=</span> <span class="s2">&quot;Stephen Gary Wozniak&quot;</span>
+</span><span class='line'>      <span class="k">when</span> <span class="s1">&#39;age&#39;</span>  <span class="c1"># 2列目のデータ</span>
+</span><span class='line'>        <span class="n">str</span> <span class="o">=</span> <span class="s2">&quot;61&quot;</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">str</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>rowIndex</code> の値でどの行のデータが必要とされているのか判別できます。列は、<code>aTableColumn.identifier</code> の値によって判別できます。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/tableview-basic/tableview_sample2.png" alt="image" /></p>
+
+<h2>列を追加する</h2>
+
+<p>TableView は初期状態で 2 列分のデータを表示します。以下の図のように、[Table View] を選択した状態で [Show the attributes inspector] をクリックします。[Columns] に表示する列数を指定すると、TableView に列を追加することができます。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/tableview-basic/tableview_columns.png" alt="image" /></p>
+
+<h2>セルに画像を表示する</h2>
+
+<p>今度は TableView のセルに画像を表示してみましょう。初期状態で TableView のセルには「Text Field Cell」という部品が使われています。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/tableview-basic/tableview_text_field_cell.png" alt="image" /></p>
+
+<p>この Text Field Cell は名前の通りに Text しか表示できません。画像を表示するためには、「Image Cell」という部品を使います。次の図のように、Object Library から Image Cell を画像を表示するセルの Text Field Cell へドロップして置き換えます。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/tableview-basic/replace_to_image_cell.png" alt="image" /></p>
+
+<p>Image Cell へ置き換えると、Window に配置した TableView は以下のように表示されます。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/tableview-basic/tableview_with_image_cell.png" alt="image" /></p>
+
+<p>Image Cell の Identifier を image と設定します。<code>tableView:objectValueForTableColumn:row:</code> メソッドで、Image Cell のデータに NSImage のオブジェクトを返すようにするとセルに画像が表示されます。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">def</span> <span class="nf">tableView</span><span class="p">(</span><span class="n">aTableView</span><span class="p">,</span> <span class="n">objectValueForTableColumn</span><span class="p">:</span> <span class="n">aTableColumn</span><span class="p">,</span> <span class="n">row</span><span class="p">:</span> <span class="n">rowIndex</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1"># テーブルに表示するデータを返す</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">rowIndex</span> <span class="o">==</span> <span class="mi">0</span>
+</span><span class='line'>      <span class="c1"># 1行目のデータ</span>
+</span><span class='line'>      <span class="k">case</span> <span class="n">aTableColumn</span><span class="o">.</span><span class="n">identifier</span>
+</span><span class='line'>      <span class="k">when</span> <span class="s1">&#39;image&#39;</span>
+</span><span class='line'>        <span class="n">nsurl</span> <span class="o">=</span> <span class="no">NSURL</span><span class="o">.</span><span class="n">URLWithString</span><span class="p">(</span><span class="s2">&quot;http://images.apple.com/apple-events/images/overview_march2011_20110302_20110301.jpg&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">data</span> <span class="o">=</span> <span class="no">NSImage</span><span class="o">.</span><span class="n">alloc</span><span class="o">.</span><span class="n">initWithContentsOfURL</span><span class="p">(</span><span class="n">nsurl</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">when</span> <span class="s1">&#39;name&#39;</span>
+</span><span class='line'>        <span class="n">data</span> <span class="o">=</span> <span class="s2">&quot;Steven Paul Jobs&quot;</span>
+</span><span class='line'>      <span class="k">when</span> <span class="s1">&#39;age&#39;</span>
+</span><span class='line'>        <span class="n">data</span> <span class="o">=</span> <span class="s2">&quot;56&quot;</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">data</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/tableview-basic/tableview_with_image_cell2.png" alt="image" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Objective-C のメソッドの読み方]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/10/intro-objc-method/"/>
+    <updated>2012-03-10T11:37:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/10/intro-objc-method</id>
+    <content type="html"><![CDATA[<p>MacRuby でアプリケーションを作成しようとすると、Mac OS X の <a href="https://developer.apple.com/library/mac/navigation/">API リファレンス</a> を読まなければなりません。API リファレンスを読む上で、Objective-C を MacRuby の規則に置き換えて読む必要があります。</p>
+
+<h2>文字列の表現</h2>
+
+<p>Objective-C では文字列のリテラル表現として <code>@""</code> を使います。Ruby では、単に <code>""</code> で表現できます。</p>
+
+<ul>
+<li>Objective-C</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSString</span> <span class="o">*</span><span class="n">string</span> <span class="o">=</span> <span class="s">@&quot;Hello World!&quot;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>MacRuby</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Hello World!&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>メソッドの呼び出し方</h2>
+
+<p>Objective-C ではメソッドの呼び出しを <code>[レシーバ メソッド]</code> という形式で記述します。また、引数の区切りに <code>,</code> は無く、単にスペースで区切ります。</p>
+
+<ul>
+<li>Objective-C</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="p">[</span><span class="n">NSString</span> <span class="nl">stringWithContentsOfURL:</span> <span class="n">nsurl</span>
+</span><span class='line'>                         <span class="nl">encoding:</span> <span class="n">NSUTF8StringEncoding</span>
+</span><span class='line'>                            <span class="nl">error:</span> <span class="nb">nil</span><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>MacRuby</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">NSString</span><span class="o">.</span><span class="n">stringWithContentsOfURL</span><span class="p">(</span><span class="n">nsurl</span><span class="p">,</span>
+</span><span class='line'>                                 <span class="n">encoding</span><span class="p">:</span> <span class="no">NSUTF8StringEncoding</span><span class="p">,</span>
+</span><span class='line'>                                 <span class="n">error</span><span class="p">:</span> <span class="kp">nil</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>以下のような手順で Objective-C を MacRuby の文法に置き換えます。</p>
+
+<ol>
+<li><code>[レシーバ メソッド]</code> の <code>[]</code> を消す</li>
+<li>1 つ目の引数の前にある <code>:</code> を <code>(</code> に置き換える</li>
+<li>引数の区切りに <code>,</code> を使う</li>
+<li><code>;</code> を <code>)</code> で置き換える</li>
+</ol>
+
+
+<p><code>encoding:</code> や <code>error:</code> はキーワード引数を表していて、コロンの手前(<code>encoding</code>) までをキーワードと呼ばれます。(Ruby 2.0 で同様の文法がサポートされるようです。)</p>
+
+<h2>メソッドの宣言</h2>
+
+<ul>
+<li>Objective-C</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nf">foo:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">string</span> <span class="nf">index:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">num</span> <span class="p">{</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>一文字目の <code>-</code> はインスタンスメソッドであることを表しています。<code>+</code> の場合はクラスメソッドを表しています。</li>
+<li><code>(id)</code> はメソッドの返り値の型情報を表しています。</li>
+<li><p><code>(NSString *)</code> と <code>(NSInteger)</code> は引数の型情報を表しています。</p></li>
+<li><p>MacRuby</p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="n">num</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ol>
+<li><code>-</code> とメソッドの返り値の型情報を <code>def</code> で置き換える</li>
+<li>引数の型情報を削除する</li>
+<li>1 つ目の引数の前にある <code>:</code> を <code>(</code> に置き換える</li>
+<li>引数の区切りに <code>,</code> を使う</li>
+</ol>
+
+
+<p>という手順を踏むと、ほぼ MacRuby の文法になるかと思います。</p>
+
+<hr />
+
+<p>TBD</p>
+
+<p>他に気がついたら書き足します。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Constructs the MacRuby environment]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/09/intro-install/"/>
+    <updated>2012-03-09T21:58:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/09/intro-install</id>
+    <content type="html"><![CDATA[<h2>Requirements</h2>
+
+<p>When use the MacRuby, you would need to install the following softwares in advance.</p>
+
+<ul>
+<li>Mac OS X 10.6.8 later</li>
+<li>Xcode 4.2 or Xcode 4.3</li>
+<li>MacRuby</li>
+<li>BridgeSupport Preview 3 (If you use MacRuby on Mac OS X 10.6.8)</li>
+</ul>
+
+
+<h2>Install Xcode</h2>
+
+<p>Install Xcode from the Mac App Store. Launch Mac App Store, and then, search by keywords of &#8220;Xcode&#8221; at search field on top of right corner.</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-install/search_xcode.png" alt="image" /></p>
+
+<p>You could install Xcode easily from the search results.</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-install/xcode.png" alt="image" /></p>
+
+<p>If you use Mac OS X 10.6.8, Xcode 4.2.x will be installed. And if you use Mac OS X 10.7.x, Xcode 4.3.x will be installed.</p>
+
+<div class="note">
+<p>
+If you have previously installed an older version (as Xcode 4.2.x) and installed Xcode 4.3.x at this time,
+recommend to be running the following command on the Terminal.
+</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer/</span></code></pre></td></tr></table></div></figure>
+</div>
+
+
+<h2>Install Command Line Tools</h2>
+
+<p>Since Xcode 4.3, Command Line Tools (compiler, etc) became to additional package. Also would install Command Line Tools.</p>
+
+<ol>
+<li>Select [Xcode]->[Preferences…] form Xcode&#8217;s menu to display Preferences.</li>
+<li>Select Downloads tab as shown in the figure below, and install Command Line Tools.</li>
+</ol>
+
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-install/command_line_tools.png" alt="image" /></p>
+
+<h1>Install MacRuby</h1>
+
+<p>Next step, install MacRuby.</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-install/macruby_org.png" alt="image" /></p>
+
+<p>MacRuby 0.10 has been released now. However, unfortunately, it does not support for Xcode 4.3. Therefore, you should install the nightly build and could download it from <a href="http://www.macruby.org/files/nightlies/">http://www.macruby.org/files/nightlies/</a>. Nightly build which has latest changes has packaged every night.</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-install/nightly_build.png" alt="image" /></p>
+
+<h1>Install BridgeSupport Preview 3</h1>
+
+<p><strong>For Mac OS X 10.6.8 users only</strong>, need to install BridgeSupport Preview 3. BridgeSupport is used to get information about the Framework provided by the Mac OS X. In Mac OS X 10.7 environment, it has been pre-installed. You could get the BridgeSupport Preview 3 from <a href="http://www.macruby.org/files/">http://www.macruby.org/files/</a> as <em>BridgeSupport Preview 3.zip</em>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[アイコンを変更しよう]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/09/intro-icon/"/>
+    <updated>2012-03-09T16:10:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/09/intro-icon</id>
+    <content type="html"><![CDATA[<p>作成したアプリケーションのアイコンには Mac OS X であらかじめ用意されているものが使用されます。すべてのアプリケーションは、最初に同じアイコンで表示されることになり、あまり見栄えがしません。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-icon/default_icon.png" alt="image" /></p>
+
+<p>アプリケーションのアイコンを独自のものに変更してみましょう。</p>
+
+<h2>Icon Composer</h2>
+
+<p>あらかじめ PNG 形式などで、アプリケーションに設定するアイコン用の画像を用意します。用意した画像を、アイコンは Icon Composer を使用しアプリケーションに設定できる形式に出力します。この Icon Composer は Xcode と一緒にインストールされています。</p>
+
+<p>Xcode 4.3 からは、[Xcode]->[Open Developer Tool] から起動することができます。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-icon/icon_composer_xcode43.png" alt="image" /></p>
+
+<p>Xcode 4.2 以前では、<em>/Developer/Applications/Utilities/Icon Composer.app</em> というフォルダ内に存在します。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-icon/icon_composer_xcode42.png" alt="image" /></p>
+
+<p>Icon Composer を起動すると、アイコンサイズごとに枠がいくつか表示されています。その枠に用意しておいた画像をドラッグ &amp; ドロップして配置し、アイコンを保存します。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-icon/icns.png" alt="image" /></p>
+
+<h2>アイコンを変更する</h2>
+
+<p>Xcode でアプリケーションのアイコンを変更します。以下の図のように、ターゲットを選択して [App Icon] に先ほど Icon Composer で作成したアイコンをドラッグ &amp; ドロップします。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-icon/change_icon.png" alt="image" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Window のリサイズに対応しよう]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/08/intro-window-resize/"/>
+    <updated>2012-03-08T22:52:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/08/intro-window-resize</id>
+    <content type="html"><![CDATA[<p>作成したアプリケーションを実行した後、Window がリサイズされることを考慮しましょう。何も対処していなければ、以下のようにリサイズすると間が抜けた UI レイアウトになったり、たくさんの UI 部品を使用したアプリケーションでは使用するのが困難なほどにレイアウトが崩れたりすることもあるでしょう。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-window-resize/window.png" alt="image" /></p>
+
+<h2>Autosizing の設定</h2>
+
+<p>Window をリサイズした時に、UI 部品の配置をどのように取り扱うかについて Xcode の Autosizing という項目で簡単に設定することができます。以下の図のように、Autosizing を設定する UI 部品を選択し Size Inspector を表示します。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-window-resize/size_inspector.png" alt="image" /></p>
+
+<p>幅や高さを伸縮させたい場合には以下のように設定します。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-window-resize/autosizing_variable.png" alt="image" /></p>
+
+<p>UI 配置位置を固定する場合には以下のように設定します。設定した箇所の間隔は、Window をリサイズしても変わらないようになります。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-window-resize/autosizing_fixable.png" alt="image" /></p>
+
+<p>Autosizing の効果は Example にプレビューされるので、確認しながら設定していくと良いでしょう。</p>
+
+<h2>Window をリサイズできないようにする</h2>
+
+<p>単純な UI の場合ですと、そもそも Window のリサイズしなくても良いということもあるでしょう。</p>
+
+<p>Window を選択した状態で、Size Inspector を表示します。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-window-resize/window_size.png" alt="image" /></p>
+
+<p>[Minimum Size] と [Maximum Size] のチェックを ON にすると、Window の最大最小サイズを固定できます。上の図のように [Minimum Size] と [Maximum Size] を同じ値にすると、Window がリサイズできないようになります。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[ストップウォッチを作る (Thread 編)]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/08/intro-stopwatch-thread/"/>
+    <updated>2012-03-08T15:49:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/08/intro-stopwatch-thread</id>
+    <content type="html"><![CDATA[<p><a href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/07/intro-stopwatch/">ストップウォッチを作る</a>では <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Reference/Foundation/Classes/nstimer_Class/Reference/NSTimer.html">NSTimer</a> を使って定期的に Text Field の内容を更新していました。同じ事を Ruby の Thread を使って実現することができます。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">AppDelegate</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:window</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:textField</span> <span class="c1"># アウトレット</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">applicationDidFinishLaunching</span><span class="p">(</span><span class="n">a_notification</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1"># Insert code here to initialize your application</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">startTimer</span><span class="p">(</span><span class="n">sender</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">if</span> <span class="vi">@thread</span><span class="o">.</span><span class="n">nil?</span>
+</span><span class='line'>      <span class="vi">@time</span> <span class="o">=</span> <span class="mi">0</span><span class="o">.</span><span class="mi">0</span>
+</span><span class='line'>      <span class="vi">@thread</span> <span class="o">=</span> <span class="no">Thread</span><span class="o">.</span><span class="n">start</span> <span class="k">do</span>
+</span><span class='line'>        <span class="kp">loop</span> <span class="k">do</span>
+</span><span class='line'>          <span class="n">string</span> <span class="o">=</span> <span class="nb">sprintf</span><span class="p">(</span><span class="s2">&quot;%.1f&quot;</span><span class="p">,</span> <span class="vi">@time</span><span class="p">)</span>
+</span><span class='line'>          <span class="n">textField</span><span class="o">.</span><span class="n">stringValue</span> <span class="o">=</span> <span class="n">string</span>
+</span><span class='line'>
+</span><span class='line'>          <span class="nb">sleep</span> <span class="mi">0</span><span class="o">.</span><span class="mi">1</span>
+</span><span class='line'>          <span class="vi">@time</span> <span class="o">+=</span> <span class="mi">0</span><span class="o">.</span><span class="mi">1</span>
+</span><span class='line'>        <span class="k">end</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">stopTimer</span><span class="p">(</span><span class="n">sender</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">if</span> <span class="vi">@thread</span>
+</span><span class='line'>      <span class="vi">@thread</span><span class="o">.</span><span class="n">kill</span>
+</span><span class='line'>      <span class="vi">@thread</span> <span class="o">=</span> <span class="kp">nil</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/07/intro-stopwatch/">ストップウォッチを作る</a>と同じように UI 部品を配置し、アウトレットとアクションメソッドを接続します。</p>
+
+<p>NSTimer の長い呼び出しの記述が無くなっただけで、ずいぶん Ruby らしくなったのではないでしょうか。</p>
+
+<p>また Text Field に文字列を設定するメソッドとして、今回は <code>stringValue=</code> を使用しています。MacRuby には <code>foo=</code> というメソッドを <code>setFoo</code> と読み替える仕組みがあり、それを活用するとより Ruby らしいコードになるのではないでしょうか。</p>
+
+<div class="note">
+今回の Text Field のように、UI を更新する場合には単一のスレッドで行いましょう。(NSTimerを使ったものは、メインスレッドで更新しています)
+</div>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Deployment してアプリケーションを配布しよう]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/07/intro-deployment/"/>
+    <updated>2012-03-07T17:50:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/07/intro-deployment</id>
+    <content type="html"><![CDATA[<p>作成したアプリケーションは MacRuby がインストールされている環境でしか動作しません。アプリケーションを配布する際には、MacRuby がインストールされていない環境で利用されるかもしれません。</p>
+
+<p>そこで MacRuby には、アプリケーションに MacRuby 自体を埋め込む仕組みが備わっています。これにより MacRuby がインストールされていない環境でもアプリケーションが動作します。</p>
+
+<p>以下の図のように「Deployment」を選択した状態で [Run] をクリックすると、アプリケーションに MacRuby が埋め込まれます。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-deployment/deployment.png" alt="image" /></p>
+
+<p>Deployment ではいくつかのオプションを指定することができます。以下の図のように「Arguments」欄でオプションを指定します。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-deployment/deployment_option.png" alt="image" /></p>
+
+<p>指定できるオプションは、<code>macruby_deploy</code> コマンドを Terminal で実行することで確認できます。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ macruby_deploy 
+</span><span class='line'>Usage: macruby_deploy [options] application-bundle
+</span><span class='line'>        --compile                    Compile the bundle source code
+</span><span class='line'>        --embed                      Embed MacRuby inside the bundle
+</span><span class='line'>        --no-stdlib                  Do not embed the standard library
+</span><span class='line'>        --stdlib [LIB]               Embed only LIB from the standard library
+</span><span class='line'>        --gem [GEM]                  Embed GEM and its dependencies
+</span><span class='line'>        --bs                         Embed the system BridgeSupport files
+</span><span class='line'>        --verbose                    Log all commands to standard out
+</span><span class='line'>        --codesign [CERT]            Sign the files with the specified certificate
+</span><span class='line'>    -v, --version                    Display the version</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<table class="table">
+<tr><th>オプション</th><th>内容</th></tr>
+<tr><td>&#8211;compile</td><td>アプリケーション内で使用している `*.rb` ファイルをコンパイルします。配布先で、不正にアプリケーションコードをコピーされるのを防ぐことができます</td></tr>
+<tr><td>&#8211;embed</td><td>アプリケーションに MacRuby を埋め込みます</td></tr>
+<tr><td>&#8211;no-stdlib</td><td>MacRuby の標準ライブラリを埋め込みません。標準ライブラリを使用していないアプリケーションでは、このオプションによってアプリケションのサイズを削減することができます</td></tr>
+<tr><td>&#8211;stdlib ライブラリ名</td><td>指定したライブラリのみ埋め込みます。&#8211;stdlib json のように使用します。</td></tr>
+<tr><td>&#8211;gem RubyGems名</td><td>指定した RubyGems をアプリケーションに埋め込みます</td></tr>
+</table>
+
+
+<p>できあがったアプリケーションは、[Products] のアプリケーション名を <kbd>control</kbd> キーを押しながらクリックすると Finder で確認することができます。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-deployment/show_finder.png" alt="image" /></p>
+
+<p>あとは、zip ファイルに圧縮するなどして配布してみてください。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[ストップウォッチを作る]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/07/intro-stopwatch/"/>
+    <updated>2012-03-07T00:44:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/07/intro-stopwatch</id>
+    <content type="html"><![CDATA[<p>ここでは、簡易的な「ストップウォッチ」アプリケーションを作成します。 単純なアプリケーションですが、MacRuby でアプリケーションを作成するうえで不可欠な内容となっています。</p>
+
+<p>アプリケーションは以下の図のようなデザインで、「StopWatch」というプロジェクトとします。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-stopwatch/stopwatch.png" alt="image" /></p>
+
+<p>「start ボタンがクリックされるとタイマーが動き出し、stop ボタンがクリックされるとタイマーを停止します。Text Field には何秒間タイマーが動いていたかを表示する」というアプリケーションです。</p>
+
+<h2>UI 部品を配置する</h2>
+
+<p>それでは、さっそく UI 部品を配置してみましょう。Xcode で <em>MainMenu.xib</em> ファイルを選択して、UI デザインを変更していきます。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-stopwatch/mainmenu_xib.png" alt="image" /></p>
+
+<p>次に [Window - StopWatch] を選択して、UI 部品を配置する Window を表示します。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-stopwatch/window_stopwatch.png" alt="image" /></p>
+
+<p>以下の図のように、ツールバーのアイコンをクリックすると Object Library が表示されます。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-stopwatch/show_object_library.png" alt="image" /></p>
+
+<p>ようやく UI 部品を配置するための準備が整いました。</p>
+
+<p>それでは、タイマーの値を表示するための Text Field と、タイマーの開始と停止のための Button を Object Library から Window へドラッグ &amp; ドロップして配置します。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-stopwatch/ui_design.png" alt="image" /></p>
+
+<h2>アウトレットを接続する</h2>
+
+<p>「ストップウォッチ」アプリケーションではタイマーの値を Text Field へ設定しますが、Text Field を Window に配置しただけでは値を設定することができません。UI 部品の状態や値を設定するための仕組みとしてアウトレットがあります。</p>
+
+<p>アウトレットを使用するために、プログラムへ記述が必要となります。<em>AppDelegate.rb</em> を選択して以下のように <code>attr_accessor :textField</code> を AppDelegate クラスに追加します。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">AppDelegate</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:window</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:textField</span> <span class="c1"># アウトレット</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>このように <code>attr_accessor</code> で用意したアクセサをアウトレットとして使用することができます。</p>
+
+<p><em>MainMenu.xib</em> の画面に戻り、アウトレットを接続します。<kbd>control</kbd> キーを押しながら、App Delegate から Text Field へドラッグします。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-stopwatch/connect_outlet.png" alt="image" /></p>
+
+<p>アウトレットの一覧が表示されるので、先ほど追加した <code>textField</code> を選択して接続します。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-stopwatch/outlets.png" alt="image" /></p>
+
+<p>これで、プログラムからアクセサ <code>textField</code> を通して Text Field の値を取得設定できるようになります。</p>
+
+<h2>アクションを接続する</h2>
+
+<p>まだ、start ボタンと stop ボタンをクリックしても何も起こりません。ボタンがクリックされた時の振る舞いを設定してあげる必要があります。振る舞いを設定する仕組みとしてアクションがあります。</p>
+
+<p><em>AppDelegate.rb</em> を選択して以下のように <code>startTimer</code> と <code>stopTimer</code> を追加します。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">AppDelegate</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:window</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:textField</span> <span class="c1"># アウトレット</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">applicationDidFinishLaunching</span><span class="p">(</span><span class="n">a_notification</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1"># Insert code here to initialize your application</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">startTimer</span><span class="p">(</span><span class="n">sender</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1"># タイマー開始</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">stopTimer</span><span class="p">(</span><span class="n">sender</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1"># タイマー停止</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><em>MainMenu.xib</em> の画面に戻り、アクションを接続します。<kbd>control</kbd> キーを押しながら、start ボタンから App Delegate へドラッグします。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-stopwatch/connect_action.png" alt="image" /></p>
+
+<p>アクションの一覧が表示されるので、先ほど追加した <code>startTimer</code> を選択して接続します。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-stopwatch/actions.png" alt="image" /></p>
+
+<p>同じように stop ボタンと <code>stopTimer</code> を接続します。これで、ボタンがクリックされた時にそれぞれのメソッドが呼び出されるようになります。</p>
+
+<p>ボタンがクリックされた時に呼び出される <code>startTimer</code> と <code>stopTimer</code> は<strong>アクションメソッド</strong>とも呼ばれます。</p>
+
+<div class="note">
+アクションメソッドを記述する際には、<strong>必ず sender</strong> という引数を用意しましょう。MacRuby の仕様により、sender 引数がないメソッドはアクションメソッドとして認識されず、接続することができません。
+</div>
+
+
+<h2>タイマーを使う</h2>
+
+<p>一定間隔ごとに何か処理を行う場合には、<a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Reference/Foundation/Classes/nstimer_Class/Reference/NSTimer.html">NSTimer</a> を使用します。</p>
+
+<p>以下のようにタイマーをすると、一定間隔ごとに処理することができます。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="vi">@timer</span> <span class="o">=</span> <span class="no">NSTimer</span>
+</span><span class='line'>           <span class="o">.</span><span class="n">scheduledTimerWithTimeInterval</span><span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span>
+</span><span class='line'>                                           <span class="n">target</span><span class="p">:</span> <span class="nb">self</span><span class="p">,</span>
+</span><span class='line'>                                           <span class="n">selector</span><span class="p">:</span> <span class="s2">&quot;timerHandler:&quot;</span><span class="p">,</span>
+</span><span class='line'>                                           <span class="n">userInfo</span><span class="p">:</span> <span class="kp">nil</span><span class="p">,</span>
+</span><span class='line'>                                           <span class="n">repeats</span><span class="p">:</span> <span class="kp">true</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">timerHandler</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+</span><span class='line'>  <span class="c1"># 一定間隔ごとに処理する内容</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<table class="table">
+<tr><th>引数</th><th>内容</th></tr>
+<tr><td></td><td>タイマーを発生させる間隔(上の例では0.1秒)</td></tr>
+<tr><td>target</td><td>タイマー発生時に呼び出すメソッドが存在するターゲット</td></tr>
+<tr><td>selector</td><td>タイマー発生時に呼び出すメソッド</td></tr>
+<tr><td>userInfo</td><td>メソッドに渡すデータ</td></tr>
+<tr><td>repeats</td><td>タイマーの実行を繰り返すかどうか (true:繰り返す, false:1度のみ)</td></tr>
+</table>
+
+
+
+
+<div class="note">
+selector はメソッド名を示す文字列です。メソッドが引数を取る場合には <code>"timerHandler:"</code> のようにコロンがついたりします。引数がない場合には <code>"timerHandler"</code> です。 上記の例で使用しているメソッドの場合には <code>"scheduledTimerWithTimeInterval:target:selector:userInfo:repeats:"</code> となります。Objective-C 由来の書き方でわかりにくいのですが、リファレンスを読む場合にも度々でてくるので、selector の書き方はマスターしてください。
+</div>
+
+
+<p>タイマーを停止するには、<code>invalidate</code> メソッドを使用します。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="vi">@timer</span><span class="o">.</span><span class="n">invalidate</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>それではアクションメソッドの <code>startTimer</code> でタイマーを生成し、<code>stopTimer</code> で停止するようにしましょう。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">AppDelegate</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:window</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:textField</span> <span class="c1"># アウトレット</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">applicationDidFinishLaunching</span><span class="p">(</span><span class="n">a_notification</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1"># Insert code here to initialize your application</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">startTimer</span><span class="p">(</span><span class="n">sender</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">if</span> <span class="vi">@timer</span><span class="o">.</span><span class="n">nil?</span>
+</span><span class='line'>      <span class="vi">@time</span> <span class="o">=</span> <span class="mi">0</span><span class="o">.</span><span class="mi">0</span>
+</span><span class='line'>      <span class="vi">@timer</span> <span class="o">=</span> <span class="no">NSTimer</span>
+</span><span class='line'>                <span class="o">.</span><span class="n">scheduledTimerWithTimeInterval</span><span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span>
+</span><span class='line'>                                                <span class="n">target</span><span class="p">:</span> <span class="nb">self</span><span class="p">,</span>
+</span><span class='line'>                                                <span class="n">selector</span><span class="p">:</span> <span class="s2">&quot;timerHandler:&quot;</span><span class="p">,</span>
+</span><span class='line'>                                                <span class="n">userInfo</span><span class="p">:</span> <span class="kp">nil</span><span class="p">,</span>
+</span><span class='line'>                                                <span class="n">repeats</span><span class="p">:</span> <span class="kp">true</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">stopTimer</span><span class="p">(</span><span class="n">sender</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">if</span> <span class="vi">@timer</span>
+</span><span class='line'>      <span class="vi">@timer</span><span class="o">.</span><span class="n">invalidate</span>
+</span><span class='line'>      <span class="vi">@timer</span> <span class="o">=</span> <span class="kp">nil</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">timerHandler</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+</span><span class='line'>    <span class="vi">@time</span> <span class="o">+=</span> <span class="mi">0</span><span class="o">.</span><span class="mi">1</span>
+</span><span class='line'>    <span class="n">string</span> <span class="o">=</span> <span class="nb">sprintf</span><span class="p">(</span><span class="s2">&quot;%.1f&quot;</span><span class="p">,</span> <span class="vi">@time</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">textField</span><span class="o">.</span><span class="n">setStringValue</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>timerHandler</code> で Text Field に経過秒数を設定しています。<code>setStringValue</code> メソッドを使用すると、Text Field に文字列を設定できます。</p>
+
+<p>これで「ストップウォッチ」アプリケーションが完成です。完成したアプリケーションを実行してみましょう。[Scheme] で「Deployment」からプロジェクト名のスキームに変更してツールバーの [Run] ボタンをクリックすると、アプリケーションが起動します。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-stopwatch/scheme.png" alt="image" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[新規プロジェクトをつくってみよう]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/06/intro-new-project/"/>
+    <updated>2012-03-06T22:06:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/06/intro-new-project</id>
+    <content type="html"><![CDATA[<p>Xcode を起動すると、以下の図のように「Welcome to Xcode」と表示されたウィンドウが表示されます。[Create a New Xcode Project] をクリックすると、新規のプロジェクトを作れます。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-new-project/welcome_to_xcode.png" alt="image" /></p>
+
+<p>次にどのテンプレートを使用してプロジェクトを作成するか選択します。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-new-project/choose_a_templete.png" alt="image" /></p>
+
+<p>[MacRuby Application] を選択し、 [Next] をクリックして次に進みます。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-new-project/product_name.png" alt="image" /></p>
+
+<p>プロジェクト名を入力し、プロジェクトの保存場所を選択したら新しいプロジェクトができあがります。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[MacRuby の環境を構築しよう]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/06/intro-install/"/>
+    <updated>2012-03-06T17:59:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/06/intro-install</id>
+    <content type="html"><![CDATA[<h2>必要なもの</h2>
+
+<p>MacRuby を使用する際には、あらかじめ以下のものをインストールする必要があります。</p>
+
+<ul>
+<li>Mac OS X 10.6.8 以降</li>
+<li>Xcode 4.2 または Xcode 4.3</li>
+<li>MacRuby</li>
+<li>BridgeSupport Preview 3 (<strong>Mac OS X 10.6.8 を利用する場合のみ必要</strong>)</li>
+</ul>
+
+
+<h2>Xcode をインストール</h2>
+
+<p>Xcode は Mac App Store からインストールできます。Mac App Store を起動し、右上の検索欄に Xcode と入力し検索します。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-install/search_xcode.png" alt="image" /></p>
+
+<p>検索結果に表示された Xcode をインストールします。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-install/xcode.png" alt="image" /></p>
+
+<p>使用している Mac OS X が 10.6.8 の場合には Xcode 4.2.x が、10.7.x の場合には Xcode 4.3.x がインストールされます。</p>
+
+<div class="note">
+<p>
+以前に Xcode 4.2.x など古いバージョンをインストールされていて、今回 Xcode 4.3.x をインストールされた方は、Terminal 上で以下のコマンドを実行しておくと良いでしょう。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer/</span></code></pre></td></tr></table></div></figure>
+</div>
+
+
+<h2>Command Line Tools をインストール</h2>
+
+<p>Xcode 4.3 からは、コマンドラインで実行するコンパイラなどのツール類を別途インストールしなければなりません。Xcode と併せてインストールしておきましょう。</p>
+
+<p>Xcode のメニューから [Xcode]->[Preferences&#8230;] と選択していきます。下の図のように Downloads のタブを選択し、Command Line Tools をインストールします。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-install/command_line_tools.png" alt="image" /></p>
+
+<h2>MacRuby をインストール</h2>
+
+<p>引き続き、<a href="http://www.macruby.org/">MacRuby</a> をインストールしましょう。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-install/macruby_org.png" alt="image" /></p>
+
+<p>現在リリースされている MacRuby 0.10 は、残念ながら Xcode 4.3 には対応していません。そこで <a href="http://www.macruby.org/files/nightlies/">http://www.macruby.org/files/nightlies/</a> から nightly build の <em>macruby_nightly-latest.pkg</em> をダウンロードしてインストールします。nightly build は、毎日作られその時点での最新の変更内容が適用されたパッケージです。</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-install/nightly_build.png" alt="image" /></p>
+
+<h2>BridgeSupport Preview 3 をインストール</h2>
+
+<p><strong>Mac OS X 10.6.8 を利用している方のみ</strong> BridgeSupport Preview 3 をインストールします。BridgeSupport は Mac OS X が提供する Framework の情報を取得するためのものです。Mac OS X 10.7 にはあらかじめ同等のものがインストールされています。<a href="http://www.macruby.org/files/">http://www.macruby.org/files/</a> から <em>BridgeSupport Preview 3.zip</em> をダウンロードしインストールします。</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,380 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>ツイートを検索して表示してみよう - MacRuby DoJo (道場)</title>
+  <meta name="author" content="Watson">
+
+  
+  <meta name="description" content="TableView の使い方を TableView を使ってみよう に書きました。今回は Twitter のツイートを検索して、TableView に表示するアプリケーションを作ってみようと思います。 以下のように、Text Field に検索ワードを入力し該当するツイートを TableView &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/10/search_tweets">
+  <link href="/MacRuby-DoJo/favicon.png" rel="icon">
+  <link href="/MacRuby-DoJo/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/MacRuby-DoJo/javascripts/modernizr-2.0.js"></script>
+  <script src="/MacRuby-DoJo/javascripts/ender.js"></script>
+  <script src="/MacRuby-DoJo/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/MacRuby-DoJo/atom.xml" rel="alternate" title="MacRuby DoJo (道場)" type="application/atom+xml">
+  
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/MacRuby-DoJo/">MacRuby DoJo (道場)</a></h1>
+  
+  <p class="fork"><a href="https://github.com/Watson1978/MacRuby-DoJo/"><img src="/MacRuby-DoJo/images/forkme_right_darkblue_121621.png" /></a></p>
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/MacRuby-DoJo/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:watson1978.github.com/MacRuby-DoJo" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/MacRuby-DoJo/">日本語</a></li>
+  <li><a href="/MacRuby-DoJo/index.en.html">English</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">ツイートを検索して表示してみよう</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-10T17:35:00+09:00" pubdate data-updated="true">Mar 10<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>TableView の使い方を <a href="/MacRuby-DoJo/blog/2012/03/10/tableview-basic/">TableView を使ってみよう</a> に書きました。今回は Twitter のツイートを検索して、TableView に表示するアプリケーションを作ってみようと思います。</p>
+
+<p>以下のように、Text Field に検索ワードを入力し該当するツイートを TableView に表示します。</p>
+
+<p><img src="/MacRuby-DoJo/images/ja/search_tweets/search_tweets.png" alt="image" /></p>
+
+<h2>使用するアウトレットとアクションメソッド</h2>
+
+<p>使用するアウトレットは以下のとおりです。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:textField</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:tableView</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Search ボタンがクリックされた時に呼び出されるアクションメソッドとして、以下のメソッドを用意します。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="n">sender</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1"># 検索処理</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>アウトレットなどを接続</h2>
+
+<p>以下の図のように、アウトレットやアクション、データソースを接続します。</p>
+
+<p><img src="/MacRuby-DoJo/images/ja/search_tweets/connect_outlets_etc.png" alt="image" /></p>
+
+<h2>Table カラムの Identifier を指定</h2>
+
+<p>Table のカラムを以下のように指定しておきます。</p>
+
+<table class="table">
+<tr><th>カラム</th><th>identifier</th></tr>
+<tr><td>1 列目</td><td>name</td></tr>
+<tr><td>2 列目</td><td>text</td></tr>
+</table>
+
+
+<h2>検索処理を実装</h2>
+
+<p>Twitter API を用いて検索した際に、<a href="https://dev.twitter.com/docs/api/1/get/search">https://dev.twitter.com/docs/api/1/get/search</a> という形式で JSON を取得できます。これを参考に実装します。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;uri&#39;</span>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;json&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">AppDelegate</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:window</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:textField</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:tableView</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="n">sender</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">text</span> <span class="o">=</span> <span class="n">textField</span><span class="o">.</span><span class="n">stringValue</span>  <span class="c1"># Text Field から文字列を取得</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">length</span> <span class="o">&gt;</span> <span class="mi">0</span>
+</span><span class='line'>      <span class="n">query</span> <span class="o">=</span> <span class="no">URI</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>    <span class="c1"># 検索クエリーをエスケープ</span>
+</span><span class='line'>      <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;http://search.twitter.com/search.json?q=</span><span class="si">#{</span><span class="n">query</span><span class="si">}</span><span class="s2">&amp;rpp=30&quot;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="c1"># HTTP アクセスし、レスポンスを取得</span>
+</span><span class='line'>      <span class="n">nsurl</span> <span class="o">=</span> <span class="no">NSURL</span><span class="o">.</span><span class="n">URLWithString</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">str</span> <span class="o">=</span> <span class="no">NSString</span><span class="o">.</span><span class="n">stringWithContentsOfURL</span><span class="p">(</span><span class="n">nsurl</span><span class="p">,</span>
+</span><span class='line'>                                             <span class="n">encoding</span><span class="p">:</span> <span class="no">NSUTF8StringEncoding</span><span class="p">,</span>
+</span><span class='line'>                                             <span class="n">error</span><span class="p">:</span> <span class="kp">nil</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">json</span> <span class="o">=</span> <span class="no">JSON</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">str</span><span class="p">)</span>
+</span><span class='line'>      <span class="vi">@search_result</span> <span class="o">=</span> <span class="n">json</span><span class="o">[</span><span class="s1">&#39;results&#39;</span><span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="c1"># TableView をリロード</span>
+</span><span class='line'>      <span class="c1"># numberOfRowsInTableView や tableView:objectValueForTableColumn:row:</span>
+</span><span class='line'>      <span class="c1"># が呼びだされます</span>
+</span><span class='line'>      <span class="n">tableView</span><span class="o">.</span><span class="n">reloadData</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">numberOfRowsInTableView</span><span class="p">(</span><span class="n">aTableView</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span> <span class="k">if</span> <span class="vi">@search_result</span><span class="o">.</span><span class="n">nil?</span>
+</span><span class='line'>    <span class="k">return</span> <span class="vi">@search_result</span><span class="o">.</span><span class="n">size</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">tableView</span><span class="p">(</span><span class="n">aTableView</span><span class="p">,</span>
+</span><span class='line'>                <span class="n">objectValueForTableColumn</span><span class="p">:</span> <span class="n">aTableColumn</span><span class="p">,</span>
+</span><span class='line'>                <span class="n">row</span><span class="p">:</span> <span class="n">rowIndex</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">case</span> <span class="n">aTableColumn</span><span class="o">.</span><span class="n">identifier</span>
+</span><span class='line'>    <span class="k">when</span> <span class="s2">&quot;name&quot;</span>
+</span><span class='line'>      <span class="k">return</span> <span class="vi">@search_result</span><span class="o">[</span><span class="n">rowIndex</span><span class="o">][</span><span class="s1">&#39;from_user&#39;</span><span class="o">]</span>
+</span><span class='line'>    <span class="k">when</span> <span class="s2">&quot;text&quot;</span>
+</span><span class='line'>      <span class="k">return</span> <span class="vi">@search_result</span><span class="o">[</span><span class="n">rowIndex</span><span class="o">][</span><span class="s1">&#39;text&#39;</span><span class="o">]</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>検索結果を取得する際に <code>NSString.stringWithContentsOfURL</code> を使用していますが、Ruby の <code>Net::HTTP</code> を使用することもできます。また、JSON の解析も Mac OS X 10.7 以降に限定すれば <a href="https://developer.apple.com/library/mac/#documentation/Foundation/Reference/NSJSONSerialization_Class/Reference/Reference.html">NSJSONSerialization</a> を使うことができます。Ruby メソッドと Mac OS X API をいろいろ組み合わせて使用できますので、用途や利便性などで使いわけてみてください。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Watson</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-10T17:35:00+09:00" pubdate data-updated="true">Mar 10<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/MacRuby-DoJo/blog/categories/macruby/'>MacRuby</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/10/search_tweets/" data-via="" data-counturl="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/10/search_tweets/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/MacRuby-DoJo/blog/2012/03/10/tableview-basic/" title="Previous Post: TableView を使ってみよう">&laquo; TableView を使ってみよう</a>
+      
+      
+        <a class="basic-alignment right" href="/MacRuby-DoJo/blog/2012/03/12/intro-new-project/" title="Next Post: Creates a New Project">Creates a New Project &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/MacRuby-DoJo/blog/2012/03/21/organizer/">Organizer で API を調べてみよう</a>
+      </li>
+    
+      <li class="post">
+        <a href="/MacRuby-DoJo/blog/2012/03/19/intro-deployment/">Embeds the MacRuby into Application</a>
+      </li>
+    
+      <li class="post">
+        <a href="/MacRuby-DoJo/blog/2012/03/18/intro-stopwatch/">Creates a Stopwatch Application</a>
+      </li>
+    
+      <li class="post">
+        <a href="/MacRuby-DoJo/blog/2012/03/15/webkit/">WebKit フレームワークを使ってみよう</a>
+      </li>
+    
+      <li class="post">
+        <a href="/MacRuby-DoJo/blog/2012/03/12/intro-new-project/">Creates a New Project</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Watson -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
