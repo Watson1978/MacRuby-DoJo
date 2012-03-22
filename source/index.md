@@ -1,7 +1,7 @@
 ---
 layout: page
 title: 目次
-date: 2012-03-21 22:00
+date: 2012-03-22 16:30
 comments: true
 sharing: true
 footer: true
@@ -22,7 +22,7 @@ sidebar: true
 - [TableView を使ってみよう](/blog/2012/03/10/tableview-basic/)
 - [ツイートを検索して表示してみよう](/blog/2012/03/10/search_tweets/)
 - [WebKit フレームワークを使ってみよう](/blog/2012/03/15/webkit/)
-
+- [RubyGems を利用して Markdown ファイルを表示しよう](/blog/2012/03/22/markdown-viewer/)
 
 ## リンク
 - [MacRuby: The Definitive Guide](http://ofps.oreilly.com/titles/9781449380373/)
