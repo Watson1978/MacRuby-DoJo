@@ -4,7 +4,7 @@
   <title><![CDATA[Category: MacRuby | MacRuby DoJo (道場)]]></title>
   <link href="http://watson1978.github.com/MacRuby-DoJo/blog/categories/macruby/atom.xml" rel="self"/>
   <link href="http://watson1978.github.com/MacRuby-DoJo/"/>
-  <updated>2012-03-22T16:58:30+09:00</updated>
+  <updated>2012-03-22T21:08:23+09:00</updated>
   <id>http://watson1978.github.com/MacRuby-DoJo/</id>
   <author>
     <name><![CDATA[Watson]]></name>
@@ -82,7 +82,7 @@ CRuby 1.9 では <code>require 'rubygems'</code> が不要なのですが、MacR
 
 <p><img src="/images/ja/markdown-viewer/open_panel.png" alt="image" /></p>
 
-<p>オープンパネルの表示には <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Reference/ApplicationKit/Classes/NSOpenPanel_Class/Reference/Reference.html">NSOpenPanel</a> を利用します。</p>
+<p>オープンパネルの表示には <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Reference/ApplicationKit/Classes/NSOpenPanel_Class/Reference/Reference.html">NSOpenPanel</a> を利用し、以下のように実装します。</p>
 
 <p>```ruby
   def open(sender)</p>
@@ -95,7 +95,7 @@ result = panel.runModalForDirectory(NSHomeDirectory(),                # パネ�
                                     file: nil,                        # 選択できるファイル名を指定。指定しないので nil とする
                                     types: ["md", "mkd", "markdown"]) # 選択できるファイル拡張子を指定。
 if(result == NSOKButton)
-  # パネルの OK がクリックされたときの処理
+  # パネルの Open がクリックされたときの処理
   path = panel.filename # 選択されたファイルのパスを取得
 
   # ファイルを読む
@@ -146,7 +146,7 @@ require 'rdiscount'</p>
 EOS</p>
 
 <pre><code>  # WebView に HTML を表示
-  webView.mainFrame.loadHTMLString(html, baseURL:nil)
+  webView.mainFrame.loadHTMLString(html, baseURL: nil)
 </code></pre>
 
 <p>```</p>
@@ -197,7 +197,7 @@ result = panel.runModalForDirectory(NSHomeDirectory(),                # パネ�
                                     file: nil,                        # 選択できるファイル名を指定。指定しないので nil とする
                                     types: ["md", "mkd", "markdown"]) # 選択できるファイル拡張子を指定。
 if(result == NSOKButton)
-  # パネルの OK がクリックされたときの処理
+  # パネルの Open がクリックされたときの処理
   path = panel.filename # 選択されたファイルのパスを取得
 
   # ファイルを読む
@@ -223,7 +223,7 @@ if(result == NSOKButton)
 EOS</p>
 
 <pre><code>  # WebView に HTML を表示
-  webView.mainFrame.loadHTMLString(html, baseURL:nil)
+  webView.mainFrame.loadHTMLString(html, baseURL: nil)
 end
 </code></pre>
 

@@ -162,7 +162,7 @@ CRuby 1.9 では <code>require 'rubygems'</code> が不要なのですが、MacR
 
 <p><img src="/MacRuby-DoJo/images/ja/markdown-viewer/open_panel.png" alt="image" /></p>
 
-<p>オープンパネルの表示には <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Reference/ApplicationKit/Classes/NSOpenPanel_Class/Reference/Reference.html">NSOpenPanel</a> を利用します。</p>
+<p>オープンパネルの表示には <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Reference/ApplicationKit/Classes/NSOpenPanel_Class/Reference/Reference.html">NSOpenPanel</a> を利用し、以下のように実装します。</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -189,7 +189,7 @@ CRuby 1.9 では <code>require 'rubygems'</code> が不要なのですが、MacR
 </span><span class='line'>                                        <span class="n">file</span><span class="p">:</span> <span class="kp">nil</span><span class="p">,</span>                        <span class="c1"># 選択できるファイル名を指定。指定しないので nil とする</span>
 </span><span class='line'>                                        <span class="n">types</span><span class="p">:</span> <span class="o">[</span><span class="s2">&quot;md&quot;</span><span class="p">,</span> <span class="s2">&quot;mkd&quot;</span><span class="p">,</span> <span class="s2">&quot;markdown&quot;</span><span class="o">]</span><span class="p">)</span> <span class="c1"># 選択できるファイル拡張子を指定。</span>
 </span><span class='line'>    <span class="k">if</span><span class="p">(</span><span class="n">result</span> <span class="o">==</span> <span class="no">NSOKButton</span><span class="p">)</span>
-</span><span class='line'>      <span class="c1"># パネルの OK がクリックされたときの処理</span>
+</span><span class='line'>      <span class="c1"># パネルの Open がクリックされたときの処理</span>
 </span><span class='line'>      <span class="n">path</span> <span class="o">=</span> <span class="n">panel</span><span class="o">.</span><span class="n">filename</span> <span class="c1"># 選択されたファイルのパスを取得</span>
 </span><span class='line'>
 </span><span class='line'>      <span class="c1"># ファイルを読む</span>
@@ -257,7 +257,7 @@ CRuby 1.9 では <code>require 'rubygems'</code> が不要なのですが、MacR
 </span><span class='line'><span class="sh">&lt;/html&gt;</span>
 </span><span class='line'><span class="no">EOS</span>
 </span><span class='line'>  <span class="c1"># WebView に HTML を表示</span>
-</span><span class='line'>  <span class="n">webView</span><span class="o">.</span><span class="n">mainFrame</span><span class="o">.</span><span class="n">loadHTMLString</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="n">baseURL</span><span class="ss">:nil</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">webView</span><span class="o">.</span><span class="n">mainFrame</span><span class="o">.</span><span class="n">loadHTMLString</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="n">baseURL</span><span class="p">:</span> <span class="kp">nil</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -348,7 +348,7 @@ Deployment するとロードパスの探索範囲内に rdiscount が埋め込�
 </span><span class='line'>                                        <span class="n">file</span><span class="p">:</span> <span class="kp">nil</span><span class="p">,</span>                        <span class="c1"># 選択できるファイル名を指定。指定しないので nil とする</span>
 </span><span class='line'>                                        <span class="n">types</span><span class="p">:</span> <span class="o">[</span><span class="s2">&quot;md&quot;</span><span class="p">,</span> <span class="s2">&quot;mkd&quot;</span><span class="p">,</span> <span class="s2">&quot;markdown&quot;</span><span class="o">]</span><span class="p">)</span> <span class="c1"># 選択できるファイル拡張子を指定。</span>
 </span><span class='line'>    <span class="k">if</span><span class="p">(</span><span class="n">result</span> <span class="o">==</span> <span class="no">NSOKButton</span><span class="p">)</span>
-</span><span class='line'>      <span class="c1"># パネルの OK がクリックされたときの処理</span>
+</span><span class='line'>      <span class="c1"># パネルの Open がクリックされたときの処理</span>
 </span><span class='line'>      <span class="n">path</span> <span class="o">=</span> <span class="n">panel</span><span class="o">.</span><span class="n">filename</span> <span class="c1"># 選択されたファイルのパスを取得</span>
 </span><span class='line'>
 </span><span class='line'>      <span class="c1"># ファイルを読む</span>
@@ -369,7 +369,7 @@ Deployment するとロードパスの探索範囲内に rdiscount が埋め込�
 </span><span class='line'><span class="sh">&lt;/html&gt;</span>
 </span><span class='line'><span class="no">EOS</span>
 </span><span class='line'>      <span class="c1"># WebView に HTML を表示</span>
-</span><span class='line'>      <span class="n">webView</span><span class="o">.</span><span class="n">mainFrame</span><span class="o">.</span><span class="n">loadHTMLString</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="n">baseURL</span><span class="ss">:nil</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">webView</span><span class="o">.</span><span class="n">mainFrame</span><span class="o">.</span><span class="n">loadHTMLString</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="n">baseURL</span><span class="p">:</span> <span class="kp">nil</span><span class="p">)</span>
 </span><span class='line'>    <span class="k">end</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'>
