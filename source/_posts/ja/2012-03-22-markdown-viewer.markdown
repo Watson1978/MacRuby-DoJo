@@ -67,7 +67,7 @@ CRuby 1.9 では <code>require 'rubygems'</code> が不要なのですが、MacR
 
 ![image](/images/ja/markdown-viewer/open_panel.png)
 
-オープンパネルの表示には [NSOpenPanel](https://developer.apple.com/library/mac/#documentation/Cocoa/Reference/ApplicationKit/Classes/NSOpenPanel_Class/Reference/Reference.html) を利用します。
+オープンパネルの表示には [NSOpenPanel](https://developer.apple.com/library/mac/#documentation/Cocoa/Reference/ApplicationKit/Classes/NSOpenPanel_Class/Reference/Reference.html) を利用し、以下のように実装します。
 
 ```ruby
   def open(sender)
@@ -79,7 +79,7 @@ CRuby 1.9 では <code>require 'rubygems'</code> が不要なのですが、MacR
                                         file: nil,                        # 選択できるファイル名を指定。指定しないので nil とする
                                         types: ["md", "mkd", "markdown"]) # 選択できるファイル拡張子を指定。
     if(result == NSOKButton)
-      # パネルの OK がクリックされたときの処理
+      # パネルの Open がクリックされたときの処理
       path = panel.filename # 選択されたファイルのパスを取得
 
       # ファイルを読む
@@ -122,7 +122,7 @@ class AppDelegate
 </html>
 EOS
       # WebView に HTML を表示
-      webView.mainFrame.loadHTMLString(html, baseURL:nil)
+      webView.mainFrame.loadHTMLString(html, baseURL: nil)
 ```
 
 `webView.mainFrame` の `loadHTMLString` を用いると作成した HTML を表示できます。
@@ -165,7 +165,7 @@ class AppDelegate
                                         file: nil,                        # 選択できるファイル名を指定。指定しないので nil とする
                                         types: ["md", "mkd", "markdown"]) # 選択できるファイル拡張子を指定。
     if(result == NSOKButton)
-      # パネルの OK がクリックされたときの処理
+      # パネルの Open がクリックされたときの処理
       path = panel.filename # 選択されたファイルのパスを取得
 
       # ファイルを読む
@@ -186,7 +186,7 @@ class AppDelegate
 </html>
 EOS
       # WebView に HTML を表示
-      webView.mainFrame.loadHTMLString(html, baseURL:nil)
+      webView.mainFrame.loadHTMLString(html, baseURL: nil)
     end
   end
 
