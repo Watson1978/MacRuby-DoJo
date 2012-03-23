@@ -11,11 +11,11 @@ Application that you created has been just worked with environment which install
 
 Therefore, MacRuby may embed itself into your application. The application which embedded MacRuby will work everywhere.
 
-You choose "Deployment" and click [Run] as a following figure, then MacRuby is embedded into your application.
+You choose "Deployment" and click [Run] like the following figure. MacRuby is embedded into your application.
 
 ![image](/images/en/intro-deployment/deployment.png)
 
-You can specify several options with "Deployment" in "Arguments" as a following figure.
+You can specify several options with "Deployment" in "Arguments" like the following figure.
 
 ![image](/images/en/intro-deployment/deployment_option.png)
 

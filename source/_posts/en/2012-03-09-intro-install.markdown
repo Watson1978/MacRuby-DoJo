@@ -42,13 +42,13 @@ $ sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer/
 ## Install Command Line Tools
 Since Xcode 4.3, Command Line Tools (compiler, etc) became to additional package. Install Command Line Tools also.
 
-1. Choose a [Xcode]->[Preferences…] form Xcode's menu to display Preferences.
+1. Choose a [Xcode]->[Preferences...] form Xcode's menu to display Preferences.
 2. Choose a Downloads tab like the following figure, and install Command Line Tools.
 
 ![image](/images/en/intro-install/command_line_tools.png)
 
 
-# Install MacRuby
+## Install MacRuby
 Next step, install MacRuby.
 
 ![image](/images/en/intro-install/macruby_org.png)
@@ -58,5 +58,5 @@ MacRuby 0.10 has been released now. However, unfortunately, it does not support 
 ![image](/images/en/intro-install/nightly_build.png)
 
 
-# Install BridgeSupport Preview 3
+## Install BridgeSupport Preview 3
 **For Mac OS X 10.6.8 users only**, need to install BridgeSupport Preview 3. BridgeSupport is used to get information about the Framework provided by the Mac OS X. In Mac OS X 10.7 environment, it has been pre-installed. You could get BridgeSupport Preview 3 from [http://www.macruby.org/files/](http://www.macruby.org/files/) as *BridgeSupport Preview 3.zip*.
