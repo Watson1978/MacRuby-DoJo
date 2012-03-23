@@ -13,14 +13,14 @@ Show an application’s User Interface in following figure. We will call this ap
 
 ![image](/images/en/intro-stopwatch/stopwatch.png)
 
-"StopWatch" has below behaviors.
+The "StopWatch" has below behaviors.
 
 1. Run a timer if start button is clicked.
 2. Stop a timer if stop button is clicked.
 3. A timer value is displayed in Text Field.
 
 
-## Design User Interface
+## User Interface
 To start the design, need some operations in Xcode.
 
 Choose a *MainMenu.xib*.
@@ -31,7 +31,7 @@ Choose a [Window - StopWatch] to display Window for design.
 
 ![image](/images/en/intro-stopwatch/window_stopwatch.png)
 
-Click an icon in toolbar in following figure. After then, Object Library is displayed.
+Click an icon in toolbar like the following figure. After that, Object Library is displayed.
 
 ![image](/images/en/intro-stopwatch/show_object_library.png)
 
@@ -41,9 +41,9 @@ You have been completed to prepare to design. Then, place the User Interface par
 
 
 ## Connect the Outlets
-"StopWatch" application sets a timer value into Text Field. However, if Text Field is just placed on Window, cannot set a value into there. We should use the Outlets to set a value or to get a status of User Interface parts.
+The "StopWatch" application sets a timer value into Text Field. However, if Text Field is just placed on Window, cannot set a value into there. We should use the Outlets to set a value or to get a status of User Interface parts.
 
-To use the Outlets, need to write a program code. Choose a *AppDelegate.rb*, then add a `attr_accessor :textField` to AppDelegate class.
+To use the Outlets, need to write a program code. Choose a *AppDelegate.rb*. After that, add a `attr_accessor :textField` to AppDelegate class.
 
 ```ruby
 class AppDelegate
@@ -51,21 +51,21 @@ class AppDelegate
   attr_accessor :textField # Outlet
 ```
 
-Return to *MainMenu.xib* screen, connect the Outlet. Press <kbd>control</kbd> key, and drag from App Delegate to Text Field.
+Return to *MainMenu.xib* screen, connect the Outlet. Press <kbd>control</kbd> key and drag from App Delegate to Text Field.
 
 ![image](/images/en/intro-stopwatch/connect_outlet.png)
 
-A list of Outlets will be displayed, then choose a `textField` to connect it.
+A list of Outlets will be displayed, and then choose a `textField` to connect it.
 
 ![image](/images/en/intro-stopwatch/outlets.png)
 
-You can  set/get the value of the Text Field through the textField accessor.
+You can set/get the value of the Text Field through the textField accessor.
 
 
 ## Connect the Actions
 When you clicked start/stop button, still nothing happens. You need to set the behaviors when the buttons are clicked.
 
-Choose an *AppDelegate.rb*, then add `startTimer` and `stopTimer` methods as following.
+Choose an *AppDelegate.rb*. After that, add `startTimer` and `stopTimer` methods as following.
 
 ```ruby
 class AppDelegate
@@ -86,11 +86,11 @@ class AppDelegate
 end
 ```
 
-Return to *MainMenu.xib* screen, connect the Actions. Press control key, and drag from start button to App Delegate.
+Return to *MainMenu.xib* screen, connect the Actions. Press control key and drag from start button to App Delegate.
 
 ![image](/images/en/intro-stopwatch/connect_action.png)
 
-A list of Actions will be displayed, then choose a `startTimer` to connect it.
+A list of Actions will be displayed, and then choose a `startTimer` to connect it.
 
 ![image](/images/en/intro-stopwatch/actions.png)
 
@@ -99,7 +99,7 @@ Connect stop button to `stopTimer` in the same way. Each methods will be called 
 `stopTimer`/`startTimer` are also known as the action method.
 
 <div class="note">
-When you write an action method, you <strong>must</strong> provide a <code>sender</code> argument. If methods does not have a <code>sender</code> argument, it is not recognized as an action method.
+If you write an action method, you <strong>must</strong> provide a <code>sender</code> argument. If methods does not have a <code>sender</code> argument, it is not recognized as an action method.
 </div>
 
 
@@ -162,6 +162,6 @@ Invoke `@timer.invalidate` to stop a timer. Invoke `textField.setStringValue(str
 
 "Stopwatch" application is complete!
 
-Change to "StopWatch" from "Deployment" in Scheme. Then, Click [Run]. "Stopwatch" application will be running!!
+Change to "StopWatch" from "Deployment" in Scheme. After that, Click [Run]. "Stopwatch" application will be running!!
 
 ![image](/images/en/intro-stopwatch/scheme.png)

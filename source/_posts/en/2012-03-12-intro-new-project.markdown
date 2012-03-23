@@ -19,4 +19,4 @@ Choose a [MacRuby Application], and click a [Next].
 
 ![image](/images/en/intro-new-project/product_name.png)
 
-Input your Project Name, and then, choose location for New Project. You would be able to see New Project.
+Input your Project Name, and then, choose a location for New Project. You would be able to see New Project.
