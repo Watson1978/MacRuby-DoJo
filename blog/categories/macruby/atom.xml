@@ -4,7 +4,7 @@
   <title><![CDATA[Category: MacRuby | MacRuby DoJo (道場)]]></title>
   <link href="http://watson1978.github.com/MacRuby-DoJo/blog/categories/macruby/atom.xml" rel="self"/>
   <link href="http://watson1978.github.com/MacRuby-DoJo/"/>
-  <updated>2012-03-22T21:08:23+09:00</updated>
+  <updated>2012-03-23T11:40:03+09:00</updated>
   <id>http://watson1978.github.com/MacRuby-DoJo/</id>
   <author>
     <name><![CDATA[Watson]]></name>
@@ -302,7 +302,7 @@ Usage: macruby_deploy [options] application-bundle</p>
 
 <p><img src="/images/en/intro-stopwatch/stopwatch.png" alt="image" /></p>
 
-<p>"StopWatch" has below behaviors.</p>
+<p>The "StopWatch" has below behaviors.</p>
 
 <ol>
 <li>Run a timer if start button is clicked.</li>
@@ -311,7 +311,7 @@ Usage: macruby_deploy [options] application-bundle</p>
 </ol>
 
 
-<h2>Design User Interface</h2>
+<h2>User Interface</h2>
 
 <p>To start the design, need some operations in Xcode.</p>
 
@@ -323,7 +323,7 @@ Usage: macruby_deploy [options] application-bundle</p>
 
 <p><img src="/images/en/intro-stopwatch/window_stopwatch.png" alt="image" /></p>
 
-<p>Click an icon in toolbar in following figure. After then, Object Library is displayed.</p>
+<p>Click an icon in toolbar like the following figure. After that, Object Library is displayed.</p>
 
 <p><img src="/images/en/intro-stopwatch/show_object_library.png" alt="image" /></p>
 
@@ -333,9 +333,9 @@ Usage: macruby_deploy [options] application-bundle</p>
 
 <h2>Connect the Outlets</h2>
 
-<p>"StopWatch" application sets a timer value into Text Field. However, if Text Field is just placed on Window, cannot set a value into there. We should use the Outlets to set a value or to get a status of User Interface parts.</p>
+<p>The "StopWatch" application sets a timer value into Text Field. However, if Text Field is just placed on Window, cannot set a value into there. We should use the Outlets to set a value or to get a status of User Interface parts.</p>
 
-<p>To use the Outlets, need to write a program code. Choose a <em>AppDelegate.rb</em>, then add a <code>attr_accessor :textField</code> to AppDelegate class.</p>
+<p>To use the Outlets, need to write a program code. Choose a <em>AppDelegate.rb</em>. After that, add a <code>attr_accessor :textField</code> to AppDelegate class.</p>
 
 <p><code>ruby
 class AppDelegate
@@ -343,21 +343,21 @@ class AppDelegate
   attr_accessor :textField # Outlet
 </code></p>
 
-<p>Return to <em>MainMenu.xib</em> screen, connect the Outlet. Press <kbd>control</kbd> key, and drag from App Delegate to Text Field.</p>
+<p>Return to <em>MainMenu.xib</em> screen, connect the Outlet. Press <kbd>control</kbd> key and drag from App Delegate to Text Field.</p>
 
 <p><img src="/images/en/intro-stopwatch/connect_outlet.png" alt="image" /></p>
 
-<p>A list of Outlets will be displayed, then choose a <code>textField</code> to connect it.</p>
+<p>A list of Outlets will be displayed, and then choose a <code>textField</code> to connect it.</p>
 
 <p><img src="/images/en/intro-stopwatch/outlets.png" alt="image" /></p>
 
-<p>You can  set/get the value of the Text Field through the textField accessor.</p>
+<p>You can set/get the value of the Text Field through the textField accessor.</p>
 
 <h2>Connect the Actions</h2>
 
 <p>When you clicked start/stop button, still nothing happens. You need to set the behaviors when the buttons are clicked.</p>
 
-<p>Choose an <em>AppDelegate.rb</em>, then add <code>startTimer</code> and <code>stopTimer</code> methods as following.</p>
+<p>Choose an <em>AppDelegate.rb</em>. After that, add <code>startTimer</code> and <code>stopTimer</code> methods as following.</p>
 
 <p>```ruby
 class AppDelegate
@@ -387,11 +387,11 @@ class AppDelegate
 <p>end
 ```</p>
 
-<p>Return to <em>MainMenu.xib</em> screen, connect the Actions. Press control key, and drag from start button to App Delegate.</p>
+<p>Return to <em>MainMenu.xib</em> screen, connect the Actions. Press control key and drag from start button to App Delegate.</p>
 
 <p><img src="/images/en/intro-stopwatch/connect_action.png" alt="image" /></p>
 
-<p>A list of Actions will be displayed, then choose a <code>startTimer</code> to connect it.</p>
+<p>A list of Actions will be displayed, and then choose a <code>startTimer</code> to connect it.</p>
 
 <p><img src="/images/en/intro-stopwatch/actions.png" alt="image" /></p>
 
@@ -400,7 +400,7 @@ class AppDelegate
 <p><code>stopTimer</code>/<code>startTimer</code> are also known as the action method.</p>
 
 <div class="note">
-When you write an action method, you <strong>must</strong> provide a <code>sender</code> argument. If methods does not have a <code>sender</code> argument, it is not recognized as an action method.
+If you write an action method, you <strong>must</strong> provide a <code>sender</code> argument. If methods does not have a <code>sender</code> argument, it is not recognized as an action method.
 </div>
 
 
@@ -478,7 +478,7 @@ end
 
 <p>"Stopwatch" application is complete!</p>
 
-<p>Change to "StopWatch" from "Deployment" in Scheme. Then, Click [Run]. "Stopwatch" application will be running!!</p>
+<p>Change to "StopWatch" from "Deployment" in Scheme. After that, Click [Run]. "Stopwatch" application will be running!!</p>
 
 <p><img src="/images/en/intro-stopwatch/scheme.png" alt="image" /></p>
 ]]></content>
