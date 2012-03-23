@@ -4,7 +4,7 @@
   <title><![CDATA[MacRuby DoJo (道場)]]></title>
   <link href="http://watson1978.github.com/MacRuby-DoJo/atom.xml" rel="self"/>
   <link href="http://watson1978.github.com/MacRuby-DoJo/"/>
-  <updated>2012-03-23T11:40:03+09:00</updated>
+  <updated>2012-03-23T22:24:00+09:00</updated>
   <id>http://watson1978.github.com/MacRuby-DoJo/</id>
   <author>
     <name><![CDATA[Watson]]></name>
@@ -339,11 +339,11 @@ Deployment するとロードパスの探索範囲内に rdiscount が埋め込�
 
 <p>Therefore, MacRuby may embed itself into your application. The application which embedded MacRuby will work everywhere.</p>
 
-<p>You choose &#8220;Deployment&#8221; and click [Run] as a following figure, then MacRuby is embedded into your application.</p>
+<p>You choose &#8220;Deployment&#8221; and click [Run] like the following figure. MacRuby is embedded into your application.</p>
 
 <p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-deployment/deployment.png" alt="image" /></p>
 
-<p>You can specify several options with &#8220;Deployment&#8221; in &#8220;Arguments&#8221; as a following figure.</p>
+<p>You can specify several options with &#8220;Deployment&#8221; in &#8220;Arguments&#8221; like the following figure.</p>
 
 <p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-deployment/deployment_option.png" alt="image" /></p>
 
@@ -1259,14 +1259,14 @@ recommend to be running the following command on the Terminal.
 <p>Since Xcode 4.3, Command Line Tools (compiler, etc) became to additional package. Install Command Line Tools also.</p>
 
 <ol>
-<li>Choose a [Xcode]->[Preferences…] form Xcode&#8217;s menu to display Preferences.</li>
+<li>Choose a [Xcode]->[Preferences&#8230;] form Xcode&#8217;s menu to display Preferences.</li>
 <li>Choose a Downloads tab like the following figure, and install Command Line Tools.</li>
 </ol>
 
 
 <p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-install/command_line_tools.png" alt="image" /></p>
 
-<h1>Install MacRuby</h1>
+<h2>Install MacRuby</h2>
 
 <p>Next step, install MacRuby.</p>
 
@@ -1276,7 +1276,7 @@ recommend to be running the following command on the Terminal.
 
 <p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-install/nightly_build.png" alt="image" /></p>
 
-<h1>Install BridgeSupport Preview 3</h1>
+<h2>Install BridgeSupport Preview 3</h2>
 
 <p><strong>For Mac OS X 10.6.8 users only</strong>, need to install BridgeSupport Preview 3. BridgeSupport is used to get information about the Framework provided by the Mac OS X. In Mac OS X 10.7 environment, it has been pre-installed. You could get BridgeSupport Preview 3 from <a href="http://www.macruby.org/files/">http://www.macruby.org/files/</a> as <em>BridgeSupport Preview 3.zip</em>.</p>
 ]]></content>

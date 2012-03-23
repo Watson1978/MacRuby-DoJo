@@ -4,7 +4,7 @@
   <title><![CDATA[Category: MacRuby | MacRuby DoJo (道場)]]></title>
   <link href="http://watson1978.github.com/MacRuby-DoJo/blog/categories/macruby/atom.xml" rel="self"/>
   <link href="http://watson1978.github.com/MacRuby-DoJo/"/>
-  <updated>2012-03-23T11:40:03+09:00</updated>
+  <updated>2012-03-23T22:24:00+09:00</updated>
   <id>http://watson1978.github.com/MacRuby-DoJo/</id>
   <author>
     <name><![CDATA[Watson]]></name>
@@ -262,11 +262,11 @@ end
 
 <p>Therefore, MacRuby may embed itself into your application. The application which embedded MacRuby will work everywhere.</p>
 
-<p>You choose "Deployment" and click [Run] as a following figure, then MacRuby is embedded into your application.</p>
+<p>You choose "Deployment" and click [Run] like the following figure. MacRuby is embedded into your application.</p>
 
 <p><img src="/images/en/intro-deployment/deployment.png" alt="image" /></p>
 
-<p>You can specify several options with "Deployment" in "Arguments" as a following figure.</p>
+<p>You can specify several options with "Deployment" in "Arguments" like the following figure.</p>
 
 <p><img src="/images/en/intro-deployment/deployment_option.png" alt="image" /></p>
 
