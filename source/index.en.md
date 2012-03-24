@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Contents
-date: 2012-03-18 00:00
+date: 2012-03-24 10:00
 comments: true
 sharing: true
 footer: true
@@ -14,7 +14,7 @@ sidebar: true
 - [Creates a Stopwatch Application](/blog/2012/03/18/intro-stopwatch/)
 - Creates the stopwatch application (with Thread)
 - Corresponding to resize the Window
-- Changes the application's icon
+- [Changes an Application's Icon](/blog/2012/03/24/intro-icon/)
 - [Embeds the MacRuby into Application](/blog/2012/03/19/intro-deployment/)
 
 
