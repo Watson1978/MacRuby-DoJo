@@ -4,7 +4,7 @@
   <title><![CDATA[MacRuby DoJo (道場)]]></title>
   <link href="http://watson1978.github.com/MacRuby-DoJo/atom.xml" rel="self"/>
   <link href="http://watson1978.github.com/MacRuby-DoJo/"/>
-  <updated>2012-03-23T22:24:00+09:00</updated>
+  <updated>2012-03-24T10:25:48+09:00</updated>
   <id>http://watson1978.github.com/MacRuby-DoJo/</id>
   <author>
     <name><![CDATA[Watson]]></name>
@@ -12,6 +12,41 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Changes an Application's Icon]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/24/intro-icon/"/>
+    <updated>2012-03-24T10:00:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/24/intro-icon</id>
+    <content type="html"><![CDATA[<p>All applications which you created have a system default icon.</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-icon/default_icon.png" alt="image" /></p>
+
+<p>You can change the icon of the application to suit your needs.</p>
+
+<h2>Icon Composer</h2>
+
+<p>Prepare the image for the icon to set for your application. Convert an image to icon with Icon Composer. Icon Composer is installed along with Xcode.</p>
+
+<p>Since Xcode 4.3, launch Icon Composer with [Xcode]->[Open Developer Tool] in Xcode&#8217;s menu.</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-icon/icon_composer_xcode43.png" alt="image" /></p>
+
+<p>Previous Xcode 4.2, Icon Composer exists in <em>/Developer/Applications/Utilities/Icon Composer.app</em></p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-icon/icon_composer_xcode42.png" alt="image" /></p>
+
+<p>Some frames are shown in main screen of Icon Composer. Drag and drop prepared the image into there. After that, save it as icon.</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-icon/icns.png" alt="image" /></p>
+
+<h2>Change an Application&#8217;s Icon</h2>
+
+<p>Change an Application&#8217;s Icon with Xcode. Choose a [TARGETS] like the following figure. After that, drag and drop an icon which created with Icon Composer into [App Icon].</p>
+
+<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-icon/change_icon.png" alt="image" /></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[RubyGems を利用して Markdown ファイルを表示しよう]]></title>
