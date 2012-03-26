@@ -32,6 +32,23 @@ MacRuby には CRuby や Cocoa API に存在しない、独自のメソッドや
 ```
 
 
+### String#pointer
+文字列から Pointer クラスのオブジェクトを返します。オブジェクトは `unsigned char*` の変数に対応します。Cocoa API では String オブジェクトではなく、文字列のポインタ変数を受け付けるメソッドがあります。それらのメソッドに渡すためのデータを用意するために使用します。
+
+- pinter -> Pointer
+  - [RETURN]
+	- Pointer オブジェクトを返します。
+
+```
+>> pointer = "foo".pointer
+=> #<Pointer:0x4007ac580>
+>> data = NSData.dataWithBytes(pointer, length: "foo".length)
+=> <666f6f>
+>> data.to_str
+=> "foo"
+```
+
+
 ### String#to_data
 文字列から [NSData](https://developer.apple.com/library/mac/#documentation/Cocoa/Reference/Foundation/Classes/NSData_Class/Reference/Reference.html) クラスのオブジェクトを生成し返します。
 
@@ -56,23 +73,6 @@ MacRuby には CRuby や Cocoa API に存在しない、独自のメソッドや
 
 ```
 >> data = "foo".to_data
-=> <666f6f>
->> data.to_str
-=> "foo"
-```
-
-
-### String#pointer
-文字列から Pointer クラスのオブジェクトを返します。オブジェクトは `unsigned char*` の変数に対応します。Cocoa API では String オブジェクトではなく、文字列のポインタ変数を受け付けるメソッドがあります。それらのメソッドに渡すためのデータを用意するために使用します。
-
-- pinter -> Pointer
-  - [RETURN]
-	- Pointer オブジェクトを返します。
-
-```
->> pointer = "foo".pointer
-=> #<Pointer:0x4007ac580>
->> data = NSData.dataWithBytes(pointer, length: "foo".length)
 => <666f6f>
 >> data.to_str
 => "foo"
