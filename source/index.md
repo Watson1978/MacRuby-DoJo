@@ -1,7 +1,7 @@
 ---
 layout: page
 title: 目次
-date: 2012-03-22 16:30
+date: 2012-03-26 12:00
 comments: true
 sharing: true
 footer: true
@@ -23,6 +23,9 @@ sidebar: true
 - [ツイートを検索して表示してみよう](/blog/2012/03/10/search_tweets/)
 - [WebKit フレームワークを使ってみよう](/blog/2012/03/15/webkit/)
 - [RubyGems を利用して Markdown ファイルを表示しよう](/blog/2012/03/22/markdown-viewer/)
+
+## 中級編
+- [MacRuby 独自のメソッド](/blog/2012/03/26/original-methods/)
 
 ## リンク
 - [MacRuby: The Definitive Guide](http://ofps.oreilly.com/titles/9781449380373/)
