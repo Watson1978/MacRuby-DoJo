@@ -119,23 +119,6 @@ plist 形式の文字列から Hash オブジェクトに変換し返します�
 ```
 
 
-## Object#methods
-オブジェクトに対して呼び出せるメソッド名の一覧を返します。CRuby も Object#methods がありますが、MacRuby では `objc_methods` 引数が追加されています。
-
-- methods(include_inherited = true, objc_methods = false) -> [Symbol]
-  - [PARAM] include_inherited:
-	- 引数が false の時は Object#singleton_methods(false) と同じになります。
-  - [PARAM] objc_methods:
-	- 引数が true の時は Ruby のメソッドのほかに Cocoa API の一覧も返します。
-  - [RETURN]
-	- メソッド名の一覧を返します。
-
-```
-> "foo".methods(true, true)
-=> [:encode!, :"replaceCharactersInRange:withString:", :"getCharacters:range:", :characterAtIndex, :length, :transform, :crypt, :rpartition, :partition, :sum, :tr_s!, :tr_s, :tr!, :tr, :squeeze!, :squeeze, :delete!, :delete, :count, :reverse!, :reverse, :upto, :next!, :next, :succ!, :succ, :each_codepoint, :codepoints, :each_byte, :bytes, :each_char, :chars, :each_line, :lines, :rstrip!, :lstrip!, :strip!, :rstrip, :lstrip, :strip, :center, :rjust, :ljust, :capitalize!, :capitalize, :swapcase!, :swapcase, :upcase!, :upcase, :downcase!, :downcase, :gsub!, :gsub, :sub!, :sub, :chop!, :chop, :chomp!, :chomp, :to_f, :chr, :ord, :oct, :hex, :to_i, :split, :scan, :=~, :match, :dump, :inspect, :intern, :to_sym, :to_str, :to_s, :end_with?, :start_with?, :include?, :eql?, :casecmp, :<=>, :==, :concat, :<<, :%, :*, :+, :rindex, :index, :insert, :slice!, :slice, :[]=, :[], :ascii_only?, :valid_encoding?, :force_encoding, :pointer, :to_data, :setbyte, :getbyte, :bytesize, :empty?, :size, :encoding, :clear, :replace, :dup, :"performSelector:withObject:withObject:", :"performSelector:withObject:", :performSelector, :conformsToProtocol, :dd_appendSpaces, :"replaceOccurrencesOfString:withString:options:range:", :initWithCapacity, 以下略
-```
-
-
 ### Object#to_plist
 plist 形式に変換したデータを文字列で返します。
 
@@ -150,6 +133,23 @@ plist 形式に変換したデータを文字列で返します。
 => "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n<plist version=\"1.0\">\n<dict>\n\t<key>foo</key>\n\t<integer>42</integer>\n</dict>\n</plist>\n"
 >> ["foo", "bar"].to_plist
 => "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n<plist version=\"1.0\">\n<array>\n\t<string>foo</string>\n\t<string>bar</string>\n</array>\n</plist>\n"
+```
+
+
+### Object#methods
+オブジェクトに対して呼び出せるメソッド名の一覧を返します。CRuby も Object#methods がありますが、MacRuby では `objc_methods` 引数が追加されています。
+
+- methods(include_inherited = true, objc_methods = false) -> [Symbol]
+  - [PARAM] include_inherited:
+	- 引数が false の時は Object#singleton_methods(false) と同じになります。
+  - [PARAM] objc_methods:
+	- 引数が true の時は Ruby のメソッドのほかに Cocoa API の一覧も返します。
+  - [RETURN]
+	- メソッド名の一覧を返します。
+
+```
+> "foo".methods(true, true)
+=> [:encode!, :"replaceCharactersInRange:withString:", :"getCharacters:range:", :characterAtIndex, :length, :transform, :crypt, :rpartition, :partition, :sum, :tr_s!, :tr_s, :tr!, :tr, :squeeze!, :squeeze, :delete!, :delete, :count, :reverse!, :reverse, :upto, :next!, :next, :succ!, :succ, :each_codepoint, :codepoints, :each_byte, :bytes, :each_char, :chars, :each_line, :lines, :rstrip!, :lstrip!, :strip!, :rstrip, :lstrip, :strip, :center, :rjust, :ljust, :capitalize!, :capitalize, :swapcase!, :swapcase, :upcase!, :upcase, :downcase!, :downcase, :gsub!, :gsub, :sub!, :sub, :chop!, :chop, :chomp!, :chomp, :to_f, :chr, :ord, :oct, :hex, :to_i, :split, :scan, :=~, :match, :dump, :inspect, :intern, :to_sym, :to_str, :to_s, :end_with?, :start_with?, :include?, :eql?, :casecmp, :<=>, :==, :concat, :<<, :%, :*, :+, :rindex, :index, :insert, :slice!, :slice, :[]=, :[], :ascii_only?, :valid_encoding?, :force_encoding, :pointer, :to_data, :setbyte, :getbyte, :bytesize, :empty?, :size, :encoding, :clear, :replace, :dup, :"performSelector:withObject:withObject:", :"performSelector:withObject:", :performSelector, :conformsToProtocol, :dd_appendSpaces, :"replaceOccurrencesOfString:withString:options:range:", :initWithCapacity, 以下略
 ```
 
 
