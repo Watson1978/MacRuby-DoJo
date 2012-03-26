@@ -4,7 +4,7 @@
   <title><![CDATA[MacRuby DoJo (道場)]]></title>
   <link href="http://watson1978.github.com/MacRuby-DoJo/atom.xml" rel="self"/>
   <link href="http://watson1978.github.com/MacRuby-DoJo/"/>
-  <updated>2012-03-26T12:04:55+09:00</updated>
+  <updated>2012-03-26T13:21:18+09:00</updated>
   <id>http://watson1978.github.com/MacRuby-DoJo/</id>
   <author>
     <name><![CDATA[Watson]]></name>
@@ -18,7 +18,7 @@
     <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/26/original-methods/"/>
     <updated>2012-03-26T12:00:00+09:00</updated>
     <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/26/original-methods</id>
-    <content type="html"><![CDATA[<p>MacRuby には CRuby や Cocoa API に存在しない、独自のメソッドやクラスが存在します。ここでは、それらの使い方などについて説明します。</p>
+    <content type="html"><![CDATA[<p>MacRuby には CRuby や Cocoa API に存在しない、独自のメソッドやクラスが存在します。ここでは、独自メソッドについて説明します。</p>
 
 <h2>独自メソッド</h2>
 
@@ -198,7 +198,7 @@
 
 <h3>Kernel.load_plist</h3>
 
-<p>plist を読み込み、Hash オブジェクトを返します。</p>
+<p>plist 形式の文字列から Hash オブジェクトに変換し返します。</p>
 
 <ul>
 <li>load_plist(string) -> Hash
@@ -227,6 +227,43 @@
 </pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt; data = File.read('StopWatch-Info.plist')
 </span><span class='line'>&gt;&gt; load_plist(data)
 </span><span class='line'>=&gt; {"CFBundleName"=&gt;"${PRODUCT_NAME}", "CFBundleIdentifier"=&gt;"Watson.${PRODUCT_NAME:rfc1034identifier}", "CFBundleInfoDictionaryVersion"=&gt;"6.0", "CFBundleVersion"=&gt;"1", "CFBundleExecutable"=&gt;"${EXECUTABLE_NAME}", "NSPrincipalClass"=&gt;"NSApplication", "CFBundlePackageType"=&gt;"APPL", "CFBundleIconFile"=&gt;"MacRuby.icns", "CFBundleSignature"=&gt;"????", "NSMainNibFile"=&gt;"MainMenu", "LSMinimumSystemVersion"=&gt;"${MACOSX_DEPLOYMENT_TARGET}", "CFBundleDevelopmentRegion"=&gt;"en", "CFBundleShortVersionString"=&gt;"1.0"}</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Object#methods</h2>
+
+<p>オブジェクトに対して呼び出せるメソッド名の一覧を返します。CRuby も Object#methods がありますが、MacRuby では <code>objc_methods</code> 引数が追加されています。</p>
+
+<ul>
+<li>methods(include_inherited = true, objc_methods = false) -> [Symbol]
+
+<ul>
+<li>[PARAM] include_inherited:
+
+<ul>
+<li>引数が false の時は Object#singleton_methods(false) と同じになります。</li>
+</ul>
+</li>
+<li>[PARAM] objc_methods:
+
+<ul>
+<li>引数が true の時は Ruby のメソッドのほかに Cocoa API の一覧も返します。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>メソッド名の一覧を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt; "foo".methods(true, true)
+</span><span class='line'>=&gt; [:encode!, :"replaceCharactersInRange:withString:", :"getCharacters:range:", :characterAtIndex, :length, :transform, :crypt, :rpartition, :partition, :sum, :tr_s!, :tr_s, :tr!, :tr, :squeeze!, :squeeze, :delete!, :delete, :count, :reverse!, :reverse, :upto, :next!, :next, :succ!, :succ, :each_codepoint, :codepoints, :each_byte, :bytes, :each_char, :chars, :each_line, :lines, :rstrip!, :lstrip!, :strip!, :rstrip, :lstrip, :strip, :center, :rjust, :ljust, :capitalize!, :capitalize, :swapcase!, :swapcase, :upcase!, :upcase, :downcase!, :downcase, :gsub!, :gsub, :sub!, :sub, :chop!, :chop, :chomp!, :chomp, :to_f, :chr, :ord, :oct, :hex, :to_i, :split, :scan, :=~, :match, :dump, :inspect, :intern, :to_sym, :to_str, :to_s, :end_with?, :start_with?, :include?, :eql?, :casecmp, :&lt;=&gt;, :==, :concat, :&lt;&lt;, :%, :*, :+, :rindex, :index, :insert, :slice!, :slice, :[]=, :[], :ascii_only?, :valid_encoding?, :force_encoding, :pointer, :to_data, :setbyte, :getbyte, :bytesize, :empty?, :size, :encoding, :clear, :replace, :dup, :"performSelector:withObject:withObject:", :"performSelector:withObject:", :performSelector, :conformsToProtocol, :dd_appendSpaces, :"replaceOccurrencesOfString:withString:options:range:", :initWithCapacity, 以下略</span></code></pre></td></tr></table></div></figure>
 
 
 <h3>Object#to_plist</h3>
@@ -260,6 +297,41 @@
 </span><span class='line'>=&gt; "&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt;\n&lt;!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\"&gt;\n&lt;plist version=\"1.0\"&gt;\n&lt;dict&gt;\n\t&lt;key&gt;foo&lt;/key&gt;\n\t&lt;integer&gt;42&lt;/integer&gt;\n&lt;/dict&gt;\n&lt;/plist&gt;\n"
 </span><span class='line'>&gt;&gt; ["foo", "bar"].to_plist
 </span><span class='line'>=&gt; "&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt;\n&lt;!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\"&gt;\n&lt;plist version=\"1.0\"&gt;\n&lt;array&gt;\n\t&lt;string&gt;foo&lt;/string&gt;\n\t&lt;string&gt;bar&lt;/string&gt;\n&lt;/array&gt;\n&lt;/plist&gt;\n"</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Range#relative_to</h3>
+
+<p><code>max</code> で指定した Range 範囲のオブジェクトを返します。負の範囲に対して実行した場合には、<code>max</code> との相対的な範囲となります。</p>
+
+<ul>
+<li>relative_to(max) -> Range
+
+<ul>
+<li>[PARAM] max:
+
+<ul>
+<li>Range の範囲の最大値を指定します。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>新しい Range オブジェクトを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt; (1..10).relative_to(5)
+</span><span class='line'>=&gt; 1..5
+</span><span class='line'>&gt;&gt; (-2..-1).relative_to(5)
+</span><span class='line'>=&gt; 3..4</span></code></pre></td></tr></table></div></figure>
 
 
 <h3>BasicSocket#sendfile</h3>
