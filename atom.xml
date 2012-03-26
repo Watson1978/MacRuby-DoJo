@@ -4,7 +4,7 @@
   <title><![CDATA[MacRuby DoJo (道場)]]></title>
   <link href="http://watson1978.github.com/MacRuby-DoJo/atom.xml" rel="self"/>
   <link href="http://watson1978.github.com/MacRuby-DoJo/"/>
-  <updated>2012-03-24T10:25:48+09:00</updated>
+  <updated>2012-03-26T12:04:55+09:00</updated>
   <id>http://watson1978.github.com/MacRuby-DoJo/</id>
   <author>
     <name><![CDATA[Watson]]></name>
@@ -12,6 +12,311 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[MacRuby 独自のメソッド]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/26/original-methods/"/>
+    <updated>2012-03-26T12:00:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/26/original-methods</id>
+    <content type="html"><![CDATA[<p>MacRuby には CRuby や Cocoa API に存在しない、独自のメソッドやクラスが存在します。ここでは、それらの使い方などについて説明します。</p>
+
+<h2>独自メソッド</h2>
+
+<h3>String#transform</h3>
+
+<p>文字列を大文字や小文字、または別の言語の文字列に変形することができます。<a href="http://site.icu-project.org/">ICU</a> の <a href="http://userguide.icu-project.org/transforms/general">Transforms</a> という機能を用いて実装されています。</p>
+
+<ul>
+<li>transform(pattern) -> String
+
+<ul>
+<li>[PARAM] pattern:
+
+<ul>
+<li>どのような文字列に変換するかを指定します。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>変換結果の文字列を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt; "hello".transform("Upper")
+</span><span class='line'>=&gt; "HELLO"
+</span><span class='line'>&gt;&gt; "HELLO".transform("Lower")
+</span><span class='line'>=&gt; "hello"
+</span><span class='line'>&gt;&gt; "hello".transform("Hiragana")
+</span><span class='line'>=&gt; "へっろ"
+</span><span class='line'>&gt;&gt; "hello".transform("Greek")
+</span><span class='line'>=&gt; "ἑλλο"</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>String#to_data</h3>
+
+<p>文字列から <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Reference/Foundation/Classes/NSData_Class/Reference/Reference.html">NSData</a> クラスのオブジェクトを生成し返します。</p>
+
+<ul>
+<li>to_data -> NSData
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>NSData オブジェクトを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt; "foo".to_data
+</span><span class='line'>=&gt; &lt;666f6f&gt;
+</span><span class='line'>&gt;&gt; "foo".to_data.class
+</span><span class='line'>=&gt; __NSCFData</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>NSData#to_str</h3>
+
+<p>文字列を伴う NSData オブジェクトから、文字列を返します。</p>
+
+<ul>
+<li>to_str -> String
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>文字列を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt; data = "foo".to_data
+</span><span class='line'>=&gt; &lt;666f6f&gt;
+</span><span class='line'>&gt;&gt; data.to_str
+</span><span class='line'>=&gt; "foo"</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>String#pointer</h3>
+
+<p>文字列から Pointer クラスのオブジェクトを返します。オブジェクトは <code>unsigned char*</code> の変数に対応します。Cocoa API では String オブジェクトではなく、文字列のポインタ変数を受け付けるメソッドがあります。それらのメソッドに渡すためのデータを用意するために使用します。</p>
+
+<ul>
+<li>pinter -> Pointer
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Pointer オブジェクトを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt; pointer = "foo".pointer
+</span><span class='line'>=&gt; #&lt;Pointer:0x4007ac580&gt;
+</span><span class='line'>&gt;&gt; data = NSData.dataWithBytes(pointer, length: "foo".length)
+</span><span class='line'>=&gt; &lt;666f6f&gt;
+</span><span class='line'>&gt;&gt; data.to_str
+</span><span class='line'>=&gt; "foo"</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Kernel.framework</h3>
+
+<p>フレームワークをロードします。</p>
+
+<ul>
+<li>framework -> bool
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>フレームワークのロードに成功すれば true、失敗した場合には false を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt; framework 'Foundation'
+</span><span class='line'>=&gt; true</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Kernel.load_bridge_support_file</h3>
+
+<p>Bridge Support ファイルをロードします。</p>
+
+<ul>
+<li>load_bridge_support_file(filename) -> self</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt; load_bridge_support_file("Foo.bridgesupport")
+</span><span class='line'>=&gt; main</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Kernel.load_plist</h3>
+
+<p>plist を読み込み、Hash オブジェクトを返します。</p>
+
+<ul>
+<li>load_plist(string) -> Hash
+
+<ul>
+<li>[PARAM] string:
+
+<ul>
+<li>plist データの文字列を渡します。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>plist データを Hash に変換したオブジェクトを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt; data = File.read('StopWatch-Info.plist')
+</span><span class='line'>&gt;&gt; load_plist(data)
+</span><span class='line'>=&gt; {"CFBundleName"=&gt;"${PRODUCT_NAME}", "CFBundleIdentifier"=&gt;"Watson.${PRODUCT_NAME:rfc1034identifier}", "CFBundleInfoDictionaryVersion"=&gt;"6.0", "CFBundleVersion"=&gt;"1", "CFBundleExecutable"=&gt;"${EXECUTABLE_NAME}", "NSPrincipalClass"=&gt;"NSApplication", "CFBundlePackageType"=&gt;"APPL", "CFBundleIconFile"=&gt;"MacRuby.icns", "CFBundleSignature"=&gt;"????", "NSMainNibFile"=&gt;"MainMenu", "LSMinimumSystemVersion"=&gt;"${MACOSX_DEPLOYMENT_TARGET}", "CFBundleDevelopmentRegion"=&gt;"en", "CFBundleShortVersionString"=&gt;"1.0"}</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Object#to_plist</h3>
+
+<p>plist 形式に変換したデータを文字列で返します。</p>
+
+<ul>
+<li>to_plist -> String
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>文字列を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt; "foo".to_plist
+</span><span class='line'>=&gt; "&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt;\n&lt;!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\"&gt;\n&lt;plist version=\"1.0\"&gt;\n&lt;string&gt;foo&lt;/string&gt;\n&lt;/plist&gt;\n"
+</span><span class='line'>&gt;&gt; {"foo" =&gt; 42}.to_plist
+</span><span class='line'>=&gt; "&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt;\n&lt;!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\"&gt;\n&lt;plist version=\"1.0\"&gt;\n&lt;dict&gt;\n\t&lt;key&gt;foo&lt;/key&gt;\n\t&lt;integer&gt;42&lt;/integer&gt;\n&lt;/dict&gt;\n&lt;/plist&gt;\n"
+</span><span class='line'>&gt;&gt; ["foo", "bar"].to_plist
+</span><span class='line'>=&gt; "&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt;\n&lt;!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\"&gt;\n&lt;plist version=\"1.0\"&gt;\n&lt;array&gt;\n\t&lt;string&gt;foo&lt;/string&gt;\n\t&lt;string&gt;bar&lt;/string&gt;\n&lt;/array&gt;\n&lt;/plist&gt;\n"</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>BasicSocket#sendfile</h3>
+
+<p>ソケットを介してファイルのデータを <a href="http://developer.apple.com/library/ios/#DOCUMENTATION/System/Conceptual/ManPages_iPhoneOS/man2/sendfile.2.html">sendfile(2)</a> を用いて送信します。</p>
+
+<ul>
+<li>sendfile(file, offset, length) -> Integer
+
+<ul>
+<li>[PARAM] file:
+
+<ul>
+<li>送信するファイルのパス、または IO オブジェクトを渡します。</li>
+</ul>
+</li>
+<li>[PARAM] offset:
+
+<ul>
+<li>送信を開始するデータの位置を指定します。</li>
+</ul>
+</li>
+<li>[PARAM] length:
+
+<ul>
+<li>送信するデータサイズを指定します。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>送信したデータサイズを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;socket&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">port</span> <span class="o">=</span> <span class="mi">5000</span>
+</span><span class='line'><span class="n">socket</span> <span class="o">=</span> <span class="no">TCPSocket</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;sample.txt&#39;</span>
+</span><span class='line'><span class="n">socket</span><span class="o">.</span><span class="n">sendfile</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Changes an Application's Icon]]></title>

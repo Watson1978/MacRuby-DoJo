@@ -4,7 +4,7 @@
   <title><![CDATA[Category: MacRuby | MacRuby DoJo (道場)]]></title>
   <link href="http://watson1978.github.com/MacRuby-DoJo/blog/categories/macruby/atom.xml" rel="self"/>
   <link href="http://watson1978.github.com/MacRuby-DoJo/"/>
-  <updated>2012-03-24T10:25:48+09:00</updated>
+  <updated>2012-03-26T12:04:55+09:00</updated>
   <id>http://watson1978.github.com/MacRuby-DoJo/</id>
   <author>
     <name><![CDATA[Watson]]></name>
@@ -12,6 +12,285 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[MacRuby 独自のメソッド]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/26/original-methods/"/>
+    <updated>2012-03-26T12:00:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/26/original-methods</id>
+    <content type="html"><![CDATA[<p>MacRuby には CRuby や Cocoa API に存在しない、独自のメソッドやクラスが存在します。ここでは、それらの使い方などについて説明します。</p>
+
+<h2>独自メソッド</h2>
+
+<h3>String#transform</h3>
+
+<p>文字列を大文字や小文字、または別の言語の文字列に変形することができます。<a href="http://site.icu-project.org/">ICU</a> の <a href="http://userguide.icu-project.org/transforms/general">Transforms</a> という機能を用いて実装されています。</p>
+
+<ul>
+<li>transform(pattern) -> String
+
+<ul>
+<li>[PARAM] pattern:
+
+<ul>
+<li>どのような文字列に変換するかを指定します。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>変換結果の文字列を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>```</p>
+
+<blockquote><blockquote><p>"hello".transform("Upper")
+=> "HELLO"
+"HELLO".transform("Lower")
+=> "hello"
+"hello".transform("Hiragana")
+=> "へっろ"
+"hello".transform("Greek")
+=> "ἑλλο"
+```</p></blockquote></blockquote>
+
+<h3>String#to_data</h3>
+
+<p>文字列から <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Reference/Foundation/Classes/NSData_Class/Reference/Reference.html">NSData</a> クラスのオブジェクトを生成し返します。</p>
+
+<ul>
+<li>to_data -> NSData
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>NSData オブジェクトを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>```</p>
+
+<blockquote><blockquote><p>"foo".to_data
+=> <666f6f>
+"foo".to_data.class
+=> __NSCFData
+```</p></blockquote></blockquote>
+
+<h3>NSData#to_str</h3>
+
+<p>文字列を伴う NSData オブジェクトから、文字列を返します。</p>
+
+<ul>
+<li>to_str -> String
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>文字列を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>```</p>
+
+<blockquote><blockquote><p>data = "foo".to_data
+=> <666f6f>
+data.to_str
+=> "foo"
+```</p></blockquote></blockquote>
+
+<h3>String#pointer</h3>
+
+<p>文字列から Pointer クラスのオブジェクトを返します。オブジェクトは <code>unsigned char*</code> の変数に対応します。Cocoa API では String オブジェクトではなく、文字列のポインタ変数を受け付けるメソッドがあります。それらのメソッドに渡すためのデータを用意するために使用します。</p>
+
+<ul>
+<li>pinter -> Pointer
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Pointer オブジェクトを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>```</p>
+
+<blockquote><blockquote><p>pointer = "foo".pointer
+=> #&lt;Pointer:0x4007ac580>
+data = NSData.dataWithBytes(pointer, length: "foo".length)
+=> <666f6f>
+data.to_str
+=> "foo"
+```</p></blockquote></blockquote>
+
+<h3>Kernel.framework</h3>
+
+<p>フレームワークをロードします。</p>
+
+<ul>
+<li>framework -> bool
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>フレームワークのロードに成功すれば true、失敗した場合には false を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>```</p>
+
+<blockquote><blockquote><p>framework 'Foundation'
+=> true
+```</p></blockquote></blockquote>
+
+<h3>Kernel.load_bridge_support_file</h3>
+
+<p>Bridge Support ファイルをロードします。</p>
+
+<ul>
+<li>load_bridge_support_file(filename) -> self</li>
+</ul>
+
+
+<p>```</p>
+
+<blockquote><blockquote><p>load_bridge_support_file("Foo.bridgesupport")
+=> main
+```</p></blockquote></blockquote>
+
+<h3>Kernel.load_plist</h3>
+
+<p>plist を読み込み、Hash オブジェクトを返します。</p>
+
+<ul>
+<li>load_plist(string) -> Hash
+
+<ul>
+<li>[PARAM] string:
+
+<ul>
+<li>plist データの文字列を渡します。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>plist データを Hash に変換したオブジェクトを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>```</p>
+
+<blockquote><blockquote><p>data = File.read('StopWatch-Info.plist')
+load_plist(data)
+=> {"CFBundleName"=>"${PRODUCT_NAME}", "CFBundleIdentifier"=>"Watson.${PRODUCT_NAME:rfc1034identifier}", "CFBundleInfoDictionaryVersion"=>"6.0", "CFBundleVersion"=>"1", "CFBundleExecutable"=>"${EXECUTABLE_NAME}", "NSPrincipalClass"=>"NSApplication", "CFBundlePackageType"=>"APPL", "CFBundleIconFile"=>"MacRuby.icns", "CFBundleSignature"=>"????", "NSMainNibFile"=>"MainMenu", "LSMinimumSystemVersion"=>"${MACOSX_DEPLOYMENT_TARGET}", "CFBundleDevelopmentRegion"=>"en", "CFBundleShortVersionString"=>"1.0"}
+```</p></blockquote></blockquote>
+
+<h3>Object#to_plist</h3>
+
+<p>plist 形式に変換したデータを文字列で返します。</p>
+
+<ul>
+<li>to_plist -> String
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>文字列を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>```</p>
+
+<blockquote><blockquote><p>"foo".to_plist
+=> "&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?>\n&lt;!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n<plist version=\"1.0\">\n<string>foo</string>\n</plist>\n"
+{"foo" => 42}.to_plist
+=> "&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?>\n&lt;!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n<plist version=\"1.0\">\n<dict>\n\t<key>foo</key>\n\t<integer>42</integer>\n</dict>\n</plist>\n"
+["foo", "bar"].to_plist
+=> "&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?>\n&lt;!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n<plist version=\"1.0\">\n<array>\n\t<string>foo</string>\n\t<string>bar</string>\n</array>\n</plist>\n"
+```</p></blockquote></blockquote>
+
+<h3>BasicSocket#sendfile</h3>
+
+<p>ソケットを介してファイルのデータを <a href="http://developer.apple.com/library/ios/#DOCUMENTATION/System/Conceptual/ManPages_iPhoneOS/man2/sendfile.2.html">sendfile(2)</a> を用いて送信します。</p>
+
+<ul>
+<li>sendfile(file, offset, length) -> Integer
+
+<ul>
+<li>[PARAM] file:
+
+<ul>
+<li>送信するファイルのパス、または IO オブジェクトを渡します。</li>
+</ul>
+</li>
+<li>[PARAM] offset:
+
+<ul>
+<li>送信を開始するデータの位置を指定します。</li>
+</ul>
+</li>
+<li>[PARAM] length:
+
+<ul>
+<li>送信するデータサイズを指定します。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>送信したデータサイズを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>```ruby
+require 'socket'</p>
+
+<p>port = 5000
+socket = TCPSocket.open('localhost', port)</p>
+
+<p>path = 'sample.txt'
+socket.sendfile(path, 0, 128)
+```</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Changes an Application's Icon]]></title>
@@ -323,199 +602,6 @@ Usage: macruby_deploy [options] application-bundle</p>
 </code></pre>
 
 <p>```</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Creates a Stopwatch Application]]></title>
-    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/18/intro-stopwatch/"/>
-    <updated>2012-03-18T00:01:00+09:00</updated>
-    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/18/intro-stopwatch</id>
-    <content type="html"><![CDATA[<p>In this content, describe how to create a simple application. This content have some essences to create an application using MacRuby.</p>
-
-<p>Show an application’s User Interface in following figure. We will call this application "StopWatch".</p>
-
-<p><img src="/images/en/intro-stopwatch/stopwatch.png" alt="image" /></p>
-
-<p>The "StopWatch" has below behaviors.</p>
-
-<ol>
-<li>Run a timer if start button is clicked.</li>
-<li>Stop a timer if stop button is clicked.</li>
-<li>A timer value is displayed in Text Field.</li>
-</ol>
-
-
-<h2>User Interface</h2>
-
-<p>To start the design, need some operations in Xcode.</p>
-
-<p>Choose a <em>MainMenu.xib</em>.</p>
-
-<p><img src="/images/en/intro-stopwatch/mainmenu_xib.png" alt="image" /></p>
-
-<p>Choose a [Window - StopWatch] to display Window for design.</p>
-
-<p><img src="/images/en/intro-stopwatch/window_stopwatch.png" alt="image" /></p>
-
-<p>Click an icon in toolbar like the following figure. After that, Object Library is displayed.</p>
-
-<p><img src="/images/en/intro-stopwatch/show_object_library.png" alt="image" /></p>
-
-<p>You have been completed to prepare to design. Then, place the User Interface parts from Object Library to Window.</p>
-
-<p><img src="/images/en/intro-stopwatch/ui_design.png" alt="image" /></p>
-
-<h2>Connect the Outlets</h2>
-
-<p>The "StopWatch" application sets a timer value into Text Field. However, if Text Field is just placed on Window, cannot set a value into there. We should use the Outlets to set a value or to get a status of User Interface parts.</p>
-
-<p>To use the Outlets, need to write a program code. Choose a <em>AppDelegate.rb</em>. After that, add a <code>attr_accessor :textField</code> to AppDelegate class.</p>
-
-<p><code>ruby
-class AppDelegate
-  attr_accessor :window
-  attr_accessor :textField # Outlet
-</code></p>
-
-<p>Return to <em>MainMenu.xib</em> screen, connect the Outlet. Press <kbd>control</kbd> key and drag from App Delegate to Text Field.</p>
-
-<p><img src="/images/en/intro-stopwatch/connect_outlet.png" alt="image" /></p>
-
-<p>A list of Outlets will be displayed, and then choose a <code>textField</code> to connect it.</p>
-
-<p><img src="/images/en/intro-stopwatch/outlets.png" alt="image" /></p>
-
-<p>You can set/get the value of the Text Field through the textField accessor.</p>
-
-<h2>Connect the Actions</h2>
-
-<p>When you clicked start/stop button, still nothing happens. You need to set the behaviors when the buttons are clicked.</p>
-
-<p>Choose an <em>AppDelegate.rb</em>. After that, add <code>startTimer</code> and <code>stopTimer</code> methods as following.</p>
-
-<p>```ruby
-class AppDelegate
-  attr_accessor :window
-  attr_accessor :textField # Outlet
-  def applicationDidFinishLaunching(a_notification)</p>
-
-<pre><code># Insert code here to initialize your application
-</code></pre>
-
-<p>  end</p>
-
-<p>  def startTimer(sender)</p>
-
-<pre><code># This method is called when clicked start button.
-</code></pre>
-
-<p>  end</p>
-
-<p>  def stopTimer(sender)</p>
-
-<pre><code># This method is called when clicked stop button.
-</code></pre>
-
-<p>  end</p>
-
-<p>end
-```</p>
-
-<p>Return to <em>MainMenu.xib</em> screen, connect the Actions. Press control key and drag from start button to App Delegate.</p>
-
-<p><img src="/images/en/intro-stopwatch/connect_action.png" alt="image" /></p>
-
-<p>A list of Actions will be displayed, and then choose a <code>startTimer</code> to connect it.</p>
-
-<p><img src="/images/en/intro-stopwatch/actions.png" alt="image" /></p>
-
-<p>Connect stop button to <code>stopTimer</code> in the same way. Each methods will be called when the button is clicked.</p>
-
-<p><code>stopTimer</code>/<code>startTimer</code> are also known as the action method.</p>
-
-<div class="note">
-If you write an action method, you <strong>must</strong> provide a <code>sender</code> argument. If methods does not have a <code>sender</code> argument, it is not recognized as an action method.
-</div>
-
-
-<h2>Use the timer</h2>
-
-<p>If you do something at a constant interval, use the <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Reference/Foundation/Classes/nstimer_Class/Reference/NSTimer.html">NSTimer</a>.</p>
-
-<p>When use a timer as shown below, you will be able to handle at a constant interval.</p>
-
-<p>```ruby
-@timer = NSTimer</p>
-
-<pre><code>       .scheduledTimerWithTimeInterval(0.1,
-                                       target: self,
-                                       selector: "timerHandler:",
-                                       userInfo: nil,
-                                       repeats: true)
-</code></pre>
-
-<p>def timerHandler(userInfo)
-  # Handler
-end
-```</p>
-
-<p>Generate a timer at startTimer and stop a timer at stopTimer.</p>
-
-<p>```ruby
-class AppDelegate
-  attr_accessor :window
-  attr_accessor :textField # Outlet
-  def applicationDidFinishLaunching(a_notification)</p>
-
-<pre><code># Insert code here to initialize your application
-</code></pre>
-
-<p>  end</p>
-
-<p>  def startTimer(sender)</p>
-
-<pre><code>if @timer.nil?
-  @time = 0.0
-  @timer = NSTimer
-            .scheduledTimerWithTimeInterval(0.1,
-                                            target: self,
-                                            selector: "timerHandler:",
-                                            userInfo: nil,
-                                            repeats: true)
-end
-</code></pre>
-
-<p>  end</p>
-
-<p>  def stopTimer(sender)</p>
-
-<pre><code>if @timer
-  @timer.invalidate
-  @timer = nil
-end
-</code></pre>
-
-<p>  end</p>
-
-<p>  def timerHandler(userInfo)</p>
-
-<pre><code>@time += 0.1
-string = sprintf("%.1f", @time)
-textField.setStringValue(string)
-</code></pre>
-
-<p>  end
-end
-```</p>
-
-<p>Invoke <code>@timer.invalidate</code> to stop a timer. Invoke <code>textField.setStringValue(string)</code> to set string to Text Field.</p>
-
-<p>"Stopwatch" application is complete!</p>
-
-<p>Change to "StopWatch" from "Deployment" in Scheme. After that, Click [Run]. "Stopwatch" application will be running!!</p>
-
-<p><img src="/images/en/intro-stopwatch/scheme.png" alt="image" /></p>
 ]]></content>
   </entry>
   
