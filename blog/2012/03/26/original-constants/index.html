@@ -5,14 +5,14 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>MacRuby の環境を構築しよう - MacRuby DoJo (道場)</title>
+  <title>MacRuby 独自の定数 - MacRuby DoJo (道場)</title>
   <meta name="author" content="Watson">
 
   
-  <meta name="description" content="必要なもの MacRuby を使用する際には、あらかじめ以下のものをインストールする必要があります。 Mac OS X 10.6.8 以降
-Xcode 4.2 または Xcode 4.3
-MacRuby
-BridgeSupport Preview 3 (Mac OS X 10.6.8 &hellip;">
+  <meta name="description" content="ここでは MacRuby で追加されている定数について説明します。 独自の定数 Kernel::RUBY_ARCH 動作している MacRuby が対象としている CPU のアーキテクチャ名。 1
+2
+&gt;&gt; Kernel::RUBY_ARCH
+=&gt; "x86_64" Kernel &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -21,7 +21,7 @@ BridgeSupport Preview 3 (Mac OS X 10.6.8 &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/06/intro-install">
+  <link rel="canonical" href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/26/original-constants">
   <link href="/MacRuby-DoJo/favicon.png" rel="icon">
   <link href="/MacRuby-DoJo/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/MacRuby-DoJo/javascripts/modernizr-2.0.js"></script>
@@ -66,7 +66,7 @@ BridgeSupport Preview 3 (Mac OS X 10.6.8 &hellip;">
   
   <header>
     
-      <h1 class="entry-title">MacRuby の環境を構築しよう</h1>
+      <h1 class="entry-title">MacRuby 独自の定数</h1>
     
     
       <p class="meta">
@@ -82,67 +82,79 @@ BridgeSupport Preview 3 (Mac OS X 10.6.8 &hellip;">
   
 
 
-<time datetime="2012-03-06T17:59:00+09:00" pubdate data-updated="true">Mar 6<span>th</span>, 2012</time>
+<time datetime="2012-03-26T21:00:00+09:00" pubdate data-updated="true">Mar 26<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h2>必要なもの</h2>
+<div class="entry-content"><p>ここでは MacRuby で追加されている定数について説明します。</p>
 
-<p>MacRuby を使用する際には、あらかじめ以下のものをインストールする必要があります。</p>
+<h2>独自の定数</h2>
 
-<ul>
-<li>Mac OS X 10.6.8 以降</li>
-<li>Xcode 4.2 または Xcode 4.3</li>
-<li>MacRuby</li>
-<li>BridgeSupport Preview 3 (<strong>Mac OS X 10.6.8 を利用する場合のみ必要</strong>)</li>
-</ul>
+<h3>Kernel::RUBY_ARCH</h3>
 
-
-<h2>Xcode をインストール</h2>
-
-<p>Xcode は Mac App Store からインストールできます。Mac App Store を起動し、右上の検索欄に Xcode と入力し検索します。</p>
-
-<p><img src="/MacRuby-DoJo/images/ja/intro-install/search_xcode.png" alt="image" /></p>
-
-<p>検索結果に表示された Xcode をインストールします。</p>
-
-<p><img src="/MacRuby-DoJo/images/ja/intro-install/xcode.png" alt="image" /></p>
-
-<p>使用している Mac OS X が 10.6.8 の場合には Xcode 4.2.x が、10.7.x の場合には Xcode 4.3.x がインストールされます。</p>
-
-<div class="note">
-<p>
-以前に Xcode 4.2.x など古いバージョンをインストールされていて、今回 Xcode 4.3.x をインストールされた方は、Terminal 上で以下のコマンドを実行しておくと良いでしょう。</p>
+<p>動作している MacRuby が対象としている CPU のアーキテクチャ名。</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer/</span></code></pre></td></tr></table></div></figure>
-</div>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt; Kernel::RUBY_ARCH
+</span><span class='line'>=&gt; "x86_64"</span></code></pre></td></tr></table></div></figure>
 
 
-<h2>Command Line Tools をインストール</h2>
+<h3>Kernel::MACRUBY_VERSION</h3>
 
-<p>Xcode 4.3 からは、コマンドラインで実行するコンパイラなどのツール類を別途インストールしなければなりません。Xcode と併せてインストールしておきましょう。</p>
+<p>MacRuby のバージョン。</p>
 
-<p>Xcode のメニューから [Xcode]->[Preferences&#8230;] と選択していきます。下の図のように Downloads のタブを選択し、Command Line Tools をインストールします。</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt; Kernel::MACRUBY_VERSION
+</span><span class='line'>=&gt; "0.12"</span></code></pre></td></tr></table></div></figure>
 
-<p><img src="/MacRuby-DoJo/images/ja/intro-install/command_line_tools.png" alt="image" /></p>
 
-<h2>MacRuby をインストール</h2>
+<p>たとえば以下のようなメソッドを用意しておくと、実行している環境が MacRuby かそれ以外なのか簡単にチェックすることができます。</p>
 
-<p>引き続き、<a href="http://www.macruby.org/">MacRuby</a> をインストールしましょう。</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">is_macruby?</span>
+</span><span class='line'>  <span class="k">begin</span>
+</span><span class='line'>    <span class="no">MACRUBY_VERSION</span>
+</span><span class='line'>    <span class="k">return</span> <span class="kp">true</span>
+</span><span class='line'>  <span class="k">rescue</span>
+</span><span class='line'>    <span class="k">return</span> <span class="kp">false</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p><img src="/MacRuby-DoJo/images/ja/intro-install/macruby_org.png" alt="image" /></p>
 
-<p>現在リリースされている MacRuby 0.10 は、残念ながら Xcode 4.3 には対応していません。そこで <a href="http://www.macruby.org/files/nightlies/">http://www.macruby.org/files/nightlies/</a> から nightly build の <em>macruby_nightly-latest.pkg</em> をダウンロードしてインストールします。nightly build は、毎日作られその時点での最新の変更内容が適用されたパッケージです。</p>
+<h3>Kernel::MACRUBY_REVISION</h3>
 
-<p><img src="/MacRuby-DoJo/images/ja/intro-install/nightly_build.png" alt="image" /></p>
+<p>最後にコミットされたパッチの Git SHA1 ハッシュ値(古い MacRuby では SVN のリビジョン番号)。</p>
 
-<h2>BridgeSupport Preview 3 をインストール</h2>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="no">Kernel</span><span class="o">::</span><span class="no">MACRUBY_REVISION</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;git commit e35df75944e7a13d16f019e2ed1e4ce2406b06af&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p><strong>Mac OS X 10.6.8 を利用している方のみ</strong> BridgeSupport Preview 3 をインストールします。BridgeSupport は Mac OS X が提供する Framework の情報を取得するためのものです。Mac OS X 10.7 にはあらかじめ同等のものがインストールされています。<a href="http://www.macruby.org/files/">http://www.macruby.org/files/</a> から <em>BridgeSupport Preview 3.zip</em> をダウンロードしインストールします。</p>
+
+<h3>Dir::NS_TMPDIR</h3>
+
+<p>テンポラリディレクトリのパス。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="no">Dir</span><span class="o">::</span><span class="no">NS_TMPDIR</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;/var/folders/1z/ff7x15cj7vb24rl38ty0y52w0000gn/T/&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
 </div>
 
 
@@ -165,7 +177,7 @@ BridgeSupport Preview 3 (Mac OS X 10.6.8 &hellip;">
   
 
 
-<time datetime="2012-03-06T17:59:00+09:00" pubdate data-updated="true">Mar 6<span>th</span>, 2012</time>
+<time datetime="2012-03-26T21:00:00+09:00" pubdate data-updated="true">Mar 26<span>th</span>, 2012</time>
       
 
 <span class="categories">
@@ -179,7 +191,7 @@ BridgeSupport Preview 3 (Mac OS X 10.6.8 &hellip;">
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/06/intro-install/" data-via="" data-counturl="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/06/intro-install/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/26/original-constants/" data-via="" data-counturl="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/26/original-constants/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -192,8 +204,8 @@ BridgeSupport Preview 3 (Mac OS X 10.6.8 &hellip;">
     
     <p class="meta">
       
+        <a class="basic-alignment left" href="/MacRuby-DoJo/blog/2012/03/26/original-methods/" title="Previous Post: MacRuby 独自のメソッド">&laquo; MacRuby 独自のメソッド</a>
       
-        <a class="basic-alignment right" href="/MacRuby-DoJo/blog/2012/03/06/intro-new-project/" title="Next Post: 新規プロジェクトをつくってみよう">新規プロジェクトをつくってみよう &raquo;</a>
       
     </p>
   </footer>

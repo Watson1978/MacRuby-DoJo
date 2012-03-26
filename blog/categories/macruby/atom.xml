@@ -4,7 +4,7 @@
   <title><![CDATA[Category: MacRuby | MacRuby DoJo (道場)]]></title>
   <link href="http://watson1978.github.com/MacRuby-DoJo/blog/categories/macruby/atom.xml" rel="self"/>
   <link href="http://watson1978.github.com/MacRuby-DoJo/"/>
-  <updated>2012-03-26T13:31:16+09:00</updated>
+  <updated>2012-03-26T21:06:02+09:00</updated>
   <id>http://watson1978.github.com/MacRuby-DoJo/</id>
   <author>
     <name><![CDATA[Watson]]></name>
@@ -12,6 +12,75 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[MacRuby 独自の定数]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/26/original-constants/"/>
+    <updated>2012-03-26T21:00:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/26/original-constants</id>
+    <content type="html"><![CDATA[<p>ここでは MacRuby で追加されている定数について説明します。</p>
+
+<h2>独自の定数</h2>
+
+<h3>Kernel::RUBY_ARCH</h3>
+
+<p>動作している MacRuby が対象としている CPU のアーキテクチャ名。</p>
+
+<p>```</p>
+
+<blockquote><blockquote><p>Kernel::RUBY_ARCH
+=> "x86_64"
+```</p></blockquote></blockquote>
+
+<h3>Kernel::MACRUBY_VERSION</h3>
+
+<p>MacRuby のバージョン。</p>
+
+<p>```</p>
+
+<blockquote><blockquote><p>Kernel::MACRUBY_VERSION
+=> "0.12"
+```</p></blockquote></blockquote>
+
+<p>たとえば以下のようなメソッドを用意しておくと、実行している環境が MacRuby かそれ以外なのか簡単にチェックすることができます。
+```ruby
+def is_macruby?
+  begin</p>
+
+<pre><code>MACRUBY_VERSION
+return true
+</code></pre>
+
+<p>  rescue</p>
+
+<pre><code>return false
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<h3>Kernel::MACRUBY_REVISION</h3>
+
+<p>最後にコミットされたパッチの Git SHA1 ハッシュ値(古い MacRuby では SVN のリビジョン番号)。</p>
+
+<p>```</p>
+
+<blockquote><blockquote><p>Kernel::MACRUBY_REVISION
+=> "git commit e35df75944e7a13d16f019e2ed1e4ce2406b06af"
+```</p></blockquote></blockquote>
+
+<h3>Dir::NS_TMPDIR</h3>
+
+<p>テンポラリディレクトリのパス。</p>
+
+<p>```</p>
+
+<blockquote><blockquote><p>Dir::NS_TMPDIR
+=> "/var/folders/1z/ff7x15cj7vb24rl38ty0y52w0000gn/T/"
+```</p></blockquote></blockquote>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[MacRuby 独自のメソッド]]></title>
@@ -57,6 +126,35 @@
 => "へっろ"
 "hello".transform("Greek")
 => "ἑλλο"
+```</p></blockquote></blockquote>
+
+<h3>String#pointer</h3>
+
+<p>文字列から Pointer クラスのオブジェクトを返します。オブジェクトは <code>unsigned char*</code> の変数に対応します。Cocoa API では String オブジェクトではなく、文字列のポインタ変数を受け付けるメソッドがあります。それらのメソッドに渡すためのデータを用意するために使用します。</p>
+
+<ul>
+<li>pinter -> Pointer
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Pointer オブジェクトを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>```</p>
+
+<blockquote><blockquote><p>pointer = "foo".pointer
+=> #&lt;Pointer:0x4007ac580>
+data = NSData.dataWithBytes(pointer, length: "foo".length)
+=> <666f6f>
+data.to_str
+=> "foo"
 ```</p></blockquote></blockquote>
 
 <h3>String#to_data</h3>
@@ -108,35 +206,6 @@
 <p>```</p>
 
 <blockquote><blockquote><p>data = "foo".to_data
-=> <666f6f>
-data.to_str
-=> "foo"
-```</p></blockquote></blockquote>
-
-<h3>String#pointer</h3>
-
-<p>文字列から Pointer クラスのオブジェクトを返します。オブジェクトは <code>unsigned char*</code> の変数に対応します。Cocoa API では String オブジェクトではなく、文字列のポインタ変数を受け付けるメソッドがあります。それらのメソッドに渡すためのデータを用意するために使用します。</p>
-
-<ul>
-<li>pinter -> Pointer
-
-<ul>
-<li>[RETURN]
-
-<ul>
-<li>Pointer オブジェクトを返します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<p>```</p>
-
-<blockquote><blockquote><p>pointer = "foo".pointer
-=> #&lt;Pointer:0x4007ac580>
-data = NSData.dataWithBytes(pointer, length: "foo".length)
 => <666f6f>
 data.to_str
 => "foo"
@@ -359,6 +428,27 @@ socket = TCPSocket.open('localhost', port)</p>
 <p>path = 'sample.txt'
 socket.sendfile(path, 0, 128)
 ```</p>
+
+<h2>Fixnum#popcnt</h2>
+
+<p>数値を 2 進数表記した際に、1 となるビットの数を返します。</p>
+
+<ul>
+<li>popcnt -> Fixnum</li>
+</ul>
+
+
+<p>```</p>
+
+<blockquote><blockquote><p>13.to_s(2)
+=> "1101"
+13.popcnt
+=> 3
+255.to_s(2)
+=> "11111111"
+255.popcnt
+=> 8
+```</p></blockquote></blockquote>
 ]]></content>
   </entry>
   
@@ -634,44 +724,6 @@ end
 <p>各 Framework のクラスで、どのようなメソッドが存在するのか調べたりする際などで活用してみてください。</p>
 
 <p><img src="/images/ja/organizer/organizer_doc_search.png" alt="image" /></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Embeds the MacRuby into Application]]></title>
-    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/19/intro-deployment/"/>
-    <updated>2012-03-19T00:00:00+09:00</updated>
-    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/19/intro-deployment</id>
-    <content type="html"><![CDATA[<p>Application that you created has been just worked with environment which installed MacRuby. When you distribute your application, MacRuby might not be installed in users environments.</p>
-
-<p>Therefore, MacRuby may embed itself into your application. The application which embedded MacRuby will work everywhere.</p>
-
-<p>You choose "Deployment" and click [Run] like the following figure. MacRuby is embedded into your application.</p>
-
-<p><img src="/images/en/intro-deployment/deployment.png" alt="image" /></p>
-
-<p>You can specify several options with "Deployment" in "Arguments" like the following figure.</p>
-
-<p><img src="/images/en/intro-deployment/deployment_option.png" alt="image" /></p>
-
-<p>Run a <code>macruby_deploy</code> command in Terminal.app, you could confirm the options.</p>
-
-<p>```
-$ macruby_deploy
-Usage: macruby_deploy [options] application-bundle</p>
-
-<pre><code>    --compile                    Compile the bundle source code
-    --embed                      Embed MacRuby inside the bundle
-    --no-stdlib                  Do not embed the standard library
-    --stdlib [LIB]               Embed only LIB from the standard library
-    --gem [GEM]                  Embed GEM and its dependencies
-    --bs                         Embed the system BridgeSupport files
-    --verbose                    Log all commands to standard out
-    --codesign [CERT]            Sign the files with the specified certificate
--v, --version                    Display the version
-</code></pre>
-
-<p>```</p>
 ]]></content>
   </entry>
   
