@@ -104,18 +104,22 @@ Bridge Support ファイルをロードします。
 
 
 ### Kernel.load_plist
-plist 形式の文字列から Hash オブジェクトに変換し返します。
+plist 形式の文字列を Ruby オブジェクトに変換し返します。
 
-- load_plist(string) -> Hash
+- load_plist(string) -> Object
   - [PARAM] string:
 	- plist データの文字列を渡します。
   - [RETURN]
-	- plist データを Hash に変換したオブジェクトを返します。
+	- オブジェクトを返します。
 
 ```
 >> data = File.read('StopWatch-Info.plist')
 >> load_plist(data)
 => {"CFBundleName"=>"${PRODUCT_NAME}", "CFBundleIdentifier"=>"Watson.${PRODUCT_NAME:rfc1034identifier}", "CFBundleInfoDictionaryVersion"=>"6.0", "CFBundleVersion"=>"1", "CFBundleExecutable"=>"${EXECUTABLE_NAME}", "NSPrincipalClass"=>"NSApplication", "CFBundlePackageType"=>"APPL", "CFBundleIconFile"=>"MacRuby.icns", "CFBundleSignature"=>"????", "NSMainNibFile"=>"MainMenu", "LSMinimumSystemVersion"=>"${MACOSX_DEPLOYMENT_TARGET}", "CFBundleDevelopmentRegion"=>"en", "CFBundleShortVersionString"=>"1.0"}
+>> data = "foo".to_plist
+=> "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n<plist version=\"1.0\">\n<string>foo</string>\n</plist>\n"
+>> load_plist data
+=> "foo"
 ```
 
 
