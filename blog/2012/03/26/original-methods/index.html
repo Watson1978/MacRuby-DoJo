@@ -266,10 +266,10 @@
 
 <h3>Kernel.load_plist</h3>
 
-<p>plist 形式の文字列から Hash オブジェクトに変換し返します。</p>
+<p>plist 形式の文字列を Ruby オブジェクトに変換し返します。</p>
 
 <ul>
-<li>load_plist(string) -> Hash
+<li>load_plist(string) -> Object
 
 <ul>
 <li>[PARAM] string:
@@ -281,7 +281,7 @@
 <li>[RETURN]
 
 <ul>
-<li>plist データを Hash に変換したオブジェクトを返します。</li>
+<li>オブジェクトを返します。</li>
 </ul>
 </li>
 </ul>
@@ -292,9 +292,17 @@
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt; data = File.read('StopWatch-Info.plist')
 </span><span class='line'>&gt;&gt; load_plist(data)
-</span><span class='line'>=&gt; {"CFBundleName"=&gt;"${PRODUCT_NAME}", "CFBundleIdentifier"=&gt;"Watson.${PRODUCT_NAME:rfc1034identifier}", "CFBundleInfoDictionaryVersion"=&gt;"6.0", "CFBundleVersion"=&gt;"1", "CFBundleExecutable"=&gt;"${EXECUTABLE_NAME}", "NSPrincipalClass"=&gt;"NSApplication", "CFBundlePackageType"=&gt;"APPL", "CFBundleIconFile"=&gt;"MacRuby.icns", "CFBundleSignature"=&gt;"????", "NSMainNibFile"=&gt;"MainMenu", "LSMinimumSystemVersion"=&gt;"${MACOSX_DEPLOYMENT_TARGET}", "CFBundleDevelopmentRegion"=&gt;"en", "CFBundleShortVersionString"=&gt;"1.0"}</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>=&gt; {"CFBundleName"=&gt;"${PRODUCT_NAME}", "CFBundleIdentifier"=&gt;"Watson.${PRODUCT_NAME:rfc1034identifier}", "CFBundleInfoDictionaryVersion"=&gt;"6.0", "CFBundleVersion"=&gt;"1", "CFBundleExecutable"=&gt;"${EXECUTABLE_NAME}", "NSPrincipalClass"=&gt;"NSApplication", "CFBundlePackageType"=&gt;"APPL", "CFBundleIconFile"=&gt;"MacRuby.icns", "CFBundleSignature"=&gt;"????", "NSMainNibFile"=&gt;"MainMenu", "LSMinimumSystemVersion"=&gt;"${MACOSX_DEPLOYMENT_TARGET}", "CFBundleDevelopmentRegion"=&gt;"en", "CFBundleShortVersionString"=&gt;"1.0"}
+</span><span class='line'>&gt;&gt; data = "foo".to_plist
+</span><span class='line'>=&gt; "&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt;\n&lt;!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\"&gt;\n&lt;plist version=\"1.0\"&gt;\n&lt;string&gt;foo&lt;/string&gt;\n&lt;/plist&gt;\n"
+</span><span class='line'>&gt;&gt; load_plist data
+</span><span class='line'>=&gt; "foo"</span></code></pre></td></tr></table></div></figure>
 
 
 <h3>Object#to_plist</h3>
