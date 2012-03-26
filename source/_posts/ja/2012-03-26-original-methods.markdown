@@ -192,3 +192,20 @@ socket = TCPSocket.open('localhost', port)
 path = 'sample.txt'
 socket.sendfile(path, 0, 128)
 ```
+
+
+## Fixnum#popcnt
+数値を 2 進数表記した際に、1 となるビットの数を返します。
+
+- popcnt -> Fixnum
+
+```
+>> 13.to_s(2)
+=> "1101"
+>> 13.popcnt
+=> 3
+>> 255.to_s(2)
+=> "11111111"
+>> 255.popcnt
+=> 8
+```
