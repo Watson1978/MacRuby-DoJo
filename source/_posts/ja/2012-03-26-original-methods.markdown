@@ -7,7 +7,7 @@ sharing: true
 categories: MacRuby
 ---
 
-MacRuby には CRuby や Cocoa API に存在しない、独自のメソッドやクラスが存在します。ここでは、それらの使い方などについて説明します。
+MacRuby には CRuby や Cocoa API に存在しない、独自のメソッドやクラスが存在します。ここでは、独自メソッドについて説明します。
 
 
 ## 独自メソッド
@@ -104,7 +104,7 @@ Bridge Support ファイルをロードします。
 
 
 ### Kernel.load_plist
-plist を読み込み、Hash オブジェクトを返します。
+plist 形式の文字列から Hash オブジェクトに変換し返します。
 
 - load_plist(string) -> Hash
   - [PARAM] string:
