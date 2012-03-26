@@ -1,2 +1,52 @@
 // This File is imported last, and will override other styles in the cascade
 // Add styles here to make changes without digging in too much
+h1 {
+    font-size: 220%;
+}
+h2 {
+    font-size: 160%;
+}
+h3 {
+    font-size: 120%;
+}
+ul, ol {
+    margin-left: 2em;
+}
+p.fork {
+}
+p.fork img {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+div.note {
+    border: 3px solid #A65F00;
+    padding: 5px;
+    margin-bottom: 2em;
+}
+table.table,
+table.table th,
+table.table td
+ {
+     border: 1px solid #666;
+     padding: 3px;
+}
+table.table th {
+    font-weight: bold;
+    background-color: #ccc;
+}
+table.table {
+    margin-bottom: 1.5em;
+}
+kbd {
+    color: #555;
+    font-size: 90%;
+    padding: 0px 2px 0px 2px;
+    border: 1px solid #666;
+    background: -moz-linear-gradient(top, #fff, #ccc);
+    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ccc));
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
