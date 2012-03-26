@@ -153,6 +153,23 @@ plist 形式に変換したデータを文字列で返します。
 ```
 
 
+### Range#relative_to
+`max` で指定した Range 範囲のオブジェクトを返します。負の範囲に対して実行した場合には、`max` との相対的な範囲となります。
+
+- relative_to(max) -> Range
+  - [PARAM] max:
+	- Range の範囲の最大値を指定します。
+  - [RETURN]
+	- 新しい Range オブジェクトを返します。
+
+```
+>> (1..10).relative_to(5)
+=> 1..5
+>> (-2..-1).relative_to(5)
+=> 3..4
+```
+
+
 ### BasicSocket#sendfile
 ソケットを介してファイルのデータを [sendfile(2)](http://developer.apple.com/library/ios/#DOCUMENTATION/System/Conceptual/ManPages_iPhoneOS/man2/sendfile.2.html) を用いて送信します。
 
