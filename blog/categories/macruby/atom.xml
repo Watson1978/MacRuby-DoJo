@@ -4,7 +4,7 @@
   <title><![CDATA[Category: MacRuby | MacRuby DoJo (道場)]]></title>
   <link href="http://watson1978.github.com/MacRuby-DoJo/blog/categories/macruby/atom.xml" rel="self"/>
   <link href="http://watson1978.github.com/MacRuby-DoJo/"/>
-  <updated>2012-03-27T14:56:54+09:00</updated>
+  <updated>2012-03-28T02:12:25+09:00</updated>
   <id>http://watson1978.github.com/MacRuby-DoJo/</id>
   <author>
     <name><![CDATA[Watson]]></name>
@@ -22,7 +22,7 @@
 
 <p>使い方は簡単で、あらかじめ <code>Sandbox.no_network.apply!</code> というように呼び出しておくだけです。Ruby のメソッド、Cocoa のAPI、双方に制限がかかります。</p>
 
-<p>```</p>
+<p>```ruby</p>
 
 <blockquote><blockquote><p>framework 'Cocoa'
 require 'socket'
@@ -193,7 +193,7 @@ SocketError: host not found</p>
 </ul>
 
 
-<p>```</p>
+<p>```ruby</p>
 
 <blockquote><blockquote><p>framework 'Cocoa'
 NSRect.type
@@ -219,7 +219,7 @@ NSRect.type
 </ul>
 
 
-<p>```</p>
+<p>```ruby</p>
 
 <blockquote><blockquote><p>framework 'Cocoa'
 NSRect.opaque?
@@ -589,7 +589,7 @@ end
 
 <p>動作している MacRuby が対象としている CPU のアーキテクチャ名。</p>
 
-<p>```</p>
+<p>```ruby</p>
 
 <blockquote><blockquote><p>Kernel::RUBY_ARCH
 => "x86_64"
@@ -599,7 +599,7 @@ end
 
 <p>MacRuby のバージョン。</p>
 
-<p>```</p>
+<p>```ruby</p>
 
 <blockquote><blockquote><p>Kernel::MACRUBY_VERSION
 => "0.12"
@@ -627,7 +627,7 @@ end
 
 <p>最後にコミットされたパッチの Git SHA1 ハッシュ値(古い MacRuby では SVN のリビジョン番号)。</p>
 
-<p>```</p>
+<p>```ruby</p>
 
 <blockquote><blockquote><p>Kernel::MACRUBY_REVISION
 => "git commit e35df75944e7a13d16f019e2ed1e4ce2406b06af"
@@ -637,7 +637,7 @@ end
 
 <p>テンポラリディレクトリのパス。</p>
 
-<p>```</p>
+<p>```ruby</p>
 
 <blockquote><blockquote><p>Dir::NS_TMPDIR
 => "/var/folders/1z/ff7x15cj7vb24rl38ty0y52w0000gn/T/"
@@ -679,7 +679,7 @@ end
 </ul>
 
 
-<p>```</p>
+<p>```ruby</p>
 
 <blockquote><blockquote><p>"hello".transform("Upper")
 => "HELLO"
@@ -710,7 +710,7 @@ end
 </ul>
 
 
-<p>```</p>
+<p>```ruby</p>
 
 <blockquote><blockquote><p>pointer = "foo".pointer
 => #&lt;Pointer:0x4007ac580>
@@ -739,7 +739,7 @@ data.to_str
 </ul>
 
 
-<p>```</p>
+<p>```ruby</p>
 
 <blockquote><blockquote><p>"foo".to_data
 => <666f6f>
@@ -766,7 +766,7 @@ data.to_str
 </ul>
 
 
-<p>```</p>
+<p>```ruby</p>
 
 <blockquote><blockquote><p>data = "foo".to_data
 => <666f6f>
@@ -793,7 +793,7 @@ data.to_str
 </ul>
 
 
-<p>```</p>
+<p>```ruby</p>
 
 <blockquote><blockquote><p>framework 'Foundation'
 => true
@@ -808,7 +808,7 @@ data.to_str
 </ul>
 
 
-<p>```</p>
+<p>```ruby</p>
 
 <blockquote><blockquote><p>load_bridge_support_file("Foo.bridgesupport")
 => main
@@ -839,7 +839,7 @@ data.to_str
 </ul>
 
 
-<p>```</p>
+<p>```ruby</p>
 
 <blockquote><blockquote><p>data = File.read('StopWatch-Info.plist')
 load_plist(data)
@@ -869,7 +869,7 @@ load_plist(data)
 </ul>
 
 
-<p>```</p>
+<p>```ruby</p>
 
 <blockquote><blockquote><p>"foo".to_plist
 => "&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?>\n&lt;!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n<plist version=\"1.0\">\n<string>foo</string>\n</plist>\n"
@@ -910,7 +910,7 @@ load_plist(data)
 </ul>
 
 
-<p>```</p>
+<p>```ruby</p>
 
 <blockquote><p>"foo".methods(true, true)
 => [:encode!, :"replaceCharactersInRange:withString:", :"getCharacters:range:", :characterAtIndex, :length, :transform, :crypt, :rpartition, :partition, :sum, :tr_s!, :tr_s, :tr!, :tr, :squeeze!, :squeeze, :delete!, :delete, :count, :reverse!, :reverse, :upto, :next!, :next, :succ!, :succ, :each_codepoint, :codepoints, :each_byte, :bytes, :each_char, :chars, :each_line, :lines, :rstrip!, :lstrip!, :strip!, :rstrip, :lstrip, :strip, :center, :rjust, :ljust, :capitalize!, :capitalize, :swapcase!, :swapcase, :upcase!, :upcase, :downcase!, :downcase, :gsub!, :gsub, :sub!, :sub, :chop!, :chop, :chomp!, :chomp, :to_f, :chr, :ord, :oct, :hex, :to_i, :split, :scan, :=~, :match, :dump, :inspect, :intern, :to_sym, :to_str, :to_s, :end_with?, :start_with?, :include?, :eql?, :casecmp, :&lt;=>, :==, :concat, :&lt;&lt;, :%, :*, :+, :rindex, :index, :insert, :slice!, :slice, :[]=, :[], :ascii_only?, :valid_encoding?, :force_encoding, :pointer, :to_data, :setbyte, :getbyte, :bytesize, :empty?, :size, :encoding, :clear, :replace, :dup, :"performSelector:withObject:withObject:", :"performSelector:withObject:", :performSelector, :conformsToProtocol, :dd_appendSpaces, :"replaceOccurrencesOfString:withString:options:range:", :initWithCapacity, 以下略
@@ -941,7 +941,7 @@ load_plist(data)
 </ul>
 
 
-<p>```</p>
+<p>```ruby</p>
 
 <blockquote><blockquote><p>(1..10).relative_to(5)
 => 1..5
@@ -1005,7 +1005,7 @@ socket.sendfile(path, 0, 128)
 </ul>
 
 
-<p>```</p>
+<p>```ruby</p>
 
 <blockquote><blockquote><p>13.to_s(2)
 => "1101"

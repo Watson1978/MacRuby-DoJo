@@ -115,7 +115,7 @@
 </ul>
 
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -123,14 +123,15 @@
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt; "hello".transform("Upper")
-</span><span class='line'>=&gt; "HELLO"
-</span><span class='line'>&gt;&gt; "HELLO".transform("Lower")
-</span><span class='line'>=&gt; "hello"
-</span><span class='line'>&gt;&gt; "hello".transform("Hiragana")
-</span><span class='line'>=&gt; "へっろ"
-</span><span class='line'>&gt;&gt; "hello".transform("Greek")
-</span><span class='line'>=&gt; "ἑλλο"</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="s2">&quot;hello&quot;</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="s2">&quot;Upper&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;HELLO&quot;</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="s2">&quot;HELLO&quot;</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="s2">&quot;Lower&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;hello&quot;</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="s2">&quot;hello&quot;</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="s2">&quot;Hiragana&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;へっろ&quot;</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="s2">&quot;hello&quot;</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="s2">&quot;Greek&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;ἑλλο&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <h3>String#pointer</h3>
@@ -152,18 +153,19 @@
 </ul>
 
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt; pointer = "foo".pointer
-</span><span class='line'>=&gt; #&lt;Pointer:0x4007ac580&gt;
-</span><span class='line'>&gt;&gt; data = NSData.dataWithBytes(pointer, length: "foo".length)
-</span><span class='line'>=&gt; &lt;666f6f&gt;
-</span><span class='line'>&gt;&gt; data.to_str
-</span><span class='line'>=&gt; "foo"</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="n">pointer</span> <span class="o">=</span> <span class="s2">&quot;foo&quot;</span><span class="o">.</span><span class="n">pointer</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="c1">#&lt;Pointer:0x4007ac580&gt;</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="no">NSData</span><span class="o">.</span><span class="n">dataWithBytes</span><span class="p">(</span><span class="n">pointer</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="s2">&quot;foo&quot;</span><span class="o">.</span><span class="n">length</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="o">&lt;</span><span class="mi">666</span><span class="n">f6f</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="n">data</span><span class="o">.</span><span class="n">to_str</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;foo&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <h3>String#to_data</h3>
@@ -185,14 +187,15 @@
 </ul>
 
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt; "foo".to_data
-</span><span class='line'>=&gt; &lt;666f6f&gt;
-</span><span class='line'>&gt;&gt; "foo".to_data.class
-</span><span class='line'>=&gt; __NSCFData</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="s2">&quot;foo&quot;</span><span class="o">.</span><span class="n">to_data</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="o">&lt;</span><span class="mi">666</span><span class="n">f6f</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="s2">&quot;foo&quot;</span><span class="o">.</span><span class="n">to_data</span><span class="o">.</span><span class="n">class</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="n">__NSCFData</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <h3>NSData#to_str</h3>
@@ -214,14 +217,15 @@
 </ul>
 
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt; data = "foo".to_data
-</span><span class='line'>=&gt; &lt;666f6f&gt;
-</span><span class='line'>&gt;&gt; data.to_str
-</span><span class='line'>=&gt; "foo"</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="s2">&quot;foo&quot;</span><span class="o">.</span><span class="n">to_data</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="o">&lt;</span><span class="mi">666</span><span class="n">f6f</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="n">data</span><span class="o">.</span><span class="n">to_str</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;foo&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <h3>Kernel.framework</h3>
@@ -243,10 +247,11 @@
 </ul>
 
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt; framework 'Foundation'
-</span><span class='line'>=&gt; true</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="n">framework</span> <span class="s1">&#39;Foundation&#39;</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="kp">true</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <h3>Kernel.load_bridge_support_file</h3>
@@ -258,10 +263,11 @@
 </ul>
 
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt; load_bridge_support_file("Foo.bridgesupport")
-</span><span class='line'>=&gt; main</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="n">load_bridge_support_file</span><span class="p">(</span><span class="s2">&quot;Foo.bridgesupport&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="n">main</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <h3>Kernel.load_plist</h3>
@@ -289,20 +295,21 @@
 </ul>
 
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt; data = File.read('StopWatch-Info.plist')
-</span><span class='line'>&gt;&gt; load_plist(data)
-</span><span class='line'>=&gt; {"CFBundleName"=&gt;"${PRODUCT_NAME}", "CFBundleIdentifier"=&gt;"Watson.${PRODUCT_NAME:rfc1034identifier}", "CFBundleInfoDictionaryVersion"=&gt;"6.0", "CFBundleVersion"=&gt;"1", "CFBundleExecutable"=&gt;"${EXECUTABLE_NAME}", "NSPrincipalClass"=&gt;"NSApplication", "CFBundlePackageType"=&gt;"APPL", "CFBundleIconFile"=&gt;"MacRuby.icns", "CFBundleSignature"=&gt;"????", "NSMainNibFile"=&gt;"MainMenu", "LSMinimumSystemVersion"=&gt;"${MACOSX_DEPLOYMENT_TARGET}", "CFBundleDevelopmentRegion"=&gt;"en", "CFBundleShortVersionString"=&gt;"1.0"}
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="no">File</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;StopWatch-Info.plist&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="n">load_plist</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="p">{</span><span class="s2">&quot;CFBundleName&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;${PRODUCT_NAME}&quot;</span><span class="p">,</span> <span class="s2">&quot;CFBundleIdentifier&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;Watson.${PRODUCT_NAME:rfc1034identifier}&quot;</span><span class="p">,</span> <span class="s2">&quot;CFBundleInfoDictionaryVersion&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;6.0&quot;</span><span class="p">,</span> <span class="s2">&quot;CFBundleVersion&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;CFBundleExecutable&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;${EXECUTABLE_NAME}&quot;</span><span class="p">,</span> <span class="s2">&quot;NSPrincipalClass&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;NSApplication&quot;</span><span class="p">,</span> <span class="s2">&quot;CFBundlePackageType&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;APPL&quot;</span><span class="p">,</span> <span class="s2">&quot;CFBundleIconFile&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;MacRuby.icns&quot;</span><span class="p">,</span> <span class="s2">&quot;CFBundleSignature&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;????&quot;</span><span class="p">,</span> <span class="s2">&quot;NSMainNibFile&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;MainMenu&quot;</span><span class="p">,</span> <span class="s2">&quot;LSMinimumSystemVersion&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;${MACOSX_DEPLOYMENT_TARGET}&quot;</span><span class="p">,</span> <span class="s2">&quot;CFBundleDevelopmentRegion&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="s2">&quot;CFBundleShortVersionString&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;1.0&quot;</span><span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'>&gt;&gt; data = "foo".to_plist
-</span><span class='line'>&gt;&gt; load_plist(data)
-</span><span class='line'>=&gt; "foo"</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="s2">&quot;foo&quot;</span><span class="o">.</span><span class="n">to_plist</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="n">load_plist</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;foo&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <h3>Object#to_plist</h3>
@@ -324,18 +331,19 @@
 </ul>
 
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt; "foo".to_plist
-</span><span class='line'>=&gt; "&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt;\n&lt;!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\"&gt;\n&lt;plist version=\"1.0\"&gt;\n&lt;string&gt;foo&lt;/string&gt;\n&lt;/plist&gt;\n"
-</span><span class='line'>&gt;&gt; {"foo" =&gt; 42}.to_plist
-</span><span class='line'>=&gt; "&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt;\n&lt;!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\"&gt;\n&lt;plist version=\"1.0\"&gt;\n&lt;dict&gt;\n\t&lt;key&gt;foo&lt;/key&gt;\n\t&lt;integer&gt;42&lt;/integer&gt;\n&lt;/dict&gt;\n&lt;/plist&gt;\n"
-</span><span class='line'>&gt;&gt; ["foo", "bar"].to_plist
-</span><span class='line'>=&gt; "&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt;\n&lt;!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\"&gt;\n&lt;plist version=\"1.0\"&gt;\n&lt;array&gt;\n\t&lt;string&gt;foo&lt;/string&gt;\n\t&lt;string&gt;bar&lt;/string&gt;\n&lt;/array&gt;\n&lt;/plist&gt;\n"</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="s2">&quot;foo&quot;</span><span class="o">.</span><span class="n">to_plist</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;&lt;?xml version=</span><span class="se">\&quot;</span><span class="s2">1.0</span><span class="se">\&quot;</span><span class="s2"> encoding=</span><span class="se">\&quot;</span><span class="s2">UTF-8</span><span class="se">\&quot;</span><span class="s2">?&gt;</span><span class="se">\n</span><span class="s2">&lt;!DOCTYPE plist PUBLIC </span><span class="se">\&quot;</span><span class="s2">-//Apple//DTD PLIST 1.0//EN</span><span class="se">\&quot;</span><span class="s2"> </span><span class="se">\&quot;</span><span class="s2">http://www.apple.com/DTDs/PropertyList-1.0.dtd</span><span class="se">\&quot;</span><span class="s2">&gt;</span><span class="se">\n</span><span class="s2">&lt;plist version=</span><span class="se">\&quot;</span><span class="s2">1.0</span><span class="se">\&quot;</span><span class="s2">&gt;</span><span class="se">\n</span><span class="s2">&lt;string&gt;foo&lt;/string&gt;</span><span class="se">\n</span><span class="s2">&lt;/plist&gt;</span><span class="se">\n</span><span class="s2">&quot;</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="p">{</span><span class="s2">&quot;foo&quot;</span> <span class="o">=&gt;</span> <span class="mi">42</span><span class="p">}</span><span class="o">.</span><span class="n">to_plist</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;&lt;?xml version=</span><span class="se">\&quot;</span><span class="s2">1.0</span><span class="se">\&quot;</span><span class="s2"> encoding=</span><span class="se">\&quot;</span><span class="s2">UTF-8</span><span class="se">\&quot;</span><span class="s2">?&gt;</span><span class="se">\n</span><span class="s2">&lt;!DOCTYPE plist PUBLIC </span><span class="se">\&quot;</span><span class="s2">-//Apple//DTD PLIST 1.0//EN</span><span class="se">\&quot;</span><span class="s2"> </span><span class="se">\&quot;</span><span class="s2">http://www.apple.com/DTDs/PropertyList-1.0.dtd</span><span class="se">\&quot;</span><span class="s2">&gt;</span><span class="se">\n</span><span class="s2">&lt;plist version=</span><span class="se">\&quot;</span><span class="s2">1.0</span><span class="se">\&quot;</span><span class="s2">&gt;</span><span class="se">\n</span><span class="s2">&lt;dict&gt;</span><span class="se">\n\t</span><span class="s2">&lt;key&gt;foo&lt;/key&gt;</span><span class="se">\n\t</span><span class="s2">&lt;integer&gt;42&lt;/integer&gt;</span><span class="se">\n</span><span class="s2">&lt;/dict&gt;</span><span class="se">\n</span><span class="s2">&lt;/plist&gt;</span><span class="se">\n</span><span class="s2">&quot;</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="o">[</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="o">].</span><span class="n">to_plist</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;&lt;?xml version=</span><span class="se">\&quot;</span><span class="s2">1.0</span><span class="se">\&quot;</span><span class="s2"> encoding=</span><span class="se">\&quot;</span><span class="s2">UTF-8</span><span class="se">\&quot;</span><span class="s2">?&gt;</span><span class="se">\n</span><span class="s2">&lt;!DOCTYPE plist PUBLIC </span><span class="se">\&quot;</span><span class="s2">-//Apple//DTD PLIST 1.0//EN</span><span class="se">\&quot;</span><span class="s2"> </span><span class="se">\&quot;</span><span class="s2">http://www.apple.com/DTDs/PropertyList-1.0.dtd</span><span class="se">\&quot;</span><span class="s2">&gt;</span><span class="se">\n</span><span class="s2">&lt;plist version=</span><span class="se">\&quot;</span><span class="s2">1.0</span><span class="se">\&quot;</span><span class="s2">&gt;</span><span class="se">\n</span><span class="s2">&lt;array&gt;</span><span class="se">\n\t</span><span class="s2">&lt;string&gt;foo&lt;/string&gt;</span><span class="se">\n\t</span><span class="s2">&lt;string&gt;bar&lt;/string&gt;</span><span class="se">\n</span><span class="s2">&lt;/array&gt;</span><span class="se">\n</span><span class="s2">&lt;/plist&gt;</span><span class="se">\n</span><span class="s2">&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <h3>Object#methods</h3>
@@ -369,10 +377,11 @@
 </ul>
 
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&gt; "foo".methods(true, true)
-</span><span class='line'>=&gt; [:encode!, :"replaceCharactersInRange:withString:", :"getCharacters:range:", :characterAtIndex, :length, :transform, :crypt, :rpartition, :partition, :sum, :tr_s!, :tr_s, :tr!, :tr, :squeeze!, :squeeze, :delete!, :delete, :count, :reverse!, :reverse, :upto, :next!, :next, :succ!, :succ, :each_codepoint, :codepoints, :each_byte, :bytes, :each_char, :chars, :each_line, :lines, :rstrip!, :lstrip!, :strip!, :rstrip, :lstrip, :strip, :center, :rjust, :ljust, :capitalize!, :capitalize, :swapcase!, :swapcase, :upcase!, :upcase, :downcase!, :downcase, :gsub!, :gsub, :sub!, :sub, :chop!, :chop, :chomp!, :chomp, :to_f, :chr, :ord, :oct, :hex, :to_i, :split, :scan, :=~, :match, :dump, :inspect, :intern, :to_sym, :to_str, :to_s, :end_with?, :start_with?, :include?, :eql?, :casecmp, :&lt;=&gt;, :==, :concat, :&lt;&lt;, :%, :*, :+, :rindex, :index, :insert, :slice!, :slice, :[]=, :[], :ascii_only?, :valid_encoding?, :force_encoding, :pointer, :to_data, :setbyte, :getbyte, :bytesize, :empty?, :size, :encoding, :clear, :replace, :dup, :"performSelector:withObject:withObject:", :"performSelector:withObject:", :performSelector, :conformsToProtocol, :dd_appendSpaces, :"replaceOccurrencesOfString:withString:options:range:", :initWithCapacity, 以下略</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;</span> <span class="s2">&quot;foo&quot;</span><span class="o">.</span><span class="n">methods</span><span class="p">(</span><span class="kp">true</span><span class="p">,</span> <span class="kp">true</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:encode!</span><span class="p">,</span> <span class="ss">:&quot;replaceCharactersInRange:withString:&quot;</span><span class="p">,</span> <span class="ss">:&quot;getCharacters:range:&quot;</span><span class="p">,</span> <span class="ss">:characterAtIndex</span><span class="p">,</span> <span class="ss">:length</span><span class="p">,</span> <span class="ss">:transform</span><span class="p">,</span> <span class="ss">:crypt</span><span class="p">,</span> <span class="ss">:rpartition</span><span class="p">,</span> <span class="ss">:partition</span><span class="p">,</span> <span class="ss">:sum</span><span class="p">,</span> <span class="ss">:tr_s!</span><span class="p">,</span> <span class="ss">:tr_s</span><span class="p">,</span> <span class="ss">:tr!</span><span class="p">,</span> <span class="ss">:tr</span><span class="p">,</span> <span class="ss">:squeeze!</span><span class="p">,</span> <span class="ss">:squeeze</span><span class="p">,</span> <span class="ss">:delete!</span><span class="p">,</span> <span class="ss">:delete</span><span class="p">,</span> <span class="ss">:count</span><span class="p">,</span> <span class="ss">:reverse!</span><span class="p">,</span> <span class="ss">:reverse</span><span class="p">,</span> <span class="ss">:upto</span><span class="p">,</span> <span class="ss">:next!</span><span class="p">,</span> <span class="ss">:next</span><span class="p">,</span> <span class="ss">:succ!</span><span class="p">,</span> <span class="ss">:succ</span><span class="p">,</span> <span class="ss">:each_codepoint</span><span class="p">,</span> <span class="ss">:codepoints</span><span class="p">,</span> <span class="ss">:each_byte</span><span class="p">,</span> <span class="ss">:bytes</span><span class="p">,</span> <span class="ss">:each_char</span><span class="p">,</span> <span class="ss">:chars</span><span class="p">,</span> <span class="ss">:each_line</span><span class="p">,</span> <span class="ss">:lines</span><span class="p">,</span> <span class="ss">:rstrip!</span><span class="p">,</span> <span class="ss">:lstrip!</span><span class="p">,</span> <span class="ss">:strip!</span><span class="p">,</span> <span class="ss">:rstrip</span><span class="p">,</span> <span class="ss">:lstrip</span><span class="p">,</span> <span class="ss">:strip</span><span class="p">,</span> <span class="ss">:center</span><span class="p">,</span> <span class="ss">:rjust</span><span class="p">,</span> <span class="ss">:ljust</span><span class="p">,</span> <span class="ss">:capitalize!</span><span class="p">,</span> <span class="ss">:capitalize</span><span class="p">,</span> <span class="ss">:swapcase!</span><span class="p">,</span> <span class="ss">:swapcase</span><span class="p">,</span> <span class="ss">:upcase!</span><span class="p">,</span> <span class="ss">:upcase</span><span class="p">,</span> <span class="ss">:downcase!</span><span class="p">,</span> <span class="ss">:downcase</span><span class="p">,</span> <span class="ss">:gsub!</span><span class="p">,</span> <span class="ss">:gsub</span><span class="p">,</span> <span class="ss">:sub!</span><span class="p">,</span> <span class="ss">:sub</span><span class="p">,</span> <span class="ss">:chop!</span><span class="p">,</span> <span class="ss">:chop</span><span class="p">,</span> <span class="ss">:chomp!</span><span class="p">,</span> <span class="ss">:chomp</span><span class="p">,</span> <span class="ss">:to_f</span><span class="p">,</span> <span class="ss">:chr</span><span class="p">,</span> <span class="ss">:ord</span><span class="p">,</span> <span class="ss">:oct</span><span class="p">,</span> <span class="ss">:hex</span><span class="p">,</span> <span class="ss">:to_i</span><span class="p">,</span> <span class="ss">:split</span><span class="p">,</span> <span class="ss">:scan</span><span class="p">,</span> <span class="p">:</span><span class="o">=~</span><span class="p">,</span> <span class="ss">:match</span><span class="p">,</span> <span class="ss">:dump</span><span class="p">,</span> <span class="ss">:inspect</span><span class="p">,</span> <span class="ss">:intern</span><span class="p">,</span> <span class="ss">:to_sym</span><span class="p">,</span> <span class="ss">:to_str</span><span class="p">,</span> <span class="ss">:to_s</span><span class="p">,</span> <span class="ss">:end_with?</span><span class="p">,</span> <span class="ss">:start_with?</span><span class="p">,</span> <span class="ss">:include?</span><span class="p">,</span> <span class="ss">:eql?</span><span class="p">,</span> <span class="ss">:casecmp</span><span class="p">,</span> <span class="ss">:&lt;=&gt;</span><span class="p">,</span> <span class="ss">:==</span><span class="p">,</span> <span class="ss">:concat</span><span class="p">,</span> <span class="ss">:&lt;&lt;</span><span class="p">,</span> <span class="ss">:%</span><span class="p">,</span> <span class="ss">:*</span><span class="p">,</span> <span class="ss">:+</span><span class="p">,</span> <span class="ss">:rindex</span><span class="p">,</span> <span class="ss">:index</span><span class="p">,</span> <span class="ss">:insert</span><span class="p">,</span> <span class="ss">:slice!</span><span class="p">,</span> <span class="ss">:slice</span><span class="p">,</span> <span class="ss">:[]=</span><span class="p">,</span> <span class="ss">:[]</span><span class="p">,</span> <span class="ss">:ascii_only?</span><span class="p">,</span> <span class="ss">:valid_encoding?</span><span class="p">,</span> <span class="ss">:force_encoding</span><span class="p">,</span> <span class="ss">:pointer</span><span class="p">,</span> <span class="ss">:to_data</span><span class="p">,</span> <span class="ss">:setbyte</span><span class="p">,</span> <span class="ss">:getbyte</span><span class="p">,</span> <span class="ss">:bytesize</span><span class="p">,</span> <span class="ss">:empty?</span><span class="p">,</span> <span class="ss">:size</span><span class="p">,</span> <span class="ss">:encoding</span><span class="p">,</span> <span class="ss">:clear</span><span class="p">,</span> <span class="ss">:replace</span><span class="p">,</span> <span class="ss">:dup</span><span class="p">,</span> <span class="ss">:&quot;performSelector:withObject:withObject:&quot;</span><span class="p">,</span> <span class="ss">:&quot;performSelector:withObject:&quot;</span><span class="p">,</span> <span class="ss">:performSelector</span><span class="p">,</span> <span class="ss">:conformsToProtocol</span><span class="p">,</span> <span class="ss">:dd_appendSpaces</span><span class="p">,</span> <span class="ss">:&quot;replaceOccurrencesOfString:withString:options:range:&quot;</span><span class="p">,</span> <span class="ss">:initWithCapacity</span><span class="p">,</span> <span class="err">以下略</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <h3>Range#relative_to</h3>
@@ -400,14 +409,15 @@
 </ul>
 
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt; (1..10).relative_to(5)
-</span><span class='line'>=&gt; 1..5
-</span><span class='line'>&gt;&gt; (-2..-1).relative_to(5)
-</span><span class='line'>=&gt; 3..4</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="p">(</span><span class="mi">1</span><span class="o">.</span><span class="n">.</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">relative_to</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="mi">1</span><span class="o">.</span><span class="n">.</span><span class="mi">5</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="o">.</span><span class="n">.</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">relative_to</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="mi">3</span><span class="o">.</span><span class="n">.</span><span class="mi">4</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <h3>BasicSocket#sendfile</h3>

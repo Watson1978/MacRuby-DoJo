@@ -12,7 +12,7 @@
   <meta name="description" content="ここでは MacRuby で追加されている定数について説明します。 独自の定数 Kernel::RUBY_ARCH 動作している MacRuby が対象としている CPU のアーキテクチャ名。 1
 2
 &gt;&gt; Kernel::RUBY_ARCH
-=&gt; "x86_64" Kernel &hellip;">
+=&gt; &quot;x86_64& &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -97,20 +97,22 @@
 
 <p>動作している MacRuby が対象としている CPU のアーキテクチャ名。</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt; Kernel::RUBY_ARCH
-</span><span class='line'>=&gt; "x86_64"</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="no">Kernel</span><span class="o">::</span><span class="no">RUBY_ARCH</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;x86_64&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <h3>Kernel::MACRUBY_VERSION</h3>
 
 <p>MacRuby のバージョン。</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt; Kernel::MACRUBY_VERSION
-</span><span class='line'>=&gt; "0.12"</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="no">Kernel</span><span class="o">::</span><span class="no">MACRUBY_VERSION</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;0.12&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>たとえば以下のようなメソッドを用意しておくと、実行している環境が MacRuby かそれ以外なのか簡単にチェックすることができます。</p>

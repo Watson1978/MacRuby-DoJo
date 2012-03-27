@@ -90,7 +90,7 @@
 
 <p>使い方は簡単で、あらかじめ <code>Sandbox.no_network.apply!</code> というように呼び出しておくだけです。Ruby のメソッド、Cocoa のAPI、双方に制限がかかります。</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -100,16 +100,17 @@
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt; framework 'Cocoa'
-</span><span class='line'>&gt;&gt; require 'socket'
-</span><span class='line'>&gt;&gt; Sandbox.no_network.apply!
-</span><span class='line'>&gt;&gt; Socket.gethostbyaddr("apple.com")
-</span><span class='line'>SocketError: host not found
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="n">framework</span> <span class="s1">&#39;Cocoa&#39;</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="nb">require</span> <span class="s1">&#39;socket&#39;</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="no">Sandbox</span><span class="o">.</span><span class="n">no_network</span><span class="o">.</span><span class="n">apply!</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="no">Socket</span><span class="o">.</span><span class="n">gethostbyaddr</span><span class="p">(</span><span class="s2">&quot;apple.com&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="no">SocketError</span><span class="p">:</span> <span class="n">host</span> <span class="ow">not</span> <span class="n">found</span>
 </span><span class='line'>  
-</span><span class='line'>&gt;&gt; NSHost.hostWithName("apple.com")
-</span><span class='line'>=&gt; &lt;NSHost 0x40121eb80&gt; (null) ((
-</span><span class='line'>) (
-</span><span class='line'>))</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="no">NSHost</span><span class="o">.</span><span class="n">hostWithName</span><span class="p">(</span><span class="s2">&quot;apple.com&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="o">&lt;</span><span class="no">NSHost</span> <span class="mh">0x40121eb80</span><span class="o">&gt;</span> <span class="p">(</span><span class="n">null</span><span class="p">)</span> <span class="p">((</span>
+</span><span class='line'><span class="p">)</span> <span class="p">(</span>
+</span><span class='line'><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>Sandbox を用いて、スクリプトに以下の制限をかけることができます。</p>
