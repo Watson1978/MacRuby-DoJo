@@ -4,7 +4,7 @@
   <title><![CDATA[Category: MacRuby | MacRuby DoJo (道場)]]></title>
   <link href="http://watson1978.github.com/MacRuby-DoJo/blog/categories/macruby/atom.xml" rel="self"/>
   <link href="http://watson1978.github.com/MacRuby-DoJo/"/>
-  <updated>2012-03-26T23:53:35+09:00</updated>
+  <updated>2012-03-27T14:56:54+09:00</updated>
   <id>http://watson1978.github.com/MacRuby-DoJo/</id>
   <author>
     <name><![CDATA[Watson]]></name>
@@ -12,6 +12,569 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Sandbox クラス]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/27/sandbox-class/"/>
+    <updated>2012-03-27T14:30:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/27/sandbox-class</id>
+    <content type="html"><![CDATA[<p>MacRuby には Sandbox というネットワークアクセスなどを制限するためのクラスがあります。<a href="https://developer.apple.com/library/mac/#documentation/Darwin/Reference/ManPages/man7/sandbox.7.html">sandbox(7)</a> を利用して MacRuby に実装されています。</p>
+
+<p>使い方は簡単で、あらかじめ <code>Sandbox.no_network.apply!</code> というように呼び出しておくだけです。Ruby のメソッド、Cocoa のAPI、双方に制限がかかります。</p>
+
+<p>```</p>
+
+<blockquote><blockquote><p>framework 'Cocoa'
+require 'socket'
+Sandbox.no_network.apply!
+Socket.gethostbyaddr("apple.com")
+SocketError: host not found</p>
+
+<p>NSHost.hostWithName("apple.com")
+=> <NSHost 0x40121eb80> (null) ((
+) (
+))
+```</p></blockquote></blockquote>
+
+<p>Sandbox を用いて、スクリプトに以下の制限をかけることができます。</p>
+
+<ul>
+<li>TCP/IPネットワーキング機能</li>
+<li>ソケットベースな全てのネットワーキング機能</li>
+<li>ファイルの書き込み</li>
+<li>/var/tmp など、テンポラリディレクトリ内のみファイル書き込み可能</li>
+<li>OS のサービス全て</li>
+</ul>
+
+
+<p>注意点として、</p>
+
+<ul>
+<li>いったん制限をしてしまうと解除できない (別の制限に変更できない)</li>
+<li>Sandboxはプロセス単位で制限がかかる</li>
+</ul>
+
+
+<p>制限をかけたい処理は別のプロセスで行うと良いでしょう。</p>
+
+<h2>Sandbox クラスのメソッド</h2>
+
+<h3>Sandbox.no_internet</h3>
+
+<p>TCP/IPネットワーキング機能を制限します。</p>
+
+<ul>
+<li>no_internet -> Sandbox
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>制限内容が設定された、Sandbox のインスタンスを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Sandbox.no_network</h3>
+
+<p>ソケットベースな全てのネットワーキング機能を制限します。</p>
+
+<ul>
+<li>no_network -> Sandbox
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>制限内容が設定された、Sandbox のインスタンスを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Sandbox.no_writes</h3>
+
+<p>ファイルの書き込みを制限します。</p>
+
+<ul>
+<li>no_writes -> Sandbox
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>制限内容が設定された、Sandbox のインスタンスを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Sandbox.temporary_writes</h3>
+
+<p>/var/tmp など、テンポラリディレクトリ内のみファイル書き込み可能にします。</p>
+
+<ul>
+<li>temporary_writes -> Sandbox
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>制限内容が設定された、Sandbox のインスタンスを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Sandbox.pure_computation</h3>
+
+<p>OS のサービス全てを制限します。</p>
+
+<ul>
+<li>pure_computation -> Sandbox
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>制限内容が設定された、Sandbox のインスタンスを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Sandbox#apply!</h3>
+
+<p>制限内容を反映します。</p>
+
+<ul>
+<li>apply!</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Boxed クラス]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/27/boxed-class/"/>
+    <updated>2012-03-27T14:00:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/27/boxed-class</id>
+    <content type="html"><![CDATA[<p>Boxed クラスは Cocoa で定義されている構造体の情報を取得するために使用します。すべての構造体で Boxed クラスのメソッドを使用できます。</p>
+
+<h2>Boxed クラスのメソッド</h2>
+
+<h3>Boxed.type</h3>
+
+<p>構造体の型情報を返します。</p>
+
+<ul>
+<li>type -> String
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>構造体の型情報を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>```</p>
+
+<blockquote><blockquote><p>framework 'Cocoa'
+NSRect.type
+=> "{CGRect={CGPoint=dd}{CGSize=dd}}"
+```</p></blockquote></blockquote>
+
+<h3>Boxed.opaque?</h3>
+
+<p>構造体が Opaque 構造体かどうかを返します。Opaque 構造体については、<a href="http://news.mynavi.jp/column/objc/018/">「ダイナミックObjective-C」</a>に書かれていますので参考にしてください。</p>
+
+<ul>
+<li>opaque? -> bool
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Opaque 構造体の場合には true、異なる場合には false を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>```</p>
+
+<blockquote><blockquote><p>framework 'Cocoa'
+NSRect.opaque?
+=> false
+NSModalSession.opaque?
+=> true</p>
+
+<p>```</p></blockquote></blockquote>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Pointer クラス]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/27/pointer-class/"/>
+    <updated>2012-03-27T12:00:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/27/pointer-class</id>
+    <content type="html"><![CDATA[<p>Cocoa API を使用していると、引数にポインタ変数を渡さなければいけないときがあります。多くは <code>NSError* error;</code> のような変数が必要になるケースでしょうか。Ruby にはポインタ変数を扱うことができるクラスが存在しないため、MacRuby では Pointer クラスが追加されています。</p>
+
+<p>Pointer クラスを使用して、Objective-C の <code>NSError* error;</code> と等しい変数を用意するには以下のような記述になります。</p>
+
+<p><code>ruby
+error = Pointer.new('@')
+</code></p>
+
+<p><code>Pointer.new</code> の引数の <code>@</code> は、「オブジェクトのポインタ変数をつくりなさい」と指示しています。<code>@</code> のほかにも種類があり <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html">Type Encodings</a> で確認することができます。</p>
+
+<p><code>char* name[5];</code> のようなインスタンスを作成するには、以下のように <code>Pointer.new</code> の第 2 引数でサイズを指定します。</p>
+
+<p><code>ruby
+name = Pointer.new('c', 5)
+name[0] = 'a'
+name[1] = 'b'
+name[2] = 'c'
+name[3] = 'd'
+name[4] = 'e'
+</code></p>
+
+<p><code>NSRect *rect[2];</code> のような構造体のポインタ変数のインスタンスは、以下のように作成できます。</p>
+
+<p><code>ruby
+rect = Pointer.new("{CGRect={CGPoint=dd}{CGSize=dd}}", 2)
+</code></p>
+
+<p>構造体の内容を正確に把握しなければ、変数を用意することができません。
+そこで、<code>NSRect.type</code> と構造体に対して <code>type</code> メソッドを実行すると <code>"{CGRect={CGPoint=dd}{CGSize=dd}}"</code> と構造体の Type を取得することができるようになっています。上の例は以下のように書くことができます。</p>
+
+<p><code>ruby
+rect = Pointer.new(NSRect.type, 2)
+</code></p>
+
+<h2>ポインタ種類の別名</h2>
+
+<p><code>@</code> ではどのようなポインタとなるのかわかりにくいため、MacRuby では <code>Pointer.new('@')</code> を以下のように書くこともできます。</p>
+
+<p><code>ruby
+error = Pointer.new(:object)
+</code></p>
+
+<p>以下の表のように別名が用意されています。</p>
+
+<table class="table">
+<tr><th>内容</th><th>ポインタ</th><th>別名</th>
+<tr><td>char</td><td>Pointer.new('c')</td><td>Pointer.new(:char)</td></tr>
+<tr><td>unsigned char</td><td>Pointer.new('C')</td><td>Pointer.new(:uchar)</td></tr>
+<tr><td>short</td><td>Pointer.new('s')</td><td>Pointer.new(:short)</td></tr>
+<tr><td>unsigned short</td><td>Pointer.new('S')</td><td>Pointer.new(:ushort)</td></tr>
+<tr><td>int</td><td>Pointer.new('i')</td><td>Pointer.new(:int)</td></tr>
+<tr><td>unsigned int</td><td>Pointer.new('I')</td><td>Pointer.new(:uint)</td></tr>
+<tr><td>long</td><td>Pointer.new('l')</td><td>Pointer.new(:long)</td></tr>
+<tr><td>unsigned long</td><td>Pointer.new('L')</td><td>Pointer.new(:ulong)</td></tr>
+<tr><td>long long</td><td>Pointer.new('q')</td><td>Pointer.new(:long_long)</td></tr>
+<tr><td>unsigned long long</td><td>Pointer.new('Q')</td><td>Pointer.new(:ulong_long)</td></tr>
+<tr><td>float</td><td>Pointer.new('f')</td><td>Pointer.new(:float)</td></tr>
+<tr><td>double</td><td>Pointer.new('d')</td><td>Pointer.new(:double)</td></tr>
+<tr><td>character string (char *)</td><td>Pointer.new('*')</td><td>Pointer.new(:string)</td></tr>
+<tr><td>pointer</td><td>Pointer.new('^')</td><td>Pointer.new(:pointer)</td></tr>
+<tr><td>object</td><td>Pointer.new('@')</td><td>Pointer.new(:object)<br>Pointer.new(:id)</td></tr>
+<tr><td>class object (Class)</td><td>Pointer.new('#')</td><td>Pointer.new(:class)</td></tr>
+<tr><td>boolean</td><td>Pointer.new('B')</td><td>Pointer.new(:boolean)<br>Pointer.new(:bool)</td></tr>
+<tr><td>method selector (SEL)</td><td>Pointer.new(':')</td><td>Pointer.new(:selector)<br>Pointer.new(:sel)</td></tr>
+</table>
+
+
+<h2>Pointer クラスのメソッド</h2>
+
+<h3>Pointer.new</h3>
+
+<p>Pointer クラスのインスタンスを作成して返します。</p>
+
+<ul>
+<li>new(type, size = 1) -> Pointer
+
+<ul>
+<li>[PARAM] type:
+
+<ul>
+<li>どのようなポインタ変数を作成するか指定します。</li>
+</ul>
+</li>
+<li>[PARAM] size:
+
+<ul>
+<li>ポインタ変数のサイズを指定します。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>作成した Pointer のインスタンスを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Pointer.new_with_type</h3>
+
+<p>Pointer.new の別名です。</p>
+
+<h3>Pointer.magic_cookie</h3>
+
+<p>即値を (void *) へキャストした Pointer のインスタンスを返します。</p>
+
+<ul>
+<li>magic_cookie(val) -> Pointer
+
+<ul>
+<li>[PARAM] val:
+
+<ul>
+<li>数値を指定します。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>(void *) に即値をキャストした Pointer のインスタンスを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>OpenGL に関するチケット <a href="http://www.macruby.org/trac/ticket/1112">#1112</a> でこのメソッドが追加されました。</p>
+
+<h3>Pointer#type</h3>
+
+<p>どのような種類のポインタか確認するのに使用します。</p>
+
+<ul>
+<li>type -> String
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>ポインタの種類を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>```ruby</p>
+
+<blockquote><blockquote><p>framework 'Cocoa'
+pointer = Pointer.new(NSRect.type)
+pointer.type
+=> "{CGRect={CGPoint=dd}{CGSize=dd}}"
+```</p></blockquote></blockquote>
+
+<h3>Pointer#cast!</h3>
+
+<p>ポインタの種類を変更します。</p>
+
+<ul>
+<li>cast!(type) -> self
+
+<ul>
+<li>[PARAM] type:
+
+<ul>
+<li>変更先のポインタの種類を指定します。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>ポインタの種類を変更したオブジェクトを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>```ruby</p>
+
+<blockquote><blockquote><p>pointer = Pointer.new('i')
+pointer.type
+=> "i"
+pointer.cast!('I')
+pointer.type
+=> "I"
+```</p></blockquote></blockquote>
+
+<h3>Pointer#[]</h3>
+
+<p>nth 番目の内容を取得します。</p>
+
+<ul>
+<li>self[nth]
+
+<ul>
+<li>[PARAM] nth:
+
+<ul>
+<li>取得する内容の位置を指定します。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>nth 番目の内容を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Pointer#[]=</h3>
+
+<p>nth 番目の内容を val で置き換えます。</p>
+
+<ul>
+<li>self[nth] = val
+
+<ul>
+<li>[PARAM] nth:
+
+<ul>
+<li>置き換える内容の位置を指定します。</li>
+</ul>
+</li>
+<li>[PARAM] val:
+
+<ul>
+<li>置き換える内容を指定します。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>val を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Pointer#assign</h3>
+
+<p>0 番目の内容を val で置き換えます。</p>
+
+<ul>
+<li>assign(val)
+
+<ul>
+<li>[PARAM] val:
+
+<ul>
+<li>置き換える内容を指定します。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>val を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Pointer#+</h3>
+
+<p>指定した offset からの Pointer インスタンスを返します。</p>
+
+<ul>
+<li>self + offset -> Pointer
+
+<ul>
+<li>[PARAM] offset:
+
+<ul>
+<li>取得する内容の位置を指定します。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>指定した位置からの Pointer インスタンスを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>```ruby
+name = Pointer.new('c', 5)
+name[0] = 10
+name[1] = 11
+name[2] = 12
+name[3] = 13
+name[4] = 14</p>
+
+<p>tmp = name + 3
+2.times do |i|
+  p tmp[i] # => 13, 14
+end
+```</p>
+
+<h3>Pointer#-</h3>
+
+<p>Pointer#+ と同じように、指定した offset からの Pointer インスタンスを返します。</p>
+
+<ul>
+<li>self - offset -> Pointer
+
+<ul>
+<li>[PARAM] offset:
+
+<ul>
+<li>取得する内容の位置を指定します。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>指定した位置からの Pointer インスタンスを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[MacRuby 独自の定数]]></title>
@@ -280,10 +843,10 @@ data.to_str
 
 <blockquote><blockquote><p>data = File.read('StopWatch-Info.plist')
 load_plist(data)
-=> {"CFBundleName"=>"${PRODUCT_NAME}", "CFBundleIdentifier"=>"Watson.${PRODUCT_NAME:rfc1034identifier}", "CFBundleInfoDictionaryVersion"=>"6.0", "CFBundleVersion"=>"1", "CFBundleExecutable"=>"${EXECUTABLE_NAME}", "NSPrincipalClass"=>"NSApplication", "CFBundlePackageType"=>"APPL", "CFBundleIconFile"=>"MacRuby.icns", "CFBundleSignature"=>"????", "NSMainNibFile"=>"MainMenu", "LSMinimumSystemVersion"=>"${MACOSX_DEPLOYMENT_TARGET}", "CFBundleDevelopmentRegion"=>"en", "CFBundleShortVersionString"=>"1.0"}
-data = "foo".to_plist
-=> "&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?>\n&lt;!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n<plist version=\"1.0\">\n<string>foo</string>\n</plist>\n"
-load_plist data
+=> {"CFBundleName"=>"${PRODUCT_NAME}", "CFBundleIdentifier"=>"Watson.${PRODUCT_NAME:rfc1034identifier}", "CFBundleInfoDictionaryVersion"=>"6.0", "CFBundleVersion"=>"1", "CFBundleExecutable"=>"${EXECUTABLE_NAME}", "NSPrincipalClass"=>"NSApplication", "CFBundlePackageType"=>"APPL", "CFBundleIconFile"=>"MacRuby.icns", "CFBundleSignature"=>"????", "NSMainNibFile"=>"MainMenu", "LSMinimumSystemVersion"=>"${MACOSX_DEPLOYMENT_TARGET}", "CFBundleDevelopmentRegion"=>"en", "CFBundleShortVersionString"=>"1.0"}</p>
+
+<p>data = "foo".to_plist
+load_plist(data)
 => "foo"
 ```</p></blockquote></blockquote>
 
@@ -453,281 +1016,6 @@ socket.sendfile(path, 0, 128)
 255.popcnt
 => 8
 ```</p></blockquote></blockquote>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Changes an Application's Icon]]></title>
-    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/24/intro-icon/"/>
-    <updated>2012-03-24T10:00:00+09:00</updated>
-    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/24/intro-icon</id>
-    <content type="html"><![CDATA[<p>All applications which you created have a system default icon.</p>
-
-<p><img src="/images/en/intro-icon/default_icon.png" alt="image" /></p>
-
-<p>You can change the icon of the application to suit your needs.</p>
-
-<h2>Icon Composer</h2>
-
-<p>Prepare the image for the icon to set for your application. Convert an image to icon with Icon Composer. Icon Composer is installed along with Xcode.</p>
-
-<p>Since Xcode 4.3, launch Icon Composer with [Xcode]->[Open Developer Tool] in Xcode's menu.</p>
-
-<p><img src="/images/en/intro-icon/icon_composer_xcode43.png" alt="image" /></p>
-
-<p>Previous Xcode 4.2, Icon Composer exists in <em>/Developer/Applications/Utilities/Icon Composer.app</em></p>
-
-<p><img src="/images/en/intro-icon/icon_composer_xcode42.png" alt="image" /></p>
-
-<p>Some frames are shown in main screen of Icon Composer. Drag and drop prepared the image into there. After that, save it as icon.</p>
-
-<p><img src="/images/en/intro-icon/icns.png" alt="image" /></p>
-
-<h2>Change an Application's Icon</h2>
-
-<p>Change an Application's Icon with Xcode. Choose a [TARGETS] like the following figure. After that, drag and drop an icon which created with Icon Composer into [App Icon].</p>
-
-<p><img src="/images/en/intro-icon/change_icon.png" alt="image" /></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[RubyGems を利用して Markdown ファイルを表示しよう]]></title>
-    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/22/markdown-viewer/"/>
-    <updated>2012-03-22T16:30:00+09:00</updated>
-    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/22/markdown-viewer</id>
-    <content type="html"><![CDATA[<p>MacRuby は WebKit など Objective-C で作られたフレームワークはもちろん、RubyGems ライブラリを用いてアプリケーションを作ることができます。今回は、Markdown ファイルを HTML へ変換する RubyGems ライブラリを利用し、WebKit で変換された HTML を表示するアプリケーションを作成します。</p>
-
-<h2>RubyGems ライブラリをインストールする</h2>
-
-<p>Markdown ファイルを HTML へ変換するために、<a href="http://rubygems.org/gems/rdiscount">rdiscount</a> という RubyGems を用います。Markdown ファイルを変換するためのライブラリはほかにも <a href="http://deveiate.org/projects/BlueCloth">BlueCloth</a> などいくつかありますので、いろいろ試してみるとおもしろいかもしれません。</p>
-
-<p>それでは、rdiscount をインストールしてみましょう。Terminal 上で以下のようにコマンドを実行します。</p>
-
-<p><code>
-$ sudo macgem install rdiscount
-</code></p>
-
-<p>rdiscount を用いて以下のように、<code>RDiscount.new</code> へ Markdown ファイルの内容を渡し <code>to_html</code> というメソッドで HTML へ変換できます。</p>
-
-<p><code>
-$ macirb
-irb(main):001:0&gt; require 'rubygems'
-=&gt; true
-irb(main):002:0&gt; require 'rdiscount'
-=&gt; true
-irb(main):003:0&gt; path = "MarkDownSyntax.md"
-=&gt; "MarkDownSyntax.md"
-irb(main):004:0&gt; md = RDiscount.new(File.read(path))
-=&gt; #&lt;RDiscount:0x4008cace0 以下略
-irb(main):005:0&gt; md.to_html
-=&gt; "&lt;h1&gt;Markdown: Syntax&lt;/h1&gt;\n\n&lt;ul 以下略
-</code></p>
-
-<div class="note">
-CRuby 1.9 では <code>require 'rubygems'</code> が不要なのですが、MacRuby で RubyGems を利用する際には必須となります。「MacRuby の起動にさらに時間がかかるので、rubygems をロードしていない」というのが理由です。(参考: <a href="http://www.macruby.org/trac/ticket/855">MacRuby should load the "rubygems" automatically.</a>)
-</div>
-
-
-<h2>Web Viewの準備</h2>
-
-<p><a href="/blog/2012/03/15/webkit/">WebKit フレームワークを使ってみよう</a>の記事を参考に、Web View をアウトレット接続するところまでを行います。</p>
-
-<p><img src="/images/ja/webkit/connect_outlet.png" alt="image" /></p>
-
-<h2>Markdown ファイルを読む</h2>
-
-<p>アプリケーションメニューの [File]->[Open...] がクリックされると、ファイルを選択するためのオープンパネルを表示しファイルを読み込むようにします。</p>
-
-<p><img src="/images/ja/markdown-viewer/file_open.png" alt="image" /></p>
-
-<p>[File]->[Open...] はボタンと同じように、アクションメソッドが必要となります。以下のようなメソッドを用意しておきます。</p>
-
-<p>```ruby
-  def open(sender)</p>
-
-<pre><code># [File]-&gt;[Open...] のアクション
-</code></pre>
-
-<p>  end
-```</p>
-
-<p>[Main Menu] の中にある [File]->[Open...] から、control キーを押しながら App Delegate までドラッグして、さきほど用意した <code>open</code> とアクションを接続します。</p>
-
-<p><img src="/images/ja/markdown-viewer/connect_action.png" alt="image" /></p>
-
-<p>これで、[File]->[Open...] がクリックされると <code>open</code> が呼び出されます。引き続き、以下のようなオープンパネルを表示するための処理を <code>open</code> へ実装します。</p>
-
-<p><img src="/images/ja/markdown-viewer/open_panel.png" alt="image" /></p>
-
-<p>オープンパネルの表示には <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Reference/ApplicationKit/Classes/NSOpenPanel_Class/Reference/Reference.html">NSOpenPanel</a> を利用し、以下のように実装します。</p>
-
-<p>```ruby
-  def open(sender)</p>
-
-<pre><code># オープンパネルのインスタンスを取得
-panel = NSOpenPanel.openPanel
-
-# パネルを表示
-result = panel.runModalForDirectory(NSHomeDirectory(),                # パネルを表示するときのディレクトリ
-                                    file: nil,                        # 選択できるファイル名を指定。指定しないので nil とする
-                                    types: ["md", "mkd", "markdown"]) # 選択できるファイル拡張子を指定。
-if(result == NSOKButton)
-  # パネルの Open がクリックされたときの処理
-  path = panel.filename # 選択されたファイルのパスを取得
-
-  # ファイルを読む
-  markdown_content = File.read(path)
-end
-</code></pre>
-
-<p>  end
-```</p>
-
-<h2>Markdown を HTML へ変換し表示する</h2>
-
-<p>Markdown ファイルを読むまでの処理ができましたので、つぎに HTML へ変換する処理を実装します。まず、<code>rdiscount</code> を <em>AppDelegate.rb</em> の先頭で <code>require</code> でロードします。</p>
-
-<p>```ruby
-require 'rubygems'
-require 'rdiscount'</p>
-
-<p>class AppDelegate
-  attr_accessor :window
-  attr_accessor :webView
-```</p>
-
-<p><code>open</code> メソッドでファイルを読んだ後の処理として、Markdown を HTML へ変換し表示する処理を実装します。</p>
-
-<p>```ruby</p>
-
-<pre><code>  # ファイルを読む
-  markdown_content = File.read(path)
-
-  # Markdown を HTML へ変換
-  md = RDiscount.new(markdown_content)
-
-  # 変換された HTML にヘッダなどを追加
-  html =&lt;&lt;"EOS"
-</code></pre>
-
-<p><html>
-<head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-</head>
-<body></p>
-
-<h1>{md.to_html}</h1>
-
-<p></body>
-</html>
-EOS</p>
-
-<pre><code>  # WebView に HTML を表示
-  webView.mainFrame.loadHTMLString(html, baseURL: nil)
-</code></pre>
-
-<p>```</p>
-
-<p><code>webView.mainFrame</code> の <code>loadHTMLString</code> を用いると作成した HTML を表示できます。</p>
-
-<p><img src="/images/ja/markdown-viewer/markdown-viewer.png" alt="image" /></p>
-
-<p>スタイルシートを記述して見栄えをよくしたりしてみてください。Markdown ファイルで使用している画像を表示するために <code>baseURL</code> の指定を変更する必要があるかと思います。いろいろ試してみてください。その際には、MacRuby のサンプルにある <a href="https://github.com/MacRuby/MacRuby/tree/master/sample-macruby/MarkdownViewer">MarkdownViewer</a> が参考になるかと思います。</p>
-
-<h2>Deployment のオプションを追加</h2>
-
-<p>Deployment するときに、今回使用した rdiscount がアプリケーションに埋め込まれるように <code>--gem rdiscount</code> をオプションに追加しておきましょう。</p>
-
-<p><img src="/images/ja/markdown-viewer/deployment_option.png" alt="image" /></p>
-
-<div class="note">
-Deployment するとロードパスの探索範囲内に rdiscount が埋め込まれるようになります。そのため、Deployment する際に <code>require 'rubygems'</code> を削除しても動作します。(rubygems を読み込まない分、起動が速くなるかもしれません、という程度ですが。)
-</div>
-
-
-<h2>付録 : 今回作成したコード</h2>
-
-<p>最後に今回作成した <em>AppDelegate.rb</em> の全文を記載します。</p>
-
-<p>```ruby
-require 'rubygems'
-require 'rdiscount'</p>
-
-<p>class AppDelegate
-  attr_accessor :window
-  attr_accessor :webView</p>
-
-<p>  def applicationDidFinishLaunching(a_notification)</p>
-
-<pre><code># Insert code here to initialize your application
-</code></pre>
-
-<p>  end</p>
-
-<p>  def open(sender)</p>
-
-<pre><code># オープンパネルのインスタンスを取得
-panel = NSOpenPanel.openPanel
-
-# パネルを表示
-result = panel.runModalForDirectory(NSHomeDirectory(),                # パネルを表示するときのディレクトリ
-                                    file: nil,                        # 選択できるファイル名を指定。指定しないので nil とする
-                                    types: ["md", "mkd", "markdown"]) # 選択できるファイル拡張子を指定。
-if(result == NSOKButton)
-  # パネルの Open がクリックされたときの処理
-  path = panel.filename # 選択されたファイルのパスを取得
-
-  # ファイルを読む
-  markdown_content = File.read(path)
-
-  # Markdown を HTML へ変換
-  md = RDiscount.new(markdown_content)
-
-  # 変換された HTML にヘッダなどを追加
-  html =&lt;&lt;"EOS"
-</code></pre>
-
-<p><html>
-<head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-</head>
-<body></p>
-
-<h1>{md.to_html}</h1>
-
-<p></body>
-</html>
-EOS</p>
-
-<pre><code>  # WebView に HTML を表示
-  webView.mainFrame.loadHTMLString(html, baseURL: nil)
-end
-</code></pre>
-
-<p>  end</p>
-
-<p>end
-```</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Organizer で API を調べてみよう]]></title>
-    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/21/organizer/"/>
-    <updated>2012-03-21T22:33:00+09:00</updated>
-    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/21/organizer</id>
-    <content type="html"><![CDATA[<p>Xcode には Organizer という、iPhone などのデバイスやプロジェクト、ドキュメントを扱うツールがあります。Xcode で [Window]->[Organizer] とメニューを選択すると Organizer が起動します。</p>
-
-<p><img src="/images/ja/organizer/xcode_menu_organizer.png" alt="image" /></p>
-
-<p>Organizer のツールバーにある Documentation というアイコンを選択すると、Mac OS X や iOS のドキュメントを閲覧することができます。</p>
-
-<p><img src="/images/ja/organizer/organizer.png" alt="image" /></p>
-
-<p>各 Framework のクラスで、どのようなメソッドが存在するのか調べたりする際などで活用してみてください。</p>
-
-<p><img src="/images/ja/organizer/organizer_doc_search.png" alt="image" /></p>
 ]]></content>
   </entry>
   

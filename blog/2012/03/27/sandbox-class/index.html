@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Embeds the MacRuby into Application - MacRuby DoJo (道場)</title>
+  <title>Sandbox クラス - MacRuby DoJo (道場)</title>
   <meta name="author" content="Watson">
 
   
-  <meta name="description" content="Application that you created has been just worked with environment which installed MacRuby. When you distribute your application, MacRuby might not &hellip;">
+  <meta name="description" content="MacRuby には Sandbox というネットワークアクセスなどを制限するためのクラスがあります。sandbox(7) を利用して MacRuby に実装されています。 使い方は簡単で、あらかじめ Sandbox.no_network.apply! というように呼び出しておくだけです。Ruby &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/19/intro-deployment">
+  <link rel="canonical" href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/27/sandbox-class">
   <link href="/MacRuby-DoJo/favicon.png" rel="icon">
   <link href="/MacRuby-DoJo/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/MacRuby-DoJo/javascripts/modernizr-2.0.js"></script>
@@ -63,7 +63,7 @@
   
   <header>
     
-      <h1 class="entry-title">Embeds the MacRuby Into Application</h1>
+      <h1 class="entry-title">Sandbox クラス</h1>
     
     
       <p class="meta">
@@ -79,26 +79,16 @@
   
 
 
-<time datetime="2012-03-19T00:00:00+09:00" pubdate data-updated="true">Mar 19<span>th</span>, 2012</time>
+<time datetime="2012-03-27T14:30:00+09:00" pubdate data-updated="true">Mar 27<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>Application that you created has been just worked with environment which installed MacRuby. When you distribute your application, MacRuby might not be installed in users environments.</p>
+<div class="entry-content"><p>MacRuby には Sandbox というネットワークアクセスなどを制限するためのクラスがあります。<a href="https://developer.apple.com/library/mac/#documentation/Darwin/Reference/ManPages/man7/sandbox.7.html">sandbox(7)</a> を利用して MacRuby に実装されています。</p>
 
-<p>Therefore, MacRuby may embed itself into your application. The application which embedded MacRuby will work everywhere.</p>
-
-<p>You choose &#8220;Deployment&#8221; and click [Run] like the following figure. MacRuby is embedded into your application.</p>
-
-<p><img src="/MacRuby-DoJo/images/en/intro-deployment/deployment.png" alt="image" /></p>
-
-<p>You can specify several options with &#8220;Deployment&#8221; in &#8220;Arguments&#8221; like the following figure.</p>
-
-<p><img src="/MacRuby-DoJo/images/en/intro-deployment/deployment_option.png" alt="image" /></p>
-
-<p>Run a <code>macruby_deploy</code> command in Terminal.app, you could confirm the options.</p>
+<p>使い方は簡単で、あらかじめ <code>Sandbox.no_network.apply!</code> というように呼び出しておくだけです。Ruby のメソッド、Cocoa のAPI、双方に制限がかかります。</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -110,18 +100,143 @@
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ macruby_deploy 
-</span><span class='line'>Usage: macruby_deploy [options] application-bundle
-</span><span class='line'>        --compile                    Compile the bundle source code
-</span><span class='line'>        --embed                      Embed MacRuby inside the bundle
-</span><span class='line'>        --no-stdlib                  Do not embed the standard library
-</span><span class='line'>        --stdlib [LIB]               Embed only LIB from the standard library
-</span><span class='line'>        --gem [GEM]                  Embed GEM and its dependencies
-</span><span class='line'>        --bs                         Embed the system BridgeSupport files
-</span><span class='line'>        --verbose                    Log all commands to standard out
-</span><span class='line'>        --codesign [CERT]            Sign the files with the specified certificate
-</span><span class='line'>    -v, --version                    Display the version</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt; framework 'Cocoa'
+</span><span class='line'>&gt;&gt; require 'socket'
+</span><span class='line'>&gt;&gt; Sandbox.no_network.apply!
+</span><span class='line'>&gt;&gt; Socket.gethostbyaddr("apple.com")
+</span><span class='line'>SocketError: host not found
+</span><span class='line'>  
+</span><span class='line'>&gt;&gt; NSHost.hostWithName("apple.com")
+</span><span class='line'>=&gt; &lt;NSHost 0x40121eb80&gt; (null) ((
+</span><span class='line'>) (
+</span><span class='line'>))</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Sandbox を用いて、スクリプトに以下の制限をかけることができます。</p>
+
+<ul>
+<li>TCP/IPネットワーキング機能</li>
+<li>ソケットベースな全てのネットワーキング機能</li>
+<li>ファイルの書き込み</li>
+<li>/var/tmp など、テンポラリディレクトリ内のみファイル書き込み可能</li>
+<li>OS のサービス全て</li>
+</ul>
+
+
+<p>注意点として、</p>
+
+<ul>
+<li>いったん制限をしてしまうと解除できない (別の制限に変更できない)</li>
+<li>Sandboxはプロセス単位で制限がかかる</li>
+</ul>
+
+
+<p>制限をかけたい処理は別のプロセスで行うと良いでしょう。</p>
+
+<h2>Sandbox クラスのメソッド</h2>
+
+<h3>Sandbox.no_internet</h3>
+
+<p>TCP/IPネットワーキング機能を制限します。</p>
+
+<ul>
+<li>no_internet -> Sandbox
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>制限内容が設定された、Sandbox のインスタンスを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Sandbox.no_network</h3>
+
+<p>ソケットベースな全てのネットワーキング機能を制限します。</p>
+
+<ul>
+<li>no_network -> Sandbox
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>制限内容が設定された、Sandbox のインスタンスを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Sandbox.no_writes</h3>
+
+<p>ファイルの書き込みを制限します。</p>
+
+<ul>
+<li>no_writes -> Sandbox
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>制限内容が設定された、Sandbox のインスタンスを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Sandbox.temporary_writes</h3>
+
+<p>/var/tmp など、テンポラリディレクトリ内のみファイル書き込み可能にします。</p>
+
+<ul>
+<li>temporary_writes -> Sandbox
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>制限内容が設定された、Sandbox のインスタンスを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Sandbox.pure_computation</h3>
+
+<p>OS のサービス全てを制限します。</p>
+
+<ul>
+<li>pure_computation -> Sandbox
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>制限内容が設定された、Sandbox のインスタンスを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Sandbox#apply!</h3>
+
+<p>制限内容を反映します。</p>
+
+<ul>
+<li>apply!</li>
+</ul>
 
 </div>
 
@@ -145,7 +260,7 @@
   
 
 
-<time datetime="2012-03-19T00:00:00+09:00" pubdate data-updated="true">Mar 19<span>th</span>, 2012</time>
+<time datetime="2012-03-27T14:30:00+09:00" pubdate data-updated="true">Mar 27<span>th</span>, 2012</time>
       
 
 <span class="categories">
@@ -159,7 +274,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/19/intro-deployment/" data-via="" data-counturl="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/19/intro-deployment/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/27/sandbox-class/" data-via="" data-counturl="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/27/sandbox-class/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -172,10 +287,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/MacRuby-DoJo/blog/2012/03/18/intro-stopwatch/" title="Previous Post: Creates a Stopwatch Application">&laquo; Creates a Stopwatch Application</a>
+        <a class="basic-alignment left" href="/MacRuby-DoJo/blog/2012/03/27/boxed-class/" title="Previous Post: Boxed クラス">&laquo; Boxed クラス</a>
       
-      
-        <a class="basic-alignment right" href="/MacRuby-DoJo/blog/2012/03/21/organizer/" title="Next Post: Organizer で API を調べてみよう">Organizer で API を調べてみよう &raquo;</a>
       
     </p>
   </footer>

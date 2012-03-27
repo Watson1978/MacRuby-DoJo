@@ -1,0 +1,601 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Pointer クラス - MacRuby DoJo (道場)</title>
+  <meta name="author" content="Watson">
+
+  
+  <meta name="description" content="Cocoa API を使用していると、引数にポインタ変数を渡さなければいけないときがあります。多くは NSError* error; のような変数が必要になるケースでしょうか。Ruby にはポインタ変数を扱うことができるクラスが存在しないため、MacRuby では Pointer &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/27/pointer-class">
+  <link href="/MacRuby-DoJo/favicon.png" rel="icon">
+  <link href="/MacRuby-DoJo/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/MacRuby-DoJo/javascripts/modernizr-2.0.js"></script>
+  <script src="/MacRuby-DoJo/javascripts/ender.js"></script>
+  <script src="/MacRuby-DoJo/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/MacRuby-DoJo/atom.xml" rel="alternate" title="MacRuby DoJo (道場)" type="application/atom+xml">
+  
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/MacRuby-DoJo/">MacRuby DoJo (道場)</a></h1>
+  
+  <p class="fork"><a href="https://github.com/Watson1978/MacRuby-DoJo/"><img src="/MacRuby-DoJo/images/forkme_right_darkblue_121621.png" /></a></p>
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/MacRuby-DoJo/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:watson1978.github.com/MacRuby-DoJo" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/MacRuby-DoJo/">日本語</a></li>
+  <li><a href="/MacRuby-DoJo/index.en.html">English</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Pointer クラス</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-27T12:00:00+09:00" pubdate data-updated="true">Mar 27<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Cocoa API を使用していると、引数にポインタ変数を渡さなければいけないときがあります。多くは <code>NSError* error;</code> のような変数が必要になるケースでしょうか。Ruby にはポインタ変数を扱うことができるクラスが存在しないため、MacRuby では Pointer クラスが追加されています。</p>
+
+<p>Pointer クラスを使用して、Objective-C の <code>NSError* error;</code> と等しい変数を用意するには以下のような記述になります。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">error</span> <span class="o">=</span> <span class="no">Pointer</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;@&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>Pointer.new</code> の引数の <code>@</code> は、「オブジェクトのポインタ変数をつくりなさい」と指示しています。<code>@</code> のほかにも種類があり <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html">Type Encodings</a> で確認することができます。</p>
+
+<p><code>char* name[5];</code> のようなインスタンスを作成するには、以下のように <code>Pointer.new</code> の第 2 引数でサイズを指定します。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">name</span> <span class="o">=</span> <span class="no">Pointer</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</span><span class='line'><span class="nb">name</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span>
+</span><span class='line'><span class="nb">name</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;b&#39;</span>
+</span><span class='line'><span class="nb">name</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;c&#39;</span>
+</span><span class='line'><span class="nb">name</span><span class="o">[</span><span class="mi">3</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;d&#39;</span>
+</span><span class='line'><span class="nb">name</span><span class="o">[</span><span class="mi">4</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;e&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>NSRect *rect[2];</code> のような構造体のポインタ変数のインスタンスは、以下のように作成できます。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">rect</span> <span class="o">=</span> <span class="no">Pointer</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;{CGRect={CGPoint=dd}{CGSize=dd}}&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>構造体の内容を正確に把握しなければ、変数を用意することができません。
+そこで、<code>NSRect.type</code> と構造体に対して <code>type</code> メソッドを実行すると <code>"{CGRect={CGPoint=dd}{CGSize=dd}}"</code> と構造体の Type を取得することができるようになっています。上の例は以下のように書くことができます。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">rect</span> <span class="o">=</span> <span class="no">Pointer</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="no">NSRect</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>ポインタ種類の別名</h2>
+
+<p><code>@</code> ではどのようなポインタとなるのかわかりにくいため、MacRuby では <code>Pointer.new('@')</code> を以下のように書くこともできます。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">error</span> <span class="o">=</span> <span class="no">Pointer</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:object</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>以下の表のように別名が用意されています。</p>
+
+<table class="table">
+<tr><th>内容</th><th>ポインタ</th><th>別名</th>
+<tr><td>char</td><td>Pointer.new(&#8216;c&#8217;)</td><td>Pointer.new(:char)</td></tr>
+<tr><td>unsigned char</td><td>Pointer.new(&#8216;C&#8217;)</td><td>Pointer.new(:uchar)</td></tr>
+<tr><td>short</td><td>Pointer.new(&#8217;s&#8217;)</td><td>Pointer.new(:short)</td></tr>
+<tr><td>unsigned short</td><td>Pointer.new(&#8216;S&#8217;)</td><td>Pointer.new(:ushort)</td></tr>
+<tr><td>int</td><td>Pointer.new(&#8216;i&#8217;)</td><td>Pointer.new(:int)</td></tr>
+<tr><td>unsigned int</td><td>Pointer.new(&#8216;I&#8217;)</td><td>Pointer.new(:uint)</td></tr>
+<tr><td>long</td><td>Pointer.new(&#8216;l&#8217;)</td><td>Pointer.new(:long)</td></tr>
+<tr><td>unsigned long</td><td>Pointer.new(&#8216;L&#8217;)</td><td>Pointer.new(:ulong)</td></tr>
+<tr><td>long long</td><td>Pointer.new(&#8216;q&#8217;)</td><td>Pointer.new(:long_long)</td></tr>
+<tr><td>unsigned long long</td><td>Pointer.new(&#8216;Q&#8217;)</td><td>Pointer.new(:ulong_long)</td></tr>
+<tr><td>float</td><td>Pointer.new(&#8216;f&#8217;)</td><td>Pointer.new(:float)</td></tr>
+<tr><td>double</td><td>Pointer.new(&#8216;d&#8217;)</td><td>Pointer.new(:double)</td></tr>
+<tr><td>character string (char *)</td><td>Pointer.new(&#8216;*&#8217;)</td><td>Pointer.new(:string)</td></tr>
+<tr><td>pointer</td><td>Pointer.new(&#8216;^&#8217;)</td><td>Pointer.new(:pointer)</td></tr>
+<tr><td>object</td><td>Pointer.new(&#8216;@&#8217;)</td><td>Pointer.new(:object)<br>Pointer.new(:id)</td></tr>
+<tr><td>class object (Class)</td><td>Pointer.new(&#8216;#&#8217;)</td><td>Pointer.new(:class)</td></tr>
+<tr><td>boolean</td><td>Pointer.new(&#8216;B&#8217;)</td><td>Pointer.new(:boolean)<br>Pointer.new(:bool)</td></tr>
+<tr><td>method selector (SEL)</td><td>Pointer.new(&#8216;:&#8217;)</td><td>Pointer.new(:selector)<br>Pointer.new(:sel)</td></tr>
+</table>
+
+
+<h2>Pointer クラスのメソッド</h2>
+
+<h3>Pointer.new</h3>
+
+<p>Pointer クラスのインスタンスを作成して返します。</p>
+
+<ul>
+<li>new(type, size = 1) -> Pointer
+
+<ul>
+<li>[PARAM] type:
+
+<ul>
+<li>どのようなポインタ変数を作成するか指定します。</li>
+</ul>
+</li>
+<li>[PARAM] size:
+
+<ul>
+<li>ポインタ変数のサイズを指定します。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>作成した Pointer のインスタンスを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Pointer.new_with_type</h3>
+
+<p>Pointer.new の別名です。</p>
+
+<h3>Pointer.magic_cookie</h3>
+
+<p>即値を (void *) へキャストした Pointer のインスタンスを返します。</p>
+
+<ul>
+<li>magic_cookie(val) -> Pointer
+
+<ul>
+<li>[PARAM] val:
+
+<ul>
+<li>数値を指定します。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>(void *) に即値をキャストした Pointer のインスタンスを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>OpenGL に関するチケット <a href="http://www.macruby.org/trac/ticket/1112">#1112</a> でこのメソッドが追加されました。</p>
+
+<h3>Pointer#type</h3>
+
+<p>どのような種類のポインタか確認するのに使用します。</p>
+
+<ul>
+<li>type -> String
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>ポインタの種類を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="n">framework</span> <span class="s1">&#39;Cocoa&#39;</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="n">pointer</span> <span class="o">=</span> <span class="no">Pointer</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="no">NSRect</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="n">pointer</span><span class="o">.</span><span class="n">type</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;{CGRect={CGPoint=dd}{CGSize=dd}}&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Pointer#cast!</h3>
+
+<p>ポインタの種類を変更します。</p>
+
+<ul>
+<li>cast!(type) -> self
+
+<ul>
+<li>[PARAM] type:
+
+<ul>
+<li>変更先のポインタの種類を指定します。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>ポインタの種類を変更したオブジェクトを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="n">pointer</span> <span class="o">=</span> <span class="no">Pointer</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;i&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="n">pointer</span><span class="o">.</span><span class="n">type</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;i&quot;</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="n">pointer</span><span class="o">.</span><span class="n">cast!</span><span class="p">(</span><span class="s1">&#39;I&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="n">pointer</span><span class="o">.</span><span class="n">type</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;I&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Pointer#[]</h3>
+
+<p>nth 番目の内容を取得します。</p>
+
+<ul>
+<li>self[nth]
+
+<ul>
+<li>[PARAM] nth:
+
+<ul>
+<li>取得する内容の位置を指定します。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>nth 番目の内容を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Pointer#[]=</h3>
+
+<p>nth 番目の内容を val で置き換えます。</p>
+
+<ul>
+<li>self[nth] = val
+
+<ul>
+<li>[PARAM] nth:
+
+<ul>
+<li>置き換える内容の位置を指定します。</li>
+</ul>
+</li>
+<li>[PARAM] val:
+
+<ul>
+<li>置き換える内容を指定します。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>val を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Pointer#assign</h3>
+
+<p>0 番目の内容を val で置き換えます。</p>
+
+<ul>
+<li>assign(val)
+
+<ul>
+<li>[PARAM] val:
+
+<ul>
+<li>置き換える内容を指定します。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>val を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Pointer#+</h3>
+
+<p>指定した offset からの Pointer インスタンスを返します。</p>
+
+<ul>
+<li>self + offset -> Pointer
+
+<ul>
+<li>[PARAM] offset:
+
+<ul>
+<li>取得する内容の位置を指定します。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>指定した位置からの Pointer インスタンスを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">name</span> <span class="o">=</span> <span class="no">Pointer</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</span><span class='line'><span class="nb">name</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="mi">10</span>
+</span><span class='line'><span class="nb">name</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="mi">11</span>
+</span><span class='line'><span class="nb">name</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span> <span class="o">=</span> <span class="mi">12</span>
+</span><span class='line'><span class="nb">name</span><span class="o">[</span><span class="mi">3</span><span class="o">]</span> <span class="o">=</span> <span class="mi">13</span>
+</span><span class='line'><span class="nb">name</span><span class="o">[</span><span class="mi">4</span><span class="o">]</span> <span class="o">=</span> <span class="mi">14</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">tmp</span> <span class="o">=</span> <span class="nb">name</span> <span class="o">+</span> <span class="mi">3</span>
+</span><span class='line'><span class="mi">2</span><span class="o">.</span><span class="n">times</span> <span class="k">do</span> <span class="o">|</span><span class="n">i</span><span class="o">|</span>
+</span><span class='line'>  <span class="nb">p</span> <span class="n">tmp</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="c1"># =&gt; 13, 14</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Pointer#-</h3>
+
+<p>Pointer#+ と同じように、指定した offset からの Pointer インスタンスを返します。</p>
+
+<ul>
+<li>self - offset -> Pointer
+
+<ul>
+<li>[PARAM] offset:
+
+<ul>
+<li>取得する内容の位置を指定します。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>指定した位置からの Pointer インスタンスを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Watson</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-27T12:00:00+09:00" pubdate data-updated="true">Mar 27<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/MacRuby-DoJo/blog/categories/macruby/'>MacRuby</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/27/pointer-class/" data-via="" data-counturl="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/27/pointer-class/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/MacRuby-DoJo/blog/2012/03/26/original-constants/" title="Previous Post: MacRuby 独自の定数">&laquo; MacRuby 独自の定数</a>
+      
+      
+        <a class="basic-alignment right" href="/MacRuby-DoJo/blog/2012/03/27/boxed-class/" title="Next Post: Boxed クラス">Boxed クラス &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/MacRuby-DoJo/blog/2012/03/27/sandbox-class/">Sandbox クラス</a>
+      </li>
+    
+      <li class="post">
+        <a href="/MacRuby-DoJo/blog/2012/03/27/boxed-class/">Boxed クラス</a>
+      </li>
+    
+      <li class="post">
+        <a href="/MacRuby-DoJo/blog/2012/03/27/pointer-class/">Pointer クラス</a>
+      </li>
+    
+      <li class="post">
+        <a href="/MacRuby-DoJo/blog/2012/03/26/original-constants/">MacRuby 独自の定数</a>
+      </li>
+    
+      <li class="post">
+        <a href="/MacRuby-DoJo/blog/2012/03/26/original-methods/">MacRuby 独自のメソッド</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Watson -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

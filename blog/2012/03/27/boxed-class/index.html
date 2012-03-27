@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>新規プロジェクトをつくってみよう - MacRuby DoJo (道場)</title>
+  <title>Boxed クラス - MacRuby DoJo (道場)</title>
   <meta name="author" content="Watson">
 
   
-  <meta name="description" content="Xcode を起動すると、以下の図のように「Welcome to Xcode」と表示されたウィンドウが表示されます。[Create a New Xcode Project] をクリックすると、新規のプロジェクトを作れます。 次にどのテンプレートを使用してプロジェクトを作成するか選択します。 [ &hellip;">
+  <meta name="description" content="Boxed クラスは Cocoa で定義されている構造体の情報を取得するために使用します。すべての構造体で Boxed クラスのメソッドを使用できます。 Boxed クラスのメソッド Boxed.type 構造体の型情報を返します。 type -> String [RETURN] &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/06/intro-new-project">
+  <link rel="canonical" href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/27/boxed-class">
   <link href="/MacRuby-DoJo/favicon.png" rel="icon">
   <link href="/MacRuby-DoJo/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/MacRuby-DoJo/javascripts/modernizr-2.0.js"></script>
@@ -63,7 +63,7 @@
   
   <header>
     
-      <h1 class="entry-title">新規プロジェクトをつくってみよう</h1>
+      <h1 class="entry-title">Boxed クラス</h1>
     
     
       <p class="meta">
@@ -79,26 +79,76 @@
   
 
 
-<time datetime="2012-03-06T22:06:00+09:00" pubdate data-updated="true">Mar 6<span>th</span>, 2012</time>
+<time datetime="2012-03-27T14:00:00+09:00" pubdate data-updated="true">Mar 27<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>Xcode を起動すると、以下の図のように「Welcome to Xcode」と表示されたウィンドウが表示されます。[Create a New Xcode Project] をクリックすると、新規のプロジェクトを作れます。</p>
+<div class="entry-content"><p>Boxed クラスは Cocoa で定義されている構造体の情報を取得するために使用します。すべての構造体で Boxed クラスのメソッドを使用できます。</p>
 
-<p><img src="/MacRuby-DoJo/images/ja/intro-new-project/welcome_to_xcode.png" alt="image" /></p>
+<h2>Boxed クラスのメソッド</h2>
 
-<p>次にどのテンプレートを使用してプロジェクトを作成するか選択します。</p>
+<h3>Boxed.type</h3>
 
-<p><img src="/MacRuby-DoJo/images/ja/intro-new-project/choose_a_templete.png" alt="image" /></p>
+<p>構造体の型情報を返します。</p>
 
-<p>[MacRuby Application] を選択し、 [Next] をクリックして次に進みます。</p>
+<ul>
+<li>type -> String
 
-<p><img src="/MacRuby-DoJo/images/ja/intro-new-project/product_name.png" alt="image" /></p>
+<ul>
+<li>[RETURN]
 
-<p>プロジェクト名を入力し、プロジェクトの保存場所を選択したら新しいプロジェクトができあがります。</p>
+<ul>
+<li>構造体の型情報を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt; framework 'Cocoa'
+</span><span class='line'>&gt;&gt; NSRect.type
+</span><span class='line'>=&gt; "{CGRect={CGPoint=dd}{CGSize=dd}}"</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Boxed.opaque?</h3>
+
+<p>構造体が Opaque 構造体かどうかを返します。Opaque 構造体については、<a href="http://news.mynavi.jp/column/objc/018/">「ダイナミックObjective-C」</a>に書かれていますので参考にしてください。</p>
+
+<ul>
+<li>opaque? -> bool
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Opaque 構造体の場合には true、異なる場合には false を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt; framework 'Cocoa'
+</span><span class='line'>&gt;&gt; NSRect.opaque?
+</span><span class='line'>=&gt; false
+</span><span class='line'>&gt;&gt; NSModalSession.opaque?
+</span><span class='line'>=&gt; true
+</span><span class='line'>&gt;&gt; </span></code></pre></td></tr></table></div></figure>
+
 </div>
 
 
@@ -121,7 +171,7 @@
   
 
 
-<time datetime="2012-03-06T22:06:00+09:00" pubdate data-updated="true">Mar 6<span>th</span>, 2012</time>
+<time datetime="2012-03-27T14:00:00+09:00" pubdate data-updated="true">Mar 27<span>th</span>, 2012</time>
       
 
 <span class="categories">
@@ -135,7 +185,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/06/intro-new-project/" data-via="" data-counturl="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/06/intro-new-project/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/27/boxed-class/" data-via="" data-counturl="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/27/boxed-class/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -148,10 +198,10 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/MacRuby-DoJo/blog/2012/03/06/intro-install/" title="Previous Post: MacRuby の環境を構築しよう">&laquo; MacRuby の環境を構築しよう</a>
+        <a class="basic-alignment left" href="/MacRuby-DoJo/blog/2012/03/27/pointer-class/" title="Previous Post: Pointer クラス">&laquo; Pointer クラス</a>
       
       
-        <a class="basic-alignment right" href="/MacRuby-DoJo/blog/2012/03/07/intro-stopwatch/" title="Next Post: ストップウォッチを作る">ストップウォッチを作る &raquo;</a>
+        <a class="basic-alignment right" href="/MacRuby-DoJo/blog/2012/03/27/sandbox-class/" title="Next Post: Sandbox クラス">Sandbox クラス &raquo;</a>
       
     </p>
   </footer>
