@@ -1,7 +1,7 @@
 ---
 layout: page
 title: 目次
-date: 2012-03-27 14:00
+date: 2012-03-27 14:30
 comments: true
 sharing: true
 footer: true
@@ -29,6 +29,7 @@ sidebar: true
 - [MacRuby 独自の定数](/blog/2012/03/26/original-constants/)
 - [Pointer クラス](/blog/2012/03/27/pointer-class/)
 - [Boxed クラス](/blog/2012/03/27/boxed-class/)
+- [Sandbox クラス](/blog/2012/03/27/sandbox-class/)
 
 ## リンク
 - [MacRuby: The Definitive Guide](http://ofps.oreilly.com/titles/9781449380373/)
