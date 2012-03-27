@@ -18,7 +18,7 @@ Boxed クラスは Cocoa で定義されている構造体の情報を取得す�
   - [RETURN]
 	- 構造体の型情報を返します。
 
-```
+```ruby
 >> framework 'Cocoa'
 >> NSRect.type
 => "{CGRect={CGPoint=dd}{CGSize=dd}}"
@@ -31,7 +31,7 @@ Boxed クラスは Cocoa で定義されている構造体の情報を取得す�
   - [RETURN]
 	- Opaque 構造体の場合には true、異なる場合には false を返します。
 
-```
+```ruby
 >> framework 'Cocoa'
 >> NSRect.opaque?
 => false

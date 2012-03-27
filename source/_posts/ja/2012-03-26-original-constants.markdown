@@ -14,7 +14,7 @@ categories: MacRuby
 ### Kernel::RUBY_ARCH
 動作している MacRuby が対象としている CPU のアーキテクチャ名。
 
-```
+```ruby
 >> Kernel::RUBY_ARCH
 => "x86_64"
 ```
@@ -23,7 +23,7 @@ categories: MacRuby
 ### Kernel::MACRUBY_VERSION
 MacRuby のバージョン。
 
-```
+```ruby
 >> Kernel::MACRUBY_VERSION
 => "0.12"
 ```
@@ -44,7 +44,7 @@ end
 ### Kernel::MACRUBY_REVISION
 最後にコミットされたパッチの Git SHA1 ハッシュ値(古い MacRuby では SVN のリビジョン番号)。
 
-```
+```ruby
 >> Kernel::MACRUBY_REVISION
 => "git commit e35df75944e7a13d16f019e2ed1e4ce2406b06af"
 ```
@@ -53,7 +53,7 @@ end
 ### Dir::NS_TMPDIR
 テンポラリディレクトリのパス。
 
-```
+```ruby
 >> Dir::NS_TMPDIR
 => "/var/folders/1z/ff7x15cj7vb24rl38ty0y52w0000gn/T/"
 ```

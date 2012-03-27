@@ -11,7 +11,7 @@ MacRuby には Sandbox というネットワークアクセスなどを制限す
 
 使い方は簡単で、あらかじめ `Sandbox.no_network.apply!` というように呼び出しておくだけです。Ruby のメソッド、Cocoa のAPI、双方に制限がかかります。
 
-```
+```ruby
 >> framework 'Cocoa'
 >> require 'socket'
 >> Sandbox.no_network.apply!

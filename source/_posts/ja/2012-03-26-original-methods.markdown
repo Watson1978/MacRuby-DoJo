@@ -20,7 +20,7 @@ MacRuby には CRuby や Cocoa API に存在しない、独自のメソッドや
   - [RETURN]
 	- 変換結果の文字列を返します。
 
-```
+```ruby
 >> "hello".transform("Upper")
 => "HELLO"
 >> "HELLO".transform("Lower")
@@ -39,7 +39,7 @@ MacRuby には CRuby や Cocoa API に存在しない、独自のメソッドや
   - [RETURN]
 	- Pointer オブジェクトを返します。
 
-```
+```ruby
 >> pointer = "foo".pointer
 => #<Pointer:0x4007ac580>
 >> data = NSData.dataWithBytes(pointer, length: "foo".length)
@@ -56,7 +56,7 @@ MacRuby には CRuby や Cocoa API に存在しない、独自のメソッドや
   - [RETURN]
 	- NSData オブジェクトを返します。
 
-```
+```ruby
 >> "foo".to_data
 => <666f6f>
 >> "foo".to_data.class
@@ -71,7 +71,7 @@ MacRuby には CRuby や Cocoa API に存在しない、独自のメソッドや
   - [RETURN]
 	- 文字列を返します。
 
-```
+```ruby
 >> data = "foo".to_data
 => <666f6f>
 >> data.to_str
@@ -86,7 +86,7 @@ MacRuby には CRuby や Cocoa API に存在しない、独自のメソッドや
   - [RETURN]
 	- フレームワークのロードに成功すれば true、失敗した場合には false を返します。
 
-```
+```ruby
 >> framework 'Foundation'
 => true
 ```
@@ -97,7 +97,7 @@ Bridge Support ファイルをロードします。
 
 - load_bridge_support_file(filename) -> self
 
-```
+```ruby
 >> load_bridge_support_file("Foo.bridgesupport")
 => main
 ```
@@ -112,7 +112,7 @@ plist 形式の文字列を Ruby オブジェクトに変換し返します。
   - [RETURN]
 	- オブジェクトを返します。
 
-```
+```ruby
 >> data = File.read('StopWatch-Info.plist')
 >> load_plist(data)
 => {"CFBundleName"=>"${PRODUCT_NAME}", "CFBundleIdentifier"=>"Watson.${PRODUCT_NAME:rfc1034identifier}", "CFBundleInfoDictionaryVersion"=>"6.0", "CFBundleVersion"=>"1", "CFBundleExecutable"=>"${EXECUTABLE_NAME}", "NSPrincipalClass"=>"NSApplication", "CFBundlePackageType"=>"APPL", "CFBundleIconFile"=>"MacRuby.icns", "CFBundleSignature"=>"????", "NSMainNibFile"=>"MainMenu", "LSMinimumSystemVersion"=>"${MACOSX_DEPLOYMENT_TARGET}", "CFBundleDevelopmentRegion"=>"en", "CFBundleShortVersionString"=>"1.0"}
@@ -130,7 +130,7 @@ plist 形式に変換したデータを文字列で返します。
   - [RETURN]
 	- 文字列を返します。
 
-```
+```ruby
 >> "foo".to_plist
 => "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n<plist version=\"1.0\">\n<string>foo</string>\n</plist>\n"
 >> {"foo" => 42}.to_plist
@@ -151,7 +151,7 @@ plist 形式に変換したデータを文字列で返します。
   - [RETURN]
 	- メソッド名の一覧を返します。
 
-```
+```ruby
 > "foo".methods(true, true)
 => [:encode!, :"replaceCharactersInRange:withString:", :"getCharacters:range:", :characterAtIndex, :length, :transform, :crypt, :rpartition, :partition, :sum, :tr_s!, :tr_s, :tr!, :tr, :squeeze!, :squeeze, :delete!, :delete, :count, :reverse!, :reverse, :upto, :next!, :next, :succ!, :succ, :each_codepoint, :codepoints, :each_byte, :bytes, :each_char, :chars, :each_line, :lines, :rstrip!, :lstrip!, :strip!, :rstrip, :lstrip, :strip, :center, :rjust, :ljust, :capitalize!, :capitalize, :swapcase!, :swapcase, :upcase!, :upcase, :downcase!, :downcase, :gsub!, :gsub, :sub!, :sub, :chop!, :chop, :chomp!, :chomp, :to_f, :chr, :ord, :oct, :hex, :to_i, :split, :scan, :=~, :match, :dump, :inspect, :intern, :to_sym, :to_str, :to_s, :end_with?, :start_with?, :include?, :eql?, :casecmp, :<=>, :==, :concat, :<<, :%, :*, :+, :rindex, :index, :insert, :slice!, :slice, :[]=, :[], :ascii_only?, :valid_encoding?, :force_encoding, :pointer, :to_data, :setbyte, :getbyte, :bytesize, :empty?, :size, :encoding, :clear, :replace, :dup, :"performSelector:withObject:withObject:", :"performSelector:withObject:", :performSelector, :conformsToProtocol, :dd_appendSpaces, :"replaceOccurrencesOfString:withString:options:range:", :initWithCapacity, 以下略
 ```
@@ -166,7 +166,7 @@ plist 形式に変換したデータを文字列で返します。
   - [RETURN]
 	- 新しい Range オブジェクトを返します。
 
-```
+```ruby
 >> (1..10).relative_to(5)
 => 1..5
 >> (-2..-1).relative_to(5)
@@ -203,7 +203,7 @@ socket.sendfile(path, 0, 128)
 
 - popcnt -> Fixnum
 
-```
+```ruby
 >> 13.to_s(2)
 => "1101"
 >> 13.popcnt
