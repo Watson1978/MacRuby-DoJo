@@ -200,3 +200,7 @@ Pointer#+ と同じように、指定した offset からの Pointer インス�
 	- 取得する内容の位置を指定します。
   - [RETURN]
 	- 指定した位置からの Pointer インスタンスを返します。
+
+
+### Pointer#to_object
+TBD
