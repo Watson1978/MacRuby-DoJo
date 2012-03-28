@@ -30,6 +30,3 @@ sidebar: true
 - [Pointer クラス](/blog/2012/03/27/pointer-class/)
 - [Boxed クラス](/blog/2012/03/27/boxed-class/)
 - [Sandbox クラス](/blog/2012/03/27/sandbox-class/)
-
-## リンク
-- [MacRuby: The Definitive Guide](http://ofps.oreilly.com/titles/9781449380373/)
