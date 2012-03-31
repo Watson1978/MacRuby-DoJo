@@ -4,7 +4,7 @@
   <title><![CDATA[MacRuby DoJo (道場)]]></title>
   <link href="http://watson1978.github.com/MacRuby-DoJo/atom.xml" rel="self"/>
   <link href="http://watson1978.github.com/MacRuby-DoJo/"/>
-  <updated>2012-03-29T11:39:37+09:00</updated>
+  <updated>2012-03-31T11:26:29+09:00</updated>
   <id>http://watson1978.github.com/MacRuby-DoJo/</id>
   <author>
     <name><![CDATA[Watson]]></name>
@@ -12,6 +12,1059 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Dispatch::Source クラス]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-source-class/"/>
+    <updated>2012-03-31T10:00:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-source-class</id>
+    <content type="html"><![CDATA[<p>Dispatch::Source クラスは何らかのイベントが発生するときに、イベントをハンドリングして処理を実行する仕組みを提供します。</p>
+
+<h2>Dispatch::Source クラスの定数</h2>
+
+<ul>
+<li>Dispatch::Source::DATA_ADD</li>
+<li>Dispatch::Source::DATA_OR</li>
+<li>Dispatch::Source::PROC</li>
+<li>Dispatch::Source::SIGNAL</li>
+<li>Dispatch::Source::READ</li>
+<li>Dispatch::Source::WRITE</li>
+<li>Dispatch::Source::VNODE</li>
+<li><br/></li>
+<li>Dispatch::Source::PROC_EXIT</li>
+<li>Dispatch::Source::PROC_FORK</li>
+<li>Dispatch::Source::PROC_EXEC</li>
+<li>Dispatch::Source::PROC_SIGNAL</li>
+<li><br/></li>
+<li>Dispatch::Source::VNODE_DELETE</li>
+<li>Dispatch::Source::VNODE_WRITE</li>
+<li>Dispatch::Source::VNODE_EXTEND</li>
+<li>Dispatch::Source::VNODE_ATTRIB</li>
+<li>Dispatch::Source::VNODE_LINK</li>
+<li>Dispatch::Source::VNODE_RENAME</li>
+<li>Dispatch::Source::VNODE_REVOKE</li>
+</ul>
+
+
+<p>Dispatch Source の種類として、以下のものを使用できます。</p>
+
+<table class="table">
+<tr><th>定数名</th><th>GCD API での定義</th><th>内容</th></tr>
+<tr>
+  <td>Dispatch::Source::DATA_ADD</td>
+  <td>DISPATCH_SOURCE_TYPE_DATA_ADD</td>
+  <td><code>&lt;&lt;</code> メソッドを通じてイベントが発生し、処理を実行します。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::DATA_OR</td>
+  <td>DISPATCH_SOURCE_TYPE_DATA_OR</td>
+  <td><code>&lt;&lt;</code> メソッドを通じてイベントが発生し、処理を実行します。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::PROC</td>
+  <td>DISPATCH_SOURCE_TYPE_PROC</td>
+  <td>プロセスに関するイベントを受けると、処理を実行します。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::SIGNAL</td>
+  <td>DISPATCH_SOURCE_TYPE_SIGNAL</td>
+  <td>シグナルを受けると、処理を実行します。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::READ</td>
+  <td>DISPATCH_SOURCE_TYPE_READ</td>
+  <td>ファイルディスクリプタが読み込み可能になると、処理を実行します。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::WRITE</td>
+  <td>DISPATCH_SOURCE_TYPE_WRITE</td>
+  <td>ファイルディスクリプタが書き込み可能になると、処理を実行します。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::VNODE</td>
+  <td>DISPATCH_SOURCE_TYPE_VNODE</td>
+  <td>ファイルが削除されたりファイルシステム上で変更があると、処理を実行します。</td>
+</tr>
+</table>
+
+
+<p>Dispatch::Source::PROC を使用する際に、以下の定数をマスクとして使用できます。</p>
+
+<table class="table">
+<tr>
+  <td>Dispatch::Source::PROC_EXIT</td>
+  <td>DISPATCH_PROC_EXIT</td>
+  <td>プロセスが終了した。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::PROC_FORK</td>
+  <td>DISPATCH_PROC_FORK</td>
+  <td>子プロセスを作成した。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::PROC_EXEC</td>
+  <td>DISPATCH_PROC_EXEC</td>
+  <td>exec や posix_spawn で別のプロセスを実行した。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::PROC_SIGNAL</td>
+  <td>DISPATCH_PROC_SIGNAL</td>
+  <td>シグナルを送信した。</td>
+</tr>
+</table>
+
+
+<p>Dispatch::Source::VNODE を使用する際に、以下の定数をマスクとして使用できます。</p>
+
+<table class="table">
+<tr>
+  <td>Dispatch::Source::VNODE_DELETE</td>
+  <td>DISPATCH_VNODE_DELETE</td>
+  <td>ファイルなどが削除された。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::VNODE_WRITE</td>
+  <td>DISPATCH_VNODE_WRITE</td>
+  <td>ファイルなどのデータが変更された。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::VNODE_EXTEND</td>
+  <td>DISPATCH_VNODE_EXTEND</td>
+  <td>ファイルサイズが変更された。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::VNODE_ATTRIB</td>
+  <td>DISPATCH_VNODE_ATTRIB</td>
+  <td>ファイルなどのメタ情報が変更された。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::VNODE_LINK</td>
+  <td>DISPATCH_VNODE_LINK</td>
+  <td>The file-system object link count changed.</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::VNODE_RENAME</td>
+  <td>DISPATCH_VNODE_RENAME</td>
+  <td>ファイル名が変更された。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::VNODE_REVOKE</td>
+  <td>DISPATCH_VNODE_REVOKE</td>
+  <td>The file-system object was revoked.</td>
+</tr>
+</table>
+
+
+<p>Dispatch Source は他のクラスよりもわかりにくいと思います。MacRuby のリポジトリにある <a href="https://github.com/MacRuby/MacRuby/blob/master/spec/macruby/core/gcd/source_spec.rb">source_spec.rb</a> を参考にしたりすると良いでしょう。</p>
+
+<h2>Dispatch::Source クラスのメソッド</h2>
+
+<h3>Dispatch::Source.new</h3>
+
+<p>Dispatch Source を生成し返します。</p>
+
+<ul>
+<li>new(type, handle, mask, queue) { &#8230; } -> Source
+
+<ul>
+<li>[PARAM] type:
+
+<ul>
+<li>Dispatch Source の種類を指定します。</li>
+</ul>
+</li>
+<li>[PARAM] handle:
+
+<ul>
+<li>イベントを監視するためのディスクリプタを指定します。type に <code>DATA_ADD</code> と <code>DATA_OR</code> を指定した場合には、<code>handle</code> は <code>0</code> とします。</li>
+</ul>
+</li>
+<li>[PARAM] mask:
+
+<ul>
+<li>マスクを指定できる Dispatch Source の種類を type で使用した際に指定します。</li>
+</ul>
+</li>
+<li>[PARAM] queue:
+
+<ul>
+<li>イベントが発生したときに、block の処理を追加する Dispatch Queue を指定します。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>生成した Dispatch Source のインスタンスを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Dispatch::Source.timer</h3>
+
+<p>タイマーイベント用の Dispatch Source を生成し返します。</p>
+
+<ul>
+<li>timer(delay, interval, leeway, queue) { &#8230; } -> Source
+
+<ul>
+<li>[PARAM] delay:
+
+<ul>
+<li>何秒後からタイマーを開始するか指定します。nil の場合には Dispatch::TIME_NOW が指定されたのと同じになります</li>
+</ul>
+</li>
+<li>[PARAM] interval:
+
+<ul>
+<li>何秒間隔で繰り返すか指定します。</li>
+</ul>
+</li>
+<li>[PARAM] leeway:
+
+<ul>
+<li>何秒までの遅れを許容するか指定します。</li>
+</ul>
+</li>
+<li>[PARAM] queue:
+
+<ul>
+<li>イベントが発生したときに、block の処理を追加する Dispatch Queue を指定します。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>生成した Dispatch Source のインスタンスを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gcdq</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Queue</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">timer</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Source</span><span class="o">.</span><span class="n">timer</span><span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="n">gcdq</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">s</span><span class="o">|</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;Wake up!&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">sleep</span> <span class="mi">3</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Dispatch::Source#cancelled?</h3>
+
+<p>Dispatch Source がキャンセルされているか返します。</p>
+
+<ul>
+<li>cancelled? -> bool
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>キャンセルされていれば true、そうでなれば false を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Dispatch::Source#cancel!</h3>
+
+<p>Dispatch Source をキャンセルします。</p>
+
+<ul>
+<li>cancel!</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gcdq</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Queue</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">timer</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Source</span><span class="o">.</span><span class="n">timer</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">gcdq</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">s</span><span class="o">|</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;Wake up!&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">sleep</span> <span class="mi">2</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">timer</span><span class="o">.</span><span class="n">cancel!</span>
+</span><span class='line'><span class="nb">p</span> <span class="n">timer</span><span class="o">.</span><span class="n">cancelled?</span> <span class="c1"># =&gt; true</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">sleep</span> <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Dispatch::Source#handle</h3>
+
+<p>Dispatch Source の handle を返します。</p>
+
+<ul>
+<li>handle
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Dispatch Source の handle を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Dispatch::Source#mask</h3>
+
+<p>Dispatch Source の mask を返します。GCD API の <code>dispatch_source_get_mask</code> に相当します。</p>
+
+<ul>
+<li>mask
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Dispatch Source の mask を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Dispatch::Source#data</h3>
+
+<p>Dispatch Source でまだ処理されていないデータを返します。GCD API の <code>dispatch_source_get_data</code> に相当します。</p>
+
+<ul>
+<li>data
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Dispatch Source でまだ処理されていないデータを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>Dispatch Source の種類によって、以下のようなデータを返します。</p>
+
+<table class="table">
+<tr>
+  <td>Dispatch::Source::DATA_ADD</td>
+  <td><code>&lt;&lt;</code>で送信されたデータ</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::DATA_OR</td>
+  <td><code>&lt;&lt;</code>で送信されたデータ</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::PROC</td>
+  <td>Dispatch::Source::PROC_EXIT、Dispatch::Source::PROC_FORK、Dispatch::Source::PROC_EXEC、Dispatch::Source::PROC_SIGNAL のいずれか</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::SIGNAL</td>
+  <td>シグナルの番号</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::READ</td>
+  <td>読み込み可能なバイト数</td>
+</tr>
+</table>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gcdq</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Queue</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">src</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Source</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="no">Dispatch</span><span class="o">::</span><span class="no">Source</span><span class="o">::</span><span class="no">DATA_ADD</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">gcdq</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">s</span><span class="o">|</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="n">s</span><span class="o">.</span><span class="n">data</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'><span class="n">src</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span>
+</span><span class='line'><span class="nb">sleep</span> <span class="mi">0</span><span class="o">.</span><span class="mi">5</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Dispatch::Source#&lt;&lt;</h3>
+
+<p>Dispatch::Source::DATA_ADD と Dispatch::Source::DATA_OR を指定した Dispatch Source で使用します。指定したデータを Dispatch Source の block へ送信します。GCD API の <code>dispatch_source_get_data</code> に相当します。</p>
+
+<ul>
+<li>&lt;&lt; data</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Dispatch::Semaphore クラス]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-semaphore-class/"/>
+    <updated>2012-03-31T10:00:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-semaphore-class</id>
+    <content type="html"><![CDATA[<p>Dispatch::Semaphore クラスは排他制御機能を提供します。たとえば、Concurrent Dispatch Queue を用いて並行処理をしていた際に計算結果を 1 つの配列に格納する場合などに Dispatch Semaphore で排他制御を行います。</p>
+
+<h2>Dispatch::Semaphore クラスのメソッド</h2>
+
+<h3>Dispatch::Semaphore.new</h3>
+
+<p>Dispatch Semaphore を生成し返します。GCD API の <code>dispatch_semaphore_create</code> に相当します。</p>
+
+<ul>
+<li>new(count) -> Semaphore
+
+<ul>
+<li>[PARAM] count:
+
+<ul>
+<li>セマフォのカウンタの初期値を指定します。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>生成した Dispatch Semaphore のインスタンスを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Dispatch::Semaphore#wait</h3>
+
+<p>Dispatch::Semaphore#signal が呼び出されセマフォのカウンタが 1 以上になるまで待ちます。カウンタが 1 以上になると 1 減算して待ち状態が解除されます。GCD API の <code>dispatch_semaphore_wait</code> に相当します。</p>
+
+<ul>
+<li>wait(timeout = nil) -> bool
+
+<ul>
+<li>[PARAM] timeout:
+
+<ul>
+<li>タイムアウト時間を指定します。省略された場合には Dispatch::TIME_FOREVER が指定されたのと同じになります。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>Dispatch::Semaphore#signal で wait が解除された場合には true、タイムアウトした場合には false を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gcdq</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Queue</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">sema</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Semaphore</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">async</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nb">sleep</span> <span class="mi">1</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;Hello&quot;</span>
+</span><span class='line'>  <span class="n">sema</span><span class="o">.</span><span class="n">signal</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="n">sema</span><span class="o">.</span><span class="n">wait</span> <span class="c1">#=&gt; true</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Dispatch::Semaphore#signal</h3>
+
+<p>Dispatch Semaphore のカウンタを 1 加算します。GCD API の <code>dispatch_semaphore_signal</code> に相当します。</p>
+
+<ul>
+<li>signal -> bool
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>セマフォを待っているスレッドがなければ true、それ以外で false を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Dispatch::Queue クラス]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-queue-class/"/>
+    <updated>2012-03-31T10:00:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-queue-class</id>
+    <content type="html"><![CDATA[<p>GCD を用いると簡単にマルチスレッドで処理を行うことができます。私たちは、GCD を使いたい処理を書き、適切な Dispatch Queue へ追加するだけです。あとは、GCD が必要なスレッドを生成して処理してくれます。</p>
+
+<p>Dispatch Queue の種類として、以下の 4 つがあります。</p>
+
+<ul>
+<li>Serial Dispatch Queue</li>
+<li>Concurrent Dispatch Queue</li>
+<li>Main Dispatch Queue (Serial Dispatch Queue)</li>
+<li>Global Dispatch Queue (Concurrent Dispatch Queue)</li>
+</ul>
+
+
+<p>Serial Dispatch Queue はタスクを逐次的に実行する際に用い、Concurrent Dispatch Queue は平行して複数の処理を行う際に用います。</p>
+
+<p>Main Dispatch Queue と Global Dispatch Queue はあらかじめ用意されており、<code>new</code> でインスタンスを生成しなくとも使うことができます。Main Dispatch Queue は Serial Dispatch Queue の、Global Dispatch Queue は Concurrent Dispatch Queue の一種となっています。</p>
+
+<h2>Dispatch::Queue クラスのメソッド</h2>
+
+<h3>Dispatch::Queue.new</h3>
+
+<p>逐次処理用に Serial Dispatch Queue を生成します。</p>
+
+<ul>
+<li>new(label) -> Queue
+
+<ul>
+<li>[PARAM] label:
+
+<ul>
+<li>生成する Queue に付与するユニークなラベルを指定します。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>生成した Dispatch Queue のインスタンスを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Dispatch::Queue.concurrent</h3>
+
+<p>並行処理用に Global Dispatch Queue を返します。Mac OS X 10.7 でビルドされた MacRuby では、優先度を指定すると Concurrent Dispatch Queue を返します。</p>
+
+<ul>
+<li>concurrent(priority = :default) -> Queue
+
+<ul>
+<li>[PARAM] priority:
+
+<ul>
+<li>生成する Queue の優先度を指定します。<code>:high</code>、<code>:low</code>、<code>:default</code> と Mac OS X 10.7 からは  <code>:background</code> も指定できます。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>Dispatch Queue のインスタンスを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Dispatch::Queue.main</h3>
+
+<p>Main Dispatch Queue を返します。</p>
+
+<ul>
+<li>main -> Queue
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Main Dispatch Queue のインスタンスを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Dispatch::Queue.current</h3>
+
+<p>現在使用している Dispatch Queue を返します。GCD タスクの block 内で呼び出すと、そのタスクを実行している Queue が返ります。block の外側で呼び出すと Main Dispatch Queue が返ります。</p>
+
+<ul>
+<li>current -> Queue
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>現在使用している Dispatch Queue のインスタンスを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gcdq</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Queue</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">after</span><span class="p">(</span><span class="no">Dispatch</span><span class="o">::</span><span class="no">TIME_NOW</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">q</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Queue</span><span class="o">.</span><span class="n">current</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="n">q</span><span class="o">.</span><span class="n">label</span> <span class="c1"># =&gt; sample</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">sleep</span> <span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">q</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Queue</span><span class="o">.</span><span class="n">current</span>
+</span><span class='line'><span class="nb">puts</span> <span class="n">q</span><span class="o">.</span><span class="n">label</span> <span class="c1"># =&gt; com.apple.main-thread</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Dispatch::Queue#apply</h3>
+
+<p>指定した回数 block を Dispatch Queue に追加し、それらの処理がすべて完了するまで待ちます。GCD API の <code>dispatch_apply</code> に相当します。</p>
+
+<ul>
+<li>apply(iterations) {|index| &#8230; }
+
+<ul>
+<li>[PARAM] iterations:
+
+<ul>
+<li>Dispatch Queue に block を追加する回数を指定します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gcdq</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Queue</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="vi">@result</span> <span class="o">=</span> <span class="o">[]</span>
+</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="p">{</span><span class="o">|</span><span class="n">i</span><span class="o">|</span> <span class="vi">@result</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">i</span><span class="o">*</span><span class="n">i</span> <span class="p">}</span>
+</span><span class='line'><span class="nb">p</span> <span class="vi">@result</span>  <span class="c1">#=&gt; [0, 1, 4, 9, 16, 25]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Dispatch::Queue#async</h3>
+
+<p>長時間にわたる処理など、非同期的に実行したい block を Dispatch Queue に追加します。group を指定すると GCD API の <code>dispatch_group_async</code> に、それ以外は <code>dispatch_async</code> に相当します。</p>
+
+<ul>
+<li>async(group = nil) { &#8230; }
+
+<ul>
+<li>[PARAM] group:
+
+<ul>
+<li>group を指定することで、Dispatch Queue に追加するタスクが group と関連づけられます。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gcdq</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Queue</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="vi">@i</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">async</span> <span class="p">{</span> <span class="vi">@i</span> <span class="o">=</span> <span class="mi">42</span> <span class="p">}</span>
+</span><span class='line'><span class="k">while</span> <span class="vi">@i</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">do</span><span class="p">;</span> <span class="k">end</span>
+</span><span class='line'><span class="nb">p</span> <span class="vi">@i</span> <span class="c1">#=&gt; 42</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>group を用いることで、Dispatch Queue に追加したすべてのタスクが完了するのを待ち合わせることができたりします。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gcdq</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Queue</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">gcdg</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Group</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'><span class="vi">@i</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">async</span><span class="p">(</span><span class="n">gcdg</span><span class="p">)</span> <span class="p">{</span> <span class="vi">@i</span> <span class="o">=</span> <span class="mi">42</span> <span class="p">}</span>
+</span><span class='line'><span class="n">gcdg</span><span class="o">.</span><span class="n">wait</span>
+</span><span class='line'><span class="nb">p</span> <span class="vi">@i</span> <span class="c1">#=&gt; 42</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Dispatch::Queue#sync</h3>
+
+<p>同期的に実行したい block を Dispatch Queue に追加します。処理が完了するまで待ちます。GCD API の <code>dispatch_sync</code> に相当します。</p>
+
+<ul>
+<li>sync { &#8230; }</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gcdq</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Queue</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="vi">@i</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">sync</span> <span class="p">{</span> <span class="vi">@i</span> <span class="o">=</span> <span class="mi">42</span> <span class="p">}</span>
+</span><span class='line'><span class="nb">p</span> <span class="vi">@i</span> <span class="c1">#=&gt; 42</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Dispatch::Queue#after</h3>
+
+<p>指定した時間が経過した後、block を Dispatch Queue に追加します。</p>
+
+<ul>
+<li>after(delay) { &#8230; }
+
+<ul>
+<li>[PARAM] delay:
+
+<ul>
+<li>何秒後に block を Dispatch Queue に追加するか指定します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gcdq</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Queue</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">after</span><span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">5</span><span class="p">)</span> <span class="p">{</span> <span class="nb">puts</span> <span class="s2">&quot;Hello&quot;</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">sleep</span> <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Dispatch::Queue#label</h3>
+
+<p>Dispatch Queue のラベルを返します。GCD API の <code>dispatch_queue_get_label</code> に相当します。</p>
+
+<ul>
+<li>label -> String
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Dispatch Queue のラベルを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gcdq</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Queue</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">label</span> <span class="c1"># =&gt; &#39;sample&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Dispatch::Queue#to_s</h3>
+
+<p>Dispatch::Queue#label の別名です。</p>
+
+<h3>Dispatch::Queue#barrier_async</h3>
+
+<p>TBD</p>
+
+<h3>Dispatch::Queue#barrier_sync</h3>
+
+<p>TBD</p>
+
+<h3>Dispatch::Queue.main.run</h3>
+
+<p>TBD</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Dispatch::Group クラス]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-group-class/"/>
+    <updated>2012-03-31T10:00:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-group-class</id>
+    <content type="html"><![CDATA[<p>Dispatch Queue に追加された複数の処理がすべて完了するまで待ちたい場合があるかと思います。そのような場合に Dispatch Group を用います。</p>
+
+<h3>Dispatch::Group.new</h3>
+
+<p>Dispatch Group を生成します。</p>
+
+<ul>
+<li>new -> Group
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>生成した Dispatch Group のインスタンスを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Dispatch::Group#notify</h3>
+
+<p>Dispatch Queue のタスクがすべて完了すると実行する block を Dispatch Queue に追加します。GCD API の <code>dispatch_group_notify</code> に相当します。</p>
+
+<ul>
+<li>notify(queue) { &#8230; }
+
+<ul>
+<li>[PARAM] queue:
+
+<ul>
+<li>block を追加する Dispatch Queue を指定します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gcdq</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Queue</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">gcdg</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Group</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'><span class="vi">@i</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">async</span> <span class="p">{</span> <span class="vi">@i</span> <span class="o">=</span> <span class="mi">42</span> <span class="p">}</span>
+</span><span class='line'><span class="n">gcdg</span><span class="o">.</span><span class="n">notify</span><span class="p">(</span><span class="n">gcdq</span><span class="p">)</span> <span class="p">{</span> <span class="nb">p</span> <span class="vi">@i</span> <span class="p">}</span> <span class="c1"># =&gt; 42</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Dispatch::Group#on_completion</h3>
+
+<p>Dispatch::Group#notify の別名です。</p>
+
+<h3>Dispatch::Group#wait</h3>
+
+<p>Dispatch Group に所属しているDispatch Queue のタスクがすべて完了するのを待ちます。GCD API の <code>dispatch_group_wait</code> に相当します。</p>
+
+<ul>
+<li>wait(timeout = nil) -> bool
+
+<ul>
+<li>[PARAM] timeout:
+
+<ul>
+<li>タイムアウト時間を指定します。省略された場合には Dispatch::TIME_FOREVER が指定されたのと同じになります。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>すべてのタスクが完了していれば true、タイムアウトにより完了していないタスクがあれば false を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gcdq</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Queue</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">gcdg</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Group</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">async</span><span class="p">(</span><span class="n">gcdg</span><span class="p">)</span> <span class="p">{</span> <span class="nb">sleep</span> <span class="mi">5</span> <span class="p">}</span>
+</span><span class='line'><span class="n">gcdg</span><span class="o">.</span><span class="n">wait</span> <span class="c1"># =&gt; true</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">async</span><span class="p">(</span><span class="n">gcdg</span><span class="p">)</span> <span class="p">{</span> <span class="nb">sleep</span> <span class="mi">5</span> <span class="p">}</span>
+</span><span class='line'><span class="n">gcdg</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># =&gt; false</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Dispatch クラス]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-class/"/>
+    <updated>2012-03-31T10:00:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-class</id>
+    <content type="html"><![CDATA[<p>Mac OS X 10.6 から追加された <a href="https://developer.apple.com/library/mac/#documentation/Performance/Reference/GCD_libdispatch_Ref/Reference/reference.html">Grand Central Dispatch (GCD)</a> を利用するために、MacRuby には Dispatch モジュールと、以下のようにいくつかのクラスがあります。</p>
+
+<ul>
+<li>Dispatch クラス</li>
+<li><a href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-queue-class/">Dispatch::Queue クラス</a></li>
+<li><a href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-group-class/">Dispatch::Group クラス</a></li>
+<li><a href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-source-class/">Dispatch::Source クラス</a></li>
+<li><a href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-semaphore-class/">Dispatch::Semaphore クラス</a></li>
+</ul>
+
+
+<p>RubyGems の <a href="https://github.com/gunn/Dispatch">Dispatch</a> ライブラリを用いると、より簡単に GCD を使うこともできます。</p>
+
+<h2>Dispatch クラスの定数</h2>
+
+<h3>Dispatch::TIME_NOW</h3>
+
+<p>「処理をすぐに開始する」と指示するときに使用します。GCD API で <code>DISPATCH_TIME_NOW</code> として定義されている定数と同じ定数です。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gcdq</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Queue</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">after</span><span class="p">(</span><span class="no">Dispatch</span><span class="o">::</span><span class="no">TIME_NOW</span><span class="p">)</span> <span class="p">{</span> <span class="nb">puts</span> <span class="s2">&quot;Hello&quot;</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">sleep</span> <span class="mi">0</span><span class="o">.</span><span class="mi">5</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Dispatch::TIME_FOREVER</h3>
+
+<p>処理が完了するのをタイムアウトなしで待ち続けたりするときに使用します。GCD API で <code>DISPATCH_TIME_FOREVER</code> として定義されている定数と同じ定数です。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gcdq</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Queue</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">sema</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Semaphore</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">async</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;Hello, &quot;</span>
+</span><span class='line'>  <span class="nb">sleep</span> <span class="mi">1</span>
+</span><span class='line'>  <span class="n">sema</span><span class="o">.</span><span class="n">signal</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;Waiting...&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">sema</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="no">Dispatch</span><span class="o">::</span><span class="no">TIME_FOREVER</span><span class="p">)</span>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;World&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Dispatch クラスのメソッド</h2>
+
+<h3>Dispatch#resume!</h3>
+
+<p>中断されている処理を再開します。GCD API の <code>dispatch_resume</code> に相当します。</p>
+
+<ul>
+<li>resume!</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gcdq</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Queue</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">after</span><span class="p">(</span><span class="no">Dispatch</span><span class="o">::</span><span class="no">TIME_NOW</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nb">sleep</span> <span class="mi">0</span><span class="o">.</span><span class="mi">5</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;Hello&quot;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">suspend!</span>
+</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">suspended?</span>  <span class="c1">#=&gt; true</span>
+</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">resume!</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">sleep</span> <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Dispatch#suspend!</h3>
+
+<p>処理を中断します。GCD API の <code>dispatch_suspend</code> に相当します。</p>
+
+<ul>
+<li>suspend!</li>
+</ul>
+
+
+<h3>Dispatch#suspended?</h3>
+
+<p>処理が中断されているかを返します。</p>
+
+<ul>
+<li>suspended? -> bool
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>処理が中断されていれば true、そうでなければ false を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Sandbox クラス]]></title>
@@ -2357,290 +3410,6 @@ Cocoa.framework は Foundation.framework、AppKit.framework と CoreData.framewo
 <p>TBD</p>
 
 <p>他に気がついたら書き足します。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Constructs the MacRuby environment]]></title>
-    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/09/intro-install/"/>
-    <updated>2012-03-09T21:58:00+09:00</updated>
-    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/09/intro-install</id>
-    <content type="html"><![CDATA[<h2>Requirements</h2>
-
-<p>The list below describes requirements for developing application using MacRuby.</p>
-
-<ul>
-<li>Mac OS X 10.6.8 later</li>
-<li>Xcode 4.2 or Xcode 4.3</li>
-<li>MacRuby</li>
-<li>BridgeSupport Preview 3 (If you use MacRuby on Mac OS X 10.6.8)</li>
-</ul>
-
-
-<h2>Install Xcode</h2>
-
-<p>You could install Xcode from Mac App Store. Launch Mac App Store. After that, search by keywords of &#8220;Xcode&#8221; at search field on top of right corner.</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-install/search_xcode.png" alt="image" /></p>
-
-<p>You could install Xcode easily from the search results.</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-install/xcode.png" alt="image" /></p>
-
-<p>If you use Mac OS X 10.6.8, Xcode 4.2.x will be installed. And if you use Mac OS X 10.7.x, Xcode 4.3.x will be installed.</p>
-
-<div class="note">
-<p>
-If you had previously installed an older version (as Xcode 4.2.x) and installed Xcode 4.3.x at this time,
-recommend to be running the following command on the Terminal.
-</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer/</span></code></pre></td></tr></table></div></figure>
-</div>
-
-
-<h2>Install Command Line Tools</h2>
-
-<p>Since Xcode 4.3, Command Line Tools (compiler, etc) became to additional package. Install Command Line Tools also.</p>
-
-<ol>
-<li>Choose a [Xcode]->[Preferences&#8230;] form Xcode&#8217;s menu to display Preferences.</li>
-<li>Choose a Downloads tab like the following figure, and install Command Line Tools.</li>
-</ol>
-
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-install/command_line_tools.png" alt="image" /></p>
-
-<h2>Install MacRuby</h2>
-
-<p>Next step, install MacRuby.</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-install/macruby_org.png" alt="image" /></p>
-
-<p>MacRuby 0.10 has been released now. However, unfortunately, it does not support for Xcode 4.3. Therefore, you should install the nightly build and could download it from <a href="http://www.macruby.org/files/nightlies/">http://www.macruby.org/files/nightlies/</a>. The nightly build which has latest changes has packaged every night.</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-install/nightly_build.png" alt="image" /></p>
-
-<h2>Install BridgeSupport Preview 3</h2>
-
-<p><strong>For Mac OS X 10.6.8 users only</strong>, need to install BridgeSupport Preview 3. BridgeSupport is used to get information about the Framework provided by the Mac OS X. In Mac OS X 10.7 environment, it has been pre-installed. You could get BridgeSupport Preview 3 from <a href="http://www.macruby.org/files/">http://www.macruby.org/files/</a> as <em>BridgeSupport Preview 3.zip</em>.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[アイコンを変更しよう]]></title>
-    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/09/intro-icon/"/>
-    <updated>2012-03-09T16:10:00+09:00</updated>
-    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/09/intro-icon</id>
-    <content type="html"><![CDATA[<p>作成したアプリケーションのアイコンには Mac OS X であらかじめ用意されているものが使用されます。すべてのアプリケーションは、最初に同じアイコンで表示されることになり、あまり見栄えがしません。</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-icon/default_icon.png" alt="image" /></p>
-
-<p>アプリケーションのアイコンを独自のものに変更してみましょう。</p>
-
-<h2>Icon Composer</h2>
-
-<p>あらかじめ PNG 形式などで、アプリケーションに設定するアイコン用の画像を用意します。用意した画像を、アイコンは Icon Composer を使用しアプリケーションに設定できる形式に出力します。この Icon Composer は Xcode と一緒にインストールされています。</p>
-
-<p>Xcode 4.3 からは、[Xcode]->[Open Developer Tool] から起動することができます。</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-icon/icon_composer_xcode43.png" alt="image" /></p>
-
-<p>Xcode 4.2 以前では、<em>/Developer/Applications/Utilities/Icon Composer.app</em> というフォルダ内に存在します。</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-icon/icon_composer_xcode42.png" alt="image" /></p>
-
-<p>Icon Composer を起動すると、アイコンサイズごとに枠がいくつか表示されています。その枠に用意しておいた画像をドラッグ &amp; ドロップして配置し、アイコンを保存します。</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-icon/icns.png" alt="image" /></p>
-
-<h2>アイコンを変更する</h2>
-
-<p>Xcode でアプリケーションのアイコンを変更します。以下の図のように、ターゲットを選択して [App Icon] に先ほど Icon Composer で作成したアイコンをドラッグ &amp; ドロップします。</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-icon/change_icon.png" alt="image" /></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Window のリサイズに対応しよう]]></title>
-    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/08/intro-window-resize/"/>
-    <updated>2012-03-08T22:52:00+09:00</updated>
-    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/08/intro-window-resize</id>
-    <content type="html"><![CDATA[<p>作成したアプリケーションを実行した後、Window がリサイズされることを考慮しましょう。何も対処していなければ、以下のようにリサイズすると間が抜けた UI レイアウトになったり、たくさんの UI 部品を使用したアプリケーションでは使用するのが困難なほどにレイアウトが崩れたりすることもあるでしょう。</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-window-resize/window.png" alt="image" /></p>
-
-<h2>Autosizing の設定</h2>
-
-<p>Window をリサイズした時に、UI 部品の配置をどのように取り扱うかについて Xcode の Autosizing という項目で簡単に設定することができます。以下の図のように、Autosizing を設定する UI 部品を選択し Size Inspector を表示します。</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-window-resize/size_inspector.png" alt="image" /></p>
-
-<p>幅や高さを伸縮させたい場合には以下のように設定します。</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-window-resize/autosizing_variable.png" alt="image" /></p>
-
-<p>UI 配置位置を固定する場合には以下のように設定します。設定した箇所の間隔は、Window をリサイズしても変わらないようになります。</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-window-resize/autosizing_fixable.png" alt="image" /></p>
-
-<p>Autosizing の効果は Example にプレビューされるので、確認しながら設定していくと良いでしょう。</p>
-
-<h2>Window をリサイズできないようにする</h2>
-
-<p>単純な UI の場合ですと、そもそも Window のリサイズしなくても良いということもあるでしょう。</p>
-
-<p>Window を選択した状態で、Size Inspector を表示します。</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-window-resize/window_size.png" alt="image" /></p>
-
-<p>[Minimum Size] と [Maximum Size] のチェックを ON にすると、Window の最大最小サイズを固定できます。上の図のように [Minimum Size] と [Maximum Size] を同じ値にすると、Window がリサイズできないようになります。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[ストップウォッチを作る (Thread 編)]]></title>
-    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/08/intro-stopwatch-thread/"/>
-    <updated>2012-03-08T15:49:00+09:00</updated>
-    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/08/intro-stopwatch-thread</id>
-    <content type="html"><![CDATA[<p><a href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/07/intro-stopwatch/">ストップウォッチを作る</a>では <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Reference/Foundation/Classes/nstimer_Class/Reference/NSTimer.html">NSTimer</a> を使って定期的に Text Field の内容を更新していました。同じ事を Ruby の Thread を使って実現することができます。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">AppDelegate</span>
-</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:window</span>
-</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:textField</span> <span class="c1"># アウトレット</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">applicationDidFinishLaunching</span><span class="p">(</span><span class="n">a_notification</span><span class="p">)</span>
-</span><span class='line'>    <span class="c1"># Insert code here to initialize your application</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">startTimer</span><span class="p">(</span><span class="n">sender</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">if</span> <span class="vi">@thread</span><span class="o">.</span><span class="n">nil?</span>
-</span><span class='line'>      <span class="vi">@time</span> <span class="o">=</span> <span class="mi">0</span><span class="o">.</span><span class="mi">0</span>
-</span><span class='line'>      <span class="vi">@thread</span> <span class="o">=</span> <span class="no">Thread</span><span class="o">.</span><span class="n">start</span> <span class="k">do</span>
-</span><span class='line'>        <span class="kp">loop</span> <span class="k">do</span>
-</span><span class='line'>          <span class="n">string</span> <span class="o">=</span> <span class="nb">sprintf</span><span class="p">(</span><span class="s2">&quot;%.1f&quot;</span><span class="p">,</span> <span class="vi">@time</span><span class="p">)</span>
-</span><span class='line'>          <span class="n">textField</span><span class="o">.</span><span class="n">stringValue</span> <span class="o">=</span> <span class="n">string</span>
-</span><span class='line'>
-</span><span class='line'>          <span class="nb">sleep</span> <span class="mi">0</span><span class="o">.</span><span class="mi">1</span>
-</span><span class='line'>          <span class="vi">@time</span> <span class="o">+=</span> <span class="mi">0</span><span class="o">.</span><span class="mi">1</span>
-</span><span class='line'>        <span class="k">end</span>
-</span><span class='line'>      <span class="k">end</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">stopTimer</span><span class="p">(</span><span class="n">sender</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">if</span> <span class="vi">@thread</span>
-</span><span class='line'>      <span class="vi">@thread</span><span class="o">.</span><span class="n">kill</span>
-</span><span class='line'>      <span class="vi">@thread</span> <span class="o">=</span> <span class="kp">nil</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><a href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/07/intro-stopwatch/">ストップウォッチを作る</a>と同じように UI 部品を配置し、アウトレットとアクションメソッドを接続します。</p>
-
-<p>NSTimer の長い呼び出しの記述が無くなっただけで、ずいぶん Ruby らしくなったのではないでしょうか。</p>
-
-<p>また Text Field に文字列を設定するメソッドとして、今回は <code>stringValue=</code> を使用しています。MacRuby には <code>foo=</code> というメソッドを <code>setFoo</code> と読み替える仕組みがあり、それを活用するとより Ruby らしいコードになるのではないでしょうか。</p>
-
-<div class="note">
-今回の Text Field のように、UI を更新する場合には単一のスレッドで行いましょう。(NSTimerを使ったものは、メインスレッドで更新しています)
-</div>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Deployment してアプリケーションを配布しよう]]></title>
-    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/07/intro-deployment/"/>
-    <updated>2012-03-07T17:50:00+09:00</updated>
-    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/07/intro-deployment</id>
-    <content type="html"><![CDATA[<p>作成したアプリケーションは MacRuby がインストールされている環境でしか動作しません。アプリケーションを配布する際には、MacRuby がインストールされていない環境で利用されるかもしれません。</p>
-
-<p>そこで MacRuby には、アプリケーションに MacRuby 自体を埋め込む仕組みが備わっています。これにより MacRuby がインストールされていない環境でもアプリケーションが動作します。</p>
-
-<p>以下の図のように「Deployment」を選択した状態で [Run] をクリックすると、アプリケーションに MacRuby が埋め込まれます。</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-deployment/deployment.png" alt="image" /></p>
-
-<p>Deployment ではいくつかのオプションを指定することができます。以下の図のように「Arguments」欄でオプションを指定します。</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-deployment/deployment_option.png" alt="image" /></p>
-
-<p>指定できるオプションは、<code>macruby_deploy</code> コマンドを Terminal で実行することで確認できます。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ macruby_deploy 
-</span><span class='line'>Usage: macruby_deploy [options] application-bundle
-</span><span class='line'>        --compile                    Compile the bundle source code
-</span><span class='line'>        --embed                      Embed MacRuby inside the bundle
-</span><span class='line'>        --no-stdlib                  Do not embed the standard library
-</span><span class='line'>        --stdlib [LIB]               Embed only LIB from the standard library
-</span><span class='line'>        --gem [GEM]                  Embed GEM and its dependencies
-</span><span class='line'>        --bs                         Embed the system BridgeSupport files
-</span><span class='line'>        --verbose                    Log all commands to standard out
-</span><span class='line'>        --codesign [CERT]            Sign the files with the specified certificate
-</span><span class='line'>    -v, --version                    Display the version</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<table class="table">
-<tr><th>オプション</th><th>内容</th></tr>
-<tr><td>&#8211;compile</td><td>アプリケーション内で使用している `*.rb` ファイルをコンパイルします。配布先で、不正にアプリケーションコードをコピーされるのを防ぐことができます</td></tr>
-<tr><td>&#8211;embed</td><td>アプリケーションに MacRuby を埋め込みます</td></tr>
-<tr><td>&#8211;no-stdlib</td><td>MacRuby の標準ライブラリを埋め込みません。標準ライブラリを使用していないアプリケーションでは、このオプションによってアプリケションのサイズを削減することができます</td></tr>
-<tr><td>&#8211;stdlib ライブラリ名</td><td>指定したライブラリのみ埋め込みます。&#8211;stdlib json のように使用します。</td></tr>
-<tr><td>&#8211;gem RubyGems名</td><td>指定した RubyGems をアプリケーションに埋め込みます</td></tr>
-</table>
-
-
-<p>できあがったアプリケーションは、[Products] のアプリケーション名を <kbd>control</kbd> キーを押しながらクリックすると Finder で確認することができます。</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/intro-deployment/show_finder.png" alt="image" /></p>
-
-<p>あとは、zip ファイルに圧縮するなどして配布してみてください。</p>
 ]]></content>
   </entry>
   

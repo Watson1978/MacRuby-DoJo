@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Boxed クラス - MacRuby DoJo (道場)</title>
+  <title>Dispatch::Group クラス - MacRuby DoJo (道場)</title>
   <meta name="author" content="Watson">
 
   
-  <meta name="description" content="Boxed クラスは Cocoa で定義されている構造体の情報を取得するために使用します。すべての構造体で Boxed クラスのメソッドを使用できます。 Boxed クラスのメソッド Boxed.type 構造体の型情報を返します。 type -> String [RETURN] &hellip;">
+  <meta name="description" content="Dispatch Queue に追加された複数の処理がすべて完了するまで待ちたい場合があるかと思います。そのような場合に Dispatch Group を用います。 Dispatch::Group.new Dispatch Group を生成します。 new -> Group [RETURN] &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/27/boxed-class">
+  <link rel="canonical" href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-group-class">
   <link href="/MacRuby-DoJo/favicon.png" rel="icon">
   <link href="/MacRuby-DoJo/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/MacRuby-DoJo/javascripts/modernizr-2.0.js"></script>
@@ -75,7 +75,7 @@
   
   <header>
     
-      <h1 class="entry-title">Boxed クラス</h1>
+      <h1 class="entry-title">Dispatch::Group クラス</h1>
     
     
       <p class="meta">
@@ -91,29 +91,46 @@
   
 
 
-<time datetime="2012-03-27T14:00:00+09:00" pubdate data-updated="true">Mar 27<span>th</span>, 2012</time>
+<time datetime="2012-03-31T10:00:00+09:00" pubdate data-updated="true">Mar 31<span>st</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>Boxed クラスは Cocoa で定義されている構造体の情報を取得するために使用します。すべての構造体で Boxed クラスのメソッドを使用できます。</p>
+<div class="entry-content"><p>Dispatch Queue に追加された複数の処理がすべて完了するまで待ちたい場合があるかと思います。そのような場合に Dispatch Group を用います。</p>
 
-<h2>Boxed クラスのメソッド</h2>
+<h3>Dispatch::Group.new</h3>
 
-<h3>Boxed.type</h3>
-
-<p>構造体の型情報を返します。</p>
+<p>Dispatch Group を生成します。</p>
 
 <ul>
-<li>type -> String
+<li>new -> Group
 
 <ul>
 <li>[RETURN]
 
 <ul>
-<li>構造体の型情報を返します。</li>
+<li>生成した Dispatch Group のインスタンスを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Dispatch::Group#notify</h3>
+
+<p>Dispatch Queue のタスクがすべて完了すると実行する block を Dispatch Queue に追加します。GCD API の <code>dispatch_group_notify</code> に相当します。</p>
+
+<ul>
+<li>notify(queue) { &#8230; }
+
+<ul>
+<li>[PARAM] queue:
+
+<ul>
+<li>block を追加する Dispatch Queue を指定します。</li>
 </ul>
 </li>
 </ul>
@@ -124,24 +141,38 @@
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="n">framework</span> <span class="s1">&#39;Cocoa&#39;</span>
-</span><span class='line'><span class="o">&gt;&gt;</span> <span class="no">NSRect</span><span class="o">.</span><span class="n">type</span>
-</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;{CGRect={CGPoint=dd}{CGSize=dd}}&quot;</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gcdq</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Queue</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">gcdg</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Group</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'><span class="vi">@i</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">async</span> <span class="p">{</span> <span class="vi">@i</span> <span class="o">=</span> <span class="mi">42</span> <span class="p">}</span>
+</span><span class='line'><span class="n">gcdg</span><span class="o">.</span><span class="n">notify</span><span class="p">(</span><span class="n">gcdq</span><span class="p">)</span> <span class="p">{</span> <span class="nb">p</span> <span class="vi">@i</span> <span class="p">}</span> <span class="c1"># =&gt; 42</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h3>Boxed.opaque?</h3>
+<h3>Dispatch::Group#on_completion</h3>
 
-<p>構造体が Opaque 構造体かどうかを返します。Opaque 構造体については、<a href="http://news.mynavi.jp/column/objc/018/">「ダイナミックObjective-C」</a>に書かれていますので参考にしてください。</p>
+<p>Dispatch::Group#notify の別名です。</p>
+
+<h3>Dispatch::Group#wait</h3>
+
+<p>Dispatch Group に所属しているDispatch Queue のタスクがすべて完了するのを待ちます。GCD API の <code>dispatch_group_wait</code> に相当します。</p>
 
 <ul>
-<li>opaque? -> bool
+<li>wait(timeout = nil) -> bool
 
 <ul>
+<li>[PARAM] timeout:
+
+<ul>
+<li>タイムアウト時間を指定します。省略された場合には Dispatch::TIME_FOREVER が指定されたのと同じになります。</li>
+</ul>
+</li>
 <li>[RETURN]
 
 <ul>
-<li>Opaque 構造体の場合には true、異なる場合には false を返します。</li>
+<li>すべてのタスクが完了していれば true、タイムアウトにより完了していないタスクがあれば false を返します。</li>
 </ul>
 </li>
 </ul>
@@ -155,12 +186,14 @@
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="n">framework</span> <span class="s1">&#39;Cocoa&#39;</span>
-</span><span class='line'><span class="o">&gt;&gt;</span> <span class="no">NSRect</span><span class="o">.</span><span class="n">opaque?</span>
-</span><span class='line'><span class="o">=&gt;</span> <span class="kp">false</span>
-</span><span class='line'><span class="o">&gt;&gt;</span> <span class="no">NSModalSession</span><span class="o">.</span><span class="n">opaque?</span>
-</span><span class='line'><span class="o">=&gt;</span> <span class="kp">true</span>
-</span><span class='line'><span class="o">&gt;&gt;</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gcdq</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Queue</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">gcdg</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Group</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">async</span><span class="p">(</span><span class="n">gcdg</span><span class="p">)</span> <span class="p">{</span> <span class="nb">sleep</span> <span class="mi">5</span> <span class="p">}</span>
+</span><span class='line'><span class="n">gcdg</span><span class="o">.</span><span class="n">wait</span> <span class="c1"># =&gt; true</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">async</span><span class="p">(</span><span class="n">gcdg</span><span class="p">)</span> <span class="p">{</span> <span class="nb">sleep</span> <span class="mi">5</span> <span class="p">}</span>
+</span><span class='line'><span class="n">gcdg</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># =&gt; false</span>
 </span></code></pre></td></tr></table></div></figure>
 
 </div>
@@ -185,7 +218,7 @@
   
 
 
-<time datetime="2012-03-27T14:00:00+09:00" pubdate data-updated="true">Mar 27<span>th</span>, 2012</time>
+<time datetime="2012-03-31T10:00:00+09:00" pubdate data-updated="true">Mar 31<span>st</span>, 2012</time>
       
 
 <span class="categories">
@@ -199,7 +232,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/27/boxed-class/" data-via="" data-counturl="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/27/boxed-class/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-group-class/" data-via="" data-counturl="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-group-class/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -212,10 +245,10 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/MacRuby-DoJo/blog/2012/03/27/pointer-class/" title="Previous Post: Pointer クラス">&laquo; Pointer クラス</a>
+        <a class="basic-alignment left" href="/MacRuby-DoJo/blog/2012/03/31/dispatch-class/" title="Previous Post: Dispatch クラス">&laquo; Dispatch クラス</a>
       
       
-        <a class="basic-alignment right" href="/MacRuby-DoJo/blog/2012/03/27/sandbox-class/" title="Next Post: Sandbox クラス">Sandbox クラス &raquo;</a>
+        <a class="basic-alignment right" href="/MacRuby-DoJo/blog/2012/03/31/dispatch-queue-class/" title="Next Post: Dispatch::Queue クラス">Dispatch::Queue クラス &raquo;</a>
       
     </p>
   </footer>

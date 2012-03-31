@@ -4,7 +4,7 @@
   <title><![CDATA[Category: MacRuby | MacRuby DoJo (道場)]]></title>
   <link href="http://watson1978.github.com/MacRuby-DoJo/blog/categories/macruby/atom.xml" rel="self"/>
   <link href="http://watson1978.github.com/MacRuby-DoJo/"/>
-  <updated>2012-03-29T11:39:37+09:00</updated>
+  <updated>2012-03-31T11:26:29+09:00</updated>
   <id>http://watson1978.github.com/MacRuby-DoJo/</id>
   <author>
     <name><![CDATA[Watson]]></name>
@@ -14,404 +14,187 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Sandbox クラス]]></title>
-    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/27/sandbox-class/"/>
-    <updated>2012-03-27T14:30:00+09:00</updated>
-    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/27/sandbox-class</id>
-    <content type="html"><![CDATA[<p>MacRuby には Sandbox というネットワークアクセスなどを制限するためのクラスがあります。<a href="https://developer.apple.com/library/mac/#documentation/Darwin/Reference/ManPages/man7/sandbox.7.html">sandbox(7)</a> を利用して MacRuby に実装されています。</p>
+    <title type="html"><![CDATA[Dispatch::Source クラス]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-source-class/"/>
+    <updated>2012-03-31T10:00:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-source-class</id>
+    <content type="html"><![CDATA[<p>Dispatch::Source クラスは何らかのイベントが発生するときに、イベントをハンドリングして処理を実行する仕組みを提供します。</p>
 
-<p>使い方は簡単で、あらかじめ <code>Sandbox.no_network.apply!</code> というように呼び出しておくだけです。Ruby のメソッド、Cocoa のAPI、双方に制限がかかります。</p>
-
-<p>```ruby</p>
-
-<blockquote><blockquote><p>framework 'Cocoa'
-require 'socket'
-Sandbox.no_network.apply!
-Socket.gethostbyaddr("apple.com")
-SocketError: host not found</p>
-
-<p>NSHost.hostWithName("apple.com")
-=> <NSHost 0x40121eb80> (null) ((
-) (
-))
-```</p></blockquote></blockquote>
-
-<p>Sandbox を用いて、スクリプトに以下の制限をかけることができます。</p>
+<h2>Dispatch::Source クラスの定数</h2>
 
 <ul>
-<li>TCP/IPネットワーキング機能</li>
-<li>ソケットベースな全てのネットワーキング機能</li>
-<li>ファイルの書き込み</li>
-<li>/var/tmp など、テンポラリディレクトリ内のみファイル書き込み可能</li>
-<li>OS のサービス全て</li>
+<li>Dispatch::Source::DATA_ADD</li>
+<li>Dispatch::Source::DATA_OR</li>
+<li>Dispatch::Source::PROC</li>
+<li>Dispatch::Source::SIGNAL</li>
+<li>Dispatch::Source::READ</li>
+<li>Dispatch::Source::WRITE</li>
+<li>Dispatch::Source::VNODE</li>
+<li><br/></li>
+<li>Dispatch::Source::PROC_EXIT</li>
+<li>Dispatch::Source::PROC_FORK</li>
+<li>Dispatch::Source::PROC_EXEC</li>
+<li>Dispatch::Source::PROC_SIGNAL</li>
+<li><br/></li>
+<li>Dispatch::Source::VNODE_DELETE</li>
+<li>Dispatch::Source::VNODE_WRITE</li>
+<li>Dispatch::Source::VNODE_EXTEND</li>
+<li>Dispatch::Source::VNODE_ATTRIB</li>
+<li>Dispatch::Source::VNODE_LINK</li>
+<li>Dispatch::Source::VNODE_RENAME</li>
+<li>Dispatch::Source::VNODE_REVOKE</li>
 </ul>
 
 
-<p>注意点として、</p>
-
-<ul>
-<li>いったん制限をしてしまうと解除できない (別の制限に変更できない)</li>
-<li>Sandboxはプロセス単位で制限がかかる</li>
-</ul>
-
-
-<p>制限をかけたい処理は別のプロセスで行うと良いでしょう。</p>
-
-<h2>Sandbox クラスのメソッド</h2>
-
-<h3>Sandbox.no_internet</h3>
-
-<p>TCP/IPネットワーキング機能を制限します。</p>
-
-<ul>
-<li>no_internet -> Sandbox
-
-<ul>
-<li>[RETURN]
-
-<ul>
-<li>制限内容が設定された、Sandbox のインスタンスを返します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<h3>Sandbox.no_network</h3>
-
-<p>ソケットベースな全てのネットワーキング機能を制限します。</p>
-
-<ul>
-<li>no_network -> Sandbox
-
-<ul>
-<li>[RETURN]
-
-<ul>
-<li>制限内容が設定された、Sandbox のインスタンスを返します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<h3>Sandbox.no_writes</h3>
-
-<p>ファイルの書き込みを制限します。</p>
-
-<ul>
-<li>no_writes -> Sandbox
-
-<ul>
-<li>[RETURN]
-
-<ul>
-<li>制限内容が設定された、Sandbox のインスタンスを返します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<h3>Sandbox.temporary_writes</h3>
-
-<p>/var/tmp など、テンポラリディレクトリ内のみファイル書き込み可能にします。</p>
-
-<ul>
-<li>temporary_writes -> Sandbox
-
-<ul>
-<li>[RETURN]
-
-<ul>
-<li>制限内容が設定された、Sandbox のインスタンスを返します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<h3>Sandbox.pure_computation</h3>
-
-<p>OS のサービス全てを制限します。</p>
-
-<ul>
-<li>pure_computation -> Sandbox
-
-<ul>
-<li>[RETURN]
-
-<ul>
-<li>制限内容が設定された、Sandbox のインスタンスを返します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<h3>Sandbox#apply!</h3>
-
-<p>制限内容を反映します。</p>
-
-<ul>
-<li>apply!</li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Boxed クラス]]></title>
-    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/27/boxed-class/"/>
-    <updated>2012-03-27T14:00:00+09:00</updated>
-    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/27/boxed-class</id>
-    <content type="html"><![CDATA[<p>Boxed クラスは Cocoa で定義されている構造体の情報を取得するために使用します。すべての構造体で Boxed クラスのメソッドを使用できます。</p>
-
-<h2>Boxed クラスのメソッド</h2>
-
-<h3>Boxed.type</h3>
-
-<p>構造体の型情報を返します。</p>
-
-<ul>
-<li>type -> String
-
-<ul>
-<li>[RETURN]
-
-<ul>
-<li>構造体の型情報を返します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<p>```ruby</p>
-
-<blockquote><blockquote><p>framework 'Cocoa'
-NSRect.type
-=> "{CGRect={CGPoint=dd}{CGSize=dd}}"
-```</p></blockquote></blockquote>
-
-<h3>Boxed.opaque?</h3>
-
-<p>構造体が Opaque 構造体かどうかを返します。Opaque 構造体については、<a href="http://news.mynavi.jp/column/objc/018/">「ダイナミックObjective-C」</a>に書かれていますので参考にしてください。</p>
-
-<ul>
-<li>opaque? -> bool
-
-<ul>
-<li>[RETURN]
-
-<ul>
-<li>Opaque 構造体の場合には true、異なる場合には false を返します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<p>```ruby</p>
-
-<blockquote><blockquote><p>framework 'Cocoa'
-NSRect.opaque?
-=> false
-NSModalSession.opaque?
-=> true</p>
-
-<p>```</p></blockquote></blockquote>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Pointer クラス]]></title>
-    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/27/pointer-class/"/>
-    <updated>2012-03-27T12:00:00+09:00</updated>
-    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/27/pointer-class</id>
-    <content type="html"><![CDATA[<p>Cocoa API を使用していると、引数にポインタ変数を渡さなければいけないときがあります。多くは <code>NSError* error;</code> のような変数が必要になるケースでしょうか。Ruby にはポインタ変数を扱うことができるクラスが存在しないため、MacRuby では Pointer クラスが追加されています。</p>
-
-<p>Pointer クラスを使用して、Objective-C の <code>NSError* error;</code> と等しい変数を用意するには以下のような記述になります。</p>
-
-<p><code>ruby
-error = Pointer.new('@')
-</code></p>
-
-<p><code>Pointer.new</code> の引数の <code>@</code> は、「オブジェクトのポインタ変数をつくりなさい」と指示しています。<code>@</code> のほかにも種類があり <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html">Type Encodings</a> で確認することができます。</p>
-
-<p><code>char* name[5];</code> のようなインスタンスを作成するには、以下のように <code>Pointer.new</code> の第 2 引数でサイズを指定します。</p>
-
-<p><code>ruby
-name = Pointer.new('c', 5)
-name[0] = 'a'
-name[1] = 'b'
-name[2] = 'c'
-name[3] = 'd'
-name[4] = 'e'
-</code></p>
-
-<p><code>NSRect *rect[2];</code> のような構造体のポインタ変数のインスタンスは、以下のように作成できます。</p>
-
-<p><code>ruby
-rect = Pointer.new("{CGRect={CGPoint=dd}{CGSize=dd}}", 2)
-</code></p>
-
-<p>構造体の内容を正確に把握しなければ、変数を用意することができません。
-そこで、<code>NSRect.type</code> と構造体に対して <code>type</code> メソッドを実行すると <code>"{CGRect={CGPoint=dd}{CGSize=dd}}"</code> と構造体の Type を取得することができるようになっています。上の例は以下のように書くことができます。</p>
-
-<p><code>ruby
-rect = Pointer.new(NSRect.type, 2)
-</code></p>
-
-<h2>ポインタ種類の別名</h2>
-
-<p><code>@</code> ではどのようなポインタとなるのかわかりにくいため、MacRuby では <code>Pointer.new('@')</code> を以下のように書くこともできます。</p>
-
-<p><code>ruby
-error = Pointer.new(:object)
-</code></p>
-
-<p>以下の表のように別名が用意されています。</p>
+<p>Dispatch Source の種類として、以下のものを使用できます。</p>
 
 <table class="table">
-<tr><th>内容</th><th>ポインタ</th><th>別名</th>
-<tr><td>char</td><td>Pointer.new('c')</td><td>Pointer.new(:char)</td></tr>
-<tr><td>unsigned char</td><td>Pointer.new('C')</td><td>Pointer.new(:uchar)</td></tr>
-<tr><td>short</td><td>Pointer.new('s')</td><td>Pointer.new(:short)</td></tr>
-<tr><td>unsigned short</td><td>Pointer.new('S')</td><td>Pointer.new(:ushort)</td></tr>
-<tr><td>int</td><td>Pointer.new('i')</td><td>Pointer.new(:int)</td></tr>
-<tr><td>unsigned int</td><td>Pointer.new('I')</td><td>Pointer.new(:uint)</td></tr>
-<tr><td>long</td><td>Pointer.new('l')</td><td>Pointer.new(:long)</td></tr>
-<tr><td>unsigned long</td><td>Pointer.new('L')</td><td>Pointer.new(:ulong)</td></tr>
-<tr><td>long long</td><td>Pointer.new('q')</td><td>Pointer.new(:long_long)</td></tr>
-<tr><td>unsigned long long</td><td>Pointer.new('Q')</td><td>Pointer.new(:ulong_long)</td></tr>
-<tr><td>float</td><td>Pointer.new('f')</td><td>Pointer.new(:float)</td></tr>
-<tr><td>double</td><td>Pointer.new('d')</td><td>Pointer.new(:double)</td></tr>
-<tr><td>character string (char *)</td><td>Pointer.new('*')</td><td>Pointer.new(:string)</td></tr>
-<tr><td>pointer</td><td>Pointer.new('^')</td><td>Pointer.new(:pointer)</td></tr>
-<tr><td>object</td><td>Pointer.new('@')</td><td>Pointer.new(:object)<br>Pointer.new(:id)</td></tr>
-<tr><td>class object (Class)</td><td>Pointer.new('#')</td><td>Pointer.new(:class)</td></tr>
-<tr><td>boolean</td><td>Pointer.new('B')</td><td>Pointer.new(:boolean)<br>Pointer.new(:bool)</td></tr>
-<tr><td>method selector (SEL)</td><td>Pointer.new(':')</td><td>Pointer.new(:selector)<br>Pointer.new(:sel)</td></tr>
+<tr><th>定数名</th><th>GCD API での定義</th><th>内容</th></tr>
+<tr>
+  <td>Dispatch::Source::DATA_ADD</td>
+  <td>DISPATCH_SOURCE_TYPE_DATA_ADD</td>
+  <td><code>&lt;&lt;</code> メソッドを通じてイベントが発生し、処理を実行します。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::DATA_OR</td>
+  <td>DISPATCH_SOURCE_TYPE_DATA_OR</td>
+  <td><code>&lt;&lt;</code> メソッドを通じてイベントが発生し、処理を実行します。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::PROC</td>
+  <td>DISPATCH_SOURCE_TYPE_PROC</td>
+  <td>プロセスに関するイベントを受けると、処理を実行します。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::SIGNAL</td>
+  <td>DISPATCH_SOURCE_TYPE_SIGNAL</td>
+  <td>シグナルを受けると、処理を実行します。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::READ</td>
+  <td>DISPATCH_SOURCE_TYPE_READ</td>
+  <td>ファイルディスクリプタが読み込み可能になると、処理を実行します。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::WRITE</td>
+  <td>DISPATCH_SOURCE_TYPE_WRITE</td>
+  <td>ファイルディスクリプタが書き込み可能になると、処理を実行します。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::VNODE</td>
+  <td>DISPATCH_SOURCE_TYPE_VNODE</td>
+  <td>ファイルが削除されたりファイルシステム上で変更があると、処理を実行します。</td>
+</tr>
 </table>
 
 
-<h2>Pointer クラスのメソッド</h2>
+<p>Dispatch::Source::PROC を使用する際に、以下の定数をマスクとして使用できます。</p>
 
-<h3>Pointer.new</h3>
-
-<p>Pointer クラスのインスタンスを作成して返します。</p>
-
-<ul>
-<li>new(type, size = 1) -> Pointer
-
-<ul>
-<li>[PARAM] type:
-
-<ul>
-<li>どのようなポインタ変数を作成するか指定します。</li>
-</ul>
-</li>
-<li>[PARAM] size:
-
-<ul>
-<li>ポインタ変数のサイズを指定します。</li>
-</ul>
-</li>
-<li>[RETURN]
-
-<ul>
-<li>作成した Pointer のインスタンスを返します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+<table class="table">
+<tr>
+  <td>Dispatch::Source::PROC_EXIT</td>
+  <td>DISPATCH_PROC_EXIT</td>
+  <td>プロセスが終了した。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::PROC_FORK</td>
+  <td>DISPATCH_PROC_FORK</td>
+  <td>子プロセスを作成した。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::PROC_EXEC</td>
+  <td>DISPATCH_PROC_EXEC</td>
+  <td>exec や posix_spawn で別のプロセスを実行した。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::PROC_SIGNAL</td>
+  <td>DISPATCH_PROC_SIGNAL</td>
+  <td>シグナルを送信した。</td>
+</tr>
+</table>
 
 
-<h3>Pointer.new_with_type</h3>
+<p>Dispatch::Source::VNODE を使用する際に、以下の定数をマスクとして使用できます。</p>
 
-<p>Pointer.new の別名です。</p>
-
-<h3>Pointer.magic_cookie</h3>
-
-<p>即値を (void *) へキャストした Pointer のインスタンスを返します。</p>
-
-<ul>
-<li>magic_cookie(val) -> Pointer
-
-<ul>
-<li>[PARAM] val:
-
-<ul>
-<li>数値を指定します。</li>
-</ul>
-</li>
-<li>[RETURN]
-
-<ul>
-<li>(void *) に即値をキャストした Pointer のインスタンスを返します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<p>OpenGL に関するチケット <a href="http://www.macruby.org/trac/ticket/1112">#1112</a> でこのメソッドが追加されました。</p>
-
-<h3>Pointer#type</h3>
-
-<p>どのような種類のポインタか確認するのに使用します。</p>
-
-<ul>
-<li>type -> String
-
-<ul>
-<li>[RETURN]
-
-<ul>
-<li>ポインタの種類を返します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+<table class="table">
+<tr>
+  <td>Dispatch::Source::VNODE_DELETE</td>
+  <td>DISPATCH_VNODE_DELETE</td>
+  <td>ファイルなどが削除された。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::VNODE_WRITE</td>
+  <td>DISPATCH_VNODE_WRITE</td>
+  <td>ファイルなどのデータが変更された。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::VNODE_EXTEND</td>
+  <td>DISPATCH_VNODE_EXTEND</td>
+  <td>ファイルサイズが変更された。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::VNODE_ATTRIB</td>
+  <td>DISPATCH_VNODE_ATTRIB</td>
+  <td>ファイルなどのメタ情報が変更された。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::VNODE_LINK</td>
+  <td>DISPATCH_VNODE_LINK</td>
+  <td>The file-system object link count changed.</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::VNODE_RENAME</td>
+  <td>DISPATCH_VNODE_RENAME</td>
+  <td>ファイル名が変更された。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::VNODE_REVOKE</td>
+  <td>DISPATCH_VNODE_REVOKE</td>
+  <td>The file-system object was revoked.</td>
+</tr>
+</table>
 
 
-<p>```ruby</p>
+<p>Dispatch Source は他のクラスよりもわかりにくいと思います。MacRuby のリポジトリにある <a href="https://github.com/MacRuby/MacRuby/blob/master/spec/macruby/core/gcd/source_spec.rb">source_spec.rb</a> を参考にしたりすると良いでしょう。</p>
 
-<blockquote><blockquote><p>framework 'Cocoa'
-pointer = Pointer.new(NSRect.type)
-pointer.type
-=> "{CGRect={CGPoint=dd}{CGSize=dd}}"
-```</p></blockquote></blockquote>
+<h2>Dispatch::Source クラスのメソッド</h2>
 
-<h3>Pointer#cast!</h3>
+<h3>Dispatch::Source.new</h3>
 
-<p>ポインタの種類を変更します。</p>
+<p>Dispatch Source を生成し返します。</p>
 
 <ul>
-<li>cast!(type) -> self
+<li>new(type, handle, mask, queue) { ... } -> Source
 
 <ul>
 <li>[PARAM] type:
 
 <ul>
-<li>変更先のポインタの種類を指定します。</li>
+<li>Dispatch Source の種類を指定します。</li>
+</ul>
+</li>
+<li>[PARAM] handle:
+
+<ul>
+<li>イベントを監視するためのディスクリプタを指定します。type に <code>DATA_ADD</code> と <code>DATA_OR</code> を指定した場合には、<code>handle</code> は <code>0</code> とします。</li>
+</ul>
+</li>
+<li>[PARAM] mask:
+
+<ul>
+<li>マスクを指定できる Dispatch Source の種類を type で使用した際に指定します。</li>
+</ul>
+</li>
+<li>[PARAM] queue:
+
+<ul>
+<li>イベントが発生したときに、block の処理を追加する Dispatch Queue を指定します。</li>
 </ul>
 </li>
 <li>[RETURN]
 
 <ul>
-<li>ポインタの種類を変更したオブジェクトを返します。</li>
+<li>生成した Dispatch Source のインスタンスを返します。</li>
 </ul>
 </li>
 </ul>
@@ -419,115 +202,42 @@ pointer.type
 </ul>
 
 
-<p>```ruby</p>
+<h3>Dispatch::Source.timer</h3>
 
-<blockquote><blockquote><p>pointer = Pointer.new('i')
-pointer.type
-=> "i"
-pointer.cast!('I')
-pointer.type
-=> "I"
-```</p></blockquote></blockquote>
-
-<h3>Pointer#[]</h3>
-
-<p>nth 番目の内容を取得します。</p>
+<p>タイマーイベント用の Dispatch Source を生成し返します。</p>
 
 <ul>
-<li>self[nth]
+<li>timer(delay, interval, leeway, queue) { ... } -> Source
 
 <ul>
-<li>[PARAM] nth:
+<li>[PARAM] delay:
 
 <ul>
-<li>取得する内容の位置を指定します。</li>
+<li>何秒後からタイマーを開始するか指定します。nil の場合には Dispatch::TIME_NOW が指定されたのと同じになります</li>
 </ul>
 </li>
-<li>[RETURN]
+<li>[PARAM] interval:
 
 <ul>
-<li>nth 番目の内容を返します。</li>
+<li>何秒間隔で繰り返すか指定します。</li>
 </ul>
 </li>
+<li>[PARAM] leeway:
+
+<ul>
+<li>何秒までの遅れを許容するか指定します。</li>
 </ul>
 </li>
-</ul>
-
-
-<h3>Pointer#[]=</h3>
-
-<p>nth 番目の内容を val で置き換えます。</p>
+<li>[PARAM] queue:
 
 <ul>
-<li>self[nth] = val
-
-<ul>
-<li>[PARAM] nth:
-
-<ul>
-<li>置き換える内容の位置を指定します。</li>
-</ul>
-</li>
-<li>[PARAM] val:
-
-<ul>
-<li>置き換える内容を指定します。</li>
+<li>イベントが発生したときに、block の処理を追加する Dispatch Queue を指定します。</li>
 </ul>
 </li>
 <li>[RETURN]
 
 <ul>
-<li>val を返します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<h3>Pointer#assign</h3>
-
-<p>0 番目の内容を val で置き換えます。</p>
-
-<ul>
-<li>assign(val)
-
-<ul>
-<li>[PARAM] val:
-
-<ul>
-<li>置き換える内容を指定します。</li>
-</ul>
-</li>
-<li>[RETURN]
-
-<ul>
-<li>val を返します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<h3>Pointer#+</h3>
-
-<p>指定した offset からの Pointer インスタンスを返します。</p>
-
-<ul>
-<li>self + offset -> Pointer
-
-<ul>
-<li>[PARAM] offset:
-
-<ul>
-<li>取得する内容の位置を指定します。</li>
-</ul>
-</li>
-<li>[RETURN]
-
-<ul>
-<li>指定した位置からの Pointer インスタンスを返します。</li>
+<li>生成した Dispatch Source のインスタンスを返します。</li>
 </ul>
 </li>
 </ul>
@@ -536,37 +246,186 @@ pointer.type
 
 
 <p>```ruby
-name = Pointer.new('c', 5)
-name[0] = 10
-name[1] = 11
-name[2] = 12
-name[3] = 13
-name[4] = 14</p>
+gcdq = Dispatch::Queue.new('sample')
+timer = Dispatch::Source.timer(0.5, 1, 0.5, gcdq) do |s|
+  puts "Wake up!"
+end</p>
 
-<p>tmp = name + 3
-2.times do |i|
-  p tmp[i] # => 13, 14
-end
+<p>sleep 3
 ```</p>
 
-<h3>Pointer#-</h3>
+<h3>Dispatch::Source#cancelled?</h3>
 
-<p>Pointer#+ と同じように、指定した offset からの Pointer インスタンスを返します。</p>
-
-<ul>
-<li>self - offset -> Pointer
+<p>Dispatch Source がキャンセルされているか返します。</p>
 
 <ul>
-<li>[PARAM] offset:
+<li>cancelled? -> bool
 
 <ul>
-<li>取得する内容の位置を指定します。</li>
+<li>[RETURN]
+
+<ul>
+<li>キャンセルされていれば true、そうでなれば false を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Dispatch::Source#cancel!</h3>
+
+<p>Dispatch Source をキャンセルします。</p>
+
+<ul>
+<li>cancel!</li>
+</ul>
+
+
+<p>```ruby
+gcdq = Dispatch::Queue.new('sample')
+timer = Dispatch::Source.timer(1, 0.5, 0, gcdq) do |s|
+  puts "Wake up!"
+end</p>
+
+<p>sleep 2</p>
+
+<p>timer.cancel!
+p timer.cancelled? # => true</p>
+
+<p>sleep 1
+```</p>
+
+<h3>Dispatch::Source#handle</h3>
+
+<p>Dispatch Source の handle を返します。</p>
+
+<ul>
+<li>handle
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Dispatch Source の handle を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Dispatch::Source#mask</h3>
+
+<p>Dispatch Source の mask を返します。GCD API の <code>dispatch_source_get_mask</code> に相当します。</p>
+
+<ul>
+<li>mask
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Dispatch Source の mask を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Dispatch::Source#data</h3>
+
+<p>Dispatch Source でまだ処理されていないデータを返します。GCD API の <code>dispatch_source_get_data</code> に相当します。</p>
+
+<ul>
+<li>data
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Dispatch Source でまだ処理されていないデータを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>Dispatch Source の種類によって、以下のようなデータを返します。</p>
+
+<table class="table">
+<tr>
+  <td>Dispatch::Source::DATA_ADD</td>
+  <td><code>&lt;&lt;</code>で送信されたデータ</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::DATA_OR</td>
+  <td><code>&lt;&lt;</code>で送信されたデータ</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::PROC</td>
+  <td>Dispatch::Source::PROC_EXIT、Dispatch::Source::PROC_FORK、Dispatch::Source::PROC_EXEC、Dispatch::Source::PROC_SIGNAL のいずれか</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::SIGNAL</td>
+  <td>シグナルの番号</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::READ</td>
+  <td>読み込み可能なバイト数</td>
+</tr>
+</table>
+
+
+<p><code>ruby
+gcdq = Dispatch::Queue.new('sample')
+src = Dispatch::Source.new(Dispatch::Source::DATA_ADD, 0, 0, gcdq) do |s|
+  puts s.data
+end
+src &lt;&lt; 1
+sleep 0.5
+</code></p>
+
+<h3>Dispatch::Source#&lt;&lt;</h3>
+
+<p>Dispatch::Source::DATA_ADD と Dispatch::Source::DATA_OR を指定した Dispatch Source で使用します。指定したデータを Dispatch Source の block へ送信します。GCD API の <code>dispatch_source_get_data</code> に相当します。</p>
+
+<ul>
+<li>&lt;&lt; data</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Dispatch::Semaphore クラス]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-semaphore-class/"/>
+    <updated>2012-03-31T10:00:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-semaphore-class</id>
+    <content type="html"><![CDATA[<p>Dispatch::Semaphore クラスは排他制御機能を提供します。たとえば、Concurrent Dispatch Queue を用いて並行処理をしていた際に計算結果を 1 つの配列に格納する場合などに Dispatch Semaphore で排他制御を行います。</p>
+
+<h2>Dispatch::Semaphore クラスのメソッド</h2>
+
+<h3>Dispatch::Semaphore.new</h3>
+
+<p>Dispatch Semaphore を生成し返します。GCD API の <code>dispatch_semaphore_create</code> に相当します。</p>
+
+<ul>
+<li>new(count) -> Semaphore
+
+<ul>
+<li>[PARAM] count:
+
+<ul>
+<li>セマフォのカウンタの初期値を指定します。</li>
 </ul>
 </li>
 <li>[RETURN]
 
 <ul>
-<li>指定した位置からの Pointer インスタンスを返します。</li>
+<li>生成した Dispatch Semaphore のインスタンスを返します。</li>
 </ul>
 </li>
 </ul>
@@ -574,139 +433,354 @@ end
 </ul>
 
 
-<h3>Pointer#to_object</h3>
+<h3>Dispatch::Semaphore#wait</h3>
+
+<p>Dispatch::Semaphore#signal が呼び出されセマフォのカウンタが 1 以上になるまで待ちます。カウンタが 1 以上になると 1 減算して待ち状態が解除されます。GCD API の <code>dispatch_semaphore_wait</code> に相当します。</p>
+
+<ul>
+<li>wait(timeout = nil) -> bool
+
+<ul>
+<li>[PARAM] timeout:
+
+<ul>
+<li>タイムアウト時間を指定します。省略された場合には Dispatch::TIME_FOREVER が指定されたのと同じになります。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>Dispatch::Semaphore#signal で wait が解除された場合には true、タイムアウトした場合には false を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p><code>ruby
+gcdq = Dispatch::Queue.new('sample')
+sema = Dispatch::Semaphore.new(0)
+gcdq.async {
+  sleep 1
+  puts "Hello"
+  sema.signal
+}
+sema.wait #=&gt; true
+</code></p>
+
+<h3>Dispatch::Semaphore#signal</h3>
+
+<p>Dispatch Semaphore のカウンタを 1 加算します。GCD API の <code>dispatch_semaphore_signal</code> に相当します。</p>
+
+<ul>
+<li>signal -> bool
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>セマフォを待っているスレッドがなければ true、それ以外で false を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Dispatch::Queue クラス]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-queue-class/"/>
+    <updated>2012-03-31T10:00:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-queue-class</id>
+    <content type="html"><![CDATA[<p>GCD を用いると簡単にマルチスレッドで処理を行うことができます。私たちは、GCD を使いたい処理を書き、適切な Dispatch Queue へ追加するだけです。あとは、GCD が必要なスレッドを生成して処理してくれます。</p>
+
+<p>Dispatch Queue の種類として、以下の 4 つがあります。</p>
+
+<ul>
+<li>Serial Dispatch Queue</li>
+<li>Concurrent Dispatch Queue</li>
+<li>Main Dispatch Queue (Serial Dispatch Queue)</li>
+<li>Global Dispatch Queue (Concurrent Dispatch Queue)</li>
+</ul>
+
+
+<p>Serial Dispatch Queue はタスクを逐次的に実行する際に用い、Concurrent Dispatch Queue は平行して複数の処理を行う際に用います。</p>
+
+<p>Main Dispatch Queue と Global Dispatch Queue はあらかじめ用意されており、<code>new</code> でインスタンスを生成しなくとも使うことができます。Main Dispatch Queue は Serial Dispatch Queue の、Global Dispatch Queue は Concurrent Dispatch Queue の一種となっています。</p>
+
+<h2>Dispatch::Queue クラスのメソッド</h2>
+
+<h3>Dispatch::Queue.new</h3>
+
+<p>逐次処理用に Serial Dispatch Queue を生成します。</p>
+
+<ul>
+<li>new(label) -> Queue
+
+<ul>
+<li>[PARAM] label:
+
+<ul>
+<li>生成する Queue に付与するユニークなラベルを指定します。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>生成した Dispatch Queue のインスタンスを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Dispatch::Queue.concurrent</h3>
+
+<p>並行処理用に Global Dispatch Queue を返します。Mac OS X 10.7 でビルドされた MacRuby では、優先度を指定すると Concurrent Dispatch Queue を返します。</p>
+
+<ul>
+<li>concurrent(priority = :default) -> Queue
+
+<ul>
+<li>[PARAM] priority:
+
+<ul>
+<li>生成する Queue の優先度を指定します。<code>:high</code>、<code>:low</code>、<code>:default</code> と Mac OS X 10.7 からは  <code>:background</code> も指定できます。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>Dispatch Queue のインスタンスを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Dispatch::Queue.main</h3>
+
+<p>Main Dispatch Queue を返します。</p>
+
+<ul>
+<li>main -> Queue
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Main Dispatch Queue のインスタンスを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Dispatch::Queue.current</h3>
+
+<p>現在使用している Dispatch Queue を返します。GCD タスクの block 内で呼び出すと、そのタスクを実行している Queue が返ります。block の外側で呼び出すと Main Dispatch Queue が返ります。</p>
+
+<ul>
+<li>current -> Queue
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>現在使用している Dispatch Queue のインスタンスを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>```ruby
+gcdq = Dispatch::Queue.new('sample')
+gcdq.after(Dispatch::TIME_NOW) {
+  q = Dispatch::Queue.current
+  puts q.label # => sample
+}</p>
+
+<p>sleep 1</p>
+
+<p>q = Dispatch::Queue.current
+puts q.label # => com.apple.main-thread
+```</p>
+
+<h3>Dispatch::Queue#apply</h3>
+
+<p>指定した回数 block を Dispatch Queue に追加し、それらの処理がすべて完了するまで待ちます。GCD API の <code>dispatch_apply</code> に相当します。</p>
+
+<ul>
+<li>apply(iterations) {|index| ... }
+
+<ul>
+<li>[PARAM] iterations:
+
+<ul>
+<li>Dispatch Queue に block を追加する回数を指定します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p><code>ruby
+gcdq = Dispatch::Queue.new('sample')
+@result = []
+gcdq.apply(5) {|i| @result[i] = i*i }
+p @result  #=&gt; [0, 1, 4, 9, 16, 25]
+</code></p>
+
+<h3>Dispatch::Queue#async</h3>
+
+<p>長時間にわたる処理など、非同期的に実行したい block を Dispatch Queue に追加します。group を指定すると GCD API の <code>dispatch_group_async</code> に、それ以外は <code>dispatch_async</code> に相当します。</p>
+
+<ul>
+<li>async(group = nil) { ... }
+
+<ul>
+<li>[PARAM] group:
+
+<ul>
+<li>group を指定することで、Dispatch Queue に追加するタスクが group と関連づけられます。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p><code>ruby
+gcdq = Dispatch::Queue.new('sample')
+@i = 0
+gcdq.async { @i = 42 }
+while @i == 0 do; end
+p @i #=&gt; 42
+</code></p>
+
+<p>group を用いることで、Dispatch Queue に追加したすべてのタスクが完了するのを待ち合わせることができたりします。</p>
+
+<p><code>ruby
+gcdq = Dispatch::Queue.new('sample')
+gcdg = Dispatch::Group.new
+@i = 0
+gcdq.async(gcdg) { @i = 42 }
+gcdg.wait
+p @i #=&gt; 42
+</code></p>
+
+<h3>Dispatch::Queue#sync</h3>
+
+<p>同期的に実行したい block を Dispatch Queue に追加します。処理が完了するまで待ちます。GCD API の <code>dispatch_sync</code> に相当します。</p>
+
+<ul>
+<li>sync { ... }</li>
+</ul>
+
+
+<p><code>ruby
+gcdq = Dispatch::Queue.new('sample')
+@i = 0
+gcdq.sync { @i = 42 }
+p @i #=&gt; 42
+</code></p>
+
+<h3>Dispatch::Queue#after</h3>
+
+<p>指定した時間が経過した後、block を Dispatch Queue に追加します。</p>
+
+<ul>
+<li>after(delay) { ... }
+
+<ul>
+<li>[PARAM] delay:
+
+<ul>
+<li>何秒後に block を Dispatch Queue に追加するか指定します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>```ruby
+gcdq = Dispatch::Queue.new('sample')
+gcdq.after(0.5) { puts "Hello" }</p>
+
+<p>sleep 1
+```</p>
+
+<h3>Dispatch::Queue#label</h3>
+
+<p>Dispatch Queue のラベルを返します。GCD API の <code>dispatch_queue_get_label</code> に相当します。</p>
+
+<ul>
+<li>label -> String
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Dispatch Queue のラベルを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p><code>ruby
+gcdq = Dispatch::Queue.new('sample')
+gcdq.label # =&gt; 'sample'
+</code></p>
+
+<h3>Dispatch::Queue#to_s</h3>
+
+<p>Dispatch::Queue#label の別名です。</p>
+
+<h3>Dispatch::Queue#barrier_async</h3>
+
+<p>TBD</p>
+
+<h3>Dispatch::Queue#barrier_sync</h3>
+
+<p>TBD</p>
+
+<h3>Dispatch::Queue.main.run</h3>
 
 <p>TBD</p>
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[MacRuby 独自の定数]]></title>
-    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/26/original-constants/"/>
-    <updated>2012-03-26T21:00:00+09:00</updated>
-    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/26/original-constants</id>
-    <content type="html"><![CDATA[<p>ここでは MacRuby で追加されている定数について説明します。</p>
+    <title type="html"><![CDATA[Dispatch::Group クラス]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-group-class/"/>
+    <updated>2012-03-31T10:00:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-group-class</id>
+    <content type="html"><![CDATA[<p>Dispatch Queue に追加された複数の処理がすべて完了するまで待ちたい場合があるかと思います。そのような場合に Dispatch Group を用います。</p>
 
-<h2>独自の定数</h2>
+<h3>Dispatch::Group.new</h3>
 
-<h3>Kernel::RUBY_ARCH</h3>
-
-<p>動作している MacRuby が対象としている CPU のアーキテクチャ名。</p>
-
-<p>```ruby</p>
-
-<blockquote><blockquote><p>Kernel::RUBY_ARCH
-=> "x86_64"
-```</p></blockquote></blockquote>
-
-<h3>Kernel::MACRUBY_VERSION</h3>
-
-<p>MacRuby のバージョン。</p>
-
-<p>```ruby</p>
-
-<blockquote><blockquote><p>Kernel::MACRUBY_VERSION
-=> "0.12"
-```</p></blockquote></blockquote>
-
-<p>たとえば以下のようなメソッドを用意しておくと、実行している環境が MacRuby かそれ以外なのか簡単にチェックすることができます。
-```ruby
-def is_macruby?
-  begin</p>
-
-<pre><code>MACRUBY_VERSION
-return true
-</code></pre>
-
-<p>  rescue</p>
-
-<pre><code>return false
-</code></pre>
-
-<p>  end
-end
-```</p>
-
-<h3>Kernel::MACRUBY_REVISION</h3>
-
-<p>最後にコミットされたパッチの Git SHA1 ハッシュ値(古い MacRuby では SVN のリビジョン番号)。</p>
-
-<p>```ruby</p>
-
-<blockquote><blockquote><p>Kernel::MACRUBY_REVISION
-=> "git commit e35df75944e7a13d16f019e2ed1e4ce2406b06af"
-```</p></blockquote></blockquote>
-
-<h3>Dir::NS_TMPDIR</h3>
-
-<p>テンポラリディレクトリのパス。</p>
-
-<p>```ruby</p>
-
-<blockquote><blockquote><p>Dir::NS_TMPDIR
-=> "/var/folders/1z/ff7x15cj7vb24rl38ty0y52w0000gn/T/"
-```</p></blockquote></blockquote>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[MacRuby 独自のメソッド]]></title>
-    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/26/original-methods/"/>
-    <updated>2012-03-26T12:00:00+09:00</updated>
-    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/26/original-methods</id>
-    <content type="html"><![CDATA[<p>MacRuby には CRuby や Cocoa API に存在しない、独自のメソッドやクラスが存在します。ここでは、独自メソッドについて説明します。</p>
-
-<h2>独自メソッド</h2>
-
-<h3>String#transform</h3>
-
-<p>文字列を大文字や小文字、または別の言語の文字列に変形することができます。<a href="http://site.icu-project.org/">ICU</a> の <a href="http://userguide.icu-project.org/transforms/general">Transforms</a> という機能を用いて実装されています。</p>
+<p>Dispatch Group を生成します。</p>
 
 <ul>
-<li>transform(pattern) -> String
-
-<ul>
-<li>[PARAM] pattern:
-
-<ul>
-<li>どのような文字列に変換するかを指定します。</li>
-</ul>
-</li>
-<li>[RETURN]
-
-<ul>
-<li>変換結果の文字列を返します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<p>```ruby</p>
-
-<blockquote><blockquote><p>"hello".transform("Upper")
-=> "HELLO"
-"HELLO".transform("Lower")
-=> "hello"
-"hello".transform("Hiragana")
-=> "へっろ"
-"hello".transform("Greek")
-=> "ἑλλο"
-```</p></blockquote></blockquote>
-
-<h3>String#pointer</h3>
-
-<p>文字列から Pointer クラスのオブジェクトを返します。オブジェクトは <code>unsigned char*</code> の変数に対応します。Cocoa API では String オブジェクトではなく、文字列のポインタ変数を受け付けるメソッドがあります。それらのメソッドに渡すためのデータを用意するために使用します。</p>
-
-<ul>
-<li>pinter -> Pointer
+<li>new -> Group
 
 <ul>
 <li>[RETURN]
 
 <ul>
-<li>Pointer オブジェクトを返します。</li>
+<li>生成した Dispatch Group のインスタンスを返します。</li>
 </ul>
 </li>
 </ul>
@@ -714,28 +788,18 @@ end
 </ul>
 
 
-<p>```ruby</p>
+<h3>Dispatch::Group#notify</h3>
 
-<blockquote><blockquote><p>pointer = "foo".pointer
-=> #&lt;Pointer:0x4007ac580>
-data = NSData.dataWithBytes(pointer, length: "foo".length)
-=> <666f6f>
-data.to_str
-=> "foo"
-```</p></blockquote></blockquote>
-
-<h3>String#to_data</h3>
-
-<p>文字列から <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Reference/Foundation/Classes/NSData_Class/Reference/Reference.html">NSData</a> クラスのオブジェクトを生成し返します。</p>
+<p>Dispatch Queue のタスクがすべて完了すると実行する block を Dispatch Queue に追加します。GCD API の <code>dispatch_group_notify</code> に相当します。</p>
 
 <ul>
-<li>to_data -> NSData
+<li>notify(queue) { ... }
 
 <ul>
-<li>[RETURN]
+<li>[PARAM] queue:
 
 <ul>
-<li>NSData オブジェクトを返します。</li>
+<li>block を追加する Dispatch Queue を指定します。</li>
 </ul>
 </li>
 </ul>
@@ -743,246 +807,36 @@ data.to_str
 </ul>
 
 
-<p>```ruby</p>
+<p><code>ruby
+gcdq = Dispatch::Queue.new('sample')
+gcdg = Dispatch::Group.new
+@i = 0
+gcdq.async { @i = 42 }
+gcdg.notify(gcdq) { p @i } # =&gt; 42
+</code></p>
 
-<blockquote><blockquote><p>"foo".to_data
-=> <666f6f>
-"foo".to_data.class
-=> __NSCFData
-```</p></blockquote></blockquote>
+<h3>Dispatch::Group#on_completion</h3>
 
-<h3>NSData#to_str</h3>
+<p>Dispatch::Group#notify の別名です。</p>
 
-<p>文字列を伴う NSData オブジェクトから、文字列を返します。</p>
+<h3>Dispatch::Group#wait</h3>
 
-<ul>
-<li>to_str -> String
-
-<ul>
-<li>[RETURN]
+<p>Dispatch Group に所属しているDispatch Queue のタスクがすべて完了するのを待ちます。GCD API の <code>dispatch_group_wait</code> に相当します。</p>
 
 <ul>
-<li>文字列を返します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<p>```ruby</p>
-
-<blockquote><blockquote><p>data = "foo".to_data
-=> <666f6f>
-data.to_str
-=> "foo"
-```</p></blockquote></blockquote>
-
-<h3>Kernel.framework</h3>
-
-<p>フレームワークをロードします。</p>
+<li>wait(timeout = nil) -> bool
 
 <ul>
-<li>framework -> bool
+<li>[PARAM] timeout:
 
 <ul>
-<li>[RETURN]
-
-<ul>
-<li>フレームワークのロードに成功すれば true、失敗した場合には false を返します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<p>```ruby</p>
-
-<blockquote><blockquote><p>framework 'Foundation'
-=> true
-```</p></blockquote></blockquote>
-
-<h3>Kernel.load_bridge_support_file</h3>
-
-<p>Bridge Support ファイルをロードします。</p>
-
-<ul>
-<li>load_bridge_support_file(filename) -> self</li>
-</ul>
-
-
-<p>```ruby</p>
-
-<blockquote><blockquote><p>load_bridge_support_file("Foo.bridgesupport")
-=> main
-```</p></blockquote></blockquote>
-
-<h3>Kernel.load_plist</h3>
-
-<p>plist 形式の文字列を Ruby オブジェクトに変換し返します。</p>
-
-<ul>
-<li>load_plist(string) -> Object
-
-<ul>
-<li>[PARAM] string:
-
-<ul>
-<li>plist データの文字列を渡します。</li>
+<li>タイムアウト時間を指定します。省略された場合には Dispatch::TIME_FOREVER が指定されたのと同じになります。</li>
 </ul>
 </li>
 <li>[RETURN]
 
 <ul>
-<li>オブジェクトを返します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<p>```ruby</p>
-
-<blockquote><blockquote><p>data = File.read('StopWatch-Info.plist')
-load_plist(data)
-=> {"CFBundleName"=>"${PRODUCT_NAME}", "CFBundleIdentifier"=>"Watson.${PRODUCT_NAME:rfc1034identifier}", "CFBundleInfoDictionaryVersion"=>"6.0", "CFBundleVersion"=>"1", "CFBundleExecutable"=>"${EXECUTABLE_NAME}", "NSPrincipalClass"=>"NSApplication", "CFBundlePackageType"=>"APPL", "CFBundleIconFile"=>"MacRuby.icns", "CFBundleSignature"=>"????", "NSMainNibFile"=>"MainMenu", "LSMinimumSystemVersion"=>"${MACOSX_DEPLOYMENT_TARGET}", "CFBundleDevelopmentRegion"=>"en", "CFBundleShortVersionString"=>"1.0"}</p>
-
-<p>data = "foo".to_plist
-load_plist(data)
-=> "foo"
-```</p></blockquote></blockquote>
-
-<h3>Object#to_plist</h3>
-
-<p>plist 形式に変換したデータを文字列で返します。</p>
-
-<ul>
-<li>to_plist -> String
-
-<ul>
-<li>[RETURN]
-
-<ul>
-<li>文字列を返します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<p>```ruby</p>
-
-<blockquote><blockquote><p>"foo".to_plist
-=> "&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?>\n&lt;!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n<plist version=\"1.0\">\n<string>foo</string>\n</plist>\n"
-{"foo" => 42}.to_plist
-=> "&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?>\n&lt;!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n<plist version=\"1.0\">\n<dict>\n\t<key>foo</key>\n\t<integer>42</integer>\n</dict>\n</plist>\n"
-["foo", "bar"].to_plist
-=> "&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?>\n&lt;!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n<plist version=\"1.0\">\n<array>\n\t<string>foo</string>\n\t<string>bar</string>\n</array>\n</plist>\n"
-```</p></blockquote></blockquote>
-
-<h3>Object#methods</h3>
-
-<p>オブジェクトに対して呼び出せるメソッド名の一覧を返します。CRuby も Object#methods がありますが、MacRuby では <code>objc_methods</code> 引数が追加されています。</p>
-
-<ul>
-<li>methods(include_inherited = true, objc_methods = false) -> [Symbol]
-
-<ul>
-<li>[PARAM] include_inherited:
-
-<ul>
-<li>引数が false の時は Object#singleton_methods(false) と同じになります。</li>
-</ul>
-</li>
-<li>[PARAM] objc_methods:
-
-<ul>
-<li>引数が true の時は Ruby のメソッドのほかに Cocoa API の一覧も返します。</li>
-</ul>
-</li>
-<li>[RETURN]
-
-<ul>
-<li>メソッド名の一覧を返します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<p>```ruby</p>
-
-<blockquote><p>"foo".methods(true, true)
-=> [:encode!, :"replaceCharactersInRange:withString:", :"getCharacters:range:", :characterAtIndex, :length, :transform, :crypt, :rpartition, :partition, :sum, :tr_s!, :tr_s, :tr!, :tr, :squeeze!, :squeeze, :delete!, :delete, :count, :reverse!, :reverse, :upto, :next!, :next, :succ!, :succ, :each_codepoint, :codepoints, :each_byte, :bytes, :each_char, :chars, :each_line, :lines, :rstrip!, :lstrip!, :strip!, :rstrip, :lstrip, :strip, :center, :rjust, :ljust, :capitalize!, :capitalize, :swapcase!, :swapcase, :upcase!, :upcase, :downcase!, :downcase, :gsub!, :gsub, :sub!, :sub, :chop!, :chop, :chomp!, :chomp, :to_f, :chr, :ord, :oct, :hex, :to_i, :split, :scan, :=~, :match, :dump, :inspect, :intern, :to_sym, :to_str, :to_s, :end_with?, :start_with?, :include?, :eql?, :casecmp, :&lt;=>, :==, :concat, :&lt;&lt;, :%, :*, :+, :rindex, :index, :insert, :slice!, :slice, :[]=, :[], :ascii_only?, :valid_encoding?, :force_encoding, :pointer, :to_data, :setbyte, :getbyte, :bytesize, :empty?, :size, :encoding, :clear, :replace, :dup, :"performSelector:withObject:withObject:", :"performSelector:withObject:", :performSelector, :conformsToProtocol, :dd_appendSpaces, :"replaceOccurrencesOfString:withString:options:range:", :initWithCapacity, 以下略
-```</p></blockquote>
-
-<h3>Range#relative_to</h3>
-
-<p><code>max</code> で指定した Range 範囲のオブジェクトを返します。負の範囲に対して実行した場合には、<code>max</code> との相対的な範囲となります。</p>
-
-<ul>
-<li>relative_to(max) -> Range
-
-<ul>
-<li>[PARAM] max:
-
-<ul>
-<li>Range の範囲の最大値を指定します。</li>
-</ul>
-</li>
-<li>[RETURN]
-
-<ul>
-<li>新しい Range オブジェクトを返します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<p>```ruby</p>
-
-<blockquote><blockquote><p>(1..10).relative_to(5)
-=> 1..5
-(-2..-1).relative_to(5)
-=> 3..4
-```</p></blockquote></blockquote>
-
-<h3>BasicSocket#sendfile</h3>
-
-<p>ソケットを介してファイルのデータを <a href="http://developer.apple.com/library/ios/#DOCUMENTATION/System/Conceptual/ManPages_iPhoneOS/man2/sendfile.2.html">sendfile(2)</a> を用いて送信します。</p>
-
-<ul>
-<li>sendfile(file, offset, length) -> Integer
-
-<ul>
-<li>[PARAM] file:
-
-<ul>
-<li>送信するファイルのパス、または IO オブジェクトを渡します。</li>
-</ul>
-</li>
-<li>[PARAM] offset:
-
-<ul>
-<li>送信を開始するデータの位置を指定します。</li>
-</ul>
-</li>
-<li>[PARAM] length:
-
-<ul>
-<li>送信するデータサイズを指定します。</li>
-</ul>
-</li>
-<li>[RETURN]
-
-<ul>
-<li>送信したデータサイズを返します。</li>
+<li>すべてのタスクが完了していれば true、タイムアウトにより完了していないタスクがあれば false を返します。</li>
 </ul>
 </li>
 </ul>
@@ -991,35 +845,118 @@ load_plist(data)
 
 
 <p>```ruby
-require 'socket'</p>
+gcdq = Dispatch::Queue.new('sample')
+gcdg = Dispatch::Group.new
+gcdq.async(gcdg) { sleep 5 }
+gcdg.wait # => true</p>
 
-<p>port = 5000
-socket = TCPSocket.open('localhost', port)</p>
-
-<p>path = 'sample.txt'
-socket.sendfile(path, 0, 128)
+<p>gcdq.async(gcdg) { sleep 5 }
+gcdg.wait(1) # => false
 ```</p>
-
-<h2>Fixnum#popcnt</h2>
-
-<p>数値を 2 進数表記した際に、1 となるビットの数を返します。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Dispatch クラス]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-class/"/>
+    <updated>2012-03-31T10:00:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-class</id>
+    <content type="html"><![CDATA[<p>Mac OS X 10.6 から追加された <a href="https://developer.apple.com/library/mac/#documentation/Performance/Reference/GCD_libdispatch_Ref/Reference/reference.html">Grand Central Dispatch (GCD)</a> を利用するために、MacRuby には Dispatch モジュールと、以下のようにいくつかのクラスがあります。</p>
 
 <ul>
-<li>popcnt -> Fixnum</li>
+<li>Dispatch クラス</li>
+<li><a href="/blog/2012/03/31/dispatch-queue-class/">Dispatch::Queue クラス</a></li>
+<li><a href="/blog/2012/03/31/dispatch-group-class/">Dispatch::Group クラス</a></li>
+<li><a href="/blog/2012/03/31/dispatch-source-class/">Dispatch::Source クラス</a></li>
+<li><a href="/blog/2012/03/31/dispatch-semaphore-class/">Dispatch::Semaphore クラス</a></li>
 </ul>
 
 
-<p>```ruby</p>
+<p>RubyGems の <a href="https://github.com/gunn/Dispatch">Dispatch</a> ライブラリを用いると、より簡単に GCD を使うこともできます。</p>
 
-<blockquote><blockquote><p>13.to_s(2)
-=> "1101"
-13.popcnt
-=> 3
-255.to_s(2)
-=> "11111111"
-255.popcnt
-=> 8
-```</p></blockquote></blockquote>
+<h2>Dispatch クラスの定数</h2>
+
+<h3>Dispatch::TIME_NOW</h3>
+
+<p>「処理をすぐに開始する」と指示するときに使用します。GCD API で <code>DISPATCH_TIME_NOW</code> として定義されている定数と同じ定数です。</p>
+
+<p>```ruby
+gcdq = Dispatch::Queue.new('sample')
+gcdq.after(Dispatch::TIME_NOW) { puts "Hello" }</p>
+
+<p>sleep 0.5
+```</p>
+
+<h3>Dispatch::TIME_FOREVER</h3>
+
+<p>処理が完了するのをタイムアウトなしで待ち続けたりするときに使用します。GCD API で <code>DISPATCH_TIME_FOREVER</code> として定義されている定数と同じ定数です。</p>
+
+<p>```ruby
+gcdq = Dispatch::Queue.new('sample')
+sema = Dispatch::Semaphore.new(0)
+gcdq.async {
+  puts "Hello, "
+  sleep 1
+  sema.signal
+}</p>
+
+<p>puts "Waiting..."</p>
+
+<p>sema.wait(Dispatch::TIME_FOREVER)
+puts "World"
+```</p>
+
+<h2>Dispatch クラスのメソッド</h2>
+
+<h3>Dispatch#resume!</h3>
+
+<p>中断されている処理を再開します。GCD API の <code>dispatch_resume</code> に相当します。</p>
+
+<ul>
+<li>resume!</li>
+</ul>
+
+
+<p>```ruby
+gcdq = Dispatch::Queue.new('sample')
+gcdq.after(Dispatch::TIME_NOW) {
+  sleep 0.5
+  puts "Hello"
+}
+gcdq.suspend!
+gcdq.suspended?  #=> true
+gcdq.resume!</p>
+
+<p>sleep 1
+```</p>
+
+<h3>Dispatch#suspend!</h3>
+
+<p>処理を中断します。GCD API の <code>dispatch_suspend</code> に相当します。</p>
+
+<ul>
+<li>suspend!</li>
+</ul>
+
+
+<h3>Dispatch#suspended?</h3>
+
+<p>処理が中断されているかを返します。</p>
+
+<ul>
+<li>suspended? -> bool
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>処理が中断されていれば true、そうでなければ false を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
 ]]></content>
   </entry>
   

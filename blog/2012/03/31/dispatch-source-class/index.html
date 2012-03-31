@@ -1,0 +1,661 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Dispatch::Source クラス - MacRuby DoJo (道場)</title>
+  <meta name="author" content="Watson">
+
+  
+  <meta name="description" content="Dispatch::Source クラスは何らかのイベントが発生するときに、イベントをハンドリングして処理を実行する仕組みを提供します。 Dispatch::Source クラスの定数 Dispatch::Source::DATA_ADD
+Dispatch::Source::DATA_OR &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-source-class">
+  <link href="/MacRuby-DoJo/favicon.png" rel="icon">
+  <link href="/MacRuby-DoJo/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/MacRuby-DoJo/javascripts/modernizr-2.0.js"></script>
+  <script src="/MacRuby-DoJo/javascripts/ender.js"></script>
+  <script src="/MacRuby-DoJo/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/MacRuby-DoJo/atom.xml" rel="alternate" title="MacRuby DoJo (道場)" type="application/atom+xml">
+  
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-30415774-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/MacRuby-DoJo/">MacRuby DoJo (道場)</a></h1>
+  
+  <p class="fork"><a href="https://github.com/Watson1978/MacRuby-DoJo/"><img src="/MacRuby-DoJo/images/forkme_right_darkblue_121621.png" /></a></p>
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/MacRuby-DoJo/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:watson1978.github.com/MacRuby-DoJo" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/MacRuby-DoJo/">日本語</a></li>
+  <li><a href="/MacRuby-DoJo/index.en.html">English</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Dispatch::Source クラス</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-31T10:00:00+09:00" pubdate data-updated="true">Mar 31<span>st</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Dispatch::Source クラスは何らかのイベントが発生するときに、イベントをハンドリングして処理を実行する仕組みを提供します。</p>
+
+<h2>Dispatch::Source クラスの定数</h2>
+
+<ul>
+<li>Dispatch::Source::DATA_ADD</li>
+<li>Dispatch::Source::DATA_OR</li>
+<li>Dispatch::Source::PROC</li>
+<li>Dispatch::Source::SIGNAL</li>
+<li>Dispatch::Source::READ</li>
+<li>Dispatch::Source::WRITE</li>
+<li>Dispatch::Source::VNODE</li>
+<li><br/></li>
+<li>Dispatch::Source::PROC_EXIT</li>
+<li>Dispatch::Source::PROC_FORK</li>
+<li>Dispatch::Source::PROC_EXEC</li>
+<li>Dispatch::Source::PROC_SIGNAL</li>
+<li><br/></li>
+<li>Dispatch::Source::VNODE_DELETE</li>
+<li>Dispatch::Source::VNODE_WRITE</li>
+<li>Dispatch::Source::VNODE_EXTEND</li>
+<li>Dispatch::Source::VNODE_ATTRIB</li>
+<li>Dispatch::Source::VNODE_LINK</li>
+<li>Dispatch::Source::VNODE_RENAME</li>
+<li>Dispatch::Source::VNODE_REVOKE</li>
+</ul>
+
+
+<p>Dispatch Source の種類として、以下のものを使用できます。</p>
+
+<table class="table">
+<tr><th>定数名</th><th>GCD API での定義</th><th>内容</th></tr>
+<tr>
+  <td>Dispatch::Source::DATA_ADD</td>
+  <td>DISPATCH_SOURCE_TYPE_DATA_ADD</td>
+  <td><code>&lt;&lt;</code> メソッドを通じてイベントが発生し、処理を実行します。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::DATA_OR</td>
+  <td>DISPATCH_SOURCE_TYPE_DATA_OR</td>
+  <td><code>&lt;&lt;</code> メソッドを通じてイベントが発生し、処理を実行します。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::PROC</td>
+  <td>DISPATCH_SOURCE_TYPE_PROC</td>
+  <td>プロセスに関するイベントを受けると、処理を実行します。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::SIGNAL</td>
+  <td>DISPATCH_SOURCE_TYPE_SIGNAL</td>
+  <td>シグナルを受けると、処理を実行します。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::READ</td>
+  <td>DISPATCH_SOURCE_TYPE_READ</td>
+  <td>ファイルディスクリプタが読み込み可能になると、処理を実行します。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::WRITE</td>
+  <td>DISPATCH_SOURCE_TYPE_WRITE</td>
+  <td>ファイルディスクリプタが書き込み可能になると、処理を実行します。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::VNODE</td>
+  <td>DISPATCH_SOURCE_TYPE_VNODE</td>
+  <td>ファイルが削除されたりファイルシステム上で変更があると、処理を実行します。</td>
+</tr>
+</table>
+
+
+<p>Dispatch::Source::PROC を使用する際に、以下の定数をマスクとして使用できます。</p>
+
+<table class="table">
+<tr>
+  <td>Dispatch::Source::PROC_EXIT</td>
+  <td>DISPATCH_PROC_EXIT</td>
+  <td>プロセスが終了した。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::PROC_FORK</td>
+  <td>DISPATCH_PROC_FORK</td>
+  <td>子プロセスを作成した。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::PROC_EXEC</td>
+  <td>DISPATCH_PROC_EXEC</td>
+  <td>exec や posix_spawn で別のプロセスを実行した。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::PROC_SIGNAL</td>
+  <td>DISPATCH_PROC_SIGNAL</td>
+  <td>シグナルを送信した。</td>
+</tr>
+</table>
+
+
+<p>Dispatch::Source::VNODE を使用する際に、以下の定数をマスクとして使用できます。</p>
+
+<table class="table">
+<tr>
+  <td>Dispatch::Source::VNODE_DELETE</td>
+  <td>DISPATCH_VNODE_DELETE</td>
+  <td>ファイルなどが削除された。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::VNODE_WRITE</td>
+  <td>DISPATCH_VNODE_WRITE</td>
+  <td>ファイルなどのデータが変更された。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::VNODE_EXTEND</td>
+  <td>DISPATCH_VNODE_EXTEND</td>
+  <td>ファイルサイズが変更された。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::VNODE_ATTRIB</td>
+  <td>DISPATCH_VNODE_ATTRIB</td>
+  <td>ファイルなどのメタ情報が変更された。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::VNODE_LINK</td>
+  <td>DISPATCH_VNODE_LINK</td>
+  <td>The file-system object link count changed.</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::VNODE_RENAME</td>
+  <td>DISPATCH_VNODE_RENAME</td>
+  <td>ファイル名が変更された。</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::VNODE_REVOKE</td>
+  <td>DISPATCH_VNODE_REVOKE</td>
+  <td>The file-system object was revoked.</td>
+</tr>
+</table>
+
+
+<p>Dispatch Source は他のクラスよりもわかりにくいと思います。MacRuby のリポジトリにある <a href="https://github.com/MacRuby/MacRuby/blob/master/spec/macruby/core/gcd/source_spec.rb">source_spec.rb</a> を参考にしたりすると良いでしょう。</p>
+
+<h2>Dispatch::Source クラスのメソッド</h2>
+
+<h3>Dispatch::Source.new</h3>
+
+<p>Dispatch Source を生成し返します。</p>
+
+<ul>
+<li>new(type, handle, mask, queue) { &#8230; } -> Source
+
+<ul>
+<li>[PARAM] type:
+
+<ul>
+<li>Dispatch Source の種類を指定します。</li>
+</ul>
+</li>
+<li>[PARAM] handle:
+
+<ul>
+<li>イベントを監視するためのディスクリプタを指定します。type に <code>DATA_ADD</code> と <code>DATA_OR</code> を指定した場合には、<code>handle</code> は <code>0</code> とします。</li>
+</ul>
+</li>
+<li>[PARAM] mask:
+
+<ul>
+<li>マスクを指定できる Dispatch Source の種類を type で使用した際に指定します。</li>
+</ul>
+</li>
+<li>[PARAM] queue:
+
+<ul>
+<li>イベントが発生したときに、block の処理を追加する Dispatch Queue を指定します。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>生成した Dispatch Source のインスタンスを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Dispatch::Source.timer</h3>
+
+<p>タイマーイベント用の Dispatch Source を生成し返します。</p>
+
+<ul>
+<li>timer(delay, interval, leeway, queue) { &#8230; } -> Source
+
+<ul>
+<li>[PARAM] delay:
+
+<ul>
+<li>何秒後からタイマーを開始するか指定します。nil の場合には Dispatch::TIME_NOW が指定されたのと同じになります</li>
+</ul>
+</li>
+<li>[PARAM] interval:
+
+<ul>
+<li>何秒間隔で繰り返すか指定します。</li>
+</ul>
+</li>
+<li>[PARAM] leeway:
+
+<ul>
+<li>何秒までの遅れを許容するか指定します。</li>
+</ul>
+</li>
+<li>[PARAM] queue:
+
+<ul>
+<li>イベントが発生したときに、block の処理を追加する Dispatch Queue を指定します。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>生成した Dispatch Source のインスタンスを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gcdq</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Queue</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">timer</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Source</span><span class="o">.</span><span class="n">timer</span><span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="n">gcdq</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">s</span><span class="o">|</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;Wake up!&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">sleep</span> <span class="mi">3</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Dispatch::Source#cancelled?</h3>
+
+<p>Dispatch Source がキャンセルされているか返します。</p>
+
+<ul>
+<li>cancelled? -> bool
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>キャンセルされていれば true、そうでなれば false を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Dispatch::Source#cancel!</h3>
+
+<p>Dispatch Source をキャンセルします。</p>
+
+<ul>
+<li>cancel!</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gcdq</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Queue</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">timer</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Source</span><span class="o">.</span><span class="n">timer</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">gcdq</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">s</span><span class="o">|</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;Wake up!&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">sleep</span> <span class="mi">2</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">timer</span><span class="o">.</span><span class="n">cancel!</span>
+</span><span class='line'><span class="nb">p</span> <span class="n">timer</span><span class="o">.</span><span class="n">cancelled?</span> <span class="c1"># =&gt; true</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">sleep</span> <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Dispatch::Source#handle</h3>
+
+<p>Dispatch Source の handle を返します。</p>
+
+<ul>
+<li>handle
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Dispatch Source の handle を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Dispatch::Source#mask</h3>
+
+<p>Dispatch Source の mask を返します。GCD API の <code>dispatch_source_get_mask</code> に相当します。</p>
+
+<ul>
+<li>mask
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Dispatch Source の mask を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Dispatch::Source#data</h3>
+
+<p>Dispatch Source でまだ処理されていないデータを返します。GCD API の <code>dispatch_source_get_data</code> に相当します。</p>
+
+<ul>
+<li>data
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Dispatch Source でまだ処理されていないデータを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>Dispatch Source の種類によって、以下のようなデータを返します。</p>
+
+<table class="table">
+<tr>
+  <td>Dispatch::Source::DATA_ADD</td>
+  <td><code>&lt;&lt;</code>で送信されたデータ</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::DATA_OR</td>
+  <td><code>&lt;&lt;</code>で送信されたデータ</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::PROC</td>
+  <td>Dispatch::Source::PROC_EXIT、Dispatch::Source::PROC_FORK、Dispatch::Source::PROC_EXEC、Dispatch::Source::PROC_SIGNAL のいずれか</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::SIGNAL</td>
+  <td>シグナルの番号</td>
+</tr>
+<tr>
+  <td>Dispatch::Source::READ</td>
+  <td>読み込み可能なバイト数</td>
+</tr>
+</table>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gcdq</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Queue</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">src</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Source</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="no">Dispatch</span><span class="o">::</span><span class="no">Source</span><span class="o">::</span><span class="no">DATA_ADD</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">gcdq</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">s</span><span class="o">|</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="n">s</span><span class="o">.</span><span class="n">data</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'><span class="n">src</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span>
+</span><span class='line'><span class="nb">sleep</span> <span class="mi">0</span><span class="o">.</span><span class="mi">5</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Dispatch::Source#&lt;&lt;</h3>
+
+<p>Dispatch::Source::DATA_ADD と Dispatch::Source::DATA_OR を指定した Dispatch Source で使用します。指定したデータを Dispatch Source の block へ送信します。GCD API の <code>dispatch_source_get_data</code> に相当します。</p>
+
+<ul>
+<li>&lt;&lt; data</li>
+</ul>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Watson</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-31T10:00:00+09:00" pubdate data-updated="true">Mar 31<span>st</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/MacRuby-DoJo/blog/categories/macruby/'>MacRuby</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-source-class/" data-via="" data-counturl="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-source-class/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/MacRuby-DoJo/blog/2012/03/31/dispatch-semaphore-class/" title="Previous Post: Dispatch::Semaphore クラス">&laquo; Dispatch::Semaphore クラス</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Links</h1>
+  <ul>
+    <li><a href="http://www.macruby.org/">MacRuby » Home</a></li>
+    <li><a href="http://www.macruby.org/files/">MacRuby » Files</a></li>
+    <li><a href="http://www.macruby.org/trac/report/1?asc=0&sort=ticket">MacRuby » Active Tickets</a></li>
+  </ul>
+  <br/>
+  <ul>
+    <li><a href="http://ofps.oreilly.com/titles/9781449380373/">MacRuby: The Definitive Guide</a></li>
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/MacRuby-DoJo/blog/2012/03/31/dispatch-source-class/">Dispatch::Source クラス</a>
+      </li>
+    
+      <li class="post">
+        <a href="/MacRuby-DoJo/blog/2012/03/31/dispatch-semaphore-class/">Dispatch::Semaphore クラス</a>
+      </li>
+    
+      <li class="post">
+        <a href="/MacRuby-DoJo/blog/2012/03/31/dispatch-queue-class/">Dispatch::Queue クラス</a>
+      </li>
+    
+      <li class="post">
+        <a href="/MacRuby-DoJo/blog/2012/03/31/dispatch-group-class/">Dispatch::Group クラス</a>
+      </li>
+    
+      <li class="post">
+        <a href="/MacRuby-DoJo/blog/2012/03/31/dispatch-class/">Dispatch クラス</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Watson -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

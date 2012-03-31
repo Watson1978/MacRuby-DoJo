@@ -1,0 +1,383 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Dispatch クラス - MacRuby DoJo (道場)</title>
+  <meta name="author" content="Watson">
+
+  
+  <meta name="description" content="Mac OS X 10.6 から追加された Grand Central Dispatch (GCD) を利用するために、MacRuby には Dispatch モジュールと、以下のようにいくつかのクラスがあります。 Dispatch クラス
+Dispatch::Queue クラス
+Dispatch &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-class">
+  <link href="/MacRuby-DoJo/favicon.png" rel="icon">
+  <link href="/MacRuby-DoJo/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/MacRuby-DoJo/javascripts/modernizr-2.0.js"></script>
+  <script src="/MacRuby-DoJo/javascripts/ender.js"></script>
+  <script src="/MacRuby-DoJo/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/MacRuby-DoJo/atom.xml" rel="alternate" title="MacRuby DoJo (道場)" type="application/atom+xml">
+  
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-30415774-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/MacRuby-DoJo/">MacRuby DoJo (道場)</a></h1>
+  
+  <p class="fork"><a href="https://github.com/Watson1978/MacRuby-DoJo/"><img src="/MacRuby-DoJo/images/forkme_right_darkblue_121621.png" /></a></p>
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/MacRuby-DoJo/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:watson1978.github.com/MacRuby-DoJo" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/MacRuby-DoJo/">日本語</a></li>
+  <li><a href="/MacRuby-DoJo/index.en.html">English</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Dispatch クラス</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-31T10:00:00+09:00" pubdate data-updated="true">Mar 31<span>st</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Mac OS X 10.6 から追加された <a href="https://developer.apple.com/library/mac/#documentation/Performance/Reference/GCD_libdispatch_Ref/Reference/reference.html">Grand Central Dispatch (GCD)</a> を利用するために、MacRuby には Dispatch モジュールと、以下のようにいくつかのクラスがあります。</p>
+
+<ul>
+<li>Dispatch クラス</li>
+<li><a href="/MacRuby-DoJo/blog/2012/03/31/dispatch-queue-class/">Dispatch::Queue クラス</a></li>
+<li><a href="/MacRuby-DoJo/blog/2012/03/31/dispatch-group-class/">Dispatch::Group クラス</a></li>
+<li><a href="/MacRuby-DoJo/blog/2012/03/31/dispatch-source-class/">Dispatch::Source クラス</a></li>
+<li><a href="/MacRuby-DoJo/blog/2012/03/31/dispatch-semaphore-class/">Dispatch::Semaphore クラス</a></li>
+</ul>
+
+
+<p>RubyGems の <a href="https://github.com/gunn/Dispatch">Dispatch</a> ライブラリを用いると、より簡単に GCD を使うこともできます。</p>
+
+<h2>Dispatch クラスの定数</h2>
+
+<h3>Dispatch::TIME_NOW</h3>
+
+<p>「処理をすぐに開始する」と指示するときに使用します。GCD API で <code>DISPATCH_TIME_NOW</code> として定義されている定数と同じ定数です。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gcdq</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Queue</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">after</span><span class="p">(</span><span class="no">Dispatch</span><span class="o">::</span><span class="no">TIME_NOW</span><span class="p">)</span> <span class="p">{</span> <span class="nb">puts</span> <span class="s2">&quot;Hello&quot;</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">sleep</span> <span class="mi">0</span><span class="o">.</span><span class="mi">5</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Dispatch::TIME_FOREVER</h3>
+
+<p>処理が完了するのをタイムアウトなしで待ち続けたりするときに使用します。GCD API で <code>DISPATCH_TIME_FOREVER</code> として定義されている定数と同じ定数です。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gcdq</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Queue</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">sema</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Semaphore</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">async</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;Hello, &quot;</span>
+</span><span class='line'>  <span class="nb">sleep</span> <span class="mi">1</span>
+</span><span class='line'>  <span class="n">sema</span><span class="o">.</span><span class="n">signal</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;Waiting...&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">sema</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="no">Dispatch</span><span class="o">::</span><span class="no">TIME_FOREVER</span><span class="p">)</span>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;World&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Dispatch クラスのメソッド</h2>
+
+<h3>Dispatch#resume!</h3>
+
+<p>中断されている処理を再開します。GCD API の <code>dispatch_resume</code> に相当します。</p>
+
+<ul>
+<li>resume!</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gcdq</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Queue</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">after</span><span class="p">(</span><span class="no">Dispatch</span><span class="o">::</span><span class="no">TIME_NOW</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nb">sleep</span> <span class="mi">0</span><span class="o">.</span><span class="mi">5</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;Hello&quot;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">suspend!</span>
+</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">suspended?</span>  <span class="c1">#=&gt; true</span>
+</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">resume!</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">sleep</span> <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Dispatch#suspend!</h3>
+
+<p>処理を中断します。GCD API の <code>dispatch_suspend</code> に相当します。</p>
+
+<ul>
+<li>suspend!</li>
+</ul>
+
+
+<h3>Dispatch#suspended?</h3>
+
+<p>処理が中断されているかを返します。</p>
+
+<ul>
+<li>suspended? -> bool
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>処理が中断されていれば true、そうでなければ false を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Watson</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-31T10:00:00+09:00" pubdate data-updated="true">Mar 31<span>st</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/MacRuby-DoJo/blog/categories/macruby/'>MacRuby</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-class/" data-via="" data-counturl="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-class/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/MacRuby-DoJo/blog/2012/03/27/sandbox-class/" title="Previous Post: Sandbox クラス">&laquo; Sandbox クラス</a>
+      
+      
+        <a class="basic-alignment right" href="/MacRuby-DoJo/blog/2012/03/31/dispatch-group-class/" title="Next Post: Dispatch::Group クラス">Dispatch::Group クラス &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Links</h1>
+  <ul>
+    <li><a href="http://www.macruby.org/">MacRuby » Home</a></li>
+    <li><a href="http://www.macruby.org/files/">MacRuby » Files</a></li>
+    <li><a href="http://www.macruby.org/trac/report/1?asc=0&sort=ticket">MacRuby » Active Tickets</a></li>
+  </ul>
+  <br/>
+  <ul>
+    <li><a href="http://ofps.oreilly.com/titles/9781449380373/">MacRuby: The Definitive Guide</a></li>
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/MacRuby-DoJo/blog/2012/03/31/dispatch-source-class/">Dispatch::Source クラス</a>
+      </li>
+    
+      <li class="post">
+        <a href="/MacRuby-DoJo/blog/2012/03/31/dispatch-semaphore-class/">Dispatch::Semaphore クラス</a>
+      </li>
+    
+      <li class="post">
+        <a href="/MacRuby-DoJo/blog/2012/03/31/dispatch-queue-class/">Dispatch::Queue クラス</a>
+      </li>
+    
+      <li class="post">
+        <a href="/MacRuby-DoJo/blog/2012/03/31/dispatch-group-class/">Dispatch::Group クラス</a>
+      </li>
+    
+      <li class="post">
+        <a href="/MacRuby-DoJo/blog/2012/03/31/dispatch-class/">Dispatch クラス</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Watson -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

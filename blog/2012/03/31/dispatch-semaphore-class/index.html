@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>新規プロジェクトをつくってみよう - MacRuby DoJo (道場)</title>
+  <title>Dispatch::Semaphore クラス - MacRuby DoJo (道場)</title>
   <meta name="author" content="Watson">
 
   
-  <meta name="description" content="Xcode を起動すると、以下の図のように「Welcome to Xcode」と表示されたウィンドウが表示されます。[Create a New Xcode Project] をクリックすると、新規のプロジェクトを作れます。 次にどのテンプレートを使用してプロジェクトを作成するか選択します。 [ &hellip;">
+  <meta name="description" content="Dispatch::Semaphore クラスは排他制御機能を提供します。たとえば、Concurrent Dispatch Queue を用いて並行処理をしていた際に計算結果を 1 つの配列に格納する場合などに Dispatch Semaphore で排他制御を行います。 Dispatch:: &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/06/intro-new-project">
+  <link rel="canonical" href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-semaphore-class">
   <link href="/MacRuby-DoJo/favicon.png" rel="icon">
   <link href="/MacRuby-DoJo/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/MacRuby-DoJo/javascripts/modernizr-2.0.js"></script>
@@ -75,7 +75,7 @@
   
   <header>
     
-      <h1 class="entry-title">新規プロジェクトをつくってみよう</h1>
+      <h1 class="entry-title">Dispatch::Semaphore クラス</h1>
     
     
       <p class="meta">
@@ -91,26 +91,104 @@
   
 
 
-<time datetime="2012-03-06T22:06:00+09:00" pubdate data-updated="true">Mar 6<span>th</span>, 2012</time>
+<time datetime="2012-03-31T10:00:00+09:00" pubdate data-updated="true">Mar 31<span>st</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>Xcode を起動すると、以下の図のように「Welcome to Xcode」と表示されたウィンドウが表示されます。[Create a New Xcode Project] をクリックすると、新規のプロジェクトを作れます。</p>
+<div class="entry-content"><p>Dispatch::Semaphore クラスは排他制御機能を提供します。たとえば、Concurrent Dispatch Queue を用いて並行処理をしていた際に計算結果を 1 つの配列に格納する場合などに Dispatch Semaphore で排他制御を行います。</p>
 
-<p><img src="/MacRuby-DoJo/images/ja/intro-new-project/welcome_to_xcode.png" alt="image" /></p>
+<h2>Dispatch::Semaphore クラスのメソッド</h2>
 
-<p>次にどのテンプレートを使用してプロジェクトを作成するか選択します。</p>
+<h3>Dispatch::Semaphore.new</h3>
 
-<p><img src="/MacRuby-DoJo/images/ja/intro-new-project/choose_a_templete.png" alt="image" /></p>
+<p>Dispatch Semaphore を生成し返します。GCD API の <code>dispatch_semaphore_create</code> に相当します。</p>
 
-<p>[MacRuby Application] を選択し、 [Next] をクリックして次に進みます。</p>
+<ul>
+<li>new(count) -> Semaphore
 
-<p><img src="/MacRuby-DoJo/images/ja/intro-new-project/product_name.png" alt="image" /></p>
+<ul>
+<li>[PARAM] count:
 
-<p>プロジェクト名を入力し、プロジェクトの保存場所を選択したら新しいプロジェクトができあがります。</p>
+<ul>
+<li>セマフォのカウンタの初期値を指定します。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>生成した Dispatch Semaphore のインスタンスを返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Dispatch::Semaphore#wait</h3>
+
+<p>Dispatch::Semaphore#signal が呼び出されセマフォのカウンタが 1 以上になるまで待ちます。カウンタが 1 以上になると 1 減算して待ち状態が解除されます。GCD API の <code>dispatch_semaphore_wait</code> に相当します。</p>
+
+<ul>
+<li>wait(timeout = nil) -> bool
+
+<ul>
+<li>[PARAM] timeout:
+
+<ul>
+<li>タイムアウト時間を指定します。省略された場合には Dispatch::TIME_FOREVER が指定されたのと同じになります。</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>Dispatch::Semaphore#signal で wait が解除された場合には true、タイムアウトした場合には false を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gcdq</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Queue</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">sema</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Semaphore</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">async</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nb">sleep</span> <span class="mi">1</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;Hello&quot;</span>
+</span><span class='line'>  <span class="n">sema</span><span class="o">.</span><span class="n">signal</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="n">sema</span><span class="o">.</span><span class="n">wait</span> <span class="c1">#=&gt; true</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Dispatch::Semaphore#signal</h3>
+
+<p>Dispatch Semaphore のカウンタを 1 加算します。GCD API の <code>dispatch_semaphore_signal</code> に相当します。</p>
+
+<ul>
+<li>signal -> bool
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>セマフォを待っているスレッドがなければ true、それ以外で false を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
 </div>
 
 
@@ -133,7 +211,7 @@
   
 
 
-<time datetime="2012-03-06T22:06:00+09:00" pubdate data-updated="true">Mar 6<span>th</span>, 2012</time>
+<time datetime="2012-03-31T10:00:00+09:00" pubdate data-updated="true">Mar 31<span>st</span>, 2012</time>
       
 
 <span class="categories">
@@ -147,7 +225,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/06/intro-new-project/" data-via="" data-counturl="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/06/intro-new-project/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-semaphore-class/" data-via="" data-counturl="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-semaphore-class/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -160,10 +238,10 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/MacRuby-DoJo/blog/2012/03/06/intro-install/" title="Previous Post: MacRuby の環境を構築しよう">&laquo; MacRuby の環境を構築しよう</a>
+        <a class="basic-alignment left" href="/MacRuby-DoJo/blog/2012/03/31/dispatch-queue-class/" title="Previous Post: Dispatch::Queue クラス">&laquo; Dispatch::Queue クラス</a>
       
       
-        <a class="basic-alignment right" href="/MacRuby-DoJo/blog/2012/03/07/intro-stopwatch/" title="Next Post: ストップウォッチを作る">ストップウォッチを作る &raquo;</a>
+        <a class="basic-alignment right" href="/MacRuby-DoJo/blog/2012/03/31/dispatch-source-class/" title="Next Post: Dispatch::Source クラス">Dispatch::Source クラス &raquo;</a>
       
     </p>
   </footer>
