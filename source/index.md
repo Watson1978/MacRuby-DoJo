@@ -1,7 +1,7 @@
 ---
 layout: page
 title: 目次
-date: 2012-03-27 14:30
+date: 2012-03-31 10:00
 comments: true
 sharing: true
 footer: true
@@ -30,3 +30,8 @@ sidebar: true
 - [Pointer クラス](/blog/2012/03/27/pointer-class/)
 - [Boxed クラス](/blog/2012/03/27/boxed-class/)
 - [Sandbox クラス](/blog/2012/03/27/sandbox-class/)
+- [Dispatch クラス](/blog/2012/03/31/dispatch-class/)
+  - [Dispatch::Queue クラス](/blog/2012/03/31/dispatch-queue-class/)
+  - [Dispatch::Group クラス](/blog/2012/03/31/dispatch-group-class/)
+  - [Dispatch::Source クラス](/blog/2012/03/31/dispatch-source-class/)
+  - [Dispatch::Semaphore クラス](/blog/2012/03/31/dispatch-semaphore-class/)
