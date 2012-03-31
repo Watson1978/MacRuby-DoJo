@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>MacRuby 独自のメソッド - MacRuby DoJo (道場)</title>
+  <title>Original Methods in MacRuby - MacRuby DoJo (道場)</title>
   <meta name="author" content="Watson">
 
   
-  <meta name="description" content="MacRuby には CRuby や Cocoa API に存在しない、独自のメソッドやクラスが存在します。ここでは、独自メソッドについて説明します。 独自メソッド String#transform 文字列を大文字や小文字、または別の言語の文字列に変形することができます。ICU の &hellip;">
+  <meta name="description" content="MacRuby has some original methods. They does not exist in CRuby&#8217;s methods and Cocoa APIs. This content describes those methods. Original &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/26/original-methods">
+  <link rel="canonical" href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/original-methods">
   <link href="/MacRuby-DoJo/favicon.png" rel="icon">
   <link href="/MacRuby-DoJo/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/MacRuby-DoJo/javascripts/modernizr-2.0.js"></script>
@@ -75,7 +75,7 @@
   
   <header>
     
-      <h1 class="entry-title">MacRuby 独自のメソッド</h1>
+      <h1 class="entry-title">Original Methods in MacRuby</h1>
     
     
       <p class="meta">
@@ -91,20 +91,21 @@
   
 
 
-<time datetime="2012-03-26T12:00:00+09:00" pubdate data-updated="true">Mar 26<span>th</span>, 2012</time>
+<time datetime="2012-03-31T16:00:00+09:00" pubdate data-updated="true">Mar 31<span>st</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>MacRuby には CRuby や Cocoa API に存在しない、独自のメソッドやクラスが存在します。ここでは、独自メソッドについて説明します。</p>
+<div class="entry-content"><p>MacRuby has some original methods. They does not exist in CRuby&#8217;s methods and Cocoa APIs. This content describes those methods.</p>
 
-<h2>独自メソッド</h2>
+<h2>Original Methods</h2>
 
 <h3>String#transform</h3>
 
-<p>文字列を大文字や小文字、または別の言語の文字列に変形することができます。<a href="http://site.icu-project.org/">ICU</a> の <a href="http://userguide.icu-project.org/transforms/general">Transforms</a> という機能を用いて実装されています。</p>
+<p>Transforms the string to uppercase/lowercase or another language charactors.
+This method is implemented with <a href="http://site.icu-project.org/">ICU</a>  <a href="http://userguide.icu-project.org/transforms/general">Transforms</a>.</p>
 
 <ul>
 <li>transform(pattern) -> String
@@ -113,13 +114,13 @@
 <li>[PARAM] pattern:
 
 <ul>
-<li>どのような文字列に変換するかを指定します。</li>
+<li>Specifies transliteration identifier.</li>
 </ul>
 </li>
 <li>[RETURN]
 
 <ul>
-<li>変換結果の文字列を返します。</li>
+<li>Returns the transformed string.</li>
 </ul>
 </li>
 </ul>
@@ -148,7 +149,10 @@
 
 <h3>String#pointer</h3>
 
-<p>文字列から Pointer クラスのオブジェクトを返します。オブジェクトは <code>unsigned char*</code> の変数に対応します。Cocoa API では String オブジェクトではなく、文字列のポインタ変数を受け付けるメソッドがあります。それらのメソッドに渡すためのデータを用意するために使用します。</p>
+<p>Returns a Pointer object converted from String. Returned object corresponds to a variable of <code>unsigned char *</code>.</p>
+
+<p>Cocoa APIs has some methods which accepts the pointer variable.
+<code>String#pointer</code> may be used for these methods.</p>
 
 <ul>
 <li>pinter -> Pointer
@@ -157,7 +161,7 @@
 <li>[RETURN]
 
 <ul>
-<li>Pointer オブジェクトを返します。</li>
+<li>Returns a Pointer object converted from String.</li>
 </ul>
 </li>
 </ul>
@@ -182,7 +186,7 @@
 
 <h3>String#to_data</h3>
 
-<p>文字列から <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Reference/Foundation/Classes/NSData_Class/Reference/Reference.html">NSData</a> クラスのオブジェクトを生成し返します。</p>
+<p>Returns an <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Reference/Foundation/Classes/NSData_Class/Reference/Reference.html">NSData</a> object which is converted from String.</p>
 
 <ul>
 <li>to_data -> NSData
@@ -191,7 +195,7 @@
 <li>[RETURN]
 
 <ul>
-<li>NSData オブジェクトを返します。</li>
+<li>Returns a NSData object.</li>
 </ul>
 </li>
 </ul>
@@ -212,7 +216,7 @@
 
 <h3>NSData#to_str</h3>
 
-<p>文字列を伴う NSData オブジェクトから、文字列を返します。</p>
+<p>Returns a String object which is converted from NSData.</p>
 
 <ul>
 <li>to_str -> String
@@ -221,7 +225,7 @@
 <li>[RETURN]
 
 <ul>
-<li>文字列を返します。</li>
+<li>Returns a String object</li>
 </ul>
 </li>
 </ul>
@@ -242,7 +246,7 @@
 
 <h3>Kernel.framework</h3>
 
-<p>フレームワークをロードします。</p>
+<p>Loads a framework.</p>
 
 <ul>
 <li>framework -> bool
@@ -251,7 +255,7 @@
 <li>[RETURN]
 
 <ul>
-<li>フレームワークのロードに成功すれば true、失敗した場合には false を返します。</li>
+<li>Returns a true if loaded a framework. Otherwise, returns a false.</li>
 </ul>
 </li>
 </ul>
@@ -268,7 +272,7 @@
 
 <h3>Kernel.load_bridge_support_file</h3>
 
-<p>Bridge Support ファイルをロードします。</p>
+<p>Loads a Bridge Support file.</p>
 
 <ul>
 <li>load_bridge_support_file(filename) -> self</li>
@@ -284,7 +288,7 @@
 
 <h3>Kernel.load_plist</h3>
 
-<p>plist 形式の文字列を Ruby オブジェクトに変換し返します。</p>
+<p>Returns an object which is converted from string of plist format.</p>
 
 <ul>
 <li>load_plist(string) -> Object
@@ -293,13 +297,13 @@
 <li>[PARAM] string:
 
 <ul>
-<li>plist データの文字列を渡します。</li>
+<li>Passes a string of plist format.</li>
 </ul>
 </li>
 <li>[RETURN]
 
 <ul>
-<li>オブジェクトを返します。</li>
+<li>Returns an object.</li>
 </ul>
 </li>
 </ul>
@@ -326,7 +330,7 @@
 
 <h3>Object#to_plist</h3>
 
-<p>plist 形式に変換したデータを文字列で返します。</p>
+<p>Returns a string of plist format which is converted from Object.</p>
 
 <ul>
 <li>to_plist -> String
@@ -335,7 +339,7 @@
 <li>[RETURN]
 
 <ul>
-<li>文字列を返します。</li>
+<li>Returns a string of plist format.</li>
 </ul>
 </li>
 </ul>
@@ -360,7 +364,7 @@
 
 <h3>Object#methods</h3>
 
-<p>オブジェクトに対して呼び出せるメソッド名の一覧を返します。CRuby も Object#methods がありますが、MacRuby では <code>objc_methods</code> 引数が追加されています。</p>
+<p>Returns a methods list. CRuby also has <code>Object#methods</code>, <code>objc_methods</code> argument is added to MacRuby&#8217;s method.</p>
 
 <ul>
 <li>methods(include_inherited = true, objc_methods = false) -> [Symbol]
@@ -369,19 +373,19 @@
 <li>[PARAM] include_inherited:
 
 <ul>
-<li>引数が false の時は Object#singleton_methods(false) と同じになります。</li>
+<li>If passes a true, looks up a recursively.</li>
 </ul>
 </li>
 <li>[PARAM] objc_methods:
 
 <ul>
-<li>引数が true の時は Ruby のメソッドのほかに Cocoa API の一覧も返します。</li>
+<li>If passes a true, returns the Ruby&#8217;s methods and Cocoa APIs.</li>
 </ul>
 </li>
 <li>[RETURN]
 
 <ul>
-<li>メソッド名の一覧を返します。</li>
+<li>Returns a method list.</li>
 </ul>
 </li>
 </ul>
@@ -392,13 +396,13 @@
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;</span> <span class="s2">&quot;foo&quot;</span><span class="o">.</span><span class="n">methods</span><span class="p">(</span><span class="kp">true</span><span class="p">,</span> <span class="kp">true</span><span class="p">)</span>
-</span><span class='line'><span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:encode!</span><span class="p">,</span> <span class="ss">:&quot;replaceCharactersInRange:withString:&quot;</span><span class="p">,</span> <span class="ss">:&quot;getCharacters:range:&quot;</span><span class="p">,</span> <span class="ss">:characterAtIndex</span><span class="p">,</span> <span class="ss">:length</span><span class="p">,</span> <span class="ss">:transform</span><span class="p">,</span> <span class="ss">:crypt</span><span class="p">,</span> <span class="ss">:rpartition</span><span class="p">,</span> <span class="ss">:partition</span><span class="p">,</span> <span class="ss">:sum</span><span class="p">,</span> <span class="ss">:tr_s!</span><span class="p">,</span> <span class="ss">:tr_s</span><span class="p">,</span> <span class="ss">:tr!</span><span class="p">,</span> <span class="ss">:tr</span><span class="p">,</span> <span class="ss">:squeeze!</span><span class="p">,</span> <span class="ss">:squeeze</span><span class="p">,</span> <span class="ss">:delete!</span><span class="p">,</span> <span class="ss">:delete</span><span class="p">,</span> <span class="ss">:count</span><span class="p">,</span> <span class="ss">:reverse!</span><span class="p">,</span> <span class="ss">:reverse</span><span class="p">,</span> <span class="ss">:upto</span><span class="p">,</span> <span class="ss">:next!</span><span class="p">,</span> <span class="ss">:next</span><span class="p">,</span> <span class="ss">:succ!</span><span class="p">,</span> <span class="ss">:succ</span><span class="p">,</span> <span class="ss">:each_codepoint</span><span class="p">,</span> <span class="ss">:codepoints</span><span class="p">,</span> <span class="ss">:each_byte</span><span class="p">,</span> <span class="ss">:bytes</span><span class="p">,</span> <span class="ss">:each_char</span><span class="p">,</span> <span class="ss">:chars</span><span class="p">,</span> <span class="ss">:each_line</span><span class="p">,</span> <span class="ss">:lines</span><span class="p">,</span> <span class="ss">:rstrip!</span><span class="p">,</span> <span class="ss">:lstrip!</span><span class="p">,</span> <span class="ss">:strip!</span><span class="p">,</span> <span class="ss">:rstrip</span><span class="p">,</span> <span class="ss">:lstrip</span><span class="p">,</span> <span class="ss">:strip</span><span class="p">,</span> <span class="ss">:center</span><span class="p">,</span> <span class="ss">:rjust</span><span class="p">,</span> <span class="ss">:ljust</span><span class="p">,</span> <span class="ss">:capitalize!</span><span class="p">,</span> <span class="ss">:capitalize</span><span class="p">,</span> <span class="ss">:swapcase!</span><span class="p">,</span> <span class="ss">:swapcase</span><span class="p">,</span> <span class="ss">:upcase!</span><span class="p">,</span> <span class="ss">:upcase</span><span class="p">,</span> <span class="ss">:downcase!</span><span class="p">,</span> <span class="ss">:downcase</span><span class="p">,</span> <span class="ss">:gsub!</span><span class="p">,</span> <span class="ss">:gsub</span><span class="p">,</span> <span class="ss">:sub!</span><span class="p">,</span> <span class="ss">:sub</span><span class="p">,</span> <span class="ss">:chop!</span><span class="p">,</span> <span class="ss">:chop</span><span class="p">,</span> <span class="ss">:chomp!</span><span class="p">,</span> <span class="ss">:chomp</span><span class="p">,</span> <span class="ss">:to_f</span><span class="p">,</span> <span class="ss">:chr</span><span class="p">,</span> <span class="ss">:ord</span><span class="p">,</span> <span class="ss">:oct</span><span class="p">,</span> <span class="ss">:hex</span><span class="p">,</span> <span class="ss">:to_i</span><span class="p">,</span> <span class="ss">:split</span><span class="p">,</span> <span class="ss">:scan</span><span class="p">,</span> <span class="p">:</span><span class="o">=~</span><span class="p">,</span> <span class="ss">:match</span><span class="p">,</span> <span class="ss">:dump</span><span class="p">,</span> <span class="ss">:inspect</span><span class="p">,</span> <span class="ss">:intern</span><span class="p">,</span> <span class="ss">:to_sym</span><span class="p">,</span> <span class="ss">:to_str</span><span class="p">,</span> <span class="ss">:to_s</span><span class="p">,</span> <span class="ss">:end_with?</span><span class="p">,</span> <span class="ss">:start_with?</span><span class="p">,</span> <span class="ss">:include?</span><span class="p">,</span> <span class="ss">:eql?</span><span class="p">,</span> <span class="ss">:casecmp</span><span class="p">,</span> <span class="ss">:&lt;=&gt;</span><span class="p">,</span> <span class="ss">:==</span><span class="p">,</span> <span class="ss">:concat</span><span class="p">,</span> <span class="ss">:&lt;&lt;</span><span class="p">,</span> <span class="ss">:%</span><span class="p">,</span> <span class="ss">:*</span><span class="p">,</span> <span class="ss">:+</span><span class="p">,</span> <span class="ss">:rindex</span><span class="p">,</span> <span class="ss">:index</span><span class="p">,</span> <span class="ss">:insert</span><span class="p">,</span> <span class="ss">:slice!</span><span class="p">,</span> <span class="ss">:slice</span><span class="p">,</span> <span class="ss">:[]=</span><span class="p">,</span> <span class="ss">:[]</span><span class="p">,</span> <span class="ss">:ascii_only?</span><span class="p">,</span> <span class="ss">:valid_encoding?</span><span class="p">,</span> <span class="ss">:force_encoding</span><span class="p">,</span> <span class="ss">:pointer</span><span class="p">,</span> <span class="ss">:to_data</span><span class="p">,</span> <span class="ss">:setbyte</span><span class="p">,</span> <span class="ss">:getbyte</span><span class="p">,</span> <span class="ss">:bytesize</span><span class="p">,</span> <span class="ss">:empty?</span><span class="p">,</span> <span class="ss">:size</span><span class="p">,</span> <span class="ss">:encoding</span><span class="p">,</span> <span class="ss">:clear</span><span class="p">,</span> <span class="ss">:replace</span><span class="p">,</span> <span class="ss">:dup</span><span class="p">,</span> <span class="ss">:&quot;performSelector:withObject:withObject:&quot;</span><span class="p">,</span> <span class="ss">:&quot;performSelector:withObject:&quot;</span><span class="p">,</span> <span class="ss">:performSelector</span><span class="p">,</span> <span class="ss">:conformsToProtocol</span><span class="p">,</span> <span class="ss">:dd_appendSpaces</span><span class="p">,</span> <span class="ss">:&quot;replaceOccurrencesOfString:withString:options:range:&quot;</span><span class="p">,</span> <span class="ss">:initWithCapacity</span><span class="p">,</span> <span class="err">以下略</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:encode!</span><span class="p">,</span> <span class="ss">:&quot;replaceCharactersInRange:withString:&quot;</span><span class="p">,</span> <span class="ss">:&quot;getCharacters:range:&quot;</span><span class="p">,</span> <span class="ss">:characterAtIndex</span><span class="p">,</span> <span class="ss">:length</span><span class="p">,</span> <span class="ss">:transform</span><span class="p">,</span> <span class="ss">:crypt</span><span class="p">,</span> <span class="ss">:rpartition</span><span class="p">,</span> <span class="ss">:partition</span><span class="p">,</span> <span class="ss">:sum</span><span class="p">,</span> <span class="ss">:tr_s!</span><span class="p">,</span> <span class="ss">:tr_s</span><span class="p">,</span> <span class="ss">:tr!</span><span class="p">,</span> <span class="ss">:tr</span><span class="p">,</span> <span class="ss">:squeeze!</span><span class="p">,</span> <span class="ss">:squeeze</span><span class="p">,</span> <span class="ss">:delete!</span><span class="p">,</span> <span class="ss">:delete</span><span class="p">,</span> <span class="ss">:count</span><span class="p">,</span> <span class="ss">:reverse!</span><span class="p">,</span> <span class="ss">:reverse</span><span class="p">,</span> <span class="ss">:upto</span><span class="p">,</span> <span class="ss">:next!</span><span class="p">,</span> <span class="ss">:next</span><span class="p">,</span> <span class="ss">:succ!</span><span class="p">,</span> <span class="ss">:succ</span><span class="p">,</span> <span class="ss">:each_codepoint</span><span class="p">,</span> <span class="ss">:codepoints</span><span class="p">,</span> <span class="ss">:each_byte</span><span class="p">,</span> <span class="ss">:bytes</span><span class="p">,</span> <span class="ss">:each_char</span><span class="p">,</span> <span class="ss">:chars</span><span class="p">,</span> <span class="ss">:each_line</span><span class="p">,</span> <span class="ss">:lines</span><span class="p">,</span> <span class="ss">:rstrip!</span><span class="p">,</span> <span class="ss">:lstrip!</span><span class="p">,</span> <span class="ss">:strip!</span><span class="p">,</span> <span class="ss">:rstrip</span><span class="p">,</span> <span class="ss">:lstrip</span><span class="p">,</span> <span class="ss">:strip</span><span class="p">,</span> <span class="ss">:center</span><span class="p">,</span> <span class="ss">:rjust</span><span class="p">,</span> <span class="ss">:ljust</span><span class="p">,</span> <span class="ss">:capitalize!</span><span class="p">,</span> <span class="ss">:capitalize</span><span class="p">,</span> <span class="ss">:swapcase!</span><span class="p">,</span> <span class="ss">:swapcase</span><span class="p">,</span> <span class="ss">:upcase!</span><span class="p">,</span> <span class="ss">:upcase</span><span class="p">,</span> <span class="ss">:downcase!</span><span class="p">,</span> <span class="ss">:downcase</span><span class="p">,</span> <span class="ss">:gsub!</span><span class="p">,</span> <span class="ss">:gsub</span><span class="p">,</span> <span class="ss">:sub!</span><span class="p">,</span> <span class="ss">:sub</span><span class="p">,</span> <span class="ss">:chop!</span><span class="p">,</span> <span class="ss">:chop</span><span class="p">,</span> <span class="ss">:chomp!</span><span class="p">,</span> <span class="ss">:chomp</span><span class="p">,</span> <span class="ss">:to_f</span><span class="p">,</span> <span class="ss">:chr</span><span class="p">,</span> <span class="ss">:ord</span><span class="p">,</span> <span class="ss">:oct</span><span class="p">,</span> <span class="ss">:hex</span><span class="p">,</span> <span class="ss">:to_i</span><span class="p">,</span> <span class="ss">:split</span><span class="p">,</span> <span class="ss">:scan</span><span class="p">,</span> <span class="p">:</span><span class="o">=~</span><span class="p">,</span> <span class="ss">:match</span><span class="p">,</span> <span class="ss">:dump</span><span class="p">,</span> <span class="ss">:inspect</span><span class="p">,</span> <span class="ss">:intern</span><span class="p">,</span> <span class="ss">:to_sym</span><span class="p">,</span> <span class="ss">:to_str</span><span class="p">,</span> <span class="ss">:to_s</span><span class="p">,</span> <span class="ss">:end_with?</span><span class="p">,</span> <span class="ss">:start_with?</span><span class="p">,</span> <span class="ss">:include?</span><span class="p">,</span> <span class="ss">:eql?</span><span class="p">,</span> <span class="ss">:casecmp</span><span class="p">,</span> <span class="ss">:&lt;=&gt;</span><span class="p">,</span> <span class="ss">:==</span><span class="p">,</span> <span class="ss">:concat</span><span class="p">,</span> <span class="ss">:&lt;&lt;</span><span class="p">,</span> <span class="ss">:%</span><span class="p">,</span> <span class="ss">:*</span><span class="p">,</span> <span class="ss">:+</span><span class="p">,</span> <span class="ss">:rindex</span><span class="p">,</span> <span class="ss">:index</span><span class="p">,</span> <span class="ss">:insert</span><span class="p">,</span> <span class="ss">:slice!</span><span class="p">,</span> <span class="ss">:slice</span><span class="p">,</span> <span class="ss">:[]=</span><span class="p">,</span> <span class="ss">:[]</span><span class="p">,</span> <span class="ss">:ascii_only?</span><span class="p">,</span> <span class="ss">:valid_encoding?</span><span class="p">,</span> <span class="ss">:force_encoding</span><span class="p">,</span> <span class="ss">:pointer</span><span class="p">,</span> <span class="ss">:to_data</span><span class="p">,</span> <span class="ss">:setbyte</span><span class="p">,</span> <span class="ss">:getbyte</span><span class="p">,</span> <span class="ss">:bytesize</span><span class="p">,</span> <span class="ss">:empty?</span><span class="p">,</span> <span class="ss">:size</span><span class="p">,</span> <span class="ss">:encoding</span><span class="p">,</span> <span class="ss">:clear</span><span class="p">,</span> <span class="ss">:replace</span><span class="p">,</span> <span class="ss">:dup</span><span class="p">,</span> <span class="ss">:&quot;performSelector:withObject:withObject:&quot;</span><span class="p">,</span> <span class="ss">:&quot;performSelector:withObject:&quot;</span><span class="p">,</span> <span class="ss">:performSelector</span><span class="p">,</span> <span class="ss">:conformsToProtocol</span><span class="p">,</span> <span class="ss">:dd_appendSpaces</span><span class="p">,</span> <span class="ss">:&quot;replaceOccurrencesOfString:withString:options:range:&quot;</span><span class="p">,</span> <span class="ss">:initWithCapacity</span><span class="p">,</span>  <span class="o">----</span> <span class="n">snip</span> <span class="o">----</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <h3>Range#relative_to</h3>
 
-<p><code>max</code> で指定した Range 範囲のオブジェクトを返します。負の範囲に対して実行した場合には、<code>max</code> との相対的な範囲となります。</p>
+<p>Returns a new Range instance which has negative values in <code>rng</code> expanded relative to <code>max</code>.</p>
 
 <ul>
 <li>relative_to(max) -> Range
@@ -407,13 +411,13 @@
 <li>[PARAM] max:
 
 <ul>
-<li>Range の範囲の最大値を指定します。</li>
+<li>Specifies a max of Range.</li>
 </ul>
 </li>
 <li>[RETURN]
 
 <ul>
-<li>新しい Range オブジェクトを返します。</li>
+<li>Returns a new Range instance.</li>
 </ul>
 </li>
 </ul>
@@ -434,7 +438,7 @@
 
 <h3>BasicSocket#sendfile</h3>
 
-<p>ソケットを介してファイルのデータを <a href="http://developer.apple.com/library/ios/#DOCUMENTATION/System/Conceptual/ManPages_iPhoneOS/man2/sendfile.2.html">sendfile(2)</a> を用いて送信します。</p>
+<p>Sends a file with socket. This method is implemented with <a href="http://developer.apple.com/library/ios/#DOCUMENTATION/System/Conceptual/ManPages_iPhoneOS/man2/sendfile.2.html">sendfile(2)</a>.</p>
 
 <ul>
 <li>sendfile(file, offset, length) -> Integer
@@ -443,25 +447,25 @@
 <li>[PARAM] file:
 
 <ul>
-<li>送信するファイルのパス、または IO オブジェクトを渡します。</li>
+<li>Specifies a file path or readable IO object.</li>
 </ul>
 </li>
 <li>[PARAM] offset:
 
 <ul>
-<li>送信を開始するデータの位置を指定します。</li>
+<li>Specifies a offset as start position.</li>
 </ul>
 </li>
 <li>[PARAM] length:
 
 <ul>
-<li>送信するデータサイズを指定します。</li>
+<li>Specifies a length to send.</li>
 </ul>
 </li>
 <li>[RETURN]
 
 <ul>
-<li>送信したデータサイズを返します。</li>
+<li>Returns a sent length.</li>
 </ul>
 </li>
 </ul>
@@ -488,7 +492,7 @@
 
 <h2>Fixnum#popcnt</h2>
 
-<p>数値を 2 進数表記した際に、1 となるビットの数を返します。</p>
+<p>Returns the number of 1 bits set in the internal representation of Fixnum.</p>
 
 <ul>
 <li>popcnt -> Fixnum</li>
@@ -535,7 +539,7 @@
   
 
 
-<time datetime="2012-03-26T12:00:00+09:00" pubdate data-updated="true">Mar 26<span>th</span>, 2012</time>
+<time datetime="2012-03-31T16:00:00+09:00" pubdate data-updated="true">Mar 31<span>st</span>, 2012</time>
       
 
 <span class="categories">
@@ -549,7 +553,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/26/original-methods/" data-via="" data-counturl="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/26/original-methods/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/original-methods/" data-via="" data-counturl="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/original-methods/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -562,10 +566,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/MacRuby-DoJo/blog/2012/03/24/intro-icon/" title="Previous Post: Changes an Application's Icon">&laquo; Changes an Application's Icon</a>
+        <a class="basic-alignment left" href="/MacRuby-DoJo/blog/2012/03/31/original-constants/" title="Previous Post: Original Constants in MacRuby">&laquo; Original Constants in MacRuby</a>
       
-      
-        <a class="basic-alignment right" href="/MacRuby-DoJo/blog/2012/03/26/original-constants/" title="Next Post: MacRuby 独自の定数">MacRuby 独自の定数 &raquo;</a>
       
     </p>
   </footer>

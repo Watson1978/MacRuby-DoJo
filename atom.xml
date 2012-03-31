@@ -4,7 +4,7 @@
   <title><![CDATA[MacRuby DoJo (道場)]]></title>
   <link href="http://watson1978.github.com/MacRuby-DoJo/atom.xml" rel="self"/>
   <link href="http://watson1978.github.com/MacRuby-DoJo/"/>
-  <updated>2012-03-31T11:26:29+09:00</updated>
+  <updated>2012-03-31T16:21:10+09:00</updated>
   <id>http://watson1978.github.com/MacRuby-DoJo/</id>
   <author>
     <name><![CDATA[Watson]]></name>
@@ -12,6 +12,509 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Original Methods in MacRuby]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/original-methods/"/>
+    <updated>2012-03-31T16:00:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/original-methods</id>
+    <content type="html"><![CDATA[<p>MacRuby has some original methods. They does not exist in CRuby&#8217;s methods and Cocoa APIs. This content describes those methods.</p>
+
+<h2>Original Methods</h2>
+
+<h3>String#transform</h3>
+
+<p>Transforms the string to uppercase/lowercase or another language charactors.
+This method is implemented with <a href="http://site.icu-project.org/">ICU</a>  <a href="http://userguide.icu-project.org/transforms/general">Transforms</a>.</p>
+
+<ul>
+<li>transform(pattern) -> String
+
+<ul>
+<li>[PARAM] pattern:
+
+<ul>
+<li>Specifies transliteration identifier.</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>Returns the transformed string.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="s2">&quot;hello&quot;</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="s2">&quot;Upper&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;HELLO&quot;</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="s2">&quot;HELLO&quot;</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="s2">&quot;Lower&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;hello&quot;</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="s2">&quot;hello&quot;</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="s2">&quot;Hiragana&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;へっろ&quot;</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="s2">&quot;hello&quot;</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="s2">&quot;Greek&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;ἑλλο&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>String#pointer</h3>
+
+<p>Returns a Pointer object converted from String. Returned object corresponds to a variable of <code>unsigned char *</code>.</p>
+
+<p>Cocoa APIs has some methods which accepts the pointer variable.
+<code>String#pointer</code> may be used for these methods.</p>
+
+<ul>
+<li>pinter -> Pointer
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Returns a Pointer object converted from String.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="n">pointer</span> <span class="o">=</span> <span class="s2">&quot;foo&quot;</span><span class="o">.</span><span class="n">pointer</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="c1">#&lt;Pointer:0x4007ac580&gt;</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="no">NSData</span><span class="o">.</span><span class="n">dataWithBytes</span><span class="p">(</span><span class="n">pointer</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="s2">&quot;foo&quot;</span><span class="o">.</span><span class="n">length</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="o">&lt;</span><span class="mi">666</span><span class="n">f6f</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="n">data</span><span class="o">.</span><span class="n">to_str</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;foo&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>String#to_data</h3>
+
+<p>Returns an <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Reference/Foundation/Classes/NSData_Class/Reference/Reference.html">NSData</a> object which is converted from String.</p>
+
+<ul>
+<li>to_data -> NSData
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Returns a NSData object.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="s2">&quot;foo&quot;</span><span class="o">.</span><span class="n">to_data</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="o">&lt;</span><span class="mi">666</span><span class="n">f6f</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="s2">&quot;foo&quot;</span><span class="o">.</span><span class="n">to_data</span><span class="o">.</span><span class="n">class</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="n">__NSCFData</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>NSData#to_str</h3>
+
+<p>Returns a String object which is converted from NSData.</p>
+
+<ul>
+<li>to_str -> String
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Returns a String object</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="s2">&quot;foo&quot;</span><span class="o">.</span><span class="n">to_data</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="o">&lt;</span><span class="mi">666</span><span class="n">f6f</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="n">data</span><span class="o">.</span><span class="n">to_str</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;foo&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Kernel.framework</h3>
+
+<p>Loads a framework.</p>
+
+<ul>
+<li>framework -> bool
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Returns a true if loaded a framework. Otherwise, returns a false.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="n">framework</span> <span class="s1">&#39;Foundation&#39;</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="kp">true</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Kernel.load_bridge_support_file</h3>
+
+<p>Loads a Bridge Support file.</p>
+
+<ul>
+<li>load_bridge_support_file(filename) -> self</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="n">load_bridge_support_file</span><span class="p">(</span><span class="s2">&quot;Foo.bridgesupport&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="n">main</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Kernel.load_plist</h3>
+
+<p>Returns an object which is converted from string of plist format.</p>
+
+<ul>
+<li>load_plist(string) -> Object
+
+<ul>
+<li>[PARAM] string:
+
+<ul>
+<li>Passes a string of plist format.</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>Returns an object.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="no">File</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;StopWatch-Info.plist&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="n">load_plist</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="p">{</span><span class="s2">&quot;CFBundleName&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;${PRODUCT_NAME}&quot;</span><span class="p">,</span> <span class="s2">&quot;CFBundleIdentifier&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;Watson.${PRODUCT_NAME:rfc1034identifier}&quot;</span><span class="p">,</span> <span class="s2">&quot;CFBundleInfoDictionaryVersion&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;6.0&quot;</span><span class="p">,</span> <span class="s2">&quot;CFBundleVersion&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;CFBundleExecutable&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;${EXECUTABLE_NAME}&quot;</span><span class="p">,</span> <span class="s2">&quot;NSPrincipalClass&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;NSApplication&quot;</span><span class="p">,</span> <span class="s2">&quot;CFBundlePackageType&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;APPL&quot;</span><span class="p">,</span> <span class="s2">&quot;CFBundleIconFile&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;MacRuby.icns&quot;</span><span class="p">,</span> <span class="s2">&quot;CFBundleSignature&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;????&quot;</span><span class="p">,</span> <span class="s2">&quot;NSMainNibFile&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;MainMenu&quot;</span><span class="p">,</span> <span class="s2">&quot;LSMinimumSystemVersion&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;${MACOSX_DEPLOYMENT_TARGET}&quot;</span><span class="p">,</span> <span class="s2">&quot;CFBundleDevelopmentRegion&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="s2">&quot;CFBundleShortVersionString&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;1.0&quot;</span><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="s2">&quot;foo&quot;</span><span class="o">.</span><span class="n">to_plist</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="n">load_plist</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;foo&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Object#to_plist</h3>
+
+<p>Returns a string of plist format which is converted from Object.</p>
+
+<ul>
+<li>to_plist -> String
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Returns a string of plist format.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="s2">&quot;foo&quot;</span><span class="o">.</span><span class="n">to_plist</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;&lt;?xml version=</span><span class="se">\&quot;</span><span class="s2">1.0</span><span class="se">\&quot;</span><span class="s2"> encoding=</span><span class="se">\&quot;</span><span class="s2">UTF-8</span><span class="se">\&quot;</span><span class="s2">?&gt;</span><span class="se">\n</span><span class="s2">&lt;!DOCTYPE plist PUBLIC </span><span class="se">\&quot;</span><span class="s2">-//Apple//DTD PLIST 1.0//EN</span><span class="se">\&quot;</span><span class="s2"> </span><span class="se">\&quot;</span><span class="s2">http://www.apple.com/DTDs/PropertyList-1.0.dtd</span><span class="se">\&quot;</span><span class="s2">&gt;</span><span class="se">\n</span><span class="s2">&lt;plist version=</span><span class="se">\&quot;</span><span class="s2">1.0</span><span class="se">\&quot;</span><span class="s2">&gt;</span><span class="se">\n</span><span class="s2">&lt;string&gt;foo&lt;/string&gt;</span><span class="se">\n</span><span class="s2">&lt;/plist&gt;</span><span class="se">\n</span><span class="s2">&quot;</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="p">{</span><span class="s2">&quot;foo&quot;</span> <span class="o">=&gt;</span> <span class="mi">42</span><span class="p">}</span><span class="o">.</span><span class="n">to_plist</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;&lt;?xml version=</span><span class="se">\&quot;</span><span class="s2">1.0</span><span class="se">\&quot;</span><span class="s2"> encoding=</span><span class="se">\&quot;</span><span class="s2">UTF-8</span><span class="se">\&quot;</span><span class="s2">?&gt;</span><span class="se">\n</span><span class="s2">&lt;!DOCTYPE plist PUBLIC </span><span class="se">\&quot;</span><span class="s2">-//Apple//DTD PLIST 1.0//EN</span><span class="se">\&quot;</span><span class="s2"> </span><span class="se">\&quot;</span><span class="s2">http://www.apple.com/DTDs/PropertyList-1.0.dtd</span><span class="se">\&quot;</span><span class="s2">&gt;</span><span class="se">\n</span><span class="s2">&lt;plist version=</span><span class="se">\&quot;</span><span class="s2">1.0</span><span class="se">\&quot;</span><span class="s2">&gt;</span><span class="se">\n</span><span class="s2">&lt;dict&gt;</span><span class="se">\n\t</span><span class="s2">&lt;key&gt;foo&lt;/key&gt;</span><span class="se">\n\t</span><span class="s2">&lt;integer&gt;42&lt;/integer&gt;</span><span class="se">\n</span><span class="s2">&lt;/dict&gt;</span><span class="se">\n</span><span class="s2">&lt;/plist&gt;</span><span class="se">\n</span><span class="s2">&quot;</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="o">[</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="o">].</span><span class="n">to_plist</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;&lt;?xml version=</span><span class="se">\&quot;</span><span class="s2">1.0</span><span class="se">\&quot;</span><span class="s2"> encoding=</span><span class="se">\&quot;</span><span class="s2">UTF-8</span><span class="se">\&quot;</span><span class="s2">?&gt;</span><span class="se">\n</span><span class="s2">&lt;!DOCTYPE plist PUBLIC </span><span class="se">\&quot;</span><span class="s2">-//Apple//DTD PLIST 1.0//EN</span><span class="se">\&quot;</span><span class="s2"> </span><span class="se">\&quot;</span><span class="s2">http://www.apple.com/DTDs/PropertyList-1.0.dtd</span><span class="se">\&quot;</span><span class="s2">&gt;</span><span class="se">\n</span><span class="s2">&lt;plist version=</span><span class="se">\&quot;</span><span class="s2">1.0</span><span class="se">\&quot;</span><span class="s2">&gt;</span><span class="se">\n</span><span class="s2">&lt;array&gt;</span><span class="se">\n\t</span><span class="s2">&lt;string&gt;foo&lt;/string&gt;</span><span class="se">\n\t</span><span class="s2">&lt;string&gt;bar&lt;/string&gt;</span><span class="se">\n</span><span class="s2">&lt;/array&gt;</span><span class="se">\n</span><span class="s2">&lt;/plist&gt;</span><span class="se">\n</span><span class="s2">&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Object#methods</h3>
+
+<p>Returns a methods list. CRuby also has <code>Object#methods</code>, <code>objc_methods</code> argument is added to MacRuby&#8217;s method.</p>
+
+<ul>
+<li>methods(include_inherited = true, objc_methods = false) -> [Symbol]
+
+<ul>
+<li>[PARAM] include_inherited:
+
+<ul>
+<li>If passes a true, looks up a recursively.</li>
+</ul>
+</li>
+<li>[PARAM] objc_methods:
+
+<ul>
+<li>If passes a true, returns the Ruby&#8217;s methods and Cocoa APIs.</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>Returns a method list.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;</span> <span class="s2">&quot;foo&quot;</span><span class="o">.</span><span class="n">methods</span><span class="p">(</span><span class="kp">true</span><span class="p">,</span> <span class="kp">true</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:encode!</span><span class="p">,</span> <span class="ss">:&quot;replaceCharactersInRange:withString:&quot;</span><span class="p">,</span> <span class="ss">:&quot;getCharacters:range:&quot;</span><span class="p">,</span> <span class="ss">:characterAtIndex</span><span class="p">,</span> <span class="ss">:length</span><span class="p">,</span> <span class="ss">:transform</span><span class="p">,</span> <span class="ss">:crypt</span><span class="p">,</span> <span class="ss">:rpartition</span><span class="p">,</span> <span class="ss">:partition</span><span class="p">,</span> <span class="ss">:sum</span><span class="p">,</span> <span class="ss">:tr_s!</span><span class="p">,</span> <span class="ss">:tr_s</span><span class="p">,</span> <span class="ss">:tr!</span><span class="p">,</span> <span class="ss">:tr</span><span class="p">,</span> <span class="ss">:squeeze!</span><span class="p">,</span> <span class="ss">:squeeze</span><span class="p">,</span> <span class="ss">:delete!</span><span class="p">,</span> <span class="ss">:delete</span><span class="p">,</span> <span class="ss">:count</span><span class="p">,</span> <span class="ss">:reverse!</span><span class="p">,</span> <span class="ss">:reverse</span><span class="p">,</span> <span class="ss">:upto</span><span class="p">,</span> <span class="ss">:next!</span><span class="p">,</span> <span class="ss">:next</span><span class="p">,</span> <span class="ss">:succ!</span><span class="p">,</span> <span class="ss">:succ</span><span class="p">,</span> <span class="ss">:each_codepoint</span><span class="p">,</span> <span class="ss">:codepoints</span><span class="p">,</span> <span class="ss">:each_byte</span><span class="p">,</span> <span class="ss">:bytes</span><span class="p">,</span> <span class="ss">:each_char</span><span class="p">,</span> <span class="ss">:chars</span><span class="p">,</span> <span class="ss">:each_line</span><span class="p">,</span> <span class="ss">:lines</span><span class="p">,</span> <span class="ss">:rstrip!</span><span class="p">,</span> <span class="ss">:lstrip!</span><span class="p">,</span> <span class="ss">:strip!</span><span class="p">,</span> <span class="ss">:rstrip</span><span class="p">,</span> <span class="ss">:lstrip</span><span class="p">,</span> <span class="ss">:strip</span><span class="p">,</span> <span class="ss">:center</span><span class="p">,</span> <span class="ss">:rjust</span><span class="p">,</span> <span class="ss">:ljust</span><span class="p">,</span> <span class="ss">:capitalize!</span><span class="p">,</span> <span class="ss">:capitalize</span><span class="p">,</span> <span class="ss">:swapcase!</span><span class="p">,</span> <span class="ss">:swapcase</span><span class="p">,</span> <span class="ss">:upcase!</span><span class="p">,</span> <span class="ss">:upcase</span><span class="p">,</span> <span class="ss">:downcase!</span><span class="p">,</span> <span class="ss">:downcase</span><span class="p">,</span> <span class="ss">:gsub!</span><span class="p">,</span> <span class="ss">:gsub</span><span class="p">,</span> <span class="ss">:sub!</span><span class="p">,</span> <span class="ss">:sub</span><span class="p">,</span> <span class="ss">:chop!</span><span class="p">,</span> <span class="ss">:chop</span><span class="p">,</span> <span class="ss">:chomp!</span><span class="p">,</span> <span class="ss">:chomp</span><span class="p">,</span> <span class="ss">:to_f</span><span class="p">,</span> <span class="ss">:chr</span><span class="p">,</span> <span class="ss">:ord</span><span class="p">,</span> <span class="ss">:oct</span><span class="p">,</span> <span class="ss">:hex</span><span class="p">,</span> <span class="ss">:to_i</span><span class="p">,</span> <span class="ss">:split</span><span class="p">,</span> <span class="ss">:scan</span><span class="p">,</span> <span class="p">:</span><span class="o">=~</span><span class="p">,</span> <span class="ss">:match</span><span class="p">,</span> <span class="ss">:dump</span><span class="p">,</span> <span class="ss">:inspect</span><span class="p">,</span> <span class="ss">:intern</span><span class="p">,</span> <span class="ss">:to_sym</span><span class="p">,</span> <span class="ss">:to_str</span><span class="p">,</span> <span class="ss">:to_s</span><span class="p">,</span> <span class="ss">:end_with?</span><span class="p">,</span> <span class="ss">:start_with?</span><span class="p">,</span> <span class="ss">:include?</span><span class="p">,</span> <span class="ss">:eql?</span><span class="p">,</span> <span class="ss">:casecmp</span><span class="p">,</span> <span class="ss">:&lt;=&gt;</span><span class="p">,</span> <span class="ss">:==</span><span class="p">,</span> <span class="ss">:concat</span><span class="p">,</span> <span class="ss">:&lt;&lt;</span><span class="p">,</span> <span class="ss">:%</span><span class="p">,</span> <span class="ss">:*</span><span class="p">,</span> <span class="ss">:+</span><span class="p">,</span> <span class="ss">:rindex</span><span class="p">,</span> <span class="ss">:index</span><span class="p">,</span> <span class="ss">:insert</span><span class="p">,</span> <span class="ss">:slice!</span><span class="p">,</span> <span class="ss">:slice</span><span class="p">,</span> <span class="ss">:[]=</span><span class="p">,</span> <span class="ss">:[]</span><span class="p">,</span> <span class="ss">:ascii_only?</span><span class="p">,</span> <span class="ss">:valid_encoding?</span><span class="p">,</span> <span class="ss">:force_encoding</span><span class="p">,</span> <span class="ss">:pointer</span><span class="p">,</span> <span class="ss">:to_data</span><span class="p">,</span> <span class="ss">:setbyte</span><span class="p">,</span> <span class="ss">:getbyte</span><span class="p">,</span> <span class="ss">:bytesize</span><span class="p">,</span> <span class="ss">:empty?</span><span class="p">,</span> <span class="ss">:size</span><span class="p">,</span> <span class="ss">:encoding</span><span class="p">,</span> <span class="ss">:clear</span><span class="p">,</span> <span class="ss">:replace</span><span class="p">,</span> <span class="ss">:dup</span><span class="p">,</span> <span class="ss">:&quot;performSelector:withObject:withObject:&quot;</span><span class="p">,</span> <span class="ss">:&quot;performSelector:withObject:&quot;</span><span class="p">,</span> <span class="ss">:performSelector</span><span class="p">,</span> <span class="ss">:conformsToProtocol</span><span class="p">,</span> <span class="ss">:dd_appendSpaces</span><span class="p">,</span> <span class="ss">:&quot;replaceOccurrencesOfString:withString:options:range:&quot;</span><span class="p">,</span> <span class="ss">:initWithCapacity</span><span class="p">,</span>  <span class="o">----</span> <span class="n">snip</span> <span class="o">----</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Range#relative_to</h3>
+
+<p>Returns a new Range instance which has negative values in <code>rng</code> expanded relative to <code>max</code>.</p>
+
+<ul>
+<li>relative_to(max) -> Range
+
+<ul>
+<li>[PARAM] max:
+
+<ul>
+<li>Specifies a max of Range.</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>Returns a new Range instance.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="p">(</span><span class="mi">1</span><span class="o">.</span><span class="n">.</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">relative_to</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="mi">1</span><span class="o">.</span><span class="n">.</span><span class="mi">5</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="o">.</span><span class="n">.</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">relative_to</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="mi">3</span><span class="o">.</span><span class="n">.</span><span class="mi">4</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>BasicSocket#sendfile</h3>
+
+<p>Sends a file with socket. This method is implemented with <a href="http://developer.apple.com/library/ios/#DOCUMENTATION/System/Conceptual/ManPages_iPhoneOS/man2/sendfile.2.html">sendfile(2)</a>.</p>
+
+<ul>
+<li>sendfile(file, offset, length) -> Integer
+
+<ul>
+<li>[PARAM] file:
+
+<ul>
+<li>Specifies a file path or readable IO object.</li>
+</ul>
+</li>
+<li>[PARAM] offset:
+
+<ul>
+<li>Specifies a offset as start position.</li>
+</ul>
+</li>
+<li>[PARAM] length:
+
+<ul>
+<li>Specifies a length to send.</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>Returns a sent length.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;socket&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">port</span> <span class="o">=</span> <span class="mi">5000</span>
+</span><span class='line'><span class="n">socket</span> <span class="o">=</span> <span class="no">TCPSocket</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;sample.txt&#39;</span>
+</span><span class='line'><span class="n">socket</span><span class="o">.</span><span class="n">sendfile</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Fixnum#popcnt</h2>
+
+<p>Returns the number of 1 bits set in the internal representation of Fixnum.</p>
+
+<ul>
+<li>popcnt -> Fixnum</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="mi">13</span><span class="o">.</span><span class="n">to_s</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;1101&quot;</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="mi">13</span><span class="o">.</span><span class="n">popcnt</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="mi">3</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="mi">255</span><span class="o">.</span><span class="n">to_s</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;11111111&quot;</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="mi">255</span><span class="o">.</span><span class="n">popcnt</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="mi">8</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Original Constants in MacRuby]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/original-constants/"/>
+    <updated>2012-03-31T16:00:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/original-constants</id>
+    <content type="html"><![CDATA[<p>This content describes the constants that have been added in MacRuby.</p>
+
+<h2>Original Constants</h2>
+
+<h3>Kernel::RUBY_ARCH</h3>
+
+<p>CPU name of the architecture which MacRuby is ran.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="no">Kernel</span><span class="o">::</span><span class="no">RUBY_ARCH</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;x86_64&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Kernel::MACRUBY_VERSION</h3>
+
+<p>MacRuby version.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="no">Kernel</span><span class="o">::</span><span class="no">MACRUBY_VERSION</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;0.12&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Following method may check whether running your program on MacRuby.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">is_macruby?</span>
+</span><span class='line'>  <span class="k">begin</span>
+</span><span class='line'>    <span class="no">MACRUBY_VERSION</span>
+</span><span class='line'>    <span class="k">return</span> <span class="kp">true</span>
+</span><span class='line'>  <span class="k">rescue</span>
+</span><span class='line'>    <span class="k">return</span> <span class="kp">false</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Kernel::MACRUBY_REVISION</h3>
+
+<p>Git SHA1 Hash which indicates a last commit. (Older MacRuby shows a revision number of SVN)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="no">Kernel</span><span class="o">::</span><span class="no">MACRUBY_REVISION</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;git commit e35df75944e7a13d16f019e2ed1e4ce2406b06af&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Dir::NS_TMPDIR</h3>
+
+<p>Path of temporary directory.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="no">Dir</span><span class="o">::</span><span class="no">NS_TMPDIR</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;/var/folders/1z/ff7x15cj7vb24rl38ty0y52w0000gn/T/&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Dispatch::Source クラス]]></title>
@@ -3086,330 +3589,6 @@ Cocoa.framework は Foundation.framework、AppKit.framework と CoreData.framewo
 
 
 <p>検索結果を取得する際に <code>NSString.stringWithContentsOfURL</code> を使用していますが、Ruby の <code>Net::HTTP</code> を使用することもできます。また、JSON の解析も Mac OS X 10.7 以降に限定すれば <a href="https://developer.apple.com/library/mac/#documentation/Foundation/Reference/NSJSONSerialization_Class/Reference/Reference.html">NSJSONSerialization</a> を使うことができます。Ruby メソッドと Mac OS X API をいろいろ組み合わせて使用できますので、用途や利便性などで使いわけてみてください。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[TableView を使ってみよう]]></title>
-    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/10/tableview-basic/"/>
-    <updated>2012-03-10T14:00:00+09:00</updated>
-    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/10/tableview-basic</id>
-    <content type="html"><![CDATA[<p>ここでは、TableView の使い方について説明します。TableView を使用するとデータをテーブル状に表示できます。この TableView はさまざまな Mac アプリケーションで見かけることができます。</p>
-
-<h2>TableView を配置する</h2>
-
-<p>それでは、新規プロジェクトを作成し Table View を配置してみましょう。</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/tableview-basic/tableview.png" alt="image" /></p>
-
-<h2>データソースを接続する</h2>
-
-<p>TableView はデータソースという仕組みを用いて、データをテーブルに表示します。データソースは、UI 部品で表示する内容が変更したというイベントが発生すると、プログラム側からデータを提供してあげるという処理が行われます。アクションメソッドを接続したと同じように、どこから提供されるかを TableView に接続してあげる必要がります。</p>
-
-<p>以下の図のように、<kbd>control</kbd> キーを押しながら TableView から App Delegate へドラッグします。</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/tableview-basic/connect_datasource.png" alt="image" /></p>
-
-<p>一覧に表示されている [dataSource] を選択して接続します。</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/tableview-basic/datasource.png" alt="image" /></p>
-
-<p>AppDelegate クラスからデータを提供するために、<a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Reference/ApplicationKit/Protocols/NSTableDataSource_Protocol/Reference/Reference.html">NSTableViewDataSource</a> プロトコルの以下のメソッドを実装します。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nf">numberOfRowsInTableView:</span><span class="p">(</span><span class="n">NSTableView</span> <span class="o">*</span><span class="p">)</span><span class="nv">aTableView</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nf">tableView:</span><span class="p">(</span><span class="n">NSTableView</span> <span class="o">*</span><span class="p">)</span><span class="nv">aTableView</span> <span class="nf">objectValueForTableColumn:</span><span class="p">(</span><span class="n">NSTableColumn</span> <span class="o">*</span><span class="p">)</span><span class="nv">aTableColumn</span> <span class="nf">row:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">rowIndex</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>最初に <code>numberOfRowsInTableView:</code> メソッドが呼び出され、データが何行分あるのかを返します。
-<code>tableView:objectValueForTableColumn:row:</code> メソッドが行数と列数に応じて呼び出されるので、テーブルに表示するデータを返してあげます。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">AppDelegate</span>
-</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:window</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">numberOfRowsInTableView</span><span class="p">(</span><span class="n">aTableView</span><span class="p">)</span>
-</span><span class='line'>    <span class="c1"># データが何行あるかを返す</span>
-</span><span class='line'>    <span class="mi">2</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">tableView</span><span class="p">(</span><span class="n">aTableView</span><span class="p">,</span> <span class="n">objectValueForTableColumn</span><span class="p">:</span> <span class="n">aTableColumn</span><span class="p">,</span> <span class="n">row</span><span class="p">:</span> <span class="n">rowIndex</span><span class="p">)</span>
-</span><span class='line'>    <span class="c1"># テーブルに表示するデータを返す</span>
-</span><span class='line'>    <span class="s2">&quot;foo&quot;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>実行すると、以下のように表示されます。</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/tableview-basic/tableview_sample1.png" alt="image" /></p>
-
-<h2>セルごとに表示する内容を変える</h2>
-
-<p>上記のプログラムでは全てのセルで foo としか表示されないので、セルごとに表示するデータを変更してみましょう。</p>
-
-<p>以下の図のように 1 列目の Table カラムを選択し、Identifier に name を設定します。</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/tableview-basic/tableview_identifier.png" alt="image" /></p>
-
-<p>同じように、今度は 2 列目の Table カラムを選択し、Identifier に age を設定します。</p>
-
-<p><code>tableView:objectValueForTableColumn:row:</code> メソッドを以下のように変更してみましょう。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">def</span> <span class="nf">tableView</span><span class="p">(</span><span class="n">aTableView</span><span class="p">,</span> <span class="n">objectValueForTableColumn</span><span class="p">:</span> <span class="n">aTableColumn</span><span class="p">,</span> <span class="n">row</span><span class="p">:</span> <span class="n">rowIndex</span><span class="p">)</span>
-</span><span class='line'>    <span class="c1"># テーブルに表示するデータを返す</span>
-</span><span class='line'>    <span class="c1"># 2行 x 2列 = 4回、このメソッドが呼び出される</span>
-</span><span class='line'>    <span class="k">if</span> <span class="n">rowIndex</span> <span class="o">==</span> <span class="mi">0</span>
-</span><span class='line'>      <span class="c1"># 1行目のデータ</span>
-</span><span class='line'>      <span class="k">case</span> <span class="n">aTableColumn</span><span class="o">.</span><span class="n">identifier</span>
-</span><span class='line'>      <span class="k">when</span> <span class="s1">&#39;name&#39;</span> <span class="c1"># 1列目のデータ</span>
-</span><span class='line'>        <span class="n">str</span> <span class="o">=</span> <span class="s2">&quot;Steven Paul Jobs&quot;</span>
-</span><span class='line'>      <span class="k">when</span> <span class="s1">&#39;age&#39;</span>  <span class="c1"># 2列目のデータ</span>
-</span><span class='line'>        <span class="n">str</span> <span class="o">=</span> <span class="s2">&quot;56&quot;</span>
-</span><span class='line'>      <span class="k">end</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">if</span> <span class="n">rowIndex</span> <span class="o">==</span> <span class="mi">1</span>
-</span><span class='line'>      <span class="c1"># 2行目のデータ</span>
-</span><span class='line'>      <span class="k">case</span> <span class="n">aTableColumn</span><span class="o">.</span><span class="n">identifier</span>
-</span><span class='line'>      <span class="k">when</span> <span class="s1">&#39;name&#39;</span> <span class="c1"># 1列目のデータ</span>
-</span><span class='line'>        <span class="n">str</span> <span class="o">=</span> <span class="s2">&quot;Stephen Gary Wozniak&quot;</span>
-</span><span class='line'>      <span class="k">when</span> <span class="s1">&#39;age&#39;</span>  <span class="c1"># 2列目のデータ</span>
-</span><span class='line'>        <span class="n">str</span> <span class="o">=</span> <span class="s2">&quot;61&quot;</span>
-</span><span class='line'>      <span class="k">end</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">return</span> <span class="n">str</span>
-</span><span class='line'>  <span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>rowIndex</code> の値でどの行のデータが必要とされているのか判別できます。列は、<code>aTableColumn.identifier</code> の値によって判別できます。</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/tableview-basic/tableview_sample2.png" alt="image" /></p>
-
-<h2>列を追加する</h2>
-
-<p>TableView は初期状態で 2 列分のデータを表示します。以下の図のように、[Table View] を選択した状態で [Show the attributes inspector] をクリックします。[Columns] に表示する列数を指定すると、TableView に列を追加することができます。</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/tableview-basic/tableview_columns.png" alt="image" /></p>
-
-<h2>セルに画像を表示する</h2>
-
-<p>今度は TableView のセルに画像を表示してみましょう。初期状態で TableView のセルには「Text Field Cell」という部品が使われています。</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/tableview-basic/tableview_text_field_cell.png" alt="image" /></p>
-
-<p>この Text Field Cell は名前の通りに Text しか表示できません。画像を表示するためには、「Image Cell」という部品を使います。次の図のように、Object Library から Image Cell を画像を表示するセルの Text Field Cell へドロップして置き換えます。</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/tableview-basic/replace_to_image_cell.png" alt="image" /></p>
-
-<p>Image Cell へ置き換えると、Window に配置した TableView は以下のように表示されます。</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/tableview-basic/tableview_with_image_cell.png" alt="image" /></p>
-
-<p>Image Cell の Identifier を image と設定します。<code>tableView:objectValueForTableColumn:row:</code> メソッドで、Image Cell のデータに NSImage のオブジェクトを返すようにするとセルに画像が表示されます。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">def</span> <span class="nf">tableView</span><span class="p">(</span><span class="n">aTableView</span><span class="p">,</span> <span class="n">objectValueForTableColumn</span><span class="p">:</span> <span class="n">aTableColumn</span><span class="p">,</span> <span class="n">row</span><span class="p">:</span> <span class="n">rowIndex</span><span class="p">)</span>
-</span><span class='line'>    <span class="c1"># テーブルに表示するデータを返す</span>
-</span><span class='line'>    <span class="k">if</span> <span class="n">rowIndex</span> <span class="o">==</span> <span class="mi">0</span>
-</span><span class='line'>      <span class="c1"># 1行目のデータ</span>
-</span><span class='line'>      <span class="k">case</span> <span class="n">aTableColumn</span><span class="o">.</span><span class="n">identifier</span>
-</span><span class='line'>      <span class="k">when</span> <span class="s1">&#39;image&#39;</span>
-</span><span class='line'>        <span class="n">nsurl</span> <span class="o">=</span> <span class="no">NSURL</span><span class="o">.</span><span class="n">URLWithString</span><span class="p">(</span><span class="s2">&quot;http://images.apple.com/apple-events/images/overview_march2011_20110302_20110301.jpg&quot;</span><span class="p">)</span>
-</span><span class='line'>        <span class="n">data</span> <span class="o">=</span> <span class="no">NSImage</span><span class="o">.</span><span class="n">alloc</span><span class="o">.</span><span class="n">initWithContentsOfURL</span><span class="p">(</span><span class="n">nsurl</span><span class="p">)</span>
-</span><span class='line'>      <span class="k">when</span> <span class="s1">&#39;name&#39;</span>
-</span><span class='line'>        <span class="n">data</span> <span class="o">=</span> <span class="s2">&quot;Steven Paul Jobs&quot;</span>
-</span><span class='line'>      <span class="k">when</span> <span class="s1">&#39;age&#39;</span>
-</span><span class='line'>        <span class="n">data</span> <span class="o">=</span> <span class="s2">&quot;56&quot;</span>
-</span><span class='line'>      <span class="k">end</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">return</span> <span class="n">data</span>
-</span><span class='line'>  <span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/tableview-basic/tableview_with_image_cell2.png" alt="image" /></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Objective-C のメソッドの読み方]]></title>
-    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/10/intro-objc-method/"/>
-    <updated>2012-03-10T11:37:00+09:00</updated>
-    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/10/intro-objc-method</id>
-    <content type="html"><![CDATA[<p>MacRuby でアプリケーションを作成しようとすると、Mac OS X の <a href="https://developer.apple.com/library/mac/navigation/">API リファレンス</a> を読まなければなりません。API リファレンスを読む上で、Objective-C を MacRuby の規則に置き換えて読む必要があります。</p>
-
-<h2>文字列の表現</h2>
-
-<p>Objective-C では文字列のリテラル表現として <code>@""</code> を使います。Ruby では、単に <code>""</code> で表現できます。</p>
-
-<ul>
-<li>Objective-C</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSString</span> <span class="o">*</span><span class="n">string</span> <span class="o">=</span> <span class="s">@&quot;Hello World!&quot;</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>MacRuby</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Hello World!&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>メソッドの呼び出し方</h2>
-
-<p>Objective-C ではメソッドの呼び出しを <code>[レシーバ メソッド]</code> という形式で記述します。また、引数の区切りに <code>,</code> は無く、単にスペースで区切ります。</p>
-
-<ul>
-<li>Objective-C</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="p">[</span><span class="n">NSString</span> <span class="nl">stringWithContentsOfURL:</span> <span class="n">nsurl</span>
-</span><span class='line'>                         <span class="nl">encoding:</span> <span class="n">NSUTF8StringEncoding</span>
-</span><span class='line'>                            <span class="nl">error:</span> <span class="nb">nil</span><span class="p">];</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>MacRuby</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">NSString</span><span class="o">.</span><span class="n">stringWithContentsOfURL</span><span class="p">(</span><span class="n">nsurl</span><span class="p">,</span>
-</span><span class='line'>                                 <span class="n">encoding</span><span class="p">:</span> <span class="no">NSUTF8StringEncoding</span><span class="p">,</span>
-</span><span class='line'>                                 <span class="n">error</span><span class="p">:</span> <span class="kp">nil</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>以下のような手順で Objective-C を MacRuby の文法に置き換えます。</p>
-
-<ol>
-<li><code>[レシーバ メソッド]</code> の <code>[]</code> を消す</li>
-<li>1 つ目の引数の前にある <code>:</code> を <code>(</code> に置き換える</li>
-<li>引数の区切りに <code>,</code> を使う</li>
-<li><code>;</code> を <code>)</code> で置き換える</li>
-</ol>
-
-
-<p><code>encoding:</code> や <code>error:</code> はキーワード引数を表していて、コロンの手前(<code>encoding</code>) までをキーワードと呼ばれます。(Ruby 2.0 で同様の文法がサポートされるようです。)</p>
-
-<h2>メソッドの宣言</h2>
-
-<ul>
-<li>Objective-C</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nf">foo:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">string</span> <span class="nf">index:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">num</span> <span class="p">{</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>一文字目の <code>-</code> はインスタンスメソッドであることを表しています。<code>+</code> の場合はクラスメソッドを表しています。</li>
-<li><code>(id)</code> はメソッドの返り値の型情報を表しています。</li>
-<li><p><code>(NSString *)</code> と <code>(NSInteger)</code> は引数の型情報を表しています。</p></li>
-<li><p>MacRuby</p></li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="n">num</span><span class="p">)</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ol>
-<li><code>-</code> とメソッドの返り値の型情報を <code>def</code> で置き換える</li>
-<li>引数の型情報を削除する</li>
-<li>1 つ目の引数の前にある <code>:</code> を <code>(</code> に置き換える</li>
-<li>引数の区切りに <code>,</code> を使う</li>
-</ol>
-
-
-<p>という手順を踏むと、ほぼ MacRuby の文法になるかと思います。</p>
-
-<hr />
-
-<p>TBD</p>
-
-<p>他に気がついたら書き足します。</p>
 ]]></content>
   </entry>
   
