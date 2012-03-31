@@ -16,3 +16,8 @@ sidebar: true
 - Corresponding to resize the Window
 - [Changes an Application's Icon](/blog/2012/03/24/intro-icon/)
 - [Embeds the MacRuby into Application](/blog/2012/03/19/intro-deployment/)
+
+
+## Advanced
+- [Original Methods in MacRuby](/blog/2012/03/31/original-methods/)
+- [Original Constants in MacRuby](/blog/2012/03/31/original-constants/)
