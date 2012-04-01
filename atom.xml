@@ -4,7 +4,7 @@
   <title><![CDATA[MacRuby DoJo (道場)]]></title>
   <link href="http://watson1978.github.com/MacRuby-DoJo/atom.xml" rel="self"/>
   <link href="http://watson1978.github.com/MacRuby-DoJo/"/>
-  <updated>2012-03-31T16:21:10+09:00</updated>
+  <updated>2012-04-01T21:49:13+09:00</updated>
   <id>http://watson1978.github.com/MacRuby-DoJo/</id>
   <author>
     <name><![CDATA[Watson]]></name>
@@ -24,7 +24,7 @@
 
 <h3>String#transform</h3>
 
-<p>Transforms the string to uppercase/lowercase or another language charactors.
+<p>Transforms the string to uppercase/lowercase or another language characters.
 This method is implemented with <a href="http://site.icu-project.org/">ICU</a>  <a href="http://userguide.icu-project.org/transforms/general">Transforms</a>.</p>
 
 <ul>
