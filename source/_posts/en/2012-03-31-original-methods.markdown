@@ -12,7 +12,7 @@ MacRuby has some original methods. They does not exist in CRuby's methods and Co
 
 ## Original Methods
 ### String#transform
-Transforms the string to uppercase/lowercase or another language charactors.
+Transforms the string to uppercase/lowercase or another language characters.
 This method is implemented with [ICU](http://site.icu-project.org/)  [Transforms](http://userguide.icu-project.org/transforms/general).
 
 - transform(pattern) -> String
