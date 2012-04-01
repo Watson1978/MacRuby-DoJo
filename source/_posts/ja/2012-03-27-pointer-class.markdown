@@ -159,6 +159,22 @@ nth 番目の内容を val で置き換えます。
 	- val を返します。
 
 
+### Pointer#value
+0 番目の内容を取得します。
+
+- value
+  - [RETURN]
+    - 0 番目の内容を取得します。
+
+```ruby
+pointer = Pointer.new('c')
+pointer[0] = 42
+
+pointer[0]    # => 42
+pointer.value # => 42
+```
+
+
 ### Pointer#assign
 0 番目の内容を val で置き換えます。
 
