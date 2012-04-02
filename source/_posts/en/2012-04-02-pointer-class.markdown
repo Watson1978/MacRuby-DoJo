@@ -15,9 +15,9 @@ To create a pointer instance as `NSError* error;`, you can write a program as fo
 error = Pointer.new('@')
 ```
 
-You can create other pointer instance if you pass a pointer type into `Pointer.new`. You can find the other pointer type [Type Encodings](https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html).
+You can create other Pointer instance if you pass a pointer type into `Pointer.new`. You can find the other pointer type in [Type Encodings](https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html).
 
-To create a pointer instance such as `char* name[5];`, specify the size in the second argument.
+To create a Pointer instance such as `char* name[5];`, specify a size in the second argument.
 
 ```ruby
 name = Pointer.new('c', 5)
@@ -28,7 +28,7 @@ name[3] = 'd'
 name[4] = 'e'
 ```
 
-To create a pointer instance of structure such as `NSRect *rect[2];`, you may write a program as following.
+To create a Pointer instance of structure such as `NSRect *rect[2];`, you may write a program as following.
 
 ```ruby
 rect = Pointer.new("{CGRect={CGPoint=dd}{CGSize=dd}}", 2)
@@ -42,7 +42,7 @@ rect = Pointer.new(NSRect.type, 2)
 
 
 ## Alias of Pointer Types
-You may think difficult the pointer types such as '@'. MacRuby has the alias of pointer types. 
+You may think difficult the pointer types such as `'@'`. MacRuby has the alias of pointer types. 
 
 ```ruby
 error = Pointer.new(:object)  # alias of '@'
@@ -71,18 +71,18 @@ error = Pointer.new(:object)  # alias of '@'
 </table>
 
 
-## Methods of Pointer Class
+## Methods in Pointer Class
 
 ### Pointer.new
-Returns a new pointer instance.
+Returns a new Pointer instance.
 
 - new(type, size = 1) -> Pointer
   - [PARAM] type:
 	- Specifies a pointer type.
   - [PARAM] size:
-	- Specifies a size.
+	- Specifies a size to allocate an array.
   - [RETURN]
-	- Returns a new pointer instance.
+	- Returns a new Pointer instance.
 
 
 ### Pointer.new_with_type
@@ -90,13 +90,13 @@ This method is alias of `Pointer.new`.
 
 
 ### Pointer.magic_cookie
-Returns a new pointer instance which cast an immediate value to (void *).
+Returns a new Pointer instance which cast an immediate value to (void *).
 
 - magic_cookie(val) -> Pointer
   - [PARAM] val:
 	- Passes an immediate value to cast.
   - [RETURN]
-	- Returns a new pointer instance.
+	- Returns a new Pointer instance.
 
 
 ### Pointer#type
@@ -119,7 +119,7 @@ Changes a pointer type.
 
 - cast!(type) -> self
   - [PARAM] type:
-	- Specifies a point type to change.
+	- Specifies a new point type.
   - [RETURN]
 	- Returns a self which pointer type was changed.
 
@@ -150,7 +150,7 @@ Set a value into nth position.
   - [PARAM] nth:
 	- Specifies a position to set a value.
   - [PARAM] val:
-	- Specifies a value.
+	- Passes a value to set.
   - [RETURN]
 	- Returns a `val`.
 
@@ -182,13 +182,13 @@ Set a value into 0 position.
 
 
 ### Pointer#+
-Returns a new pointer instance from the specified offset.
+Returns a new Pointer instance from the specified offset.
 
 - self + offset -> Pointer
   - [PARAM] offset:
 	- Specifies an offset.
   - [RETURN]
-	- Returns a new pointer instance 
+	- Returns a new Pointer instance 
 
 ```ruby
 name = Pointer.new('c', 5)
@@ -205,13 +205,13 @@ end
 ```
 
 ### Pointer#-
-Returns a new pointer instance from the specified offset.
+Returns a new Pointer instance from the specified offset.
 
 - self - offset -> Pointer
   - [PARAM] offset:
 	- Specifies an offset.
   - [RETURN]
-	- Returns a new pointer instance 
+	- Returns a new Pointer instance 
 
 
 ### Pointer#to_object
