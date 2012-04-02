@@ -202,7 +202,7 @@ socket.sendfile(path, 0, 128)
 ```
 
 
-## Fixnum#popcnt
+### Fixnum#popcnt
 Returns the number of 1 bits set in the internal representation of Fixnum.
 
 - popcnt -> Fixnum

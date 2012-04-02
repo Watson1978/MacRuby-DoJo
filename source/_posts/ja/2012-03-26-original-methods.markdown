@@ -198,7 +198,7 @@ socket.sendfile(path, 0, 128)
 ```
 
 
-## Fixnum#popcnt
+### Fixnum#popcnt
 数値を 2 進数表記した際に、1 となるビットの数を返します。
 
 - popcnt -> Fixnum
