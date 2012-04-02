@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Contents
-date: 2012-04-02 10:00
+date: 2012-04-02 14:00
 comments: true
 sharing: true
 footer: true
@@ -22,3 +22,4 @@ sidebar: true
 - [Original Methods in MacRuby](/blog/2012/03/31/original-methods/)
 - [Original Constants in MacRuby](/blog/2012/03/31/original-constants/)
 - [Pointer Class](/blog/2012/04/02/pointer-class/)
+- [Boxed Class](/blog/2012/04/02/boxed-class/)
