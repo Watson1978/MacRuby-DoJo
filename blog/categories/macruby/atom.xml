@@ -4,7 +4,7 @@
   <title><![CDATA[Category: MacRuby | MacRuby DoJo (道場)]]></title>
   <link href="http://watson1978.github.com/MacRuby-DoJo/blog/categories/macruby/atom.xml" rel="self"/>
   <link href="http://watson1978.github.com/MacRuby-DoJo/"/>
-  <updated>2012-04-01T21:49:13+09:00</updated>
+  <updated>2012-04-02T11:56:42+09:00</updated>
   <id>http://watson1978.github.com/MacRuby-DoJo/</id>
   <author>
     <name><![CDATA[Watson]]></name>
@@ -12,6 +12,377 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Pointer Class]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/04/02/pointer-class/"/>
+    <updated>2012-04-02T10:00:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/04/02/pointer-class</id>
+    <content type="html"><![CDATA[<p>If you use the Cocoa APIs, you might have to pass a pointer variable into argument of API. Some cases, you might need a variable such as <code>NSError* error;</code>.</p>
+
+<p>To create a pointer instance as <code>NSError* error;</code>, you can write a program as following.</p>
+
+<p><code>ruby
+error = Pointer.new('@')
+</code></p>
+
+<p>You can create other pointer instance if you pass a pointer type into <code>Pointer.new</code>. You can find the other pointer type <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html">Type Encodings</a>.</p>
+
+<p>To create a pointer instance such as <code>char* name[5];</code>, specify the size in the second argument.</p>
+
+<p><code>ruby
+name = Pointer.new('c', 5)
+name[0] = 'a'
+name[1] = 'b'
+name[2] = 'c'
+name[3] = 'd'
+name[4] = 'e'
+</code></p>
+
+<p>To create a pointer instance of structure such as <code>NSRect *rect[2];</code>, you may write a program as following.</p>
+
+<p><code>ruby
+rect = Pointer.new("{CGRect={CGPoint=dd}{CGSize=dd}}", 2)
+</code></p>
+
+<p>Or,</p>
+
+<p><code>ruby
+rect = Pointer.new(NSRect.type, 2)
+</code></p>
+
+<h2>Alias of Pointer Types</h2>
+
+<p>You may think difficult the pointer types such as '@'. MacRuby has the alias of pointer types.</p>
+
+<p><code>ruby
+error = Pointer.new(:object)  # alias of '@'
+</code></p>
+
+<table class="table">
+<tr><th>Meaning</th><th>Pointer Types</th><th>Alias</th>
+<tr><td>char</td><td>Pointer.new('c')</td><td>Pointer.new(:char)</td></tr>
+<tr><td>unsigned char</td><td>Pointer.new('C')</td><td>Pointer.new(:uchar)</td></tr>
+<tr><td>short</td><td>Pointer.new('s')</td><td>Pointer.new(:short)</td></tr>
+<tr><td>unsigned short</td><td>Pointer.new('S')</td><td>Pointer.new(:ushort)</td></tr>
+<tr><td>int</td><td>Pointer.new('i')</td><td>Pointer.new(:int)</td></tr>
+<tr><td>unsigned int</td><td>Pointer.new('I')</td><td>Pointer.new(:uint)</td></tr>
+<tr><td>long</td><td>Pointer.new('l')</td><td>Pointer.new(:long)</td></tr>
+<tr><td>unsigned long</td><td>Pointer.new('L')</td><td>Pointer.new(:ulong)</td></tr>
+<tr><td>long long</td><td>Pointer.new('q')</td><td>Pointer.new(:long_long)</td></tr>
+<tr><td>unsigned long long</td><td>Pointer.new('Q')</td><td>Pointer.new(:ulong_long)</td></tr>
+<tr><td>float</td><td>Pointer.new('f')</td><td>Pointer.new(:float)</td></tr>
+<tr><td>double</td><td>Pointer.new('d')</td><td>Pointer.new(:double)</td></tr>
+<tr><td>character string (char *)</td><td>Pointer.new('*')</td><td>Pointer.new(:string)</td></tr>
+<tr><td>pointer</td><td>Pointer.new('^')</td><td>Pointer.new(:pointer)</td></tr>
+<tr><td>object</td><td>Pointer.new('@')</td><td>Pointer.new(:object)<br>Pointer.new(:id)</td></tr>
+<tr><td>class object (Class)</td><td>Pointer.new('#')</td><td>Pointer.new(:class)</td></tr>
+<tr><td>boolean</td><td>Pointer.new('B')</td><td>Pointer.new(:boolean)<br>Pointer.new(:bool)</td></tr>
+<tr><td>method selector (SEL)</td><td>Pointer.new(':')</td><td>Pointer.new(:selector)<br>Pointer.new(:sel)</td></tr>
+</table>
+
+
+<h2>Methods of Pointer Class</h2>
+
+<h3>Pointer.new</h3>
+
+<p>Returns a new pointer instance.</p>
+
+<ul>
+<li>new(type, size = 1) -> Pointer
+
+<ul>
+<li>[PARAM] type:
+
+<ul>
+<li>Specifies a pointer type.</li>
+</ul>
+</li>
+<li>[PARAM] size:
+
+<ul>
+<li>Specifies a size.</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>Returns a new pointer instance.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Pointer.new_with_type</h3>
+
+<p>This method is alias of <code>Pointer.new</code>.</p>
+
+<h3>Pointer.magic_cookie</h3>
+
+<p>Returns a new pointer instance which cast an immediate value to (void *).</p>
+
+<ul>
+<li>magic_cookie(val) -> Pointer
+
+<ul>
+<li>[PARAM] val:
+
+<ul>
+<li>Passes an immediate value to cast.</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>Returns a new pointer instance.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Pointer#type</h3>
+
+<p>Returns a pointer type.</p>
+
+<ul>
+<li>type -> String
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Returns a string as pointer type.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>```ruby</p>
+
+<blockquote><blockquote><p>framework 'Cocoa'
+pointer = Pointer.new(NSRect.type)
+pointer.type
+=> "{CGRect={CGPoint=dd}{CGSize=dd}}"
+```</p></blockquote></blockquote>
+
+<h3>Pointer#cast!</h3>
+
+<p>Changes a pointer type.</p>
+
+<ul>
+<li>cast!(type) -> self
+
+<ul>
+<li>[PARAM] type:
+
+<ul>
+<li>Specifies a point type to change.</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>Returns a self which pointer type was changed.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>```ruby</p>
+
+<blockquote><blockquote><p>pointer = Pointer.new('i')
+pointer.type
+=> "i"
+pointer.cast!('I')
+pointer.type
+=> "I"
+```</p></blockquote></blockquote>
+
+<h3>Pointer#[]</h3>
+
+<p>Get a value at nth position.</p>
+
+<ul>
+<li>self[nth]
+
+<ul>
+<li>[PARAM] nth:
+
+<ul>
+<li>Specifies a position to get a value.</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>Returns a value.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Pointer#[]=</h3>
+
+<p>Set a value into nth position.</p>
+
+<ul>
+<li>self[nth] = val
+
+<ul>
+<li>[PARAM] nth:
+
+<ul>
+<li>Specifies a position to set a value.</li>
+</ul>
+</li>
+<li>[PARAM] val:
+
+<ul>
+<li>Specifies a value.</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>Returns a <code>val</code>.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Pointer#value</h3>
+
+<p>Get a value at 0 position.</p>
+
+<ul>
+<li>value
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Returns a value at 0 position.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>```ruby
+pointer = Pointer.new('c')
+pointer[0] = 42</p>
+
+<p>pointer[0]    # => 42
+pointer.value # => 42
+```</p>
+
+<h3>Pointer#assign</h3>
+
+<p>Set a value into 0 position.</p>
+
+<ul>
+<li>assign(val)
+
+<ul>
+<li>[PARAM] val:
+
+<ul>
+<li>Specifies a position to set a value.</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>Returns a <code>val</code>.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Pointer#+</h3>
+
+<p>Returns a new pointer instance from the specified offset.</p>
+
+<ul>
+<li>self + offset -> Pointer
+
+<ul>
+<li>[PARAM] offset:
+
+<ul>
+<li>Specifies an offset.</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>Returns a new pointer instance</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>```ruby
+name = Pointer.new('c', 5)
+name[0] = 10
+name[1] = 11
+name[2] = 12
+name[3] = 13
+name[4] = 14</p>
+
+<p>tmp = name + 3
+2.times do |i|
+  p tmp[i] # => 13, 14
+end
+```</p>
+
+<h3>Pointer#-</h3>
+
+<p>Returns a new pointer instance from the specified offset.</p>
+
+<ul>
+<li>self - offset -> Pointer
+
+<ul>
+<li>[PARAM] offset:
+
+<ul>
+<li>Specifies an offset.</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>Returns a new pointer instance</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Pointer#to_object</h3>
+
+<p>TBD</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Original Methods in MacRuby]]></title>
@@ -934,278 +1305,6 @@ sema.wait #=&gt; true
 </li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Dispatch::Queue クラス]]></title>
-    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-queue-class/"/>
-    <updated>2012-03-31T10:00:00+09:00</updated>
-    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-queue-class</id>
-    <content type="html"><![CDATA[<p>GCD を用いると簡単にマルチスレッドで処理を行うことができます。私たちは、GCD を使いたい処理を書き、適切な Dispatch Queue へ追加するだけです。あとは、GCD が必要なスレッドを生成して処理してくれます。</p>
-
-<p>Dispatch Queue の種類として、以下の 4 つがあります。</p>
-
-<ul>
-<li>Serial Dispatch Queue</li>
-<li>Concurrent Dispatch Queue</li>
-<li>Main Dispatch Queue (Serial Dispatch Queue)</li>
-<li>Global Dispatch Queue (Concurrent Dispatch Queue)</li>
-</ul>
-
-
-<p>Serial Dispatch Queue はタスクを逐次的に実行する際に用い、Concurrent Dispatch Queue は平行して複数の処理を行う際に用います。</p>
-
-<p>Main Dispatch Queue と Global Dispatch Queue はあらかじめ用意されており、<code>new</code> でインスタンスを生成しなくとも使うことができます。Main Dispatch Queue は Serial Dispatch Queue の、Global Dispatch Queue は Concurrent Dispatch Queue の一種となっています。</p>
-
-<h2>Dispatch::Queue クラスのメソッド</h2>
-
-<h3>Dispatch::Queue.new</h3>
-
-<p>逐次処理用に Serial Dispatch Queue を生成します。</p>
-
-<ul>
-<li>new(label) -> Queue
-
-<ul>
-<li>[PARAM] label:
-
-<ul>
-<li>生成する Queue に付与するユニークなラベルを指定します。</li>
-</ul>
-</li>
-<li>[RETURN]
-
-<ul>
-<li>生成した Dispatch Queue のインスタンスを返します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<h3>Dispatch::Queue.concurrent</h3>
-
-<p>並行処理用に Global Dispatch Queue を返します。Mac OS X 10.7 でビルドされた MacRuby では、優先度を指定すると Concurrent Dispatch Queue を返します。</p>
-
-<ul>
-<li>concurrent(priority = :default) -> Queue
-
-<ul>
-<li>[PARAM] priority:
-
-<ul>
-<li>生成する Queue の優先度を指定します。<code>:high</code>、<code>:low</code>、<code>:default</code> と Mac OS X 10.7 からは  <code>:background</code> も指定できます。</li>
-</ul>
-</li>
-<li>[RETURN]
-
-<ul>
-<li>Dispatch Queue のインスタンスを返します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<h3>Dispatch::Queue.main</h3>
-
-<p>Main Dispatch Queue を返します。</p>
-
-<ul>
-<li>main -> Queue
-
-<ul>
-<li>[RETURN]
-
-<ul>
-<li>Main Dispatch Queue のインスタンスを返します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<h3>Dispatch::Queue.current</h3>
-
-<p>現在使用している Dispatch Queue を返します。GCD タスクの block 内で呼び出すと、そのタスクを実行している Queue が返ります。block の外側で呼び出すと Main Dispatch Queue が返ります。</p>
-
-<ul>
-<li>current -> Queue
-
-<ul>
-<li>[RETURN]
-
-<ul>
-<li>現在使用している Dispatch Queue のインスタンスを返します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<p>```ruby
-gcdq = Dispatch::Queue.new('sample')
-gcdq.after(Dispatch::TIME_NOW) {
-  q = Dispatch::Queue.current
-  puts q.label # => sample
-}</p>
-
-<p>sleep 1</p>
-
-<p>q = Dispatch::Queue.current
-puts q.label # => com.apple.main-thread
-```</p>
-
-<h3>Dispatch::Queue#apply</h3>
-
-<p>指定した回数 block を Dispatch Queue に追加し、それらの処理がすべて完了するまで待ちます。GCD API の <code>dispatch_apply</code> に相当します。</p>
-
-<ul>
-<li>apply(iterations) {|index| ... }
-
-<ul>
-<li>[PARAM] iterations:
-
-<ul>
-<li>Dispatch Queue に block を追加する回数を指定します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<p><code>ruby
-gcdq = Dispatch::Queue.new('sample')
-@result = []
-gcdq.apply(5) {|i| @result[i] = i*i }
-p @result  #=&gt; [0, 1, 4, 9, 16, 25]
-</code></p>
-
-<h3>Dispatch::Queue#async</h3>
-
-<p>長時間にわたる処理など、非同期的に実行したい block を Dispatch Queue に追加します。group を指定すると GCD API の <code>dispatch_group_async</code> に、それ以外は <code>dispatch_async</code> に相当します。</p>
-
-<ul>
-<li>async(group = nil) { ... }
-
-<ul>
-<li>[PARAM] group:
-
-<ul>
-<li>group を指定することで、Dispatch Queue に追加するタスクが group と関連づけられます。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<p><code>ruby
-gcdq = Dispatch::Queue.new('sample')
-@i = 0
-gcdq.async { @i = 42 }
-while @i == 0 do; end
-p @i #=&gt; 42
-</code></p>
-
-<p>group を用いることで、Dispatch Queue に追加したすべてのタスクが完了するのを待ち合わせることができたりします。</p>
-
-<p><code>ruby
-gcdq = Dispatch::Queue.new('sample')
-gcdg = Dispatch::Group.new
-@i = 0
-gcdq.async(gcdg) { @i = 42 }
-gcdg.wait
-p @i #=&gt; 42
-</code></p>
-
-<h3>Dispatch::Queue#sync</h3>
-
-<p>同期的に実行したい block を Dispatch Queue に追加します。処理が完了するまで待ちます。GCD API の <code>dispatch_sync</code> に相当します。</p>
-
-<ul>
-<li>sync { ... }</li>
-</ul>
-
-
-<p><code>ruby
-gcdq = Dispatch::Queue.new('sample')
-@i = 0
-gcdq.sync { @i = 42 }
-p @i #=&gt; 42
-</code></p>
-
-<h3>Dispatch::Queue#after</h3>
-
-<p>指定した時間が経過した後、block を Dispatch Queue に追加します。</p>
-
-<ul>
-<li>after(delay) { ... }
-
-<ul>
-<li>[PARAM] delay:
-
-<ul>
-<li>何秒後に block を Dispatch Queue に追加するか指定します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<p>```ruby
-gcdq = Dispatch::Queue.new('sample')
-gcdq.after(0.5) { puts "Hello" }</p>
-
-<p>sleep 1
-```</p>
-
-<h3>Dispatch::Queue#label</h3>
-
-<p>Dispatch Queue のラベルを返します。GCD API の <code>dispatch_queue_get_label</code> に相当します。</p>
-
-<ul>
-<li>label -> String
-
-<ul>
-<li>[RETURN]
-
-<ul>
-<li>Dispatch Queue のラベルを返します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<p><code>ruby
-gcdq = Dispatch::Queue.new('sample')
-gcdq.label # =&gt; 'sample'
-</code></p>
-
-<h3>Dispatch::Queue#to_s</h3>
-
-<p>Dispatch::Queue#label の別名です。</p>
-
-<h3>Dispatch::Queue#barrier_async</h3>
-
-<p>TBD</p>
-
-<h3>Dispatch::Queue#barrier_sync</h3>
-
-<p>TBD</p>
-
-<h3>Dispatch::Queue.main.run</h3>
-
-<p>TBD</p>
 ]]></content>
   </entry>
   

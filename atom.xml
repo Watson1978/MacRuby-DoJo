@@ -4,7 +4,7 @@
   <title><![CDATA[MacRuby DoJo (道場)]]></title>
   <link href="http://watson1978.github.com/MacRuby-DoJo/atom.xml" rel="self"/>
   <link href="http://watson1978.github.com/MacRuby-DoJo/"/>
-  <updated>2012-04-01T21:49:13+09:00</updated>
+  <updated>2012-04-02T11:56:42+09:00</updated>
   <id>http://watson1978.github.com/MacRuby-DoJo/</id>
   <author>
     <name><![CDATA[Watson]]></name>
@@ -12,6 +12,413 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Pointer Class]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/04/02/pointer-class/"/>
+    <updated>2012-04-02T10:00:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/04/02/pointer-class</id>
+    <content type="html"><![CDATA[<p>If you use the Cocoa APIs, you might have to pass a pointer variable into argument of API. Some cases, you might need a variable such as <code>NSError* error;</code>.</p>
+
+<p>To create a pointer instance as <code>NSError* error;</code>, you can write a program as following.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">error</span> <span class="o">=</span> <span class="no">Pointer</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;@&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can create other pointer instance if you pass a pointer type into <code>Pointer.new</code>. You can find the other pointer type <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html">Type Encodings</a>.</p>
+
+<p>To create a pointer instance such as <code>char* name[5];</code>, specify the size in the second argument.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">name</span> <span class="o">=</span> <span class="no">Pointer</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</span><span class='line'><span class="nb">name</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span>
+</span><span class='line'><span class="nb">name</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;b&#39;</span>
+</span><span class='line'><span class="nb">name</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;c&#39;</span>
+</span><span class='line'><span class="nb">name</span><span class="o">[</span><span class="mi">3</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;d&#39;</span>
+</span><span class='line'><span class="nb">name</span><span class="o">[</span><span class="mi">4</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;e&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To create a pointer instance of structure such as <code>NSRect *rect[2];</code>, you may write a program as following.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">rect</span> <span class="o">=</span> <span class="no">Pointer</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;{CGRect={CGPoint=dd}{CGSize=dd}}&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Or,</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">rect</span> <span class="o">=</span> <span class="no">Pointer</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="no">NSRect</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Alias of Pointer Types</h2>
+
+<p>You may think difficult the pointer types such as &#8216;@&#8217;. MacRuby has the alias of pointer types.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">error</span> <span class="o">=</span> <span class="no">Pointer</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:object</span><span class="p">)</span>  <span class="c1"># alias of &#39;@&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<table class="table">
+<tr><th>Meaning</th><th>Pointer Types</th><th>Alias</th>
+<tr><td>char</td><td>Pointer.new(&#8216;c&#8217;)</td><td>Pointer.new(:char)</td></tr>
+<tr><td>unsigned char</td><td>Pointer.new(&#8216;C&#8217;)</td><td>Pointer.new(:uchar)</td></tr>
+<tr><td>short</td><td>Pointer.new(&#8217;s&#8217;)</td><td>Pointer.new(:short)</td></tr>
+<tr><td>unsigned short</td><td>Pointer.new(&#8216;S&#8217;)</td><td>Pointer.new(:ushort)</td></tr>
+<tr><td>int</td><td>Pointer.new(&#8216;i&#8217;)</td><td>Pointer.new(:int)</td></tr>
+<tr><td>unsigned int</td><td>Pointer.new(&#8216;I&#8217;)</td><td>Pointer.new(:uint)</td></tr>
+<tr><td>long</td><td>Pointer.new(&#8216;l&#8217;)</td><td>Pointer.new(:long)</td></tr>
+<tr><td>unsigned long</td><td>Pointer.new(&#8216;L&#8217;)</td><td>Pointer.new(:ulong)</td></tr>
+<tr><td>long long</td><td>Pointer.new(&#8216;q&#8217;)</td><td>Pointer.new(:long_long)</td></tr>
+<tr><td>unsigned long long</td><td>Pointer.new(&#8216;Q&#8217;)</td><td>Pointer.new(:ulong_long)</td></tr>
+<tr><td>float</td><td>Pointer.new(&#8216;f&#8217;)</td><td>Pointer.new(:float)</td></tr>
+<tr><td>double</td><td>Pointer.new(&#8216;d&#8217;)</td><td>Pointer.new(:double)</td></tr>
+<tr><td>character string (char *)</td><td>Pointer.new(&#8216;*&#8217;)</td><td>Pointer.new(:string)</td></tr>
+<tr><td>pointer</td><td>Pointer.new(&#8216;^&#8217;)</td><td>Pointer.new(:pointer)</td></tr>
+<tr><td>object</td><td>Pointer.new(&#8216;@&#8217;)</td><td>Pointer.new(:object)<br>Pointer.new(:id)</td></tr>
+<tr><td>class object (Class)</td><td>Pointer.new(&#8216;#&#8217;)</td><td>Pointer.new(:class)</td></tr>
+<tr><td>boolean</td><td>Pointer.new(&#8216;B&#8217;)</td><td>Pointer.new(:boolean)<br>Pointer.new(:bool)</td></tr>
+<tr><td>method selector (SEL)</td><td>Pointer.new(&#8216;:&#8217;)</td><td>Pointer.new(:selector)<br>Pointer.new(:sel)</td></tr>
+</table>
+
+
+<h2>Methods of Pointer Class</h2>
+
+<h3>Pointer.new</h3>
+
+<p>Returns a new pointer instance.</p>
+
+<ul>
+<li>new(type, size = 1) -> Pointer
+
+<ul>
+<li>[PARAM] type:
+
+<ul>
+<li>Specifies a pointer type.</li>
+</ul>
+</li>
+<li>[PARAM] size:
+
+<ul>
+<li>Specifies a size.</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>Returns a new pointer instance.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Pointer.new_with_type</h3>
+
+<p>This method is alias of <code>Pointer.new</code>.</p>
+
+<h3>Pointer.magic_cookie</h3>
+
+<p>Returns a new pointer instance which cast an immediate value to (void *).</p>
+
+<ul>
+<li>magic_cookie(val) -> Pointer
+
+<ul>
+<li>[PARAM] val:
+
+<ul>
+<li>Passes an immediate value to cast.</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>Returns a new pointer instance.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Pointer#type</h3>
+
+<p>Returns a pointer type.</p>
+
+<ul>
+<li>type -> String
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Returns a string as pointer type.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="n">framework</span> <span class="s1">&#39;Cocoa&#39;</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="n">pointer</span> <span class="o">=</span> <span class="no">Pointer</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="no">NSRect</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="n">pointer</span><span class="o">.</span><span class="n">type</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;{CGRect={CGPoint=dd}{CGSize=dd}}&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Pointer#cast!</h3>
+
+<p>Changes a pointer type.</p>
+
+<ul>
+<li>cast!(type) -> self
+
+<ul>
+<li>[PARAM] type:
+
+<ul>
+<li>Specifies a point type to change.</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>Returns a self which pointer type was changed.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="n">pointer</span> <span class="o">=</span> <span class="no">Pointer</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;i&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="n">pointer</span><span class="o">.</span><span class="n">type</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;i&quot;</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="n">pointer</span><span class="o">.</span><span class="n">cast!</span><span class="p">(</span><span class="s1">&#39;I&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="n">pointer</span><span class="o">.</span><span class="n">type</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;I&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Pointer#[]</h3>
+
+<p>Get a value at nth position.</p>
+
+<ul>
+<li>self[nth]
+
+<ul>
+<li>[PARAM] nth:
+
+<ul>
+<li>Specifies a position to get a value.</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>Returns a value.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Pointer#[]=</h3>
+
+<p>Set a value into nth position.</p>
+
+<ul>
+<li>self[nth] = val
+
+<ul>
+<li>[PARAM] nth:
+
+<ul>
+<li>Specifies a position to set a value.</li>
+</ul>
+</li>
+<li>[PARAM] val:
+
+<ul>
+<li>Specifies a value.</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>Returns a <code>val</code>.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Pointer#value</h3>
+
+<p>Get a value at 0 position.</p>
+
+<ul>
+<li>value
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Returns a value at 0 position.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">pointer</span> <span class="o">=</span> <span class="no">Pointer</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">pointer</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="mi">42</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">pointer</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span>    <span class="c1"># =&gt; 42</span>
+</span><span class='line'><span class="n">pointer</span><span class="o">.</span><span class="n">value</span> <span class="c1"># =&gt; 42</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Pointer#assign</h3>
+
+<p>Set a value into 0 position.</p>
+
+<ul>
+<li>assign(val)
+
+<ul>
+<li>[PARAM] val:
+
+<ul>
+<li>Specifies a position to set a value.</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>Returns a <code>val</code>.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Pointer#+</h3>
+
+<p>Returns a new pointer instance from the specified offset.</p>
+
+<ul>
+<li>self + offset -> Pointer
+
+<ul>
+<li>[PARAM] offset:
+
+<ul>
+<li>Specifies an offset.</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>Returns a new pointer instance</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">name</span> <span class="o">=</span> <span class="no">Pointer</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</span><span class='line'><span class="nb">name</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="mi">10</span>
+</span><span class='line'><span class="nb">name</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="mi">11</span>
+</span><span class='line'><span class="nb">name</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span> <span class="o">=</span> <span class="mi">12</span>
+</span><span class='line'><span class="nb">name</span><span class="o">[</span><span class="mi">3</span><span class="o">]</span> <span class="o">=</span> <span class="mi">13</span>
+</span><span class='line'><span class="nb">name</span><span class="o">[</span><span class="mi">4</span><span class="o">]</span> <span class="o">=</span> <span class="mi">14</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">tmp</span> <span class="o">=</span> <span class="nb">name</span> <span class="o">+</span> <span class="mi">3</span>
+</span><span class='line'><span class="mi">2</span><span class="o">.</span><span class="n">times</span> <span class="k">do</span> <span class="o">|</span><span class="n">i</span><span class="o">|</span>
+</span><span class='line'>  <span class="nb">p</span> <span class="n">tmp</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="c1"># =&gt; 13, 14</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Pointer#-</h3>
+
+<p>Returns a new pointer instance from the specified offset.</p>
+
+<ul>
+<li>self - offset -> Pointer
+
+<ul>
+<li>[PARAM] offset:
+
+<ul>
+<li>Specifies an offset.</li>
+</ul>
+</li>
+<li>[RETURN]
+
+<ul>
+<li>Returns a new pointer instance</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Pointer#to_object</h3>
+
+<p>TBD</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Original Methods in MacRuby]]></title>
@@ -2075,6 +2482,38 @@ This method is implemented with <a href="http://site.icu-project.org/">ICU</a>  
 </ul>
 
 
+<h3>Pointer#value</h3>
+
+<p>0 番目の内容を取得します。</p>
+
+<ul>
+<li>value
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>0 番目の内容を取得します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">pointer</span> <span class="o">=</span> <span class="no">Pointer</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">pointer</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="mi">42</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">pointer</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span>    <span class="c1"># =&gt; 42</span>
+</span><span class='line'><span class="n">pointer</span><span class="o">.</span><span class="n">value</span> <span class="c1"># =&gt; 42</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
 <h3>Pointer#assign</h3>
 
 <p>0 番目の内容を val で置き換えます。</p>
@@ -3436,159 +3875,6 @@ Cocoa.framework は Foundation.framework、AppKit.framework と CoreData.framewo
 <p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-new-project/product_name.png" alt="image" /></p>
 
 <p>Input your Project Name, and then, choose a location for New Project. You would be able to see New Project.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[ツイートを検索して表示してみよう]]></title>
-    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/10/search_tweets/"/>
-    <updated>2012-03-10T17:35:00+09:00</updated>
-    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/10/search_tweets</id>
-    <content type="html"><![CDATA[<p>TableView の使い方を <a href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/10/tableview-basic/">TableView を使ってみよう</a> に書きました。今回は Twitter のツイートを検索して、TableView に表示するアプリケーションを作ってみようと思います。</p>
-
-<p>以下のように、Text Field に検索ワードを入力し該当するツイートを TableView に表示します。</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/search_tweets/search_tweets.png" alt="image" /></p>
-
-<h2>使用するアウトレットとアクションメソッド</h2>
-
-<p>使用するアウトレットは以下のとおりです。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:textField</span>
-</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:tableView</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Search ボタンがクリックされた時に呼び出されるアクションメソッドとして、以下のメソッドを用意します。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="n">sender</span><span class="p">)</span>
-</span><span class='line'>    <span class="c1"># 検索処理</span>
-</span><span class='line'>  <span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>アウトレットなどを接続</h2>
-
-<p>以下の図のように、アウトレットやアクション、データソースを接続します。</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/search_tweets/connect_outlets_etc.png" alt="image" /></p>
-
-<h2>Table カラムの Identifier を指定</h2>
-
-<p>Table のカラムを以下のように指定しておきます。</p>
-
-<table class="table">
-<tr><th>カラム</th><th>identifier</th></tr>
-<tr><td>1 列目</td><td>name</td></tr>
-<tr><td>2 列目</td><td>text</td></tr>
-</table>
-
-
-<h2>検索処理を実装</h2>
-
-<p>Twitter API を用いて検索した際に、<a href="https://dev.twitter.com/docs/api/1/get/search">https://dev.twitter.com/docs/api/1/get/search</a> という形式で JSON を取得できます。これを参考に実装します。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;uri&#39;</span>
-</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;json&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">class</span> <span class="nc">AppDelegate</span>
-</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:window</span>
-</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:textField</span>
-</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:tableView</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="n">sender</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">text</span> <span class="o">=</span> <span class="n">textField</span><span class="o">.</span><span class="n">stringValue</span>  <span class="c1"># Text Field から文字列を取得</span>
-</span><span class='line'>    <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">length</span> <span class="o">&gt;</span> <span class="mi">0</span>
-</span><span class='line'>      <span class="n">query</span> <span class="o">=</span> <span class="no">URI</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>    <span class="c1"># 検索クエリーをエスケープ</span>
-</span><span class='line'>      <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;http://search.twitter.com/search.json?q=</span><span class="si">#{</span><span class="n">query</span><span class="si">}</span><span class="s2">&amp;rpp=30&quot;</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="c1"># HTTP アクセスし、レスポンスを取得</span>
-</span><span class='line'>      <span class="n">nsurl</span> <span class="o">=</span> <span class="no">NSURL</span><span class="o">.</span><span class="n">URLWithString</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-</span><span class='line'>      <span class="n">str</span> <span class="o">=</span> <span class="no">NSString</span><span class="o">.</span><span class="n">stringWithContentsOfURL</span><span class="p">(</span><span class="n">nsurl</span><span class="p">,</span>
-</span><span class='line'>                                             <span class="n">encoding</span><span class="p">:</span> <span class="no">NSUTF8StringEncoding</span><span class="p">,</span>
-</span><span class='line'>                                             <span class="n">error</span><span class="p">:</span> <span class="kp">nil</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="n">json</span> <span class="o">=</span> <span class="no">JSON</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">str</span><span class="p">)</span>
-</span><span class='line'>      <span class="vi">@search_result</span> <span class="o">=</span> <span class="n">json</span><span class="o">[</span><span class="s1">&#39;results&#39;</span><span class="o">]</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="c1"># TableView をリロード</span>
-</span><span class='line'>      <span class="c1"># numberOfRowsInTableView や tableView:objectValueForTableColumn:row:</span>
-</span><span class='line'>      <span class="c1"># が呼びだされます</span>
-</span><span class='line'>      <span class="n">tableView</span><span class="o">.</span><span class="n">reloadData</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">numberOfRowsInTableView</span><span class="p">(</span><span class="n">aTableView</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span> <span class="k">if</span> <span class="vi">@search_result</span><span class="o">.</span><span class="n">nil?</span>
-</span><span class='line'>    <span class="k">return</span> <span class="vi">@search_result</span><span class="o">.</span><span class="n">size</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">tableView</span><span class="p">(</span><span class="n">aTableView</span><span class="p">,</span>
-</span><span class='line'>                <span class="n">objectValueForTableColumn</span><span class="p">:</span> <span class="n">aTableColumn</span><span class="p">,</span>
-</span><span class='line'>                <span class="n">row</span><span class="p">:</span> <span class="n">rowIndex</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">case</span> <span class="n">aTableColumn</span><span class="o">.</span><span class="n">identifier</span>
-</span><span class='line'>    <span class="k">when</span> <span class="s2">&quot;name&quot;</span>
-</span><span class='line'>      <span class="k">return</span> <span class="vi">@search_result</span><span class="o">[</span><span class="n">rowIndex</span><span class="o">][</span><span class="s1">&#39;from_user&#39;</span><span class="o">]</span>
-</span><span class='line'>    <span class="k">when</span> <span class="s2">&quot;text&quot;</span>
-</span><span class='line'>      <span class="k">return</span> <span class="vi">@search_result</span><span class="o">[</span><span class="n">rowIndex</span><span class="o">][</span><span class="s1">&#39;text&#39;</span><span class="o">]</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>検索結果を取得する際に <code>NSString.stringWithContentsOfURL</code> を使用していますが、Ruby の <code>Net::HTTP</code> を使用することもできます。また、JSON の解析も Mac OS X 10.7 以降に限定すれば <a href="https://developer.apple.com/library/mac/#documentation/Foundation/Reference/NSJSONSerialization_Class/Reference/Reference.html">NSJSONSerialization</a> を使うことができます。Ruby メソッドと Mac OS X API をいろいろ組み合わせて使用できますので、用途や利便性などで使いわけてみてください。</p>
 ]]></content>
   </entry>
   
