@@ -4,7 +4,7 @@
   <title><![CDATA[Category: MacRuby | MacRuby DoJo (道場)]]></title>
   <link href="http://watson1978.github.com/MacRuby-DoJo/blog/categories/macruby/atom.xml" rel="self"/>
   <link href="http://watson1978.github.com/MacRuby-DoJo/"/>
-  <updated>2012-04-02T14:47:29+09:00</updated>
+  <updated>2012-04-02T14:53:30+09:00</updated>
   <id>http://watson1978.github.com/MacRuby-DoJo/</id>
   <author>
     <name><![CDATA[Watson]]></name>
@@ -805,7 +805,7 @@ socket = TCPSocket.open('localhost', port)</p>
 socket.sendfile(path, 0, 128)
 ```</p>
 
-<h2>Fixnum#popcnt</h2>
+<h3>Fixnum#popcnt</h3>
 
 <p>Returns the number of 1 bits set in the internal representation of Fixnum.</p>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[MacRuby DoJo (道場)]]></title>
   <link href="http://watson1978.github.com/MacRuby-DoJo/atom.xml" rel="self"/>
   <link href="http://watson1978.github.com/MacRuby-DoJo/"/>
-  <updated>2012-04-02T14:47:29+09:00</updated>
+  <updated>2012-04-02T14:53:30+09:00</updated>
   <id>http://watson1978.github.com/MacRuby-DoJo/</id>
   <author>
     <name><![CDATA[Watson]]></name>
@@ -890,7 +890,7 @@ This method is implemented with <a href="http://site.icu-project.org/">ICU</a>  
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h2>Fixnum#popcnt</h2>
+<h3>Fixnum#popcnt</h3>
 
 <p>Returns the number of 1 bits set in the internal representation of Fixnum.</p>
 
@@ -3162,7 +3162,7 @@ This method is implemented with <a href="http://site.icu-project.org/">ICU</a>  
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h2>Fixnum#popcnt</h2>
+<h3>Fixnum#popcnt</h3>
 
 <p>数値を 2 進数表記した際に、1 となるビットの数を返します。</p>
 
