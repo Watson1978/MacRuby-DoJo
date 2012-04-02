@@ -4,7 +4,7 @@
   <title><![CDATA[Category: MacRuby | MacRuby DoJo (道場)]]></title>
   <link href="http://watson1978.github.com/MacRuby-DoJo/blog/categories/macruby/atom.xml" rel="self"/>
   <link href="http://watson1978.github.com/MacRuby-DoJo/"/>
-  <updated>2012-04-02T11:56:42+09:00</updated>
+  <updated>2012-04-02T14:47:29+09:00</updated>
   <id>http://watson1978.github.com/MacRuby-DoJo/</id>
   <author>
     <name><![CDATA[Watson]]></name>
@@ -12,6 +12,72 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Boxed Class]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/04/02/boxed-class/"/>
+    <updated>2012-04-02T14:00:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/04/02/boxed-class</id>
+    <content type="html"><![CDATA[<p>Boxed class is used to retrieve a structure information that is defined in Cocoa. All structures allow to retrieve an information by Boxed Class.</p>
+
+<h2>Methods in Boxed Class</h2>
+
+<h3>Boxed.type</h3>
+
+<p>Returns a structure type information.</p>
+
+<ul>
+<li>type -> String
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Returns a structure type information.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>```ruby</p>
+
+<blockquote><blockquote><p>framework 'Cocoa'
+NSRect.type
+=> "{CGRect={CGPoint=dd}{CGSize=dd}}"
+```</p></blockquote></blockquote>
+
+<h3>Boxed.opaque?</h3>
+
+<p>Returns whether structure is opaque.</p>
+
+<ul>
+<li>opaque? -> bool
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Returns a true if structure is opaque. Otherwise, returns a false.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>```ruby</p>
+
+<blockquote><blockquote><p>framework 'Cocoa'
+NSRect.opaque?
+=> false
+NSModalSession.opaque?
+=> true</p>
+
+<p>```</p></blockquote></blockquote>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Pointer Class]]></title>
@@ -26,9 +92,9 @@
 error = Pointer.new('@')
 </code></p>
 
-<p>You can create other pointer instance if you pass a pointer type into <code>Pointer.new</code>. You can find the other pointer type <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html">Type Encodings</a>.</p>
+<p>You can create other Pointer instance if you pass a pointer type into <code>Pointer.new</code>. You can find the other pointer type in <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html">Type Encodings</a>.</p>
 
-<p>To create a pointer instance such as <code>char* name[5];</code>, specify the size in the second argument.</p>
+<p>To create a Pointer instance such as <code>char* name[5];</code>, specify a size in the second argument.</p>
 
 <p><code>ruby
 name = Pointer.new('c', 5)
@@ -39,7 +105,7 @@ name[3] = 'd'
 name[4] = 'e'
 </code></p>
 
-<p>To create a pointer instance of structure such as <code>NSRect *rect[2];</code>, you may write a program as following.</p>
+<p>To create a Pointer instance of structure such as <code>NSRect *rect[2];</code>, you may write a program as following.</p>
 
 <p><code>ruby
 rect = Pointer.new("{CGRect={CGPoint=dd}{CGSize=dd}}", 2)
@@ -53,7 +119,7 @@ rect = Pointer.new(NSRect.type, 2)
 
 <h2>Alias of Pointer Types</h2>
 
-<p>You may think difficult the pointer types such as '@'. MacRuby has the alias of pointer types.</p>
+<p>You may think difficult the pointer types such as <code>'@'</code>. MacRuby has the alias of pointer types.</p>
 
 <p><code>ruby
 error = Pointer.new(:object)  # alias of '@'
@@ -82,11 +148,11 @@ error = Pointer.new(:object)  # alias of '@'
 </table>
 
 
-<h2>Methods of Pointer Class</h2>
+<h2>Methods in Pointer Class</h2>
 
 <h3>Pointer.new</h3>
 
-<p>Returns a new pointer instance.</p>
+<p>Returns a new Pointer instance.</p>
 
 <ul>
 <li>new(type, size = 1) -> Pointer
@@ -101,13 +167,13 @@ error = Pointer.new(:object)  # alias of '@'
 <li>[PARAM] size:
 
 <ul>
-<li>Specifies a size.</li>
+<li>Specifies a size to allocate an array.</li>
 </ul>
 </li>
 <li>[RETURN]
 
 <ul>
-<li>Returns a new pointer instance.</li>
+<li>Returns a new Pointer instance.</li>
 </ul>
 </li>
 </ul>
@@ -121,7 +187,7 @@ error = Pointer.new(:object)  # alias of '@'
 
 <h3>Pointer.magic_cookie</h3>
 
-<p>Returns a new pointer instance which cast an immediate value to (void *).</p>
+<p>Returns a new Pointer instance which cast an immediate value to (void *).</p>
 
 <ul>
 <li>magic_cookie(val) -> Pointer
@@ -136,7 +202,7 @@ error = Pointer.new(:object)  # alias of '@'
 <li>[RETURN]
 
 <ul>
-<li>Returns a new pointer instance.</li>
+<li>Returns a new Pointer instance.</li>
 </ul>
 </li>
 </ul>
@@ -182,7 +248,7 @@ pointer.type
 <li>[PARAM] type:
 
 <ul>
-<li>Specifies a point type to change.</li>
+<li>Specifies a new point type.</li>
 </ul>
 </li>
 <li>[RETURN]
@@ -248,7 +314,7 @@ pointer.type
 <li>[PARAM] val:
 
 <ul>
-<li>Specifies a value.</li>
+<li>Passes a value to set.</li>
 </ul>
 </li>
 <li>[RETURN]
@@ -316,7 +382,7 @@ pointer.value # => 42
 
 <h3>Pointer#+</h3>
 
-<p>Returns a new pointer instance from the specified offset.</p>
+<p>Returns a new Pointer instance from the specified offset.</p>
 
 <ul>
 <li>self + offset -> Pointer
@@ -331,7 +397,7 @@ pointer.value # => 42
 <li>[RETURN]
 
 <ul>
-<li>Returns a new pointer instance</li>
+<li>Returns a new Pointer instance</li>
 </ul>
 </li>
 </ul>
@@ -355,7 +421,7 @@ end
 
 <h3>Pointer#-</h3>
 
-<p>Returns a new pointer instance from the specified offset.</p>
+<p>Returns a new Pointer instance from the specified offset.</p>
 
 <ul>
 <li>self - offset -> Pointer
@@ -370,7 +436,7 @@ end
 <li>[RETURN]
 
 <ul>
-<li>Returns a new pointer instance</li>
+<li>Returns a new Pointer instance</li>
 </ul>
 </li>
 </ul>
@@ -1212,97 +1278,6 @@ sleep 0.5
 
 <ul>
 <li>&lt;&lt; data</li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Dispatch::Semaphore クラス]]></title>
-    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-semaphore-class/"/>
-    <updated>2012-03-31T10:00:00+09:00</updated>
-    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-semaphore-class</id>
-    <content type="html"><![CDATA[<p>Dispatch::Semaphore クラスは排他制御機能を提供します。たとえば、Concurrent Dispatch Queue を用いて並行処理をしていた際に計算結果を 1 つの配列に格納する場合などに Dispatch Semaphore で排他制御を行います。</p>
-
-<h2>Dispatch::Semaphore クラスのメソッド</h2>
-
-<h3>Dispatch::Semaphore.new</h3>
-
-<p>Dispatch Semaphore を生成し返します。GCD API の <code>dispatch_semaphore_create</code> に相当します。</p>
-
-<ul>
-<li>new(count) -> Semaphore
-
-<ul>
-<li>[PARAM] count:
-
-<ul>
-<li>セマフォのカウンタの初期値を指定します。</li>
-</ul>
-</li>
-<li>[RETURN]
-
-<ul>
-<li>生成した Dispatch Semaphore のインスタンスを返します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<h3>Dispatch::Semaphore#wait</h3>
-
-<p>Dispatch::Semaphore#signal が呼び出されセマフォのカウンタが 1 以上になるまで待ちます。カウンタが 1 以上になると 1 減算して待ち状態が解除されます。GCD API の <code>dispatch_semaphore_wait</code> に相当します。</p>
-
-<ul>
-<li>wait(timeout = nil) -> bool
-
-<ul>
-<li>[PARAM] timeout:
-
-<ul>
-<li>タイムアウト時間を指定します。省略された場合には Dispatch::TIME_FOREVER が指定されたのと同じになります。</li>
-</ul>
-</li>
-<li>[RETURN]
-
-<ul>
-<li>Dispatch::Semaphore#signal で wait が解除された場合には true、タイムアウトした場合には false を返します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<p><code>ruby
-gcdq = Dispatch::Queue.new('sample')
-sema = Dispatch::Semaphore.new(0)
-gcdq.async {
-  sleep 1
-  puts "Hello"
-  sema.signal
-}
-sema.wait #=&gt; true
-</code></p>
-
-<h3>Dispatch::Semaphore#signal</h3>
-
-<p>Dispatch Semaphore のカウンタを 1 加算します。GCD API の <code>dispatch_semaphore_signal</code> に相当します。</p>
-
-<ul>
-<li>signal -> bool
-
-<ul>
-<li>[RETURN]
-
-<ul>
-<li>セマフォを待っているスレッドがなければ true、それ以外で false を返します。</li>
-</ul>
-</li>
-</ul>
-</li>
 </ul>
 
 ]]></content>

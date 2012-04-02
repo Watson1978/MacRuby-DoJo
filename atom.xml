@@ -4,7 +4,7 @@
   <title><![CDATA[MacRuby DoJo (道場)]]></title>
   <link href="http://watson1978.github.com/MacRuby-DoJo/atom.xml" rel="self"/>
   <link href="http://watson1978.github.com/MacRuby-DoJo/"/>
-  <updated>2012-04-02T11:56:42+09:00</updated>
+  <updated>2012-04-02T14:47:29+09:00</updated>
   <id>http://watson1978.github.com/MacRuby-DoJo/</id>
   <author>
     <name><![CDATA[Watson]]></name>
@@ -12,6 +12,79 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Boxed Class]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/04/02/boxed-class/"/>
+    <updated>2012-04-02T14:00:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/04/02/boxed-class</id>
+    <content type="html"><![CDATA[<p>Boxed class is used to retrieve a structure information that is defined in Cocoa. All structures allow to retrieve an information by Boxed Class.</p>
+
+<h2>Methods in Boxed Class</h2>
+
+<h3>Boxed.type</h3>
+
+<p>Returns a structure type information.</p>
+
+<ul>
+<li>type -> String
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Returns a structure type information.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="n">framework</span> <span class="s1">&#39;Cocoa&#39;</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="no">NSRect</span><span class="o">.</span><span class="n">type</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;{CGRect={CGPoint=dd}{CGSize=dd}}&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Boxed.opaque?</h3>
+
+<p>Returns whether structure is opaque.</p>
+
+<ul>
+<li>opaque? -> bool
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Returns a true if structure is opaque. Otherwise, returns a false.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="n">framework</span> <span class="s1">&#39;Cocoa&#39;</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="no">NSRect</span><span class="o">.</span><span class="n">opaque?</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="kp">false</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="no">NSModalSession</span><span class="o">.</span><span class="n">opaque?</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="kp">true</span>
+</span><span class='line'><span class="o">&gt;&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Pointer Class]]></title>
@@ -27,9 +100,9 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>You can create other pointer instance if you pass a pointer type into <code>Pointer.new</code>. You can find the other pointer type <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html">Type Encodings</a>.</p>
+<p>You can create other Pointer instance if you pass a pointer type into <code>Pointer.new</code>. You can find the other pointer type in <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html">Type Encodings</a>.</p>
 
-<p>To create a pointer instance such as <code>char* name[5];</code>, specify the size in the second argument.</p>
+<p>To create a Pointer instance such as <code>char* name[5];</code>, specify a size in the second argument.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -46,7 +119,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>To create a pointer instance of structure such as <code>NSRect *rect[2];</code>, you may write a program as following.</p>
+<p>To create a Pointer instance of structure such as <code>NSRect *rect[2];</code>, you may write a program as following.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">rect</span> <span class="o">=</span> <span class="no">Pointer</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;{CGRect={CGPoint=dd}{CGSize=dd}}&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
@@ -62,7 +135,7 @@
 
 <h2>Alias of Pointer Types</h2>
 
-<p>You may think difficult the pointer types such as &#8216;@&#8217;. MacRuby has the alias of pointer types.</p>
+<p>You may think difficult the pointer types such as <code>'@'</code>. MacRuby has the alias of pointer types.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">error</span> <span class="o">=</span> <span class="no">Pointer</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:object</span><span class="p">)</span>  <span class="c1"># alias of &#39;@&#39;</span>
@@ -94,11 +167,11 @@
 </table>
 
 
-<h2>Methods of Pointer Class</h2>
+<h2>Methods in Pointer Class</h2>
 
 <h3>Pointer.new</h3>
 
-<p>Returns a new pointer instance.</p>
+<p>Returns a new Pointer instance.</p>
 
 <ul>
 <li>new(type, size = 1) -> Pointer
@@ -113,13 +186,13 @@
 <li>[PARAM] size:
 
 <ul>
-<li>Specifies a size.</li>
+<li>Specifies a size to allocate an array.</li>
 </ul>
 </li>
 <li>[RETURN]
 
 <ul>
-<li>Returns a new pointer instance.</li>
+<li>Returns a new Pointer instance.</li>
 </ul>
 </li>
 </ul>
@@ -133,7 +206,7 @@
 
 <h3>Pointer.magic_cookie</h3>
 
-<p>Returns a new pointer instance which cast an immediate value to (void *).</p>
+<p>Returns a new Pointer instance which cast an immediate value to (void *).</p>
 
 <ul>
 <li>magic_cookie(val) -> Pointer
@@ -148,7 +221,7 @@
 <li>[RETURN]
 
 <ul>
-<li>Returns a new pointer instance.</li>
+<li>Returns a new Pointer instance.</li>
 </ul>
 </li>
 </ul>
@@ -197,7 +270,7 @@
 <li>[PARAM] type:
 
 <ul>
-<li>Specifies a point type to change.</li>
+<li>Specifies a new point type.</li>
 </ul>
 </li>
 <li>[RETURN]
@@ -268,7 +341,7 @@
 <li>[PARAM] val:
 
 <ul>
-<li>Specifies a value.</li>
+<li>Passes a value to set.</li>
 </ul>
 </li>
 <li>[RETURN]
@@ -341,7 +414,7 @@
 
 <h3>Pointer#+</h3>
 
-<p>Returns a new pointer instance from the specified offset.</p>
+<p>Returns a new Pointer instance from the specified offset.</p>
 
 <ul>
 <li>self + offset -> Pointer
@@ -356,7 +429,7 @@
 <li>[RETURN]
 
 <ul>
-<li>Returns a new pointer instance</li>
+<li>Returns a new Pointer instance</li>
 </ul>
 </li>
 </ul>
@@ -391,7 +464,7 @@
 
 <h3>Pointer#-</h3>
 
-<p>Returns a new pointer instance from the specified offset.</p>
+<p>Returns a new Pointer instance from the specified offset.</p>
 
 <ul>
 <li>self - offset -> Pointer
@@ -406,7 +479,7 @@
 <li>[RETURN]
 
 <ul>
-<li>Returns a new pointer instance</li>
+<li>Returns a new Pointer instance</li>
 </ul>
 </li>
 </ul>
@@ -3854,27 +3927,6 @@ Cocoa.framework は Foundation.framework、AppKit.framework と CoreData.framewo
 
 
 <p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/webkit/webview.png" alt="image" /></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Creates a New Project]]></title>
-    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/12/intro-new-project/"/>
-    <updated>2012-03-12T12:34:00+09:00</updated>
-    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/12/intro-new-project</id>
-    <content type="html"><![CDATA[<p>If you create a New Project, launch Xcode and click &#8220;Create a new Xcode project&#8221; in &#8220;Welcome to Xcode&#8221; screen.</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-new-project/welcome_to_xcode.png" alt="image" /></p>
-
-<p>Next, you would choose a Template for New Project.</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-new-project/choose_a_templete.png" alt="image" /></p>
-
-<p>Choose a [MacRuby Application], and click a [Next].</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-new-project/product_name.png" alt="image" /></p>
-
-<p>Input your Project Name, and then, choose a location for New Project. You would be able to see New Project.</p>
 ]]></content>
   </entry>
   

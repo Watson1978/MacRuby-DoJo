@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Changes an Application's Icon - MacRuby DoJo (道場)</title>
+  <title>Boxed Class - MacRuby DoJo (道場)</title>
   <meta name="author" content="Watson">
 
   
-  <meta name="description" content="All applications which you created have a system default icon. You can change the icon of the application to suit your needs. Icon Composer Prepare &hellip;">
+  <meta name="description" content="Boxed class is used to retrieve a structure information that is defined in Cocoa. All structures allow to retrieve an information by Boxed Class. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/24/intro-icon">
+  <link rel="canonical" href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/04/02/boxed-class">
   <link href="/MacRuby-DoJo/favicon.png" rel="icon">
   <link href="/MacRuby-DoJo/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/MacRuby-DoJo/javascripts/modernizr-2.0.js"></script>
@@ -75,7 +75,7 @@
   
   <header>
     
-      <h1 class="entry-title">Changes an Application's Icon</h1>
+      <h1 class="entry-title">Boxed Class</h1>
     
     
       <p class="meta">
@@ -91,40 +91,78 @@
   
 
 
-<time datetime="2012-03-24T10:00:00+09:00" pubdate data-updated="true">Mar 24<span>th</span>, 2012</time>
+<time datetime="2012-04-02T14:00:00+09:00" pubdate data-updated="true">Apr 2<span>nd</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>All applications which you created have a system default icon.</p>
+<div class="entry-content"><p>Boxed class is used to retrieve a structure information that is defined in Cocoa. All structures allow to retrieve an information by Boxed Class.</p>
 
-<p><img src="/MacRuby-DoJo/images/en/intro-icon/default_icon.png" alt="image" /></p>
+<h2>Methods in Boxed Class</h2>
 
-<p>You can change the icon of the application to suit your needs.</p>
+<h3>Boxed.type</h3>
 
-<h2>Icon Composer</h2>
+<p>Returns a structure type information.</p>
 
-<p>Prepare the image for the icon to set for your application. Convert an image to icon with Icon Composer. Icon Composer is installed along with Xcode.</p>
+<ul>
+<li>type -> String
 
-<p>Since Xcode 4.3, launch Icon Composer with [Xcode]->[Open Developer Tool] in Xcode&#8217;s menu.</p>
+<ul>
+<li>[RETURN]
 
-<p><img src="/MacRuby-DoJo/images/en/intro-icon/icon_composer_xcode43.png" alt="image" /></p>
+<ul>
+<li>Returns a structure type information.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
-<p>Previous Xcode 4.2, Icon Composer exists in <em>/Developer/Applications/Utilities/Icon Composer.app</em></p>
 
-<p><img src="/MacRuby-DoJo/images/en/intro-icon/icon_composer_xcode42.png" alt="image" /></p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="n">framework</span> <span class="s1">&#39;Cocoa&#39;</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="no">NSRect</span><span class="o">.</span><span class="n">type</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;{CGRect={CGPoint=dd}{CGSize=dd}}&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p>Some frames are shown in main screen of Icon Composer. Drag and drop prepared the image into there. After that, save it as icon.</p>
 
-<p><img src="/MacRuby-DoJo/images/en/intro-icon/icns.png" alt="image" /></p>
+<h3>Boxed.opaque?</h3>
 
-<h2>Change an Application&#8217;s Icon</h2>
+<p>Returns whether structure is opaque.</p>
 
-<p>Change an Application&#8217;s Icon with Xcode. Choose a [TARGETS] like the following figure. After that, drag and drop an icon which created with Icon Composer into [App Icon].</p>
+<ul>
+<li>opaque? -> bool
 
-<p><img src="/MacRuby-DoJo/images/en/intro-icon/change_icon.png" alt="image" /></p>
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Returns a true if structure is opaque. Otherwise, returns a false.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="n">framework</span> <span class="s1">&#39;Cocoa&#39;</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="no">NSRect</span><span class="o">.</span><span class="n">opaque?</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="kp">false</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="no">NSModalSession</span><span class="o">.</span><span class="n">opaque?</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="kp">true</span>
+</span><span class='line'><span class="o">&gt;&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
 </div>
 
 
@@ -147,7 +185,7 @@
   
 
 
-<time datetime="2012-03-24T10:00:00+09:00" pubdate data-updated="true">Mar 24<span>th</span>, 2012</time>
+<time datetime="2012-04-02T14:00:00+09:00" pubdate data-updated="true">Apr 2<span>nd</span>, 2012</time>
       
 
 <span class="categories">
@@ -161,7 +199,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/24/intro-icon/" data-via="" data-counturl="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/24/intro-icon/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://watson1978.github.com/MacRuby-DoJo/blog/2012/04/02/boxed-class/" data-via="" data-counturl="http://watson1978.github.com/MacRuby-DoJo/blog/2012/04/02/boxed-class/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -174,10 +212,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/MacRuby-DoJo/blog/2012/03/22/markdown-viewer/" title="Previous Post: RubyGems を利用して Markdown ファイルを表示しよう">&laquo; RubyGems を利用して Markdown ファイルを表示しよう</a>
+        <a class="basic-alignment left" href="/MacRuby-DoJo/blog/2012/04/02/pointer-class/" title="Previous Post: Pointer Class">&laquo; Pointer Class</a>
       
-      
-        <a class="basic-alignment right" href="/MacRuby-DoJo/blog/2012/03/26/original-methods/" title="Next Post: MacRuby 独自のメソッド">MacRuby 独自のメソッド &raquo;</a>
       
     </p>
   </footer>
