@@ -56,6 +56,15 @@ default_asides: [asides/links.html, asides/recent_posts.html, asides/github.html
 #   3rd Party Settings    #
 # ----------------------- #
 
+# Hatena Bookmark
+hatena_bookmark_button: true
+
+# Delicious Bookmark
+delicious_bookmark_button: true
+
+# Evernote
+evernot_clip_button: true
+
 # Github repositories
 github_user:
 github_repo_count: 0
