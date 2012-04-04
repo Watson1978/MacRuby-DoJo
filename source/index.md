@@ -2,7 +2,7 @@
 layout: page
 title: 目次
 date: 2012-03-31 10:00
-comments: true
+comments: false
 sharing: true
 footer: true
 sidebar: true

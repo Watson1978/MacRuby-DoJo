@@ -2,7 +2,7 @@
 layout: page
 title: Contents
 date: 2012-04-02 14:00
-comments: true
+comments: false
 sharing: true
 footer: true
 sidebar: true
