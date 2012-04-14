@@ -4,7 +4,7 @@
   <title><![CDATA[Category: MacRuby | MacRuby DoJo (道場)]]></title>
   <link href="http://watson1978.github.com/MacRuby-DoJo/blog/categories/macruby/atom.xml" rel="self"/>
   <link href="http://watson1978.github.com/MacRuby-DoJo/"/>
-  <updated>2012-04-12T23:20:38+09:00</updated>
+  <updated>2012-04-14T14:12:57+09:00</updated>
   <id>http://watson1978.github.com/MacRuby-DoJo/</id>
   <author>
     <name><![CDATA[Watson]]></name>
@@ -12,6 +12,158 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Sandbox Class]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/04/14/sandbox-class/"/>
+    <updated>2012-04-14T14:00:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/04/14/sandbox-class</id>
+    <content type="html"><![CDATA[<p>MacRuby has the Sandbox class which restricts the access to network. Sandbox class is implemented using the <a href="https://developer.apple.com/library/mac/#documentation/Darwin/Reference/ManPages/man7/sandbox.7.html">sandbox(7)</a> in MacRuby.</p>
+
+<p>You can restrict easily your application to access the network by <code>Sandbox.no_network.apply!</code>. Ruby methods and Cocoa APIs both are restricted by the Sandbox.</p>
+
+<p>```ruby</p>
+
+<blockquote><blockquote><p>framework 'Cocoa'
+require 'socket'
+Sandbox.no_network.apply!
+Socket.gethostbyaddr("apple.com")
+SocketError: host not found</p>
+
+<p>NSHost.hostWithName("apple.com")
+=> <NSHost 0x40121eb80> (null) ((
+) (
+))
+```</p></blockquote></blockquote>
+
+<p>The Sandbox is a good companion to the Ruby standard $SAFE functionality, you may use the Sandbox and $SAFE at the same time.</p>
+
+<p>The Sandbox will be able to restrict your application,</p>
+
+<ul>
+<li>TCP/IP networking is prohibited.</li>
+<li>All sockets-based networking is prohibited.</li>
+<li>File system writes are prohibited.</li>
+<li>File system writes are restricted to temporary folders.</li>
+<li>All operating system services are prohibited.</li>
+</ul>
+
+
+<p>As notes,</p>
+
+<ul>
+<li>Restriction is not able to change after applying.</li>
+<li>Restricts with respect to each process.</li>
+</ul>
+
+
+<h2>Methods in Sandbox Class</h2>
+
+<h3>Sandbox.no_internet</h3>
+
+<p>Restricts TCP/IP networking in current process.</p>
+
+<ul>
+<li>no_internet -> Sandbox
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Returns a Sandbox instance.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Sandbox.no_network</h3>
+
+<p>Restricts all sockets-based networking in current process.</p>
+
+<ul>
+<li>no_network -> Sandbox
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Returns a Sandbox instance.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Sandbox.no_writes</h3>
+
+<p>Restricts to write in current process.</p>
+
+<ul>
+<li>no_writes -> Sandbox
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Returns a Sandbox instance.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Sandbox.temporary_writes</h3>
+
+<p>Restricts to write outside temporay folders in current process.</p>
+
+<ul>
+<li>temporary_writes -> Sandbox
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Returns a Sandbox instance.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Sandbox.pure_computation</h3>
+
+<p>Restrictsn all operating system services in current process.</p>
+
+<ul>
+<li>pure_computation -> Sandbox
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Returns a Sandbox instance.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Sandbox#apply!</h3>
+
+<p>Applies the restriction.</p>
+
+<ul>
+<li>apply!</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Boxed Class]]></title>
@@ -894,392 +1046,6 @@ end
 <blockquote><blockquote><p>Dir::NS_TMPDIR
 => "/var/folders/1z/ff7x15cj7vb24rl38ty0y52w0000gn/T/"
 ```</p></blockquote></blockquote>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Dispatch::Source クラス]]></title>
-    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-source-class/"/>
-    <updated>2012-03-31T10:00:00+09:00</updated>
-    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-source-class</id>
-    <content type="html"><![CDATA[<p>Dispatch::Source クラスは何らかのイベントが発生するときに、イベントをハンドリングして処理を実行する仕組みを提供します。</p>
-
-<h2>Dispatch::Source クラスの定数</h2>
-
-<ul>
-<li>Dispatch::Source::DATA_ADD</li>
-<li>Dispatch::Source::DATA_OR</li>
-<li>Dispatch::Source::PROC</li>
-<li>Dispatch::Source::SIGNAL</li>
-<li>Dispatch::Source::READ</li>
-<li>Dispatch::Source::WRITE</li>
-<li>Dispatch::Source::VNODE</li>
-<li><br/></li>
-<li>Dispatch::Source::PROC_EXIT</li>
-<li>Dispatch::Source::PROC_FORK</li>
-<li>Dispatch::Source::PROC_EXEC</li>
-<li>Dispatch::Source::PROC_SIGNAL</li>
-<li><br/></li>
-<li>Dispatch::Source::VNODE_DELETE</li>
-<li>Dispatch::Source::VNODE_WRITE</li>
-<li>Dispatch::Source::VNODE_EXTEND</li>
-<li>Dispatch::Source::VNODE_ATTRIB</li>
-<li>Dispatch::Source::VNODE_LINK</li>
-<li>Dispatch::Source::VNODE_RENAME</li>
-<li>Dispatch::Source::VNODE_REVOKE</li>
-</ul>
-
-
-<p>Dispatch Source の種類として、以下のものを使用できます。</p>
-
-<table class="table">
-<tr><th>定数名</th><th>GCD API での定義</th><th>内容</th></tr>
-<tr>
-  <td>Dispatch::Source::DATA_ADD</td>
-  <td>DISPATCH_SOURCE_TYPE_DATA_ADD</td>
-  <td><code>&lt;&lt;</code> メソッドを通じてイベントが発生し、処理を実行します。</td>
-</tr>
-<tr>
-  <td>Dispatch::Source::DATA_OR</td>
-  <td>DISPATCH_SOURCE_TYPE_DATA_OR</td>
-  <td><code>&lt;&lt;</code> メソッドを通じてイベントが発生し、処理を実行します。</td>
-</tr>
-<tr>
-  <td>Dispatch::Source::PROC</td>
-  <td>DISPATCH_SOURCE_TYPE_PROC</td>
-  <td>プロセスに関するイベントを受けると、処理を実行します。</td>
-</tr>
-<tr>
-  <td>Dispatch::Source::SIGNAL</td>
-  <td>DISPATCH_SOURCE_TYPE_SIGNAL</td>
-  <td>シグナルを受けると、処理を実行します。</td>
-</tr>
-<tr>
-  <td>Dispatch::Source::READ</td>
-  <td>DISPATCH_SOURCE_TYPE_READ</td>
-  <td>ファイルディスクリプタが読み込み可能になると、処理を実行します。</td>
-</tr>
-<tr>
-  <td>Dispatch::Source::WRITE</td>
-  <td>DISPATCH_SOURCE_TYPE_WRITE</td>
-  <td>ファイルディスクリプタが書き込み可能になると、処理を実行します。</td>
-</tr>
-<tr>
-  <td>Dispatch::Source::VNODE</td>
-  <td>DISPATCH_SOURCE_TYPE_VNODE</td>
-  <td>ファイルが削除されたりファイルシステム上で変更があると、処理を実行します。</td>
-</tr>
-</table>
-
-
-<p>Dispatch::Source::PROC を使用する際に、以下の定数をマスクとして使用できます。</p>
-
-<table class="table">
-<tr>
-  <td>Dispatch::Source::PROC_EXIT</td>
-  <td>DISPATCH_PROC_EXIT</td>
-  <td>プロセスが終了した。</td>
-</tr>
-<tr>
-  <td>Dispatch::Source::PROC_FORK</td>
-  <td>DISPATCH_PROC_FORK</td>
-  <td>子プロセスを作成した。</td>
-</tr>
-<tr>
-  <td>Dispatch::Source::PROC_EXEC</td>
-  <td>DISPATCH_PROC_EXEC</td>
-  <td>exec や posix_spawn で別のプロセスを実行した。</td>
-</tr>
-<tr>
-  <td>Dispatch::Source::PROC_SIGNAL</td>
-  <td>DISPATCH_PROC_SIGNAL</td>
-  <td>シグナルを送信した。</td>
-</tr>
-</table>
-
-
-<p>Dispatch::Source::VNODE を使用する際に、以下の定数をマスクとして使用できます。</p>
-
-<table class="table">
-<tr>
-  <td>Dispatch::Source::VNODE_DELETE</td>
-  <td>DISPATCH_VNODE_DELETE</td>
-  <td>ファイルなどが削除された。</td>
-</tr>
-<tr>
-  <td>Dispatch::Source::VNODE_WRITE</td>
-  <td>DISPATCH_VNODE_WRITE</td>
-  <td>ファイルなどのデータが変更された。</td>
-</tr>
-<tr>
-  <td>Dispatch::Source::VNODE_EXTEND</td>
-  <td>DISPATCH_VNODE_EXTEND</td>
-  <td>ファイルサイズが変更された。</td>
-</tr>
-<tr>
-  <td>Dispatch::Source::VNODE_ATTRIB</td>
-  <td>DISPATCH_VNODE_ATTRIB</td>
-  <td>ファイルなどのメタ情報が変更された。</td>
-</tr>
-<tr>
-  <td>Dispatch::Source::VNODE_LINK</td>
-  <td>DISPATCH_VNODE_LINK</td>
-  <td>The file-system object link count changed.</td>
-</tr>
-<tr>
-  <td>Dispatch::Source::VNODE_RENAME</td>
-  <td>DISPATCH_VNODE_RENAME</td>
-  <td>ファイル名が変更された。</td>
-</tr>
-<tr>
-  <td>Dispatch::Source::VNODE_REVOKE</td>
-  <td>DISPATCH_VNODE_REVOKE</td>
-  <td>The file-system object was revoked.</td>
-</tr>
-</table>
-
-
-<p>Dispatch Source は他のクラスよりもわかりにくいと思います。MacRuby のリポジトリにある <a href="https://github.com/MacRuby/MacRuby/blob/master/spec/macruby/core/gcd/source_spec.rb">source_spec.rb</a> を参考にしたりすると良いでしょう。</p>
-
-<h2>Dispatch::Source クラスのメソッド</h2>
-
-<h3>Dispatch::Source.new</h3>
-
-<p>Dispatch Source を生成し返します。</p>
-
-<ul>
-<li>new(type, handle, mask, queue) { ... } -> Source
-
-<ul>
-<li>[PARAM] type:
-
-<ul>
-<li>Dispatch Source の種類を指定します。</li>
-</ul>
-</li>
-<li>[PARAM] handle:
-
-<ul>
-<li>イベントを監視するためのディスクリプタを指定します。type に <code>DATA_ADD</code> と <code>DATA_OR</code> を指定した場合には、<code>handle</code> は <code>0</code> とします。</li>
-</ul>
-</li>
-<li>[PARAM] mask:
-
-<ul>
-<li>マスクを指定できる Dispatch Source の種類を type で使用した際に指定します。</li>
-</ul>
-</li>
-<li>[PARAM] queue:
-
-<ul>
-<li>イベントが発生したときに、block の処理を追加する Dispatch Queue を指定します。</li>
-</ul>
-</li>
-<li>[RETURN]
-
-<ul>
-<li>生成した Dispatch Source のインスタンスを返します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<h3>Dispatch::Source.timer</h3>
-
-<p>タイマーイベント用の Dispatch Source を生成し返します。</p>
-
-<ul>
-<li>timer(delay, interval, leeway, queue) { ... } -> Source
-
-<ul>
-<li>[PARAM] delay:
-
-<ul>
-<li>何秒後からタイマーを開始するか指定します。nil の場合には Dispatch::TIME_NOW が指定されたのと同じになります</li>
-</ul>
-</li>
-<li>[PARAM] interval:
-
-<ul>
-<li>何秒間隔で繰り返すか指定します。</li>
-</ul>
-</li>
-<li>[PARAM] leeway:
-
-<ul>
-<li>何秒までの遅れを許容するか指定します。</li>
-</ul>
-</li>
-<li>[PARAM] queue:
-
-<ul>
-<li>イベントが発生したときに、block の処理を追加する Dispatch Queue を指定します。</li>
-</ul>
-</li>
-<li>[RETURN]
-
-<ul>
-<li>生成した Dispatch Source のインスタンスを返します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<p>```ruby
-gcdq = Dispatch::Queue.new('sample')
-timer = Dispatch::Source.timer(0.5, 1, 0.5, gcdq) do |s|
-  puts "Wake up!"
-end</p>
-
-<p>sleep 3
-```</p>
-
-<h3>Dispatch::Source#cancelled?</h3>
-
-<p>Dispatch Source がキャンセルされているか返します。</p>
-
-<ul>
-<li>cancelled? -> bool
-
-<ul>
-<li>[RETURN]
-
-<ul>
-<li>キャンセルされていれば true、そうでなれば false を返します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<h3>Dispatch::Source#cancel!</h3>
-
-<p>Dispatch Source をキャンセルします。</p>
-
-<ul>
-<li>cancel!</li>
-</ul>
-
-
-<p>```ruby
-gcdq = Dispatch::Queue.new('sample')
-timer = Dispatch::Source.timer(1, 0.5, 0, gcdq) do |s|
-  puts "Wake up!"
-end</p>
-
-<p>sleep 2</p>
-
-<p>timer.cancel!
-p timer.cancelled? # => true</p>
-
-<p>sleep 1
-```</p>
-
-<h3>Dispatch::Source#handle</h3>
-
-<p>Dispatch Source の handle を返します。</p>
-
-<ul>
-<li>handle
-
-<ul>
-<li>[RETURN]
-
-<ul>
-<li>Dispatch Source の handle を返します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<h3>Dispatch::Source#mask</h3>
-
-<p>Dispatch Source の mask を返します。GCD API の <code>dispatch_source_get_mask</code> に相当します。</p>
-
-<ul>
-<li>mask
-
-<ul>
-<li>[RETURN]
-
-<ul>
-<li>Dispatch Source の mask を返します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<h3>Dispatch::Source#data</h3>
-
-<p>Dispatch Source でまだ処理されていないデータを返します。GCD API の <code>dispatch_source_get_data</code> に相当します。</p>
-
-<ul>
-<li>data
-
-<ul>
-<li>[RETURN]
-
-<ul>
-<li>Dispatch Source でまだ処理されていないデータを返します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<p>Dispatch Source の種類によって、以下のようなデータを返します。</p>
-
-<table class="table">
-<tr>
-  <td>Dispatch::Source::DATA_ADD</td>
-  <td><code>&lt;&lt;</code>で送信されたデータ</td>
-</tr>
-<tr>
-  <td>Dispatch::Source::DATA_OR</td>
-  <td><code>&lt;&lt;</code>で送信されたデータ</td>
-</tr>
-<tr>
-  <td>Dispatch::Source::PROC</td>
-  <td>Dispatch::Source::PROC_EXIT、Dispatch::Source::PROC_FORK、Dispatch::Source::PROC_EXEC、Dispatch::Source::PROC_SIGNAL のいずれか</td>
-</tr>
-<tr>
-  <td>Dispatch::Source::SIGNAL</td>
-  <td>シグナルの番号</td>
-</tr>
-<tr>
-  <td>Dispatch::Source::READ</td>
-  <td>読み込み可能なバイト数</td>
-</tr>
-</table>
-
-
-<p><code>ruby
-gcdq = Dispatch::Queue.new('sample')
-src = Dispatch::Source.new(Dispatch::Source::DATA_ADD, 0, 0, gcdq) do |s|
-  puts s.data
-end
-src &lt;&lt; 1
-sleep 0.5
-</code></p>
-
-<h3>Dispatch::Source#&lt;&lt;</h3>
-
-<p>Dispatch::Source::DATA_ADD と Dispatch::Source::DATA_OR を指定した Dispatch Source で使用します。指定したデータを Dispatch Source の block へ送信します。GCD API の <code>dispatch_source_get_data</code> に相当します。</p>
-
-<ul>
-<li>&lt;&lt; data</li>
-</ul>
-
 ]]></content>
   </entry>
   

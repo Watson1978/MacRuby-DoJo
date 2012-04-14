@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Window のリサイズに対応しよう - MacRuby DoJo (道場)</title>
+  <title>Sandbox Class - MacRuby DoJo (道場)</title>
   <meta name="author" content="Watson">
 
   
-  <meta name="description" content="作成したアプリケーションを実行した後、Window がリサイズされることを考慮しましょう。何も対処していなければ、以下のようにリサイズすると間が抜けた UI レイアウトになったり、たくさんの UI 部品を使用したアプリケーションでは使用するのが困難なほどにレイアウトが崩れたりすることもあるでしょう &hellip;">
+  <meta name="description" content="MacRuby has the Sandbox class which restricts the access to network. Sandbox class is implemented using the sandbox(7) in MacRuby. You can restrict &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/08/intro-window-resize/">
+  <link rel="canonical" href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/04/14/sandbox-class/">
   <link href="/MacRuby-DoJo/favicon.png" rel="icon">
   <link href="/MacRuby-DoJo/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/MacRuby-DoJo/javascripts/modernizr-2.0.js"></script>
@@ -75,7 +75,7 @@
   
   <header>
     
-      <h1 class="entry-title">Window のリサイズに対応しよう</h1>
+      <h1 class="entry-title">Sandbox Class</h1>
     
     
       <p class="meta">
@@ -91,42 +91,166 @@
   
 
 
-<time datetime="2012-03-08T22:52:00+09:00" pubdate data-updated="true">Mar 8<span>th</span>, 2012</time>
+<time datetime="2012-04-14T14:00:00+09:00" pubdate data-updated="true">Apr 14<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>作成したアプリケーションを実行した後、Window がリサイズされることを考慮しましょう。何も対処していなければ、以下のようにリサイズすると間が抜けた UI レイアウトになったり、たくさんの UI 部品を使用したアプリケーションでは使用するのが困難なほどにレイアウトが崩れたりすることもあるでしょう。</p>
+<div class="entry-content"><p>MacRuby has the Sandbox class which restricts the access to network. Sandbox class is implemented using the <a href="https://developer.apple.com/library/mac/#documentation/Darwin/Reference/ManPages/man7/sandbox.7.html">sandbox(7)</a> in MacRuby.</p>
 
-<p><img src="/MacRuby-DoJo/images/ja/intro-window-resize/window.png" alt="image" /></p>
+<p>You can restrict easily your application to access the network by <code>Sandbox.no_network.apply!</code>. Ruby methods and Cocoa APIs both are restricted by the Sandbox.</p>
 
-<h2>Autosizing の設定</h2>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="n">framework</span> <span class="s1">&#39;Cocoa&#39;</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="nb">require</span> <span class="s1">&#39;socket&#39;</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="no">Sandbox</span><span class="o">.</span><span class="n">no_network</span><span class="o">.</span><span class="n">apply!</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="no">Socket</span><span class="o">.</span><span class="n">gethostbyaddr</span><span class="p">(</span><span class="s2">&quot;apple.com&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="no">SocketError</span><span class="p">:</span> <span class="n">host</span> <span class="ow">not</span> <span class="n">found</span>
+</span><span class='line'>  
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="no">NSHost</span><span class="o">.</span><span class="n">hostWithName</span><span class="p">(</span><span class="s2">&quot;apple.com&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="o">&lt;</span><span class="no">NSHost</span> <span class="mh">0x40121eb80</span><span class="o">&gt;</span> <span class="p">(</span><span class="n">null</span><span class="p">)</span> <span class="p">((</span>
+</span><span class='line'><span class="p">)</span> <span class="p">(</span>
+</span><span class='line'><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p>Window をリサイズした時に、UI 部品の配置をどのように取り扱うかについて Xcode の Autosizing という項目で簡単に設定することができます。以下の図のように、Autosizing を設定する UI 部品を選択し Size Inspector を表示します。</p>
 
-<p><img src="/MacRuby-DoJo/images/ja/intro-window-resize/size_inspector.png" alt="image" /></p>
+<p>The Sandbox is a good companion to the Ruby standard $SAFE functionality, you may use the Sandbox and $SAFE at the same time.</p>
 
-<p>幅や高さを伸縮させたい場合には以下のように設定します。</p>
+<p>The Sandbox will be able to restrict your application,</p>
 
-<p><img src="/MacRuby-DoJo/images/ja/intro-window-resize/autosizing_variable.png" alt="image" /></p>
+<ul>
+<li>TCP/IP networking is prohibited.</li>
+<li>All sockets-based networking is prohibited.</li>
+<li>File system writes are prohibited.</li>
+<li>File system writes are restricted to temporary folders.</li>
+<li>All operating system services are prohibited.</li>
+</ul>
 
-<p>UI 配置位置を固定する場合には以下のように設定します。設定した箇所の間隔は、Window をリサイズしても変わらないようになります。</p>
 
-<p><img src="/MacRuby-DoJo/images/ja/intro-window-resize/autosizing_fixable.png" alt="image" /></p>
+<p>As notes,</p>
 
-<p>Autosizing の効果は Example にプレビューされるので、確認しながら設定していくと良いでしょう。</p>
+<ul>
+<li>Restriction is not able to change after applying.</li>
+<li>Restricts with respect to each process.</li>
+</ul>
 
-<h2>Window をリサイズできないようにする</h2>
 
-<p>単純な UI の場合ですと、そもそも Window のリサイズしなくても良いということもあるでしょう。</p>
+<h2>Methods in Sandbox Class</h2>
 
-<p>Window を選択した状態で、Size Inspector を表示します。</p>
+<h3>Sandbox.no_internet</h3>
 
-<p><img src="/MacRuby-DoJo/images/ja/intro-window-resize/window_size.png" alt="image" /></p>
+<p>Restricts TCP/IP networking in current process.</p>
 
-<p>[Minimum Size] と [Maximum Size] のチェックを ON にすると、Window の最大最小サイズを固定できます。上の図のように [Minimum Size] と [Maximum Size] を同じ値にすると、Window がリサイズできないようになります。</p>
+<ul>
+<li>no_internet -> Sandbox
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Returns a Sandbox instance.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Sandbox.no_network</h3>
+
+<p>Restricts all sockets-based networking in current process.</p>
+
+<ul>
+<li>no_network -> Sandbox
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Returns a Sandbox instance.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Sandbox.no_writes</h3>
+
+<p>Restricts to write in current process.</p>
+
+<ul>
+<li>no_writes -> Sandbox
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Returns a Sandbox instance.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Sandbox.temporary_writes</h3>
+
+<p>Restricts to write outside temporay folders in current process.</p>
+
+<ul>
+<li>temporary_writes -> Sandbox
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Returns a Sandbox instance.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Sandbox.pure_computation</h3>
+
+<p>Restrictsn all operating system services in current process.</p>
+
+<ul>
+<li>pure_computation -> Sandbox
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Returns a Sandbox instance.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Sandbox#apply!</h3>
+
+<p>Applies the restriction.</p>
+
+<ul>
+<li>apply!</li>
+</ul>
+
 </div>
 
 
@@ -149,7 +273,7 @@
   
 
 
-<time datetime="2012-03-08T22:52:00+09:00" pubdate data-updated="true">Mar 8<span>th</span>, 2012</time>
+<time datetime="2012-04-14T14:00:00+09:00" pubdate data-updated="true">Apr 14<span>th</span>, 2012</time>
       
 
 <span class="categories">
@@ -173,7 +297,7 @@
   <a href="#" onclick="Evernote.doClip({}); return false;"><img src="http://static.evernote.com/site-mem-32.png"  height="20" width="20" style="border: none;" alt="Clip to Evernote" /></a>
   
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/08/intro-window-resize/" data-via="" data-counturl="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/08/intro-window-resize/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://watson1978.github.com/MacRuby-DoJo/blog/2012/04/14/sandbox-class/" data-via="" data-counturl="http://watson1978.github.com/MacRuby-DoJo/blog/2012/04/14/sandbox-class/" >Tweet</a>
   
   
   <div class="fb-like" data-send="false" data-layout="button_count" data-show-faces="true"></div>
@@ -186,10 +310,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/MacRuby-DoJo/blog/2012/03/08/intro-stopwatch-thread/" title="Previous Post: ストップウォッチを作る (Thread 編)">&laquo; ストップウォッチを作る (Thread 編)</a>
+        <a class="basic-alignment left" href="/MacRuby-DoJo/blog/2012/04/02/boxed-class/" title="Previous Post: Boxed Class">&laquo; Boxed Class</a>
       
-      
-        <a class="basic-alignment right" href="/MacRuby-DoJo/blog/2012/03/09/intro-icon/" title="Next Post: アイコンを変更しよう">アイコンを変更しよう &raquo;</a>
       
     </p>
   </footer>
@@ -268,8 +390,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/08/intro-window-resize/';
-        var disqus_url = 'http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/08/intro-window-resize/';
+        var disqus_identifier = 'http://watson1978.github.com/MacRuby-DoJo/blog/2012/04/14/sandbox-class/';
+        var disqus_url = 'http://watson1978.github.com/MacRuby-DoJo/blog/2012/04/14/sandbox-class/';
         var disqus_script = 'embed.js';
       
     (function () {

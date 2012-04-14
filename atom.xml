@@ -4,7 +4,7 @@
   <title><![CDATA[MacRuby DoJo (道場)]]></title>
   <link href="http://watson1978.github.com/MacRuby-DoJo/atom.xml" rel="self"/>
   <link href="http://watson1978.github.com/MacRuby-DoJo/"/>
-  <updated>2012-04-12T23:20:38+09:00</updated>
+  <updated>2012-04-14T14:12:57+09:00</updated>
   <id>http://watson1978.github.com/MacRuby-DoJo/</id>
   <author>
     <name><![CDATA[Watson]]></name>
@@ -12,6 +12,167 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Sandbox Class]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/04/14/sandbox-class/"/>
+    <updated>2012-04-14T14:00:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/04/14/sandbox-class</id>
+    <content type="html"><![CDATA[<p>MacRuby has the Sandbox class which restricts the access to network. Sandbox class is implemented using the <a href="https://developer.apple.com/library/mac/#documentation/Darwin/Reference/ManPages/man7/sandbox.7.html">sandbox(7)</a> in MacRuby.</p>
+
+<p>You can restrict easily your application to access the network by <code>Sandbox.no_network.apply!</code>. Ruby methods and Cocoa APIs both are restricted by the Sandbox.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;&gt;</span> <span class="n">framework</span> <span class="s1">&#39;Cocoa&#39;</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="nb">require</span> <span class="s1">&#39;socket&#39;</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="no">Sandbox</span><span class="o">.</span><span class="n">no_network</span><span class="o">.</span><span class="n">apply!</span>
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="no">Socket</span><span class="o">.</span><span class="n">gethostbyaddr</span><span class="p">(</span><span class="s2">&quot;apple.com&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="no">SocketError</span><span class="p">:</span> <span class="n">host</span> <span class="ow">not</span> <span class="n">found</span>
+</span><span class='line'>  
+</span><span class='line'><span class="o">&gt;&gt;</span> <span class="no">NSHost</span><span class="o">.</span><span class="n">hostWithName</span><span class="p">(</span><span class="s2">&quot;apple.com&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="o">&lt;</span><span class="no">NSHost</span> <span class="mh">0x40121eb80</span><span class="o">&gt;</span> <span class="p">(</span><span class="n">null</span><span class="p">)</span> <span class="p">((</span>
+</span><span class='line'><span class="p">)</span> <span class="p">(</span>
+</span><span class='line'><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The Sandbox is a good companion to the Ruby standard $SAFE functionality, you may use the Sandbox and $SAFE at the same time.</p>
+
+<p>The Sandbox will be able to restrict your application,</p>
+
+<ul>
+<li>TCP/IP networking is prohibited.</li>
+<li>All sockets-based networking is prohibited.</li>
+<li>File system writes are prohibited.</li>
+<li>File system writes are restricted to temporary folders.</li>
+<li>All operating system services are prohibited.</li>
+</ul>
+
+
+<p>As notes,</p>
+
+<ul>
+<li>Restriction is not able to change after applying.</li>
+<li>Restricts with respect to each process.</li>
+</ul>
+
+
+<h2>Methods in Sandbox Class</h2>
+
+<h3>Sandbox.no_internet</h3>
+
+<p>Restricts TCP/IP networking in current process.</p>
+
+<ul>
+<li>no_internet -> Sandbox
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Returns a Sandbox instance.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Sandbox.no_network</h3>
+
+<p>Restricts all sockets-based networking in current process.</p>
+
+<ul>
+<li>no_network -> Sandbox
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Returns a Sandbox instance.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Sandbox.no_writes</h3>
+
+<p>Restricts to write in current process.</p>
+
+<ul>
+<li>no_writes -> Sandbox
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Returns a Sandbox instance.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Sandbox.temporary_writes</h3>
+
+<p>Restricts to write outside temporay folders in current process.</p>
+
+<ul>
+<li>temporary_writes -> Sandbox
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Returns a Sandbox instance.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Sandbox.pure_computation</h3>
+
+<p>Restrictsn all operating system services in current process.</p>
+
+<ul>
+<li>pure_computation -> Sandbox
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>Returns a Sandbox instance.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Sandbox#apply!</h3>
+
+<p>Applies the restriction.</p>
+
+<ul>
+<li>apply!</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Boxed Class]]></title>
@@ -2081,6 +2242,8 @@ This method is implemented with <a href="http://site.icu-project.org/">ICU</a>  
 </span></code></pre></td></tr></table></div></figure>
 
 
+<p>Sandbox は Ruby の<a href="http://doc.ruby-lang.org/ja/1.9.2/doc/spec=2fsafelevel.html">セキュリティ機構</a>と併用することもできます。</p>
+
 <p>Sandbox を用いて、スクリプトに以下の制限をかけることができます。</p>
 
 <ul>
@@ -3817,116 +3980,6 @@ If you write an action method, you <strong>must</strong> provide a <code>sender<
 <p>Change to &#8220;StopWatch&#8221; from &#8220;Deployment&#8221; in Scheme. After that, Click [Run]. &#8220;Stopwatch&#8221; application will be running!!</p>
 
 <p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-stopwatch/scheme.png" alt="image" /></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[WebKit フレームワークを使ってみよう]]></title>
-    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/15/webkit/"/>
-    <updated>2012-03-15T08:52:00+09:00</updated>
-    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/15/webkit</id>
-    <content type="html"><![CDATA[<p>[MacRuby Application] テンプレートを用いてプロジェクトを作成すると、あらかじめ Cocoa.framework というフレームワークが読み込まれるようになっています。</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/webkit/framework.png" alt="image" /></p>
-
-<p>また、<em>rb_main.rb</em> で以下のように Cocoa.framework が読み込まれプログラム中から扱えるようになっています。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># Loading the Cocoa framework. If you need to load more frameworks, you can</span>
-</span><span class='line'><span class="c1"># do that here too.</span>
-</span><span class='line'><span class="n">framework</span> <span class="s1">&#39;Cocoa&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<div class="note">
-Cocoa.framework は Foundation.framework、AppKit.framework と CoreData.framework を 1 つにまとめたフレームワークとなっています。これらのフレームワークで扱っている UI 部品や API は、プロジェクト作成直後から利用することができます。
-</div>
-
-
-<h2>WebKit.framework を追加する</h2>
-
-<p>さっそくフレームワークを追加してみましょう。以下の図のように &#8220;+&#8221; ボタンをクリックすると、フレームワークを追加することができます。</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/webkit/add_framework.png" alt="image" /></p>
-
-<p>シートダイアログが表示されるので、追加するフレームワークを選択します。</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/webkit/choose_framework.png" alt="image" /></p>
-
-<p><em>rb_main.rb</em> で以下のように WebKit.framework を読み込むようにします。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># Loading the Cocoa framework. If you need to load more frameworks, you can</span>
-</span><span class='line'><span class="c1"># do that here too.</span>
-</span><span class='line'><span class="n">framework</span> <span class="s1">&#39;Cocoa&#39;</span>
-</span><span class='line'><span class="n">framework</span> <span class="s1">&#39;WebKit&#39;</span> <span class="c1"># 追加</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>以上で、フレームワークの追加作業が完了です。</p>
-
-<h2>Web View を配置する</h2>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/webkit/put_webview.png" alt="image" /></p>
-
-<p>Object Library から Web View を Window 上に配置します。</p>
-
-<h2>Web View をアウトレット接続する</h2>
-
-<p><em>AppDelegate.rb</em> に webView のアウトレット用のアクセサを追加し、Web View と接続します。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">AppDelegate</span>
-</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:window</span>
-</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:webView</span> <span class="c1"># アウトレット</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/webkit/connect_outlet.png" alt="image" /></p>
-
-<h2>Web サイトを表示する</h2>
-
-<p>以下のように、アウトレット接続した <code>webView</code> の <code>mainFrame</code> に URL のサイトを読み込むように指示すると、さきほど配置した Web View に Web サイトが表示されます。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">AppDelegate</span>
-</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:window</span>
-</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:webView</span> <span class="c1"># アウトレット</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">applicationDidFinishLaunching</span><span class="p">(</span><span class="n">a_notification</span><span class="p">)</span>
-</span><span class='line'>    <span class="c1"># Insert code here to initialize your application</span>
-</span><span class='line'>    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;http://www.apple.com/&quot;</span>
-</span><span class='line'>    <span class="n">nsurl</span> <span class="o">=</span> <span class="no">NSURL</span><span class="o">.</span><span class="n">URLWithString</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">nsurl_req</span> <span class="o">=</span> <span class="no">NSURLRequest</span><span class="o">.</span><span class="n">requestWithURL</span><span class="p">(</span><span class="n">nsurl</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">webView</span><span class="o">.</span><span class="n">mainFrame</span><span class="o">.</span><span class="n">loadRequest</span><span class="p">(</span><span class="n">nsurl_req</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/webkit/webview.png" alt="image" /></p>
 ]]></content>
   </entry>
   
