@@ -7,7 +7,7 @@ sharing: true
 categories: MacRuby
 ---
 
-MacRuby has the Sandbox class which restricts the access to network. Sandbox class is implemented using the [sandbox(7)](https://developer.apple.com/library/mac/#documentation/Darwin/Reference/ManPages/man7/sandbox.7.html) in MacRuby.
+MacRuby has the Sandbox class which restricts the access to network, to files, etc. Sandbox class is implemented using the [sandbox(7)](https://developer.apple.com/library/mac/#documentation/Darwin/Reference/ManPages/man7/sandbox.7.html) in MacRuby.
 
 You can restrict easily your application to access the network by `Sandbox.no_network.apply!`. Ruby methods and Cocoa APIs both are restricted by the Sandbox.
 
