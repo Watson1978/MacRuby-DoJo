@@ -4,7 +4,7 @@
   <title><![CDATA[Category: MacRuby | MacRuby DoJo (道場)]]></title>
   <link href="http://watson1978.github.com/MacRuby-DoJo/blog/categories/macruby/atom.xml" rel="self"/>
   <link href="http://watson1978.github.com/MacRuby-DoJo/"/>
-  <updated>2012-04-14T14:15:45+09:00</updated>
+  <updated>2012-04-14T14:23:54+09:00</updated>
   <id>http://watson1978.github.com/MacRuby-DoJo/</id>
   <author>
     <name><![CDATA[Watson]]></name>
@@ -18,7 +18,7 @@
     <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/04/14/sandbox-class/"/>
     <updated>2012-04-14T14:00:00+09:00</updated>
     <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/04/14/sandbox-class</id>
-    <content type="html"><![CDATA[<p>MacRuby has the Sandbox class which restricts the access to network. Sandbox class is implemented using the <a href="https://developer.apple.com/library/mac/#documentation/Darwin/Reference/ManPages/man7/sandbox.7.html">sandbox(7)</a> in MacRuby.</p>
+    <content type="html"><![CDATA[<p>MacRuby has the Sandbox class which restricts the access to network, to files, etc. Sandbox class is implemented using the <a href="https://developer.apple.com/library/mac/#documentation/Darwin/Reference/ManPages/man7/sandbox.7.html">sandbox(7)</a> in MacRuby.</p>
 
 <p>You can restrict easily your application to access the network by <code>Sandbox.no_network.apply!</code>. Ruby methods and Cocoa APIs both are restricted by the Sandbox.</p>
 
