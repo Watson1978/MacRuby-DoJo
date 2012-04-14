@@ -1,0 +1,69 @@
+---
+layout: post
+title: "Using the DTrace"
+date: 2012-04-15 00:00
+comments: true
+sharing: true
+categories: MacRuby
+---
+
+[DTrace](http://en.wikipedia.org/wiki/DTrace) is a dynamic tracing framework, and you may trace application without changing by DTrace. MacRuby provides some probe for DTrace to trace the methods behavior.
+
+<table class="table">
+<tr><th>Probe Name</th><th>Calling timing</th><th>arg0</th><th>arg1</th><th>arg2</th><th>arg3</th></tr>
+<tr><td>method-entry</td><td>At the start of the method</td><td>Class name</td><td>Method name</td><td>File name</td><td>Line number</td></tr>
+<td>method-return</td><td>At the end of the method</td><td>Class name</td><td>Method name</td><td>File name</td><td>Line number</td></tr>
+<td>raise</td><td>An exception raises</td><td>Class name</td><td>File name</td><td>Line number</td><td>-</td></tr>
+</table>
+
+Using these probes, you may easily trace the count of method calling or trace the execution time.
+
+Here is DTrace script which trace the total execution time of String methods.
+
+```d
+/* time.d */
+
+#pragma D option quiet
+
+macruby$target:::method-entry
+/ copyinstr(arg0) == "String" /  /* invokes only String methods */
+{
+	self->starttime = walltimestamp / 1000;
+}
+
+macruby$target:::method-return
+/ copyinstr(arg0) == "String" /  /* invokes only String methods */
+{
+	@invoked_time[copyinstr(arg0), copyinstr(arg1)] = sum((walltimestamp / 1000) - self->starttime);
+}
+
+END
+{
+    printf("\n");
+    printf("%-10s  %-15s  %s\n", "CLASS", "METHOD", "TOTAL TIME µsec");
+    printf("--------------------------------------------------------------------------------\n");
+    printa("%-10s  %-15s  %@d\n", @invoked_time);
+}
+```
+
+Prepare your application to trace the execution time.
+
+```ruby
+# test.rb
+
+1000.times do
+  str = "abc\n" * 1000
+  str.split("\n")
+end
+```
+
+You may retrieve the result as following.
+
+```
+$ sudo dtrace -qs time.d  -c "macruby test.rb"
+
+CLASS       METHOD           TOTAL TIME µsec
+--------------------------------------------------------------------------------
+String      *:               6578
+String      split:           1275979
+```

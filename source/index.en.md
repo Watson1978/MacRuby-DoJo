@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Contents
-date: 2012-04-02 14:00
+date: 2012-04-15 00:00
 comments: false
 sharing: true
 footer: true
@@ -24,3 +24,5 @@ sidebar: true
 - [Pointer Class](/blog/2012/04/02/pointer-class/)
 - [Boxed Class](/blog/2012/04/02/boxed-class/)
 - [Sandbox Class](/blog/2012/04/14/sandbox-class/)
+<br/>
+- [Using the DTrace](/blog/2012/04/15/dtrace/)
