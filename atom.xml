@@ -4,7 +4,7 @@
   <title><![CDATA[MacRuby DoJo (道場)]]></title>
   <link href="http://watson1978.github.com/MacRuby-DoJo/atom.xml" rel="self"/>
   <link href="http://watson1978.github.com/MacRuby-DoJo/"/>
-  <updated>2012-04-14T14:14:15+09:00</updated>
+  <updated>2012-04-14T14:15:45+09:00</updated>
   <id>http://watson1978.github.com/MacRuby-DoJo/</id>
   <author>
     <name><![CDATA[Watson]]></name>
@@ -127,7 +127,7 @@
 
 <h3>Sandbox.temporary_writes</h3>
 
-<p>Restricts to write outside temporay folders in current process.</p>
+<p>Restricts to write outside temporary folders in current process.</p>
 
 <ul>
 <li>temporary_writes -> Sandbox
@@ -146,7 +146,7 @@
 
 <h3>Sandbox.pure_computation</h3>
 
-<p>Restrictsn all operating system services in current process.</p>
+<p>Restricts all operating system services in current process.</p>
 
 <ul>
 <li>pure_computation -> Sandbox
