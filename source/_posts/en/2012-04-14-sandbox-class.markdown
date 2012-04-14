@@ -69,7 +69,7 @@ Restricts to write in current process.
 
 ### Sandbox.temporary_writes
 
-Restricts to write outside temporay folders in current process.
+Restricts to write outside temporary folders in current process.
 
 - temporary_writes -> Sandbox
   - [RETURN]
@@ -78,7 +78,7 @@ Restricts to write outside temporay folders in current process.
 
 ### Sandbox.pure_computation
 
-Restrictsn all operating system services in current process.
+Restricts all operating system services in current process.
 
 - pure_computation -> Sandbox
   - [RETURN]
