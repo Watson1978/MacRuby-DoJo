@@ -35,3 +35,5 @@ sidebar: true
   - [Dispatch::Group クラス](/blog/2012/03/31/dispatch-group-class/)
   - [Dispatch::Source クラス](/blog/2012/03/31/dispatch-source-class/)
   - [Dispatch::Semaphore クラス](/blog/2012/03/31/dispatch-semaphore-class/)
+<br/>
+- [DTrace を使ってみよう](/blog/2012/04/14/dtrace/)

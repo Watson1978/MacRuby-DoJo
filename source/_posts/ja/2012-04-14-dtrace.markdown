@@ -1,0 +1,72 @@
+---
+layout: post
+title: "DTrace を使ってみよう"
+date: 2012-04-14 21:00
+comments: true
+sharing: true
+categories: MacRuby
+---
+
+DTrace を使用することで、システムやアプリケーションに手を加えることなく、それらをトレースすることができます。MacRuby はメソッドの振る舞いをトレースするために、いくつかプローブというものを用意しています。
+
+<table class="table">
+<tr><th>プローブ名</th><th>実行タイミング</th><th>arg0</th><th>arg1</th><th>arg2</th><th>arg3</th></tr>
+<tr><td>method-entry</td><td>メソッド呼出開始</td><td>クラス名</td><td>メソッド名</td><td>ソースファイル名</td><td>行番号</td></tr>
+<td>method-return</td><td>メソッド呼出終了</td><td>クラス名</td><td>メソッド名</td><td>ソースファイル名</td><td>行番号</td></tr>
+<td>raise</td><td>例外発生時</td><td>クラス名</td><td>ソースファイル名</td><td>行番号</td><td>-</td></tr>
+</table>
+
+これらを使用することで、メソッドが呼び出された回数や実行時間を簡単に計測できます。
+
+以下は String クラスのメソッドの合計実行時間を計測するための DTrace スクリプトです。
+
+```d
+#!/usr/sbin/dtrace -s
+
+#pragma D option quiet
+
+macruby$target:::method-entry
+/ copyinstr(arg0) == "String" /  /* invokes only String methods */
+{
+	self->starttime = walltimestamp / 1000;
+}
+
+macruby$target:::method-return
+/ copyinstr(arg0) == "String" /  /* invokes only String methods */
+{
+	@invoked_time[copyinstr(arg0), copyinstr(arg1)] = sum((walltimestamp / 1000) - self->starttime);
+}
+
+END
+{
+    printf("\n");
+    printf("%-10s  %-15s  %s\n", "CLASS", "METHOD", "TOTAL TIME µsec");
+    printf("--------------------------------------------------------------------------------\n");
+    printa("%-10s  %-15s  %@d\n", @invoked_time);
+}
+```
+
+実行時間を計測する Ruby のプログラムを用意します。
+
+```ruby
+# test.rb
+1000.times do
+  str = "abc\n" * 1000
+  str.split("\n")
+end
+```
+
+これらを実行すると以下のような結果となります。
+
+```
+$ sudo dtrace -qs time.d  -c "macruby test.rb"
+
+CLASS       METHOD           TOTAL TIME µsec
+--------------------------------------------------------------------------------
+String      *:               6578
+String      split:           1275979
+```
+
+DTrace については、以下のサイトなどが有益です。
+
+- [DTrace ユーザーガイド](http://docs.oracle.com/cd/E24845_01/html/E22189/toc.html)
