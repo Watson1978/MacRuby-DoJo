@@ -24,6 +24,8 @@ SocketError: host not found
 ))
 ```
 
+Sandbox は Ruby の[セキュリティ機構](http://doc.ruby-lang.org/ja/1.9.2/doc/spec=2fsafelevel.html)と併用することもできます。
+
 Sandbox を用いて、スクリプトに以下の制限をかけることができます。
 
 - TCP/IPネットワーキング機能
