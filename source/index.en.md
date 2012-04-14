@@ -23,4 +23,4 @@ sidebar: true
 - [Original Constants in MacRuby](/blog/2012/03/31/original-constants/)
 - [Pointer Class](/blog/2012/04/02/pointer-class/)
 - [Boxed Class](/blog/2012/04/02/boxed-class/)
-- [Sandbo Class](/blog/2012/04/14/sandbox-class/)
+- [Sandbox Class](/blog/2012/04/14/sandbox-class/)
