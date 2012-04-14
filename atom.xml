@@ -4,7 +4,7 @@
   <title><![CDATA[MacRuby DoJo (道場)]]></title>
   <link href="http://watson1978.github.com/MacRuby-DoJo/atom.xml" rel="self"/>
   <link href="http://watson1978.github.com/MacRuby-DoJo/"/>
-  <updated>2012-04-14T22:19:09+09:00</updated>
+  <updated>2012-04-15T00:43:58+09:00</updated>
   <id>http://watson1978.github.com/MacRuby-DoJo/</id>
   <author>
     <name><![CDATA[Watson]]></name>
@@ -12,6 +12,110 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Using the DTrace]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/04/15/dtrace/"/>
+    <updated>2012-04-15T00:00:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/04/15/dtrace</id>
+    <content type="html"><![CDATA[<p><a href="http://en.wikipedia.org/wiki/DTrace">DTrace</a> is a dynamic tracing framework, and you may trace application without changing by DTrace. MacRuby provides some probe for DTrace to trace the methods behavior.</p>
+
+<table class="table">
+<tr><th>Probe Name</th><th>Calling timing</th><th>arg0</th><th>arg1</th><th>arg2</th><th>arg3</th></tr>
+<tr><td>method-entry</td><td>At the start of the method</td><td>Class name</td><td>Method name</td><td>File name</td><td>Line number</td></tr>
+<td>method-return</td><td>At the end of the method</td><td>Class name</td><td>Method name</td><td>File name</td><td>Line number</td></tr>
+<td>raise</td><td>An exception raises</td><td>Class name</td><td>File name</td><td>Line number</td><td>-</td></tr>
+</table>
+
+
+<p>Using these probes, you may easily trace the count of method calling or trace the execution time.</p>
+
+<p>Here is DTrace script which trace the total execution time of String methods.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='d'><span class='line'><span class="cm">/* time.d */</span>
+</span><span class='line'>
+</span><span class='line'><span class="err">#</span><span class="k">pragma</span> <span class="n">D</span> <span class="n">option</span> <span class="n">quiet</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">macruby</span><span class="p">$</span><span class="n">target</span><span class="p">:::</span><span class="n">method</span><span class="p">-</span><span class="n">entry</span>
+</span><span class='line'><span class="p">/</span> <span class="n">copyinstr</span><span class="p">(</span><span class="n">arg0</span><span class="p">)</span> <span class="p">==</span> <span class="s">&quot;String&quot;</span> <span class="p">/</span>  <span class="cm">/* invokes only String methods */</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="n">self</span><span class="p">-&gt;</span><span class="n">starttime</span> <span class="p">=</span> <span class="n">walltimestamp</span> <span class="p">/</span> <span class="mi">1000</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">macruby</span><span class="p">$</span><span class="n">target</span><span class="p">:::</span><span class="n">method</span><span class="p">-</span><span class="k">return</span>
+</span><span class='line'><span class="p">/</span> <span class="n">copyinstr</span><span class="p">(</span><span class="n">arg0</span><span class="p">)</span> <span class="p">==</span> <span class="s">&quot;String&quot;</span> <span class="p">/</span>  <span class="cm">/* invokes only String methods */</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="err">@</span><span class="n">invoked_time</span><span class="p">[</span><span class="n">copyinstr</span><span class="p">(</span><span class="n">arg0</span><span class="p">),</span> <span class="n">copyinstr</span><span class="p">(</span><span class="n">arg1</span><span class="p">)]</span> <span class="p">=</span> <span class="n">sum</span><span class="p">((</span><span class="n">walltimestamp</span> <span class="p">/</span> <span class="mi">1000</span><span class="p">)</span> <span class="p">-</span> <span class="n">self</span><span class="p">-&gt;</span><span class="n">starttime</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">END</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;\n&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%-10s  %-15s  %s\n&quot;</span><span class="p">,</span> <span class="s">&quot;CLASS&quot;</span><span class="p">,</span> <span class="s">&quot;METHOD&quot;</span><span class="p">,</span> <span class="s">&quot;TOTAL TIME µsec&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;--------------------------------------------------------------------------------\n&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">printa</span><span class="p">(</span><span class="s">&quot;%-10s  %-15s  %@d\n&quot;</span><span class="p">,</span> <span class="err">@</span><span class="n">invoked_time</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Prepare your application to trace the execution time.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># test.rb</span>
+</span><span class='line'>
+</span><span class='line'><span class="mi">1000</span><span class="o">.</span><span class="n">times</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">str</span> <span class="o">=</span> <span class="s2">&quot;abc</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">*</span> <span class="mi">1000</span>
+</span><span class='line'>  <span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You may retrieve the result as following.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">sudo</span> <span class="n">dtrace</span> <span class="o">-</span><span class="n">qs</span> <span class="n">time</span><span class="o">.</span><span class="n">d</span>  <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;macruby test.rb&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">CLASS</span>       <span class="no">METHOD</span>           <span class="no">TOTAL</span> <span class="no">TIME</span> <span class="err">µ</span><span class="n">sec</span>
+</span><span class='line'><span class="o">--------------------------------------------------------------------------------</span>
+</span><span class='line'><span class="nb">String</span>      <span class="o">*</span><span class="p">:</span>               <span class="mi">6578</span>
+</span><span class='line'><span class="nb">String</span>      <span class="nb">split</span><span class="p">:</span>           <span class="mi">1275979</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[DTrace を使ってみよう]]></title>
@@ -3813,51 +3917,6 @@ Deployment するとロードパスの探索範囲内に rdiscount が埋め込�
 <p>各 Framework のクラスで、どのようなメソッドが存在するのか調べたりする際などで活用してみてください。</p>
 
 <p><img src="http://watson1978.github.com/MacRuby-DoJo/images/ja/organizer/organizer_doc_search.png" alt="image" /></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Embeds the MacRuby into Application]]></title>
-    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/19/intro-deployment/"/>
-    <updated>2012-03-19T00:00:00+09:00</updated>
-    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/19/intro-deployment</id>
-    <content type="html"><![CDATA[<p>Application that you created has been just worked with environment which installed MacRuby. When you distribute your application, MacRuby might not be installed in users environments.</p>
-
-<p>Therefore, MacRuby may embed itself into your application. The application which embedded MacRuby will work everywhere.</p>
-
-<p>You choose &#8220;Deployment&#8221; and click [Run] like the following figure. MacRuby is embedded into your application.</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-deployment/deployment.png" alt="image" /></p>
-
-<p>You can specify several options with &#8220;Deployment&#8221; in &#8220;Arguments&#8221; like the following figure.</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-deployment/deployment_option.png" alt="image" /></p>
-
-<p>Run a <code>macruby_deploy</code> command in Terminal.app, you could confirm the options.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ macruby_deploy 
-</span><span class='line'>Usage: macruby_deploy [options] application-bundle
-</span><span class='line'>        --compile                    Compile the bundle source code
-</span><span class='line'>        --embed                      Embed MacRuby inside the bundle
-</span><span class='line'>        --no-stdlib                  Do not embed the standard library
-</span><span class='line'>        --stdlib [LIB]               Embed only LIB from the standard library
-</span><span class='line'>        --gem [GEM]                  Embed GEM and its dependencies
-</span><span class='line'>        --bs                         Embed the system BridgeSupport files
-</span><span class='line'>        --verbose                    Log all commands to standard out
-</span><span class='line'>        --codesign [CERT]            Sign the files with the specified certificate
-</span><span class='line'>    -v, --version                    Display the version</span></code></pre></td></tr></table></div></figure>
-
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: MacRuby | MacRuby DoJo (道場)]]></title>
   <link href="http://watson1978.github.com/MacRuby-DoJo/blog/categories/macruby/atom.xml" rel="self"/>
   <link href="http://watson1978.github.com/MacRuby-DoJo/"/>
-  <updated>2012-04-14T22:19:09+09:00</updated>
+  <updated>2012-04-15T00:43:58+09:00</updated>
   <id>http://watson1978.github.com/MacRuby-DoJo/</id>
   <author>
     <name><![CDATA[Watson]]></name>
@@ -12,6 +12,85 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Using the DTrace]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/04/15/dtrace/"/>
+    <updated>2012-04-15T00:00:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/04/15/dtrace</id>
+    <content type="html"><![CDATA[<p><a href="http://en.wikipedia.org/wiki/DTrace">DTrace</a> is a dynamic tracing framework, and you may trace application without changing by DTrace. MacRuby provides some probe for DTrace to trace the methods behavior.</p>
+
+<table class="table">
+<tr><th>Probe Name</th><th>Calling timing</th><th>arg0</th><th>arg1</th><th>arg2</th><th>arg3</th></tr>
+<tr><td>method-entry</td><td>At the start of the method</td><td>Class name</td><td>Method name</td><td>File name</td><td>Line number</td></tr>
+<td>method-return</td><td>At the end of the method</td><td>Class name</td><td>Method name</td><td>File name</td><td>Line number</td></tr>
+<td>raise</td><td>An exception raises</td><td>Class name</td><td>File name</td><td>Line number</td><td>-</td></tr>
+</table>
+
+
+<p>Using these probes, you may easily trace the count of method calling or trace the execution time.</p>
+
+<p>Here is DTrace script which trace the total execution time of String methods.</p>
+
+<p>```d
+/<em> time.d </em>/</p>
+
+<h1>pragma D option quiet</h1>
+
+<p>macruby$target:::method-entry
+/ copyinstr(arg0) == "String" /  /<em> invokes only String methods </em>/
+{</p>
+
+<pre><code>self-&gt;starttime = walltimestamp / 1000;
+</code></pre>
+
+<p>}</p>
+
+<p>macruby$target:::method-return
+/ copyinstr(arg0) == "String" /  /<em> invokes only String methods </em>/
+{</p>
+
+<pre><code>@invoked_time[copyinstr(arg0), copyinstr(arg1)] = sum((walltimestamp / 1000) - self-&gt;starttime);
+</code></pre>
+
+<p>}</p>
+
+<p>END
+{</p>
+
+<pre><code>printf("\n");
+printf("%-10s  %-15s  %s\n", "CLASS", "METHOD", "TOTAL TIME µsec");
+printf("--------------------------------------------------------------------------------\n");
+printa("%-10s  %-15s  %@d\n", @invoked_time);
+</code></pre>
+
+<p>}
+```</p>
+
+<p>Prepare your application to trace the execution time.</p>
+
+<p>```ruby</p>
+
+<h1>test.rb</h1>
+
+<p>1000.times do
+  str = "abc\n" * 1000
+  str.split("\n")
+end
+```</p>
+
+<p>You may retrieve the result as following.</p>
+
+<p>```
+$ sudo dtrace -qs time.d  -c "macruby test.rb"</p>
+
+<h2>CLASS       METHOD           TOTAL TIME µsec</h2>
+
+<p>String      *:               6578
+String      split:           1275979
+```</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[DTrace を使ってみよう]]></title>
@@ -686,384 +765,6 @@ end
 <h3>Pointer#to_object</h3>
 
 <p>TBD</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Original Methods in MacRuby]]></title>
-    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/original-methods/"/>
-    <updated>2012-03-31T16:00:00+09:00</updated>
-    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/original-methods</id>
-    <content type="html"><![CDATA[<p>MacRuby has some original methods. They does not exist in CRuby's methods and Cocoa APIs. This content describes those methods.</p>
-
-<h2>Original Methods</h2>
-
-<h3>String#transform</h3>
-
-<p>Transforms the string to uppercase/lowercase or another language characters.
-This method is implemented with <a href="http://site.icu-project.org/">ICU</a>  <a href="http://userguide.icu-project.org/transforms/general">Transforms</a>.</p>
-
-<ul>
-<li>transform(pattern) -> String
-
-<ul>
-<li>[PARAM] pattern:
-
-<ul>
-<li>Specifies transliteration identifier.</li>
-</ul>
-</li>
-<li>[RETURN]
-
-<ul>
-<li>Returns the transformed string.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<p>```ruby</p>
-
-<blockquote><blockquote><p>"hello".transform("Upper")
-=> "HELLO"
-"HELLO".transform("Lower")
-=> "hello"
-"hello".transform("Hiragana")
-=> "へっろ"
-"hello".transform("Greek")
-=> "ἑλλο"
-```</p></blockquote></blockquote>
-
-<h3>String#pointer</h3>
-
-<p>Returns a Pointer object converted from String. Returned object corresponds to a variable of <code>unsigned char *</code>.</p>
-
-<p>Cocoa APIs has some methods which accepts the pointer variable.
-<code>String#pointer</code> may be used for these methods.</p>
-
-<ul>
-<li>pinter -> Pointer
-
-<ul>
-<li>[RETURN]
-
-<ul>
-<li>Returns a Pointer object converted from String.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<p>```ruby</p>
-
-<blockquote><blockquote><p>pointer = "foo".pointer
-=> #&lt;Pointer:0x4007ac580>
-data = NSData.dataWithBytes(pointer, length: "foo".length)
-=> <666f6f>
-data.to_str
-=> "foo"
-```</p></blockquote></blockquote>
-
-<h3>String#to_data</h3>
-
-<p>Returns an <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Reference/Foundation/Classes/NSData_Class/Reference/Reference.html">NSData</a> object which is converted from String.</p>
-
-<ul>
-<li>to_data -> NSData
-
-<ul>
-<li>[RETURN]
-
-<ul>
-<li>Returns a NSData object.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<p>```ruby</p>
-
-<blockquote><blockquote><p>"foo".to_data
-=> <666f6f>
-"foo".to_data.class
-=> __NSCFData
-```</p></blockquote></blockquote>
-
-<h3>NSData#to_str</h3>
-
-<p>Returns a String object which is converted from NSData.</p>
-
-<ul>
-<li>to_str -> String
-
-<ul>
-<li>[RETURN]
-
-<ul>
-<li>Returns a String object</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<p>```ruby</p>
-
-<blockquote><blockquote><p>data = "foo".to_data
-=> <666f6f>
-data.to_str
-=> "foo"
-```</p></blockquote></blockquote>
-
-<h3>Kernel.framework</h3>
-
-<p>Loads a framework.</p>
-
-<ul>
-<li>framework -> bool
-
-<ul>
-<li>[RETURN]
-
-<ul>
-<li>Returns a true if loaded a framework. Otherwise, returns a false.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<p>```ruby</p>
-
-<blockquote><blockquote><p>framework 'Foundation'
-=> true
-```</p></blockquote></blockquote>
-
-<h3>Kernel.load_bridge_support_file</h3>
-
-<p>Loads a Bridge Support file.</p>
-
-<ul>
-<li>load_bridge_support_file(filename) -> self</li>
-</ul>
-
-
-<p>```ruby</p>
-
-<blockquote><blockquote><p>load_bridge_support_file("Foo.bridgesupport")
-=> main
-```</p></blockquote></blockquote>
-
-<h3>Kernel.load_plist</h3>
-
-<p>Returns an object which is converted from string of plist format.</p>
-
-<ul>
-<li>load_plist(string) -> Object
-
-<ul>
-<li>[PARAM] string:
-
-<ul>
-<li>Passes a string of plist format.</li>
-</ul>
-</li>
-<li>[RETURN]
-
-<ul>
-<li>Returns an object.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<p>```ruby</p>
-
-<blockquote><blockquote><p>data = File.read('StopWatch-Info.plist')
-load_plist(data)
-=> {"CFBundleName"=>"${PRODUCT_NAME}", "CFBundleIdentifier"=>"Watson.${PRODUCT_NAME:rfc1034identifier}", "CFBundleInfoDictionaryVersion"=>"6.0", "CFBundleVersion"=>"1", "CFBundleExecutable"=>"${EXECUTABLE_NAME}", "NSPrincipalClass"=>"NSApplication", "CFBundlePackageType"=>"APPL", "CFBundleIconFile"=>"MacRuby.icns", "CFBundleSignature"=>"????", "NSMainNibFile"=>"MainMenu", "LSMinimumSystemVersion"=>"${MACOSX_DEPLOYMENT_TARGET}", "CFBundleDevelopmentRegion"=>"en", "CFBundleShortVersionString"=>"1.0"}</p>
-
-<p>data = "foo".to_plist
-load_plist(data)
-=> "foo"
-```</p></blockquote></blockquote>
-
-<h3>Object#to_plist</h3>
-
-<p>Returns a string of plist format which is converted from Object.</p>
-
-<ul>
-<li>to_plist -> String
-
-<ul>
-<li>[RETURN]
-
-<ul>
-<li>Returns a string of plist format.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<p>```ruby</p>
-
-<blockquote><blockquote><p>"foo".to_plist
-=> "&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?>\n&lt;!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n<plist version=\"1.0\">\n<string>foo</string>\n</plist>\n"
-{"foo" => 42}.to_plist
-=> "&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?>\n&lt;!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n<plist version=\"1.0\">\n<dict>\n\t<key>foo</key>\n\t<integer>42</integer>\n</dict>\n</plist>\n"
-["foo", "bar"].to_plist
-=> "&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?>\n&lt;!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n<plist version=\"1.0\">\n<array>\n\t<string>foo</string>\n\t<string>bar</string>\n</array>\n</plist>\n"
-```</p></blockquote></blockquote>
-
-<h3>Object#methods</h3>
-
-<p>Returns a methods list. CRuby also has <code>Object#methods</code>, <code>objc_methods</code> argument is added to MacRuby's method.</p>
-
-<ul>
-<li>methods(include_inherited = true, objc_methods = false) -> [Symbol]
-
-<ul>
-<li>[PARAM] include_inherited:
-
-<ul>
-<li>If passes a true, looks up a recursively.</li>
-</ul>
-</li>
-<li>[PARAM] objc_methods:
-
-<ul>
-<li>If passes a true, returns the Ruby's methods and Cocoa APIs.</li>
-</ul>
-</li>
-<li>[RETURN]
-
-<ul>
-<li>Returns a method list.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<p>```ruby</p>
-
-<blockquote><p>"foo".methods(true, true)
-=> [:encode!, :"replaceCharactersInRange:withString:", :"getCharacters:range:", :characterAtIndex, :length, :transform, :crypt, :rpartition, :partition, :sum, :tr_s!, :tr_s, :tr!, :tr, :squeeze!, :squeeze, :delete!, :delete, :count, :reverse!, :reverse, :upto, :next!, :next, :succ!, :succ, :each_codepoint, :codepoints, :each_byte, :bytes, :each_char, :chars, :each_line, :lines, :rstrip!, :lstrip!, :strip!, :rstrip, :lstrip, :strip, :center, :rjust, :ljust, :capitalize!, :capitalize, :swapcase!, :swapcase, :upcase!, :upcase, :downcase!, :downcase, :gsub!, :gsub, :sub!, :sub, :chop!, :chop, :chomp!, :chomp, :to_f, :chr, :ord, :oct, :hex, :to_i, :split, :scan, :=~, :match, :dump, :inspect, :intern, :to_sym, :to_str, :to_s, :end_with?, :start_with?, :include?, :eql?, :casecmp, :&lt;=>, :==, :concat, :&lt;&lt;, :%, :*, :+, :rindex, :index, :insert, :slice!, :slice, :[]=, :[], :ascii_only?, :valid_encoding?, :force_encoding, :pointer, :to_data, :setbyte, :getbyte, :bytesize, :empty?, :size, :encoding, :clear, :replace, :dup, :"performSelector:withObject:withObject:", :"performSelector:withObject:", :performSelector, :conformsToProtocol, :dd_appendSpaces, :"replaceOccurrencesOfString:withString:options:range:", :initWithCapacity,  ---- snip ----
-```</p></blockquote>
-
-<h3>Range#relative_to</h3>
-
-<p>Returns a new Range instance which has negative values in <code>rng</code> expanded relative to <code>max</code>.</p>
-
-<ul>
-<li>relative_to(max) -> Range
-
-<ul>
-<li>[PARAM] max:
-
-<ul>
-<li>Specifies a max of Range.</li>
-</ul>
-</li>
-<li>[RETURN]
-
-<ul>
-<li>Returns a new Range instance.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<p>```ruby</p>
-
-<blockquote><blockquote><p>(1..10).relative_to(5)
-=> 1..5
-(-2..-1).relative_to(5)
-=> 3..4
-```</p></blockquote></blockquote>
-
-<h3>BasicSocket#sendfile</h3>
-
-<p>Sends a file with socket. This method is implemented with <a href="http://developer.apple.com/library/ios/#DOCUMENTATION/System/Conceptual/ManPages_iPhoneOS/man2/sendfile.2.html">sendfile(2)</a>.</p>
-
-<ul>
-<li>sendfile(file, offset, length) -> Integer
-
-<ul>
-<li>[PARAM] file:
-
-<ul>
-<li>Specifies a file path or readable IO object.</li>
-</ul>
-</li>
-<li>[PARAM] offset:
-
-<ul>
-<li>Specifies a offset as start position.</li>
-</ul>
-</li>
-<li>[PARAM] length:
-
-<ul>
-<li>Specifies a length to send.</li>
-</ul>
-</li>
-<li>[RETURN]
-
-<ul>
-<li>Returns a sent length.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<p>```ruby
-require 'socket'</p>
-
-<p>port = 5000
-socket = TCPSocket.open('localhost', port)</p>
-
-<p>path = 'sample.txt'
-socket.sendfile(path, 0, 128)
-```</p>
-
-<h3>Fixnum#popcnt</h3>
-
-<p>Returns the number of 1 bits set in the internal representation of Fixnum.</p>
-
-<ul>
-<li>popcnt -> Fixnum</li>
-</ul>
-
-
-<p>```ruby</p>
-
-<blockquote><blockquote><p>13.to_s(2)
-=> "1101"
-13.popcnt
-=> 3
-255.to_s(2)
-=> "11111111"
-255.popcnt
-=> 8
-```</p></blockquote></blockquote>
 ]]></content>
   </entry>
   
