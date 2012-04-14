@@ -4,7 +4,7 @@
   <title><![CDATA[Category: MacRuby | MacRuby DoJo (道場)]]></title>
   <link href="http://watson1978.github.com/MacRuby-DoJo/blog/categories/macruby/atom.xml" rel="self"/>
   <link href="http://watson1978.github.com/MacRuby-DoJo/"/>
-  <updated>2012-04-14T14:23:54+09:00</updated>
+  <updated>2012-04-14T22:19:09+09:00</updated>
   <id>http://watson1978.github.com/MacRuby-DoJo/</id>
   <author>
     <name><![CDATA[Watson]]></name>
@@ -12,6 +12,93 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[DTrace を使ってみよう]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/04/14/dtrace/"/>
+    <updated>2012-04-14T21:00:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/04/14/dtrace</id>
+    <content type="html"><![CDATA[<p>DTrace を使用することで、システムやアプリケーションに手を加えることなく、それらをトレースすることができます。MacRuby はメソッドの振る舞いをトレースするために、いくつかプローブというものを用意しています。</p>
+
+<table class="table">
+<tr><th>プローブ名</th><th>実行タイミング</th><th>arg0</th><th>arg1</th><th>arg2</th><th>arg3</th></tr>
+<tr><td>method-entry</td><td>メソッド呼出開始</td><td>クラス名</td><td>メソッド名</td><td>ソースファイル名</td><td>行番号</td></tr>
+<td>method-return</td><td>メソッド呼出終了</td><td>クラス名</td><td>メソッド名</td><td>ソースファイル名</td><td>行番号</td></tr>
+<td>raise</td><td>例外発生時</td><td>クラス名</td><td>ソースファイル名</td><td>行番号</td><td>-</td></tr>
+</table>
+
+
+<p>これらを使用することで、メソッドが呼び出された回数や実行時間を簡単に計測できます。</p>
+
+<p>以下は String クラスのメソッドの合計実行時間を計測するための DTrace スクリプトです。</p>
+
+<p>```d</p>
+
+<h1>!/usr/sbin/dtrace -s</h1>
+
+<h1>pragma D option quiet</h1>
+
+<p>macruby$target:::method-entry
+/ copyinstr(arg0) == "String" /  /<em> invokes only String methods </em>/
+{</p>
+
+<pre><code>self-&gt;starttime = walltimestamp / 1000;
+</code></pre>
+
+<p>}</p>
+
+<p>macruby$target:::method-return
+/ copyinstr(arg0) == "String" /  /<em> invokes only String methods </em>/
+{</p>
+
+<pre><code>@invoked_time[copyinstr(arg0), copyinstr(arg1)] = sum((walltimestamp / 1000) - self-&gt;starttime);
+</code></pre>
+
+<p>}</p>
+
+<p>END
+{</p>
+
+<pre><code>printf("\n");
+printf("%-10s  %-15s  %s\n", "CLASS", "METHOD", "TOTAL TIME µsec");
+printf("--------------------------------------------------------------------------------\n");
+printa("%-10s  %-15s  %@d\n", @invoked_time);
+</code></pre>
+
+<p>}
+```</p>
+
+<p>実行時間を計測する Ruby のプログラムを用意します。</p>
+
+<p>```ruby</p>
+
+<h1>test.rb</h1>
+
+<p>1000.times do
+  str = "abc\n" * 1000
+  str.split("\n")
+end
+```</p>
+
+<p>これらを実行すると以下のような結果となります。</p>
+
+<p>```
+$ sudo dtrace -qs time.d  -c "macruby test.rb"</p>
+
+<h2>CLASS       METHOD           TOTAL TIME µsec</h2>
+
+<p>String      *:               6578
+String      split:           1275979
+```</p>
+
+<p>DTrace については、以下のサイトなどが有益です。</p>
+
+<ul>
+<li><a href="http://docs.oracle.com/cd/E24845_01/html/E22189/toc.html">DTrace ユーザーガイド</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Sandbox Class]]></title>
@@ -976,75 +1063,6 @@ socket.sendfile(path, 0, 128)
 => "11111111"
 255.popcnt
 => 8
-```</p></blockquote></blockquote>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Original Constants in MacRuby]]></title>
-    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/original-constants/"/>
-    <updated>2012-03-31T16:00:00+09:00</updated>
-    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/original-constants</id>
-    <content type="html"><![CDATA[<p>This content describes the constants that have been added in MacRuby.</p>
-
-<h2>Original Constants</h2>
-
-<h3>Kernel::RUBY_ARCH</h3>
-
-<p>CPU name of the architecture which MacRuby is ran.</p>
-
-<p>```ruby</p>
-
-<blockquote><blockquote><p>Kernel::RUBY_ARCH
-=> "x86_64"
-```</p></blockquote></blockquote>
-
-<h3>Kernel::MACRUBY_VERSION</h3>
-
-<p>MacRuby version.</p>
-
-<p>```ruby</p>
-
-<blockquote><blockquote><p>Kernel::MACRUBY_VERSION
-=> "0.12"
-```</p></blockquote></blockquote>
-
-<p>Following method may check whether running your program on MacRuby.
-```ruby
-def is_macruby?
-  begin</p>
-
-<pre><code>MACRUBY_VERSION
-return true
-</code></pre>
-
-<p>  rescue</p>
-
-<pre><code>return false
-</code></pre>
-
-<p>  end
-end
-```</p>
-
-<h3>Kernel::MACRUBY_REVISION</h3>
-
-<p>Git SHA1 Hash which indicates a last commit. (Older MacRuby shows a revision number of SVN)</p>
-
-<p>```ruby</p>
-
-<blockquote><blockquote><p>Kernel::MACRUBY_REVISION
-=> "git commit e35df75944e7a13d16f019e2ed1e4ce2406b06af"
-```</p></blockquote></blockquote>
-
-<h3>Dir::NS_TMPDIR</h3>
-
-<p>Path of temporary directory.</p>
-
-<p>```ruby</p>
-
-<blockquote><blockquote><p>Dir::NS_TMPDIR
-=> "/var/folders/1z/ff7x15cj7vb24rl38ty0y52w0000gn/T/"
 ```</p></blockquote></blockquote>
 ]]></content>
   </entry>

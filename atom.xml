@@ -4,7 +4,7 @@
   <title><![CDATA[MacRuby DoJo (道場)]]></title>
   <link href="http://watson1978.github.com/MacRuby-DoJo/atom.xml" rel="self"/>
   <link href="http://watson1978.github.com/MacRuby-DoJo/"/>
-  <updated>2012-04-14T14:23:54+09:00</updated>
+  <updated>2012-04-14T22:19:09+09:00</updated>
   <id>http://watson1978.github.com/MacRuby-DoJo/</id>
   <author>
     <name><![CDATA[Watson]]></name>
@@ -12,6 +12,115 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[DTrace を使ってみよう]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/04/14/dtrace/"/>
+    <updated>2012-04-14T21:00:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/04/14/dtrace</id>
+    <content type="html"><![CDATA[<p>DTrace を使用することで、システムやアプリケーションに手を加えることなく、それらをトレースすることができます。MacRuby はメソッドの振る舞いをトレースするために、いくつかプローブというものを用意しています。</p>
+
+<table class="table">
+<tr><th>プローブ名</th><th>実行タイミング</th><th>arg0</th><th>arg1</th><th>arg2</th><th>arg3</th></tr>
+<tr><td>method-entry</td><td>メソッド呼出開始</td><td>クラス名</td><td>メソッド名</td><td>ソースファイル名</td><td>行番号</td></tr>
+<td>method-return</td><td>メソッド呼出終了</td><td>クラス名</td><td>メソッド名</td><td>ソースファイル名</td><td>行番号</td></tr>
+<td>raise</td><td>例外発生時</td><td>クラス名</td><td>ソースファイル名</td><td>行番号</td><td>-</td></tr>
+</table>
+
+
+<p>これらを使用することで、メソッドが呼び出された回数や実行時間を簡単に計測できます。</p>
+
+<p>以下は String クラスのメソッドの合計実行時間を計測するための DTrace スクリプトです。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='d'><span class='line'><span class="err">#</span><span class="p">!/</span><span class="n">usr</span><span class="p">/</span><span class="n">sbin</span><span class="p">/</span><span class="n">dtrace</span> <span class="p">-</span><span class="n">s</span>
+</span><span class='line'>
+</span><span class='line'><span class="err">#</span><span class="k">pragma</span> <span class="n">D</span> <span class="n">option</span> <span class="n">quiet</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">macruby</span><span class="p">$</span><span class="n">target</span><span class="p">:::</span><span class="n">method</span><span class="p">-</span><span class="n">entry</span>
+</span><span class='line'><span class="p">/</span> <span class="n">copyinstr</span><span class="p">(</span><span class="n">arg0</span><span class="p">)</span> <span class="p">==</span> <span class="s">&quot;String&quot;</span> <span class="p">/</span>  <span class="cm">/* invokes only String methods */</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="n">self</span><span class="p">-&gt;</span><span class="n">starttime</span> <span class="p">=</span> <span class="n">walltimestamp</span> <span class="p">/</span> <span class="mi">1000</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">macruby</span><span class="p">$</span><span class="n">target</span><span class="p">:::</span><span class="n">method</span><span class="p">-</span><span class="k">return</span>
+</span><span class='line'><span class="p">/</span> <span class="n">copyinstr</span><span class="p">(</span><span class="n">arg0</span><span class="p">)</span> <span class="p">==</span> <span class="s">&quot;String&quot;</span> <span class="p">/</span>  <span class="cm">/* invokes only String methods */</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="err">@</span><span class="n">invoked_time</span><span class="p">[</span><span class="n">copyinstr</span><span class="p">(</span><span class="n">arg0</span><span class="p">),</span> <span class="n">copyinstr</span><span class="p">(</span><span class="n">arg1</span><span class="p">)]</span> <span class="p">=</span> <span class="n">sum</span><span class="p">((</span><span class="n">walltimestamp</span> <span class="p">/</span> <span class="mi">1000</span><span class="p">)</span> <span class="p">-</span> <span class="n">self</span><span class="p">-&gt;</span><span class="n">starttime</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">END</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;\n&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%-10s  %-15s  %s\n&quot;</span><span class="p">,</span> <span class="s">&quot;CLASS&quot;</span><span class="p">,</span> <span class="s">&quot;METHOD&quot;</span><span class="p">,</span> <span class="s">&quot;TOTAL TIME µsec&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;--------------------------------------------------------------------------------\n&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">printa</span><span class="p">(</span><span class="s">&quot;%-10s  %-15s  %@d\n&quot;</span><span class="p">,</span> <span class="err">@</span><span class="n">invoked_time</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>実行時間を計測する Ruby のプログラムを用意します。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># test.rb</span>
+</span><span class='line'><span class="mi">1000</span><span class="o">.</span><span class="n">times</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">str</span> <span class="o">=</span> <span class="s2">&quot;abc</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">*</span> <span class="mi">1000</span>
+</span><span class='line'>  <span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>これらを実行すると以下のような結果となります。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">sudo</span> <span class="n">dtrace</span> <span class="o">-</span><span class="n">qs</span> <span class="n">time</span><span class="o">.</span><span class="n">d</span>  <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;macruby test.rb&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">CLASS</span>       <span class="no">METHOD</span>           <span class="no">TOTAL</span> <span class="no">TIME</span> <span class="err">µ</span><span class="n">sec</span>
+</span><span class='line'><span class="o">--------------------------------------------------------------------------------</span>
+</span><span class='line'><span class="nb">String</span>      <span class="o">*</span><span class="p">:</span>               <span class="mi">6578</span>
+</span><span class='line'><span class="nb">String</span>      <span class="nb">split</span><span class="p">:</span>           <span class="mi">1275979</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>DTrace については、以下のサイトなどが有益です。</p>
+
+<ul>
+<li><a href="http://docs.oracle.com/cd/E24845_01/html/E22189/toc.html">DTrace ユーザーガイド</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Sandbox Class]]></title>
@@ -3749,237 +3858,6 @@ Deployment するとロードパスの探索範囲内に rdiscount が埋め込�
 </span><span class='line'>        --codesign [CERT]            Sign the files with the specified certificate
 </span><span class='line'>    -v, --version                    Display the version</span></code></pre></td></tr></table></div></figure>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Creates a Stopwatch Application]]></title>
-    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/18/intro-stopwatch/"/>
-    <updated>2012-03-18T00:01:00+09:00</updated>
-    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/18/intro-stopwatch</id>
-    <content type="html"><![CDATA[<p>In this content, describe how to create a simple application. This content have some essences to create an application using MacRuby.</p>
-
-<p>Show an application’s User Interface in following figure. We will call this application &#8220;StopWatch&#8221;.</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-stopwatch/stopwatch.png" alt="image" /></p>
-
-<p>The &#8220;StopWatch&#8221; has below behaviors.</p>
-
-<ol>
-<li>Run a timer if start button is clicked.</li>
-<li>Stop a timer if stop button is clicked.</li>
-<li>A timer value is displayed in Text Field.</li>
-</ol>
-
-
-<h2>User Interface</h2>
-
-<p>To start the design, need some operations in Xcode.</p>
-
-<p>Choose a <em>MainMenu.xib</em>.</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-stopwatch/mainmenu_xib.png" alt="image" /></p>
-
-<p>Choose a [Window - StopWatch] to display Window for design.</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-stopwatch/window_stopwatch.png" alt="image" /></p>
-
-<p>Click an icon in toolbar like the following figure. After that, Object Library is displayed.</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-stopwatch/show_object_library.png" alt="image" /></p>
-
-<p>You have been completed to prepare to design. Then, place the User Interface parts from Object Library to Window.</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-stopwatch/ui_design.png" alt="image" /></p>
-
-<h2>Connect the Outlets</h2>
-
-<p>The &#8220;StopWatch&#8221; application sets a timer value into Text Field. However, if Text Field is just placed on Window, cannot set a value into there. We should use the Outlets to set a value or to get a status of User Interface parts.</p>
-
-<p>To use the Outlets, need to write a program code. Choose a <em>AppDelegate.rb</em>. After that, add a <code>attr_accessor :textField</code> to AppDelegate class.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">AppDelegate</span>
-</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:window</span>
-</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:textField</span> <span class="c1"># Outlet</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Return to <em>MainMenu.xib</em> screen, connect the Outlet. Press <kbd>control</kbd> key and drag from App Delegate to Text Field.</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-stopwatch/connect_outlet.png" alt="image" /></p>
-
-<p>A list of Outlets will be displayed, and then choose a <code>textField</code> to connect it.</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-stopwatch/outlets.png" alt="image" /></p>
-
-<p>You can set/get the value of the Text Field through the textField accessor.</p>
-
-<h2>Connect the Actions</h2>
-
-<p>When you clicked start/stop button, still nothing happens. You need to set the behaviors when the buttons are clicked.</p>
-
-<p>Choose an <em>AppDelegate.rb</em>. After that, add <code>startTimer</code> and <code>stopTimer</code> methods as following.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">AppDelegate</span>
-</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:window</span>
-</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:textField</span> <span class="c1"># Outlet</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">applicationDidFinishLaunching</span><span class="p">(</span><span class="n">a_notification</span><span class="p">)</span>
-</span><span class='line'>    <span class="c1"># Insert code here to initialize your application</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">startTimer</span><span class="p">(</span><span class="n">sender</span><span class="p">)</span>
-</span><span class='line'>    <span class="c1"># This method is called when clicked start button.</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">stopTimer</span><span class="p">(</span><span class="n">sender</span><span class="p">)</span>
-</span><span class='line'>    <span class="c1"># This method is called when clicked stop button.</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Return to <em>MainMenu.xib</em> screen, connect the Actions. Press control key and drag from start button to App Delegate.</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-stopwatch/connect_action.png" alt="image" /></p>
-
-<p>A list of Actions will be displayed, and then choose a <code>startTimer</code> to connect it.</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-stopwatch/actions.png" alt="image" /></p>
-
-<p>Connect stop button to <code>stopTimer</code> in the same way. Each methods will be called when the button is clicked.</p>
-
-<p><code>stopTimer</code>/<code>startTimer</code> are also known as the action method.</p>
-
-<div class="note">
-If you write an action method, you <strong>must</strong> provide a <code>sender</code> argument. If methods does not have a <code>sender</code> argument, it is not recognized as an action method.
-</div>
-
-
-<h2>Use the timer</h2>
-
-<p>If you do something at a constant interval, use the <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Reference/Foundation/Classes/nstimer_Class/Reference/NSTimer.html">NSTimer</a>.</p>
-
-<p>When use a timer as shown below, you will be able to handle at a constant interval.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="vi">@timer</span> <span class="o">=</span> <span class="no">NSTimer</span>
-</span><span class='line'>           <span class="o">.</span><span class="n">scheduledTimerWithTimeInterval</span><span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span>
-</span><span class='line'>                                           <span class="n">target</span><span class="p">:</span> <span class="nb">self</span><span class="p">,</span>
-</span><span class='line'>                                           <span class="n">selector</span><span class="p">:</span> <span class="s2">&quot;timerHandler:&quot;</span><span class="p">,</span>
-</span><span class='line'>                                           <span class="n">userInfo</span><span class="p">:</span> <span class="kp">nil</span><span class="p">,</span>
-</span><span class='line'>                                           <span class="n">repeats</span><span class="p">:</span> <span class="kp">true</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">timerHandler</span><span class="p">(</span><span class="n">userInfo</span><span class="p">)</span>
-</span><span class='line'>  <span class="c1"># Handler</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Generate a timer at startTimer and stop a timer at stopTimer.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">AppDelegate</span>
-</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:window</span>
-</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:textField</span> <span class="c1"># Outlet</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">applicationDidFinishLaunching</span><span class="p">(</span><span class="n">a_notification</span><span class="p">)</span>
-</span><span class='line'>    <span class="c1"># Insert code here to initialize your application</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">startTimer</span><span class="p">(</span><span class="n">sender</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">if</span> <span class="vi">@timer</span><span class="o">.</span><span class="n">nil?</span>
-</span><span class='line'>      <span class="vi">@time</span> <span class="o">=</span> <span class="mi">0</span><span class="o">.</span><span class="mi">0</span>
-</span><span class='line'>      <span class="vi">@timer</span> <span class="o">=</span> <span class="no">NSTimer</span>
-</span><span class='line'>                <span class="o">.</span><span class="n">scheduledTimerWithTimeInterval</span><span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span>
-</span><span class='line'>                                                <span class="n">target</span><span class="p">:</span> <span class="nb">self</span><span class="p">,</span>
-</span><span class='line'>                                                <span class="n">selector</span><span class="p">:</span> <span class="s2">&quot;timerHandler:&quot;</span><span class="p">,</span>
-</span><span class='line'>                                                <span class="n">userInfo</span><span class="p">:</span> <span class="kp">nil</span><span class="p">,</span>
-</span><span class='line'>                                                <span class="n">repeats</span><span class="p">:</span> <span class="kp">true</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">stopTimer</span><span class="p">(</span><span class="n">sender</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">if</span> <span class="vi">@timer</span>
-</span><span class='line'>      <span class="vi">@timer</span><span class="o">.</span><span class="n">invalidate</span>
-</span><span class='line'>      <span class="vi">@timer</span> <span class="o">=</span> <span class="kp">nil</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">timerHandler</span><span class="p">(</span><span class="n">userInfo</span><span class="p">)</span>
-</span><span class='line'>    <span class="vi">@time</span> <span class="o">+=</span> <span class="mi">0</span><span class="o">.</span><span class="mi">1</span>
-</span><span class='line'>    <span class="n">string</span> <span class="o">=</span> <span class="nb">sprintf</span><span class="p">(</span><span class="s2">&quot;%.1f&quot;</span><span class="p">,</span> <span class="vi">@time</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">textField</span><span class="o">.</span><span class="n">setStringValue</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Invoke <code>@timer.invalidate</code> to stop a timer. Invoke <code>textField.setStringValue(string)</code> to set string to Text Field.</p>
-
-<p>&#8220;Stopwatch&#8221; application is complete!</p>
-
-<p>Change to &#8220;StopWatch&#8221; from &#8220;Deployment&#8221; in Scheme. After that, Click [Run]. &#8220;Stopwatch&#8221; application will be running!!</p>
-
-<p><img src="http://watson1978.github.com/MacRuby-DoJo/images/en/intro-stopwatch/scheme.png" alt="image" /></p>
 ]]></content>
   </entry>
   
