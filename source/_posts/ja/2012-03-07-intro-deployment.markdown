@@ -40,7 +40,7 @@ Usage: macruby_deploy [options] application-bundle
 <tr><td>--compile</td><td>アプリケーション内で使用している `*.rb` ファイルをコンパイルします。配布先で、不正にアプリケーションコードをコピーされるのを防ぐことができます</td></tr>
 <tr><td>--embed</td><td>アプリケーションに MacRuby を埋め込みます</td></tr>
 <tr><td>--no-stdlib</td><td>MacRuby の標準ライブラリを埋め込みません。標準ライブラリを使用していないアプリケーションでは、このオプションによってアプリケションのサイズを削減することができます</td></tr>
-<tr><td>--stdlib ライブラリ名</td><td>指定したライブラリのみ埋め込みます。--stdlib json のように使用します。</td></tr>
+<tr><td>--stdlib ライブラリ名</td><td>指定した標準ライブラリのみ埋め込みます。--stdlib json のように使用します。</td></tr>
 <tr><td>--gem RubyGems名</td><td>指定した RubyGems をアプリケーションに埋め込みます</td></tr>
 </table>
 
