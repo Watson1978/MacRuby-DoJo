@@ -17,6 +17,25 @@ error = Pointer.new('@')
 
 You can create other Pointer instance if you pass a pointer type into `Pointer.new`. You can find the other pointer type in [Type Encodings](https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html).
 
+
+Here is a few detail sample about Pointer.
+
+```ruby
+framework 'Cocoa'
+
+error = Pointer.new('@')
+url = NSURL.URLWithString("http://your_url")
+string = NSString.stringWithContentsOfURL(url, encoding: NSUTF8StringEncoding, error: error)
+
+if error[0]
+  puts error[0].description
+  raise
+end
+puts string
+```
+
+If an error occurs with `NSString.stringWithContentsOfURL`, an error is stored into `error[0]`.
+
 To create a Pointer instance such as `char* name[5];`, specify a size in the second argument.
 
 ```ruby

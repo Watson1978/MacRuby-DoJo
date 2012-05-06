@@ -17,6 +17,24 @@ error = Pointer.new('@')
 
 `Pointer.new` の引数の `@` は、「オブジェクトのポインタ変数をつくりなさい」と指示しています。`@` のほかにも種類があり [Type Encodings](https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html) で確認することができます。
 
+Pointer クラスについて、もう少し詳しい例を下に示します。
+
+```ruby
+framework 'Cocoa'
+
+error = Pointer.new('@')
+url = NSURL.URLWithString("http://your_url")
+string = NSString.stringWithContentsOfURL(url, encoding: NSUTF8StringEncoding, error: error)
+
+if error[0]
+  puts error[0].description
+  raise
+end
+puts string
+```
+
+`NSString.stringWithContentsOfURL` でエラーが発生すると、`error[0]` にエラー内容が格納されます。
+
 `char* name[5];` のようなインスタンスを作成するには、以下のように `Pointer.new` の第 2 引数でサイズを指定します。
 
 ```ruby
