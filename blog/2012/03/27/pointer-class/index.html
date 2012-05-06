@@ -109,6 +109,35 @@
 
 <p><code>Pointer.new</code> の引数の <code>@</code> は、「オブジェクトのポインタ変数をつくりなさい」と指示しています。<code>@</code> のほかにも種類があり <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html">Type Encodings</a> で確認することができます。</p>
 
+<p>Pointer クラスについて、もう少し詳しい例を下に示します。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">framework</span> <span class="s1">&#39;Cocoa&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">error</span> <span class="o">=</span> <span class="no">Pointer</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;@&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">url</span> <span class="o">=</span> <span class="no">NSURL</span><span class="o">.</span><span class="n">URLWithString</span><span class="p">(</span><span class="s2">&quot;http://your_url&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">string</span> <span class="o">=</span> <span class="no">NSString</span><span class="o">.</span><span class="n">stringWithContentsOfURL</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">encoding</span><span class="p">:</span> <span class="no">NSUTF8StringEncoding</span><span class="p">,</span> <span class="n">error</span><span class="p">:</span> <span class="n">error</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">error</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="n">error</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="n">description</span>
+</span><span class='line'>  <span class="k">raise</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'><span class="nb">puts</span> <span class="n">string</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>NSString.stringWithContentsOfURL</code> でエラーが発生すると、<code>error[0]</code> にエラー内容が格納されます。</p>
+
 <p><code>char* name[5];</code> のようなインスタンスを作成するには、以下のように <code>Pointer.new</code> の第 2 引数でサイズを指定します。</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>

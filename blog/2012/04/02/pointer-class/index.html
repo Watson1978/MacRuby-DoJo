@@ -109,6 +109,35 @@
 
 <p>You can create other Pointer instance if you pass a pointer type into <code>Pointer.new</code>. You can find the other pointer type in <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html">Type Encodings</a>.</p>
 
+<p>Here is a few detail sample about Pointer.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">framework</span> <span class="s1">&#39;Cocoa&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">error</span> <span class="o">=</span> <span class="no">Pointer</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;@&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">url</span> <span class="o">=</span> <span class="no">NSURL</span><span class="o">.</span><span class="n">URLWithString</span><span class="p">(</span><span class="s2">&quot;http://your_url&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">string</span> <span class="o">=</span> <span class="no">NSString</span><span class="o">.</span><span class="n">stringWithContentsOfURL</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">encoding</span><span class="p">:</span> <span class="no">NSUTF8StringEncoding</span><span class="p">,</span> <span class="n">error</span><span class="p">:</span> <span class="n">error</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">error</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="n">error</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="n">description</span>
+</span><span class='line'>  <span class="k">raise</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'><span class="nb">puts</span> <span class="n">string</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If an error occurs with <code>NSString.stringWithContentsOfURL</code>, an error is stored into <code>error[0]</code>.</p>
+
 <p>To create a Pointer instance such as <code>char* name[5];</code>, specify a size in the second argument.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>

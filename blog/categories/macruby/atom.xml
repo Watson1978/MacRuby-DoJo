@@ -4,7 +4,7 @@
   <title><![CDATA[Category: MacRuby | MacRuby DoJo (道場)]]></title>
   <link href="http://watson1978.github.com/MacRuby-DoJo/blog/categories/macruby/atom.xml" rel="self"/>
   <link href="http://watson1978.github.com/MacRuby-DoJo/"/>
-  <updated>2012-05-02T15:38:34+09:00</updated>
+  <updated>2012-05-06T16:58:29+09:00</updated>
   <id>http://watson1978.github.com/MacRuby-DoJo/</id>
   <author>
     <name><![CDATA[Watson]]></name>
@@ -411,6 +411,24 @@ error = Pointer.new('@')
 </code></p>
 
 <p>You can create other Pointer instance if you pass a pointer type into <code>Pointer.new</code>. You can find the other pointer type in <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html">Type Encodings</a>.</p>
+
+<p>Here is a few detail sample about Pointer.</p>
+
+<p>```ruby
+framework 'Cocoa'</p>
+
+<p>error = Pointer.new('@')
+url = NSURL.URLWithString("http://your_url")
+string = NSString.stringWithContentsOfURL(url, encoding: NSUTF8StringEncoding, error: error)</p>
+
+<p>if error[0]
+  puts error[0].description
+  raise
+end
+puts string
+```</p>
+
+<p>If an error occurs with <code>NSString.stringWithContentsOfURL</code>, an error is stored into <code>error[0]</code>.</p>
 
 <p>To create a Pointer instance such as <code>char* name[5];</code>, specify a size in the second argument.</p>
 
