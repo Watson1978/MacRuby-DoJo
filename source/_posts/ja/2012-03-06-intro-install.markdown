@@ -49,10 +49,10 @@ Xcode のメニューから [Xcode]->[Preferences...] と選択していきま�
 
 ![image](/images/ja/intro-install/macruby_org.png)
 
-現在リリースされている MacRuby 0.10 は、残念ながら Xcode 4.3 には対応していません。そこで [https://macruby.macosforge.org/files/nightlies](https://macruby.macosforge.org/files/nightlies) から nightly build の *macruby_nightly-latest.pkg* をダウンロードしてインストールします。nightly build は、毎日作られその時点での最新の変更内容が適用されたパッケージです。
+現在リリースされている MacRuby 0.10 は、残念ながら Xcode 4.3 には対応していません。そこで [https://macruby.macosforge.org/files/nightlies/](https://macruby.macosforge.org/files/nightlies/) から nightly build の *macruby_nightly-latest.pkg* をダウンロードしてインストールします。nightly build は、毎日作られその時点での最新の変更内容が適用されたパッケージです。
 
 ![image](/images/ja/intro-install/nightly_build.png)
 
 
 ## BridgeSupport Preview 3 をインストール
-**Mac OS X 10.6.8 を利用している方のみ** BridgeSupport Preview 3 をインストールします。BridgeSupport は Mac OS X が提供する Framework の情報を取得するためのものです。Mac OS X 10.7 にはあらかじめ同等のものがインストールされています。[http://www.macruby.org/files/](http://www.macruby.org/files/) から *BridgeSupport Preview 3.zip* をダウンロードしインストールします。
+**Mac OS X 10.6.8 を利用している方のみ** BridgeSupport Preview 3 をインストールします。BridgeSupport は Mac OS X が提供する Framework の情報を取得するためのものです。Mac OS X 10.7 にはあらかじめ同等のものがインストールされています。[http://macruby.macosforge.org/files/](http://macruby.macosforge.org/files/) から *BridgeSupport Preview 3.zip* をダウンロードしインストールします。
