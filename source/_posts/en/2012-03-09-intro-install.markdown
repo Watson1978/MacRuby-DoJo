@@ -53,7 +53,7 @@ Next step, install MacRuby.
 
 ![image](/images/en/intro-install/macruby_org.png)
 
-MacRuby 0.10 has been released now. However, unfortunately, it does not support for Xcode 4.3. Therefore, you should install the nightly build and could download it from [http://www.macruby.org/files/nightlies/](http://www.macruby.org/files/nightlies/). The nightly build which has latest changes has packaged every night.
+MacRuby 0.10 has been released now. However, unfortunately, it does not support for Xcode 4.3. Therefore, you should install the nightly build and could download it from [https://macruby.macosforge.org/files/nightlies](https://macruby.macosforge.org/files/nightlies). The nightly build which has latest changes has packaged every night.
 
 ![image](/images/en/intro-install/nightly_build.png)
 

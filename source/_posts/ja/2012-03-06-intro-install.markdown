@@ -49,7 +49,7 @@ Xcode のメニューから [Xcode]->[Preferences...] と選択していきま�
 
 ![image](/images/ja/intro-install/macruby_org.png)
 
-現在リリースされている MacRuby 0.10 は、残念ながら Xcode 4.3 には対応していません。そこで [http://www.macruby.org/files/nightlies/](http://www.macruby.org/files/nightlies/) から nightly build の *macruby_nightly-latest.pkg* をダウンロードしてインストールします。nightly build は、毎日作られその時点での最新の変更内容が適用されたパッケージです。
+現在リリースされている MacRuby 0.10 は、残念ながら Xcode 4.3 には対応していません。そこで [https://macruby.macosforge.org/files/nightlies](https://macruby.macosforge.org/files/nightlies) から nightly build の *macruby_nightly-latest.pkg* をダウンロードしてインストールします。nightly build は、毎日作られその時点での最新の変更内容が適用されたパッケージです。
 
 ![image](/images/ja/intro-install/nightly_build.png)
 
