@@ -75,7 +75,16 @@ end
 という手順を踏むと、ほぼ MacRuby の文法になるかと思います。
 
 
-----
-TBD
+## Apple が提供している API リファレンスに MacRuby / RubyMotion の記述方法を表示する
 
-他に気がついたら書き足します。
+<a href="http://qiita.com/items/d810011c259c611de919">Qiita</a> に投稿していたのですが、こちらにも記載します。
+
+Apple が提供している API リファレンスはとても充実していますが、説明されている API は Objective-C による構文ととなっています。
+
+そこで、[macruby-docs-js](https://github.com/joakimk/macruby-docs-js) というユーザスクリプトをブラウザにインストールします。インストール後に API リファレンスを閲覧すると、MacRuby / RubyMotion で記述するとどうなるかが表示されるようになります。
+
+1. Google Chrome で [macruby-docs.user.js](https://github.com/joakimk/macruby-docs-js/raw/master/macruby-docs.user.js) をクリックしインストールします。(Firefox の場合には、Greasemonkey などをあらかじめインストールしておけば良いのかと思います)
+2. [NSString Class Reference](https://developer.apple.com/library/mac/#documentation/Cocoa/Reference/Foundation/Classes/NSString_Class/Reference/NSString.html) などの API リファレンスをブラウザで閲覧します。下の図のように、各 API の Objective-C の構文の下に MacRuby / RubyMotion での記述方法が表示されるようになります。(C Blocks を利用する API の表示がおかしいような感じではありましたが。)
+
+![MacRuby/RubyMotionの記述が表示される](http://cdn-ak.f.st-hatena.com/images/fotolife/W/Watson/20120514/20120514232955.png?1337005803)
+
