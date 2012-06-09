@@ -207,11 +207,21 @@
 
 <p>という手順を踏むと、ほぼ MacRuby の文法になるかと思います。</p>
 
-<hr />
+<h2>Apple が提供している API リファレンスに MacRuby / RubyMotion の記述方法を表示する</h2>
 
-<p>TBD</p>
+<p><a href="http://qiita.com/items/d810011c259c611de919">Qiita</a> に投稿していたのですが、こちらにも記載します。</p>
 
-<p>他に気がついたら書き足します。</p>
+<p>Apple が提供している API リファレンスはとても充実していますが、説明されている API は Objective-C による構文ととなっています。</p>
+
+<p>そこで、<a href="https://github.com/joakimk/macruby-docs-js">macruby-docs-js</a> というユーザスクリプトをブラウザにインストールします。インストール後に API リファレンスを閲覧すると、MacRuby / RubyMotion で記述するとどうなるかが表示されるようになります。</p>
+
+<ol>
+<li>Google Chrome で <a href="https://github.com/joakimk/macruby-docs-js/raw/master/macruby-docs.user.js">macruby-docs.user.js</a> をクリックしインストールします。(Firefox の場合には、Greasemonkey などをあらかじめインストールしておけば良いのかと思います)</li>
+<li><a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Reference/Foundation/Classes/NSString_Class/Reference/NSString.html">NSString Class Reference</a> などの API リファレンスをブラウザで閲覧します。下の図のように、各 API の Objective-C の構文の下に MacRuby / RubyMotion での記述方法が表示されるようになります。(C Blocks を利用する API の表示がおかしいような感じではありましたが。)</li>
+</ol>
+
+
+<p><img src="http://cdn-ak.f.st-hatena.com/images/fotolife/W/Watson/20120514/20120514232955.png?1337005803" alt="MacRuby/RubyMotionの記述が表示される" /></p>
 </div>
 
 
@@ -294,12 +304,13 @@
   <h1>Links</h1>
   <ul>
     <li><a href="http://www.macruby.org/">MacRuby » Home</a></li>
-    <li><a href="http://www.macruby.org/files/">MacRuby » Files</a></li>
-    <li><a href="http://www.macruby.org/trac/report/1?asc=0&sort=ticket">MacRuby » Active Tickets</a></li>
+    <li><a href="https://github.com/MacRuby/MacRuby/downloads">MacRuby » Files</a> (<a href="http://macruby.macosforge.org/files/">old site</a>)</li>
+    <li><a href="https://github.com/MacRuby/MacRuby/issues">MacRuby » Issues</a></li>
   </ul>
   <br/>
   <ul>
     <li><a href="http://ofps.oreilly.com/titles/9781449380373/">MacRuby: The Definitive Guide</a></li>
+    <li><a href="http://www.manning.com/lim/">Manning: MacRuby in Action</a></li>
   </ul>
 </section>
 <section>
