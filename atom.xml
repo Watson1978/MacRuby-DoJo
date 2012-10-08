@@ -4,7 +4,7 @@
   <title><![CDATA[MacRuby DoJo (道場)]]></title>
   <link href="http://watson1978.github.com/MacRuby-DoJo/atom.xml" rel="self"/>
   <link href="http://watson1978.github.com/MacRuby-DoJo/"/>
-  <updated>2012-08-25T02:19:40+09:00</updated>
+  <updated>2012-10-08T15:36:47+09:00</updated>
   <id>http://watson1978.github.com/MacRuby-DoJo/</id>
   <author>
     <name><![CDATA[Watson]]></name>
@@ -2217,6 +2217,136 @@ This method is implemented with <a href="http://site.icu-project.org/">ICU</a>  
   </entry>
   
   <entry>
+    <title type="html"><![CDATA[Dispatch モジュール]]></title>
+    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-module/"/>
+    <updated>2012-03-31T10:00:00+09:00</updated>
+    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-module</id>
+    <content type="html"><![CDATA[<p>Mac OS X 10.6 から追加された <a href="https://developer.apple.com/library/mac/#documentation/Performance/Reference/GCD_libdispatch_Ref/Reference/reference.html">Grand Central Dispatch (GCD)</a> を利用するために、MacRuby には Dispatch モジュールと、以下のようにいくつかのクラスがあります。</p>
+
+<ul>
+<li>Dispatch モジュール</li>
+<li><a href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-queue-class/">Dispatch::Queue クラス</a></li>
+<li><a href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-group-class/">Dispatch::Group クラス</a></li>
+<li><a href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-source-class/">Dispatch::Source クラス</a></li>
+<li><a href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-semaphore-class/">Dispatch::Semaphore クラス</a></li>
+</ul>
+
+
+<p>RubyGems の <a href="https://github.com/gunn/Dispatch">Dispatch</a> ライブラリを用いると、より簡単に GCD を使うこともできます。</p>
+
+<h2>Dispatch モジュールの定数</h2>
+
+<h3>Dispatch::TIME_NOW</h3>
+
+<p>「処理をすぐに開始する」と指示するときに使用します。GCD API で <code>DISPATCH_TIME_NOW</code> として定義されている定数と同じ定数です。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gcdq</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Queue</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">after</span><span class="p">(</span><span class="no">Dispatch</span><span class="o">::</span><span class="no">TIME_NOW</span><span class="p">)</span> <span class="p">{</span> <span class="nb">puts</span> <span class="s2">&quot;Hello&quot;</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">sleep</span> <span class="mi">0</span><span class="o">.</span><span class="mi">5</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Dispatch::TIME_FOREVER</h3>
+
+<p>処理が完了するのをタイムアウトなしで待ち続けたりするときに使用します。GCD API で <code>DISPATCH_TIME_FOREVER</code> として定義されている定数と同じ定数です。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gcdq</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Queue</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">sema</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Semaphore</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">async</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;Hello, &quot;</span>
+</span><span class='line'>  <span class="nb">sleep</span> <span class="mi">1</span>
+</span><span class='line'>  <span class="n">sema</span><span class="o">.</span><span class="n">signal</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;Waiting...&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">sema</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="no">Dispatch</span><span class="o">::</span><span class="no">TIME_FOREVER</span><span class="p">)</span>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;World&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Dispatch モジュールのメソッド</h2>
+
+<h3>Dispatch#resume!</h3>
+
+<p>中断されている処理を再開します。GCD API の <code>dispatch_resume</code> に相当します。</p>
+
+<ul>
+<li>resume!</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gcdq</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Queue</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">after</span><span class="p">(</span><span class="no">Dispatch</span><span class="o">::</span><span class="no">TIME_NOW</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nb">sleep</span> <span class="mi">0</span><span class="o">.</span><span class="mi">5</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;Hello&quot;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">suspend!</span>
+</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">suspended?</span>  <span class="c1">#=&gt; true</span>
+</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">resume!</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">sleep</span> <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Dispatch#suspend!</h3>
+
+<p>処理を中断します。GCD API の <code>dispatch_suspend</code> に相当します。</p>
+
+<ul>
+<li>suspend!</li>
+</ul>
+
+
+<h3>Dispatch#suspended?</h3>
+
+<p>処理が中断されているかを返します。</p>
+
+<ul>
+<li>suspended? -> bool
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>処理が中断されていれば true、そうでなければ false を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Dispatch::Group クラス]]></title>
     <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-group-class/"/>
     <updated>2012-03-31T10:00:00+09:00</updated>
@@ -2318,136 +2448,6 @@ This method is implemented with <a href="http://site.icu-project.org/">ICU</a>  
 </span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">async</span><span class="p">(</span><span class="n">gcdg</span><span class="p">)</span> <span class="p">{</span> <span class="nb">sleep</span> <span class="mi">5</span> <span class="p">}</span>
 </span><span class='line'><span class="n">gcdg</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># =&gt; false</span>
 </span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Dispatch クラス]]></title>
-    <link href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-class/"/>
-    <updated>2012-03-31T10:00:00+09:00</updated>
-    <id>http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-class</id>
-    <content type="html"><![CDATA[<p>Mac OS X 10.6 から追加された <a href="https://developer.apple.com/library/mac/#documentation/Performance/Reference/GCD_libdispatch_Ref/Reference/reference.html">Grand Central Dispatch (GCD)</a> を利用するために、MacRuby には Dispatch モジュールと、以下のようにいくつかのクラスがあります。</p>
-
-<ul>
-<li>Dispatch クラス</li>
-<li><a href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-queue-class/">Dispatch::Queue クラス</a></li>
-<li><a href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-group-class/">Dispatch::Group クラス</a></li>
-<li><a href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-source-class/">Dispatch::Source クラス</a></li>
-<li><a href="http://watson1978.github.com/MacRuby-DoJo/blog/2012/03/31/dispatch-semaphore-class/">Dispatch::Semaphore クラス</a></li>
-</ul>
-
-
-<p>RubyGems の <a href="https://github.com/gunn/Dispatch">Dispatch</a> ライブラリを用いると、より簡単に GCD を使うこともできます。</p>
-
-<h2>Dispatch クラスの定数</h2>
-
-<h3>Dispatch::TIME_NOW</h3>
-
-<p>「処理をすぐに開始する」と指示するときに使用します。GCD API で <code>DISPATCH_TIME_NOW</code> として定義されている定数と同じ定数です。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gcdq</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Queue</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">after</span><span class="p">(</span><span class="no">Dispatch</span><span class="o">::</span><span class="no">TIME_NOW</span><span class="p">)</span> <span class="p">{</span> <span class="nb">puts</span> <span class="s2">&quot;Hello&quot;</span> <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">sleep</span> <span class="mi">0</span><span class="o">.</span><span class="mi">5</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Dispatch::TIME_FOREVER</h3>
-
-<p>処理が完了するのをタイムアウトなしで待ち続けたりするときに使用します。GCD API で <code>DISPATCH_TIME_FOREVER</code> として定義されている定数と同じ定数です。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gcdq</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Queue</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="n">sema</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Semaphore</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">async</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;Hello, &quot;</span>
-</span><span class='line'>  <span class="nb">sleep</span> <span class="mi">1</span>
-</span><span class='line'>  <span class="n">sema</span><span class="o">.</span><span class="n">signal</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;Waiting...&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">sema</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="no">Dispatch</span><span class="o">::</span><span class="no">TIME_FOREVER</span><span class="p">)</span>
-</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;World&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Dispatch クラスのメソッド</h2>
-
-<h3>Dispatch#resume!</h3>
-
-<p>中断されている処理を再開します。GCD API の <code>dispatch_resume</code> に相当します。</p>
-
-<ul>
-<li>resume!</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gcdq</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Queue</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">after</span><span class="p">(</span><span class="no">Dispatch</span><span class="o">::</span><span class="no">TIME_NOW</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nb">sleep</span> <span class="mi">0</span><span class="o">.</span><span class="mi">5</span>
-</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;Hello&quot;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">suspend!</span>
-</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">suspended?</span>  <span class="c1">#=&gt; true</span>
-</span><span class='line'><span class="n">gcdq</span><span class="o">.</span><span class="n">resume!</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">sleep</span> <span class="mi">1</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Dispatch#suspend!</h3>
-
-<p>処理を中断します。GCD API の <code>dispatch_suspend</code> に相当します。</p>
-
-<ul>
-<li>suspend!</li>
-</ul>
-
-
-<h3>Dispatch#suspended?</h3>
-
-<p>処理が中断されているかを返します。</p>
-
-<ul>
-<li>suspended? -> bool
-
-<ul>
-<li>[RETURN]
-
-<ul>
-<li>処理が中断されていれば true、そうでなければ false を返します。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
 
 ]]></content>
   </entry>
