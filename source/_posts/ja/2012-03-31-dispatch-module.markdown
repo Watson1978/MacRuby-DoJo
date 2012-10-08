@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Dispatch クラス"
+title: "Dispatch モジュール"
 date: 2012-03-31 10:00
 comments: true
 sharing: true
@@ -9,7 +9,7 @@ categories: MacRuby
 
 Mac OS X 10.6 から追加された [Grand Central Dispatch (GCD)](https://developer.apple.com/library/mac/#documentation/Performance/Reference/GCD_libdispatch_Ref/Reference/reference.html) を利用するために、MacRuby には Dispatch モジュールと、以下のようにいくつかのクラスがあります。
 
-- Dispatch クラス
+- Dispatch モジュール
 - [Dispatch::Queue クラス](/blog/2012/03/31/dispatch-queue-class/)
 - [Dispatch::Group クラス](/blog/2012/03/31/dispatch-group-class/)
 - [Dispatch::Source クラス](/blog/2012/03/31/dispatch-source-class/)
@@ -18,7 +18,7 @@ Mac OS X 10.6 から追加された [Grand Central Dispatch (GCD)](https://devel
 RubyGems の [Dispatch](https://github.com/gunn/Dispatch) ライブラリを用いると、より簡単に GCD を使うこともできます。
 
 
-## Dispatch クラスの定数
+## Dispatch モジュールの定数
 ### Dispatch::TIME_NOW
 「処理をすぐに開始する」と指示するときに使用します。GCD API で `DISPATCH_TIME_NOW` として定義されている定数と同じ定数です。
 
@@ -47,7 +47,7 @@ sema.wait(Dispatch::TIME_FOREVER)
 puts "World"
 ```
 
-## Dispatch クラスのメソッド
+## Dispatch モジュールのメソッド
 
 ### Dispatch#resume!
 中断されている処理を再開します。GCD API の `dispatch_resume` に相当します。
