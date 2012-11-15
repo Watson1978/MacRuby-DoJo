@@ -78,3 +78,18 @@ sleep 1
 - suspended? -> bool
   - [RETURN]
     - 処理が中断されていれば true、そうでなければ false を返します。
+
+### Dispatch#dispatch_object
+
+dispatch_object_t のオブジェクトを返します。Cocoa API で dispatch_queue_t などのオブジェクトが必要なときに用います。Dispatch::Queue などのオブジェクトは MacRuby 独自のものなので、このメソッドが返すオブジェクトを Cocoa API に渡す必要があります。
+
+- dispatch_object -> object
+  - [RETURN]
+    - dispatch object を返します。
+
+```ruby
+gcdq = Dispatch::Queue.new('doc')
+output = AVCaptureVideoDataOutput.new
+output.setSampleBufferDelegate(self, queue: gcdq.dispatch_object)
+```
+
