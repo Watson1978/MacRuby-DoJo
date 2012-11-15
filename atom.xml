@@ -4,7 +4,7 @@
   <title><![CDATA[MacRuby DoJo (道場)]]></title>
   <link href="http://watson1978.github.com/MacRuby-DoJo/atom.xml" rel="self"/>
   <link href="http://watson1978.github.com/MacRuby-DoJo/"/>
-  <updated>2012-10-08T15:36:47+09:00</updated>
+  <updated>2012-11-15T20:23:14+09:00</updated>
   <id>http://watson1978.github.com/MacRuby-DoJo/</id>
   <author>
     <name><![CDATA[Watson]]></name>
@@ -2342,6 +2342,36 @@ This method is implemented with <a href="http://site.icu-project.org/">ICU</a>  
 </ul>
 </li>
 </ul>
+
+
+<h3>Dispatch#dispatch_object</h3>
+
+<p>dispatch_object_t のオブジェクトを返します。Cocoa API で dispatch_queue_t などのオブジェクトが必要なときに用います。Dispatch::Queue などのオブジェクトは MacRuby 独自のものなので、このメソッドが返すオブジェクトを Cocoa API に渡す必要があります。</p>
+
+<ul>
+<li>dispatch_object -> object
+
+<ul>
+<li>[RETURN]
+
+<ul>
+<li>dispatch object を返します。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gcdq</span> <span class="o">=</span> <span class="no">Dispatch</span><span class="o">::</span><span class="no">Queue</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;doc&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">output</span> <span class="o">=</span> <span class="no">AVCaptureVideoDataOutput</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'><span class="n">output</span><span class="o">.</span><span class="n">setSampleBufferDelegate</span><span class="p">(</span><span class="nb">self</span><span class="p">,</span> <span class="n">queue</span><span class="p">:</span> <span class="n">gcdq</span><span class="o">.</span><span class="n">dispatch_object</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
 
 ]]></content>
   </entry>
